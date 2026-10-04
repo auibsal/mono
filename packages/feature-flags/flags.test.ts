@@ -25,6 +25,5 @@ test("missing rows fall back to the default", async () => {
       from: () => ({ select: () => ({ in: async () => ({ data: [] }) }) }),
     }),
   };
-  // biome-ignore lint/suspicious/noExplicitAny: minimal client stub
   expect(await readFlags(fake as any)).toEqual({ elections: false });
 });
