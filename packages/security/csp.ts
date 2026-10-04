@@ -33,29 +33,17 @@ export const defaultCspSources: CspSources = {
     "https://*.tiktok.com",
     "https://*.posthog.com",
     "https://*.sentry.io",
-    // <module:collaboration>
-    "https://api.liveblocks.io",
-    "wss://api.liveblocks.io",
-    // </module:collaboration>
-    // <module:notifications>
     "https://api.knock.app",
     "wss://api.knock.app",
-    // </module:notifications>
   ],
   frame: [
     "https://www.googletagmanager.com",
     "https://challenges.cloudflare.com",
-    // <module:webhooks>
-    "https://app.svix.com",
-    // </module:webhooks>
   ],
   img: [
     "https://*.google-analytics.com",
     "https://*.googletagmanager.com",
     "https://www.facebook.com",
-    // <module:cms>
-    "https://assets.basehub.com",
-    // </module:cms>
   ],
   script: [
     "https://www.googletagmanager.com",

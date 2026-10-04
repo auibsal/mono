@@ -39,7 +39,6 @@ export const contact = async (input: ContactInput): Promise<ContactResult> => {
   }
 
   try {
-    // <module:rate-limit>
     if (env.UPSTASH_REDIS_REST_URL && env.UPSTASH_REDIS_REST_TOKEN) {
       const rateLimiter = createRateLimiter({
         limiter: slidingWindow(1, "1d"),
@@ -53,7 +52,6 @@ export const contact = async (input: ContactInput): Promise<ContactResult> => {
         return { error: "rate_limited", ok: false };
       }
     }
-    // </module:rate-limit>
 
     const { dateLabel, email, message, name } = parsed.data;
     await resend.emails.send({

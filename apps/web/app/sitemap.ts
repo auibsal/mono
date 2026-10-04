@@ -1,6 +1,3 @@
-// <module:cms>
-import { blog, legal } from "@repo/cms";
-// </module:cms>
 import { locales } from "@repo/internationalization";
 import type { MetadataRoute } from "next";
 import { env } from "@/env";
@@ -26,27 +23,9 @@ const localized = (path: string): MetadataRoute.Sitemap => {
   }));
 };
 
-// <module:cms>
-const cmsPaths = async () => {
-  const [posts, legalPages] = await Promise.all([
-    blog.getPosts(),
-    legal.getPosts(),
-  ]);
-  return [
-    "/blog",
-    ...posts.map((post) => `/blog/${post._slug}`),
-    ...legalPages.map((page) => `/legal/${page._slug}`),
-  ];
-};
-// </module:cms>
-
 const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   // Pages that come from other sources, e.g. the CMS.
-  const dynamicPaths: string[][] = await Promise.all([
-    // <module:cms>
-    cmsPaths(),
-    // </module:cms>
-  ]);
+  const dynamicPaths: string[][] = await Promise.all([]);
 
   return [...staticPaths, ...dynamicPaths.flat()].flatMap(localized);
 };

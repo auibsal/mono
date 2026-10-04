@@ -1,14 +1,14 @@
 {
-  "orgName": "{{ORG_NAME}}",
-  "orgSlug": "{{ORG_SLUG}}",
-  "name": "{{PROJECT_NAME}}",
-  "slug": "{{PROJECT_SLUG}}",
-  "url": "{{PROJECT_URL}}",
-  "supportEmail": "{{SUPPORT_EMAIL}}",
-  "repoUrl": "{{REPO_URL}}",
-  "bundleId": "{{BUNDLE_ID}}",
+  "orgName": "AUIB Society of Arts and Letters",
+  "orgSlug": "auibsal",
+  "name": "AUIB Society of Arts and Letters",
+  "slug": "sal",
+  "url": "https://auibsal.org",
+  "supportEmail": "hello@auibsal.org",
+  "repoUrl": "https://github.com/auibsal/mono",
+  "bundleId": "org.auibsal.nexus",
   "locale": {
-    "default": "ar",
+    "default": "en",
     "enabled": ["ar", "en"]
   },
   "region": {

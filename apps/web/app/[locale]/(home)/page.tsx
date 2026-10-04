@@ -32,22 +32,18 @@ export const generateMetadata = async ({
 const Home = async ({ params }: HomeProps) => {
   const { locale } = await params;
   setRequestLocale(locale);
-  // <module:feature-flags>
   const [betaFeature, t] = await Promise.all([
     showBetaFeature(),
     getTranslations("web.home"),
   ]);
-  // </module:feature-flags>
 
   return (
     <>
-      {/* <module:feature-flags> */}
       {betaFeature ? (
         <div className="w-full bg-black py-2 text-center text-white">
           {t("beta")}
         </div>
       ) : null}
-      {/* </module:feature-flags> */}
       <Hero />
       <Cases />
       <Features />

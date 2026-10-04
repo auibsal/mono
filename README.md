@@ -1,6 +1,6 @@
-# {{PROJECT_NAME}}
+# AUIB Society of Arts and Letters
 
-{{ORG_NAME}}'s production monorepo: a Next.js + Supabase SaaS platform built for
+AUIB Society of Arts and Letters's production monorepo: a Next.js + Supabase SaaS platform built for
 Iraq-first products. It ships Arabic (RTL) and English (LTR) out of the box, takes
 local payments through Wayl, and can be packaged as native iOS and Android apps.
 
@@ -79,4 +79,4 @@ keys are missing are disabled.
 - `.github/CONTRIBUTING.md` — workflow and local checks
 - `THIRD_PARTY_NOTICES.md` — licenses of included open-source code
 
-Repository: {{REPO_URL}} · Support: {{SUPPORT_EMAIL}}
+Repository: https://github.com/auibsal/mono · Support: hello@auibsal.org

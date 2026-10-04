@@ -3,15 +3,10 @@ import { Status } from "@repo/observability/status";
 import { getTranslations } from "next-intl/server";
 import { env } from "@/env";
 import { FooterColumn, type FooterLink } from "./footer-column";
-import { FooterLegalColumn } from "./footer-legal-column";
 
 export const Footer = async () => {
   const t = await getTranslations();
-  const pages: FooterLink[] = [
-    // <module:cms>
-    { href: "/blog", title: t("web.footer.blog") },
-    // </module:cms>
-  ];
+  const pages: FooterLink[] = [];
 
   if (env.NEXT_PUBLIC_DOCS_URL) {
     pages.push({ href: env.NEXT_PUBLIC_DOCS_URL, title: t("web.footer.docs") });
@@ -42,9 +37,6 @@ export const Footer = async () => {
               {pages.length > 0 ? (
                 <FooterColumn items={pages} title={t("web.footer.pages")} />
               ) : null}
-              {/* <module:cms> */}
-              <FooterLegalColumn />
-              {/* </module:cms> */}
             </div>
           </div>
         </div>

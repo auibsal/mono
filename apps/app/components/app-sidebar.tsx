@@ -29,7 +29,6 @@ import {
   FolderIcon,
   type LucideIcon,
   Settings2Icon,
-  WebhookIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useAuthMessages } from "@/lib/auth-messages";
@@ -58,9 +57,6 @@ export const AppSidebar = () => {
     { href: "/", icon: FolderIcon, title: t("dashboard") },
     { href: "/billing", icon: CreditCardIcon, title: t("billing") },
     { href: "/settings", icon: Settings2Icon, title: t("settings") },
-    // <module:webhooks>
-    { href: "/webhooks", icon: WebhookIcon, title: t("webhooks") },
-    // </module:webhooks>
   ];
 
   const closeOnMobile = () => {
@@ -121,9 +117,7 @@ export const AppSidebar = () => {
             }}
           />
           <div className="flex shrink-0 items-center">
-            {/* <module:notifications> */}
             <NotificationsTrigger />
-            {/* </module:notifications> */}
             <LanguageSwitcher />
             <ThemeToggle />
           </div>

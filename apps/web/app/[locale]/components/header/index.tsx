@@ -72,9 +72,6 @@ export const Header = () => {
       items: [{ href: "/pricing", title: t("header.product.pricing") }],
       title: t("header.product.title"),
     },
-    // <module:cms>
-    { href: "/blog", title: t("header.blog") },
-    // </module:cms>
   ];
 
   if (env.NEXT_PUBLIC_DOCS_URL) {

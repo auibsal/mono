@@ -12,21 +12,13 @@ import {
 import { Input } from "@repo/design-system/components/ui/input";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FolderIcon, PlusIcon } from "lucide-react";
-import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { type FormEvent, useState } from "react";
 import { useOrganization } from "@/components/organization-provider";
 import { PageHeader } from "@/components/page-header";
 import { ProjectList } from "@/components/project-list";
 import { ErrorState, SectionSpinner } from "@/components/states";
-import { env } from "@/env";
 import { queryKeys, useProjects } from "@/lib/queries";
-
-// <module:collaboration>
-const Presence = dynamic(() =>
-  import("@/components/collaboration/presence").then((mod) => mod.Presence)
-);
-// </module:collaboration>
 
 export const Dashboard = () => {
   const t = useTranslations("app.dashboard");
@@ -64,13 +56,7 @@ export const Dashboard = () => {
 
   return (
     <>
-      <PageHeader title={active.name}>
-        {/* <module:collaboration> */}
-        {env.NEXT_PUBLIC_LIVEBLOCKS_ENABLED === "true" ? (
-          <Presence organizationId={active.id} />
-        ) : null}
-        {/* </module:collaboration> */}
-      </PageHeader>
+      <PageHeader title={active.name} />
       <div className="flex flex-1 flex-col gap-6 p-4 pt-0">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="grid gap-1">

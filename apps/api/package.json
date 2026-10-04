@@ -13,7 +13,6 @@
   "dependencies": {
     "@repo/analytics": "workspace:*",
     "@repo/auth": "workspace:*",
-    "@repo/collaboration": "workspace:*",
     "@repo/config": "workspace:*",
     "@repo/database": "workspace:*",
     "@repo/design-system": "workspace:*",
@@ -22,7 +21,6 @@
     "@repo/observability": "workspace:*",
     "@repo/payments": "workspace:*",
     "@repo/storage": "workspace:*",
-    "@repo/webhooks": "workspace:*",
     "@sentry/nextjs": "^10.42.0",
     "@t3-oss/env-nextjs": "^0.13.10",
     "import-in-the-middle": "^3.0.0",

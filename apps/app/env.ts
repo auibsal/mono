@@ -1,6 +1,5 @@
 import { keys as analytics } from "@repo/analytics/keys";
 import { keys as auth } from "@repo/auth/keys";
-import { keys as collaboration } from "@repo/collaboration/keys";
 import { envPresets, withPresets } from "@repo/next-config/env";
 import { keys as core } from "@repo/next-config/keys";
 import { keys as notifications } from "@repo/notifications/keys";
@@ -12,13 +11,8 @@ import { createEnv } from "@t3-oss/env-nextjs";
 const presets = envPresets(
   auth(),
   analytics(),
-  // <module:collaboration>
-  collaboration(),
-  // </module:collaboration>
   core(),
-  // <module:notifications>
   notifications(),
-  // </module:notifications>
   observability()
 );
 

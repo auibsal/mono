@@ -3,7 +3,6 @@ import { Link } from "@repo/internationalization/navigation";
 import { MoveRight, PhoneCall } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { env } from "@/env";
-import { LatestPostAnnouncement } from "./latest-post-announcement";
 
 export const Hero = () => {
   const t = useTranslations("web.home");
@@ -13,9 +12,6 @@ export const Hero = () => {
     <div className="w-full">
       <div className="container mx-auto">
         <div className="flex flex-col items-center justify-center gap-8 py-20 lg:py-40">
-          {/* <module:cms> */}
-          <LatestPostAnnouncement label={t("hero.announcement")} />
-          {/* </module:cms> */}
           <div className="flex flex-col gap-4">
             <h1 className="max-w-2xl text-center font-regular text-5xl tracking-tighter md:text-7xl">
               {t("meta.title")}

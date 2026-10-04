@@ -21,9 +21,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
     </SidebarProvider>
   );
 
-  // <module:notifications>
   shell = <NotificationsProvider>{shell}</NotificationsProvider>;
-  // </module:notifications>
 
   return (
     <RequireAuth>
