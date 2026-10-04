@@ -34,7 +34,10 @@ const projectSchema = z
      * Default journal name. The live value is the `journal.name_*` setting in
      * the database, so the name can change without a code edit.
      */
-    journal: z.object({ name_ar: z.string().min(1), name_en: z.string().min(1) }),
+    journal: z.object({
+      name_ar: z.string().min(1),
+      name_en: z.string().min(1),
+    }),
     locale: z
       .object({
         default: z.enum(supportedLocales),

@@ -6,9 +6,18 @@ import { hasPermission, hasPermissionAnywhere, scopesFor } from "./grants";
 import { permissions } from "./permissions";
 import { highestSpendingLimitIqd, roleKeys, roles } from "./roles";
 
-const migrations = join(import.meta.dirname, "..", "database", "supabase", "migrations");
+const migrations = join(
+  import.meta.dirname,
+  "..",
+  "database",
+  "supabase",
+  "migrations"
+);
 const referenceData = readFileSync(
-  join(migrations, readdirSync(migrations).find((f) => f.endsWith("_reference_data.sql")) ?? ""),
+  join(
+    migrations,
+    readdirSync(migrations).find((f) => f.endsWith("_reference_data.sql")) ?? ""
+  ),
   "utf8"
 );
 
@@ -17,27 +26,49 @@ const section = (start: string, end: string) =>
 
 describe("mirror of the reference-data migration", () => {
   test("permission keys match", () => {
-    const sql = section("insert into access.permissions", "insert into access.roles");
+    const sql = section(
+      "insert into access.permissions",
+      "insert into access.roles"
+    );
     const keys = [...sql.matchAll(/\('([a-z_.]+)', '/g)].map((m) => m[1]);
     expect(keys.sort()).toEqual([...permissions].sort());
   });
 
   test("roles and spending limits match", () => {
-    const sql = section("insert into access.roles", "insert into access.role_permissions");
-    const rows = [...sql.matchAll(/\('([a-z_]+)', '[^']+', '[^']+', (true|false), (null|\d+), \d+\)/g)];
+    const sql = section(
+      "insert into access.roles",
+      "insert into access.role_permissions"
+    );
+    const rows = [
+      ...sql.matchAll(
+        /\('([a-z_]+)', '[^']+', '[^']+', (true|false), (null|\d+), \d+\)/g
+      ),
+    ];
     expect(rows.map((m) => m[1]).sort()).toEqual([...roleKeys].sort());
     for (const [, key, council, limit] of rows) {
       const role = roles[key as keyof typeof roles];
       expect(role.isCouncil, key).toBe(council === "true");
-      expect(role.spendingLimitIqd, key).toBe(limit === "null" ? null : Number(limit));
+      expect(role.spendingLimitIqd, key).toBe(
+        limit === "null" ? null : Number(limit)
+      );
     }
   });
 
   test("role bundles match", () => {
-    const sql = section("insert into access.role_permissions", "insert into core.programmes");
-    for (const [, key, list] of sql.matchAll(/\('([a-z_]+)', array\[([^\]]+)\]\)/g)) {
-      const fromSql = [...list.matchAll(/'([a-z_.]+)'/g)].map((m) => m[1]).sort();
-      expect([...roles[key as keyof typeof roles].permissions].sort(), key).toEqual(fromSql);
+    const sql = section(
+      "insert into access.role_permissions",
+      "insert into core.programmes"
+    );
+    for (const [, key, list] of sql.matchAll(
+      /\('([a-z_]+)', array\[([^\]]+)\]\)/g
+    )) {
+      const fromSql = [...list.matchAll(/'([a-z_.]+)'/g)]
+        .map((m) => m[1])
+        .sort();
+      expect(
+        [...roles[key as keyof typeof roles].permissions].sort(),
+        key
+      ).toEqual(fromSql);
     }
   });
 
@@ -49,7 +80,9 @@ describe("mirror of the reference-data migration", () => {
 
   test("only the Submissions Manager sees identities", () => {
     const holders = roleKeys.filter((key) =>
-      (roles[key].permissions as readonly string[]).includes("journal.identity.view")
+      (roles[key].permissions as readonly string[]).includes(
+        "journal.identity.view"
+      )
     );
     expect(holders).toEqual(["submissions_manager"]);
   });
@@ -62,8 +95,12 @@ describe("hasPermission mirror", () => {
   ];
 
   test("scoped grants cover only their scope", () => {
-    expect(hasPermission(grants, "events.manage", "programme", "p1")).toBe(true);
-    expect(hasPermission(grants, "events.manage", "programme", "p2")).toBe(false);
+    expect(hasPermission(grants, "events.manage", "programme", "p1")).toBe(
+      true
+    );
+    expect(hasPermission(grants, "events.manage", "programme", "p2")).toBe(
+      false
+    );
     expect(hasPermission(grants, "events.manage")).toBe(false);
     expect(hasPermissionAnywhere(grants, "events.manage")).toBe(true);
   });
@@ -80,5 +117,7 @@ describe("hasPermission mirror", () => {
 });
 
 test("persona SQL quotes values", () => {
-  expect(personasSql({ issue: "i" })).toContain("'submissions_manager', 'issue', 'i'");
+  expect(personasSql({ issue: "i" })).toContain(
+    "'submissions_manager', 'issue', 'i'"
+  );
 });
