@@ -20,15 +20,20 @@ These stop parts of the work. Everything else continues around them.
       `BrandLogo` prints the Society's name (logos are never redrawn).
 - [ ] **`docs-source/` is not in the repo.** Every document in §6 needs its
       source PDF/DOCX; pages will be built with structure and `TODO(content)`.
-- [ ] Shaheen Farjo's sign-in email (first admin: `access.bootstrap_founder`).
-- [ ] **Supabase:** the connected account has only `theideaiq.com`, no SAL
-      project. Need the SAL project ref and access (or permission to create
-      one in that organization).
-- [ ] **Vercel:** the connected team (`theideaiq`) does not hold
-      `auibsal.org`. Need the team that owns the domain, or the domain added
-      to this team.
-- [ ] Resend API key (or account); from address (default
-      `SAL <hello@auibsal.org>`) and a reply-to.
+- [x] Founder bootstrapped (global `president`, 2026-10-04).
+- [x] Supabase project `auibsal.org` (`fghzahtzgelqnpwdhwjo`, eu-central-1):
+      migrations applied, SAL schemas exposed, Auth site and redirect URLs
+      set, email sign-up only.
+- [x] Vercel team `theideaiq`: sal-web (auibsal.org, www), sal-nexus
+      (nexus.auibsal.org), sal-api (api.auibsal.org), functions in fra1.
+- [ ] **Resend:** `auibsal.org` is verified in the owner's other Resend team.
+      Need a sending key from it as `RESEND_TOKEN` + `RESEND_FROM` on sal-api,
+      and the same key as Supabase Auth SMTP (`smtp.resend.com:465`, user
+      `resend`). Until then Supabase's built-in mailer only reaches the
+      Supabase team, so new members can't confirm their address.
+- [ ] **sal-web holds server secrets** copied by the Supabase integration
+      (`SUPABASE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`,
+      `SUPABASE_JWT_SECRET`, `POSTGRES_*`). Delete them from the project.
 - [ ] Fall 2026 and Spring 2027 semester dates; exam weeks.
 - [ ] AUIB public calendar iCal URL.
 - [ ] Natrok Athar's cost per winter set (40,000 IQD placeholder).
@@ -142,9 +147,10 @@ These stop parts of the work. Everything else continues around them.
 - [ ] Cron: hourly AUIB calendar sync; daily reminders, agreement reminders, role-expiry notices, stale removal requests, scheduled publishing
 - [ ] Signed URLs (blind copies with metadata stripped, receipts), CSV exports, removal-request + contact endpoints with rate limits
 
-### Infrastructure (§12) — blocked on access
-- [ ] Supabase project, migrations, buckets, Auth, SMTP, webhook, advisors
-- [ ] Vercel projects, env vars, domains, cron, previews
+### Infrastructure (§12)
+- [x] Supabase project, migrations, buckets, exposed schemas, Auth URLs, FK indexes
+- [ ] Supabase SMTP (Resend), outbox webhook; 52 "multiple permissive policies" advisor warnings (deferred)
+- [x] Vercel projects, env vars, domains, cron, previews
 - [x] CI: lint, typecheck, unit, repo checks, tokens check, pgTAP, type diff, integration, builds, client-bundle secret scan
 - [ ] CI: Playwright e2e against previews; migrations on merge to `main`
 
