@@ -7,13 +7,13 @@ import { useTranslations } from "next-intl";
 
 export const FullPageSpinner = () => (
   <div className="flex min-h-dvh items-center justify-center">
-    <Spinner className="size-6 text-muted-foreground" />
+    <Spinner className="size-6 text-text-meta" />
   </div>
 );
 
 export const SectionSpinner = ({ className }: { className?: string }) => (
-  <div className={cn("flex items-center justify-center py-12", className)}>
-    <Spinner className="size-5 text-muted-foreground" />
+  <div className={cn("flex items-center justify-center py-8", className)}>
+    <Spinner className="size-5 text-text-meta" />
   </div>
 );
 
@@ -28,13 +28,13 @@ export const ErrorState = ({ className, onRetry }: ErrorStateProps) => {
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center gap-3 py-12 text-center",
+        "flex flex-col items-center justify-center gap-3 py-8 text-center",
         className
       )}
       role="alert"
     >
-      <p className="text-muted-foreground text-sm">
-        {t("app.errors.loadFailed")}
+      <p className="type-body text-text-secondary">
+        {t("nexus.errors.loadFailed")}
       </p>
       {onRetry ? (
         <Button onClick={onRetry} size="sm" variant="outline">
@@ -44,3 +44,8 @@ export const ErrorState = ({ className, onRetry }: ErrorStateProps) => {
     </div>
   );
 };
+
+/** One muted line for an empty section. */
+export const EmptyLine = ({ children }: { children: string }) => (
+  <p className="type-body text-text-secondary">{children}</p>
+);

@@ -1,0 +1,30 @@
+"use client";
+
+import { BrandLogo } from "@repo/design-system/components/brand-logo";
+import { useLocale, useTranslations } from "next-intl";
+import type { ReactNode } from "react";
+import { LanguageSwitcher } from "@/components/language-switcher";
+
+/** Sign-in, sign-up and password pages: one column, motto beneath. */
+export const AuthFrame = ({ children }: { children: ReactNode }) => {
+  const t = useTranslations("common");
+  const locale = useLocale();
+
+  return (
+    <div className="flex min-h-dvh flex-col">
+      <header className="mx-auto flex w-full max-w-md items-center justify-between px-4 py-4">
+        <BrandLogo locale={locale} />
+        <LanguageSwitcher />
+      </header>
+      <main
+        className="mx-auto grid w-full max-w-md flex-1 content-start gap-6 px-4 py-8"
+        id="main"
+      >
+        {children}
+      </main>
+      <footer className="type-caption mx-auto w-full max-w-md px-4 py-6">
+        <p lang="ar">{t("motto")}</p>
+      </footer>
+    </div>
+  );
+};

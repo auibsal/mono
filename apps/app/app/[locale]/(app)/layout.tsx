@@ -1,33 +1,18 @@
-import {
-  SidebarInset,
-  SidebarProvider,
-} from "@repo/design-system/components/ui/sidebar";
 import type { ReactNode } from "react";
-import { AppSidebar } from "@/components/app-sidebar";
-import { RequireAuth } from "@/components/gates";
-import { NotificationsProvider } from "@/components/notifications-provider";
-import { OrganizationProvider } from "@/components/organization-provider";
+import { AppShell } from "@/components/app-shell";
+import { RequireAuth, RequireMember } from "@/components/gates";
 
 interface AppLayoutProps {
   readonly children: ReactNode;
 }
 
-/** The signed-in app: requires a session and an organization. */
-const AppLayout = ({ children }: AppLayoutProps) => {
-  let shell = (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>{children}</SidebarInset>
-    </SidebarProvider>
-  );
-
-  shell = <NotificationsProvider>{shell}</NotificationsProvider>;
-
-  return (
-    <RequireAuth>
-      <OrganizationProvider>{shell}</OrganizationProvider>
-    </RequireAuth>
-  );
-};
+/** Signed-in, verified members with current pledges. */
+const AppLayout = ({ children }: AppLayoutProps) => (
+  <RequireAuth>
+    <RequireMember>
+      <AppShell>{children}</AppShell>
+    </RequireMember>
+  </RequireAuth>
+);
 
 export default AppLayout;

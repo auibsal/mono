@@ -1,4 +1,4 @@
 [install]
-# Hoisted layout: Next.js, Storybook, React Email and the Capacitor CLI all
+# Hoisted layout: Next.js, Storybook and React Email all
 # expect dependencies to resolve from the root node_modules.
 linker = "hoisted"

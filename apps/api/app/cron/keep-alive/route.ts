@@ -8,8 +8,9 @@ export const GET = async (request: Request) => {
   }
 
   const { error } = await createAdminClient()
-    .from("plans")
-    .select("id")
+    .schema("core")
+    .from("settings")
+    .select("key")
     .limit(1);
 
   if (error) {

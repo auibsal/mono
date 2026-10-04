@@ -6,9 +6,9 @@ const NotFound = () => {
   const t = useTranslations("common.notFound");
 
   return (
-    <div className="container mx-auto flex min-h-[60vh] flex-col items-center justify-center gap-4 py-20 text-center">
-      <h1 className="font-regular text-4xl tracking-tighter">{t("title")}</h1>
-      <p className="max-w-md text-muted-foreground">{t("description")}</p>
+    <div className="mx-auto flex min-h-[60vh] max-w-6xl flex-col items-start justify-center gap-4 px-4 py-20">
+      <h1 className="type-display">{t("title")}</h1>
+      <p className="type-lede max-w-md">{t("description")}</p>
       <Button asChild>
         <Link href="/">{t("home")}</Link>
       </Button>
