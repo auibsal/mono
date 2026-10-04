@@ -10,7 +10,7 @@
     "@repo/config": "workspace:*",
     "lodash.merge": "^4.6.2",
     "react": "19.3.0",
-    "schema-dts": "^1.1.5"
+    "schema-dts": "^2.0.0"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
