@@ -29,42 +29,18 @@ export const defaultCspSources: CspSources = {
     "https://*.google-analytics.com",
     "https://*.analytics.google.com",
     "https://*.googletagmanager.com",
-    "https://www.facebook.com",
-    "https://*.tiktok.com",
-    "https://*.posthog.com",
     "https://*.sentry.io",
-    // <module:collaboration>
-    "https://api.liveblocks.io",
-    "wss://api.liveblocks.io",
-    // </module:collaboration>
-    // <module:notifications>
     "https://api.knock.app",
     "wss://api.knock.app",
-    // </module:notifications>
   ],
-  frame: [
-    "https://www.googletagmanager.com",
-    "https://challenges.cloudflare.com",
-    // <module:webhooks>
-    "https://app.svix.com",
-    // </module:webhooks>
-  ],
+  // Side Quest episodes: YouTube's privacy-enhanced (no-cookie) player only.
+  frame: ["https://www.youtube-nocookie.com"],
   img: [
     "https://*.google-analytics.com",
     "https://*.googletagmanager.com",
-    "https://www.facebook.com",
-    // <module:cms>
-    "https://assets.basehub.com",
-    // </module:cms>
+    "https://i.ytimg.com",
   ],
-  script: [
-    "https://www.googletagmanager.com",
-    "https://connect.facebook.net",
-    "https://analytics.tiktok.com",
-    "https://va.vercel-scripts.com",
-    "https://challenges.cloudflare.com",
-    "https://*.posthog.com",
-  ],
+  script: ["https://www.googletagmanager.com"],
 };
 
 /** Our own API (apps/api), called directly from the browser by apps/app. */
@@ -95,7 +71,7 @@ const merge = (sources: CspSources[], key: keyof CspSources): Source[] =>
  * Builds a Content Security Policy for Nosecone.
  *
  * Default (`strict: false`) is compatible with statically rendered pages and
- * with the Capacitor static export: scripts are limited to this origin and the
+ * with static exports: scripts are limited to this origin and the
  * listed hosts, with `'unsafe-inline'` for Next.js' inline bootstrap scripts.
  *
  * `strict: true` switches to nonce + `'strict-dynamic'`, which is stronger but

@@ -1,25 +1,35 @@
 # Agent and contributor guide
 
-Conventions for anyone — human or AI agent — changing this repository.
+Conventions for anyone — human or AI agent — changing this repository: the
+platform of the AUIB Society of Arts and Letters (SAL), live at auibsal.org.
+
+Start every session by reading `PROGRESS.md` (the working checklist, blocked
+items and decisions) and continue from the first unticked item.
 
 ## Repository map
 
-- `apps/web` — marketing site (Next.js, i18n routes under `app/[locale]`).
-- `apps/app` — the product, client-first: the same code runs in the browser
-  and, as a static export (`bun run build:native`), inside the Capacitor
-  iOS/Android apps. No Server Actions, Route Handlers, `cookies()`, proxy or
-  request-time server rendering here; anything that needs a secret goes in
-  `apps/api`, called with the user's token (`callApi` in `apps/app/lib/api.ts`).
-- `apps/api` — webhooks, cron jobs and privileged server endpoints.
-- `apps/email`, `apps/docs`, `apps/storybook` — templates, docs, UI workbench.
+- `apps/web` — the public site, auibsal.org (Next.js, `/en` and `/ar`).
+  Published reads only, with the publishable key; cached by tag and
+  revalidated on publish (`/api/revalidate`).
+- `apps/app` — **the Nexus**, nexus.auibsal.org: the member portal and the
+  role-gated admin. A static export (`output: "export"`): no Server Actions,
+  Route Handlers, `cookies()`, proxy or request-time rendering, and no
+  secrets. Every check in it is UX only. Anything that needs a secret goes to
+  `apps/api`, called with the member's token (`callApi` in `apps/app/lib/api.ts`).
+- `apps/api` — api.auibsal.org: email, cron, calendar feeds, revalidation,
+  exports, signed URLs, account deletion. The only app with the secret key.
+- `apps/email`, `apps/docs`, `apps/storybook` — email templates, docs, UI workbench.
 - `packages/*` — shared code, imported as `@repo/<name>`. `@repo` is a fixed
-  internal scope; never rename it per project.
-- `packages/config/project.json` — the single source of truth for organization,
-  project, locales, region and commerce settings. Read it through `@repo/config`.
-- `scripts/` — `init.ts` creates a project from the template (template only);
-  `check-placeholders.ts`, `check-rtl.ts` and `check-i18n.ts` are repo checks.
-- `ARCHITECTURE_AND_INTEGRATIONS.md` — how the pieces fit together and how to
-  set up each integration (Supabase, Capacitor, tracking, Wayl, Vercel).
+  internal scope; never rename it.
+  - `@repo/database` — SQL migrations (`supabase/migrations`), pgTAP tests
+    (`supabase/tests/database`), generated types.
+  - `@repo/rbac` — permission keys, role bundles, the client mirror of
+    `access.has_permission()`, test personas.
+  - `@repo/sal-data` — zod schemas and typed queries per domain (membership,
+    events, journal, charity, governance, programmes, content).
+- `packages/config/project.json` — names, motto, hosts, locales, region and
+  the default journal name. Read it through `@repo/config`.
+- `scripts/` — `check-placeholders.ts`, `check-rtl.ts`, `check-i18n.ts`.
 
 ## Commands
 
@@ -32,62 +42,89 @@ bun run test                # Vitest in every workspace
 bun run check:placeholders
 bun run check:rtl           # physical Tailwind utilities (--fix rewrites them)
 bun run check:i18n          # UI text that isn't in the messages files
-bun run build:native        # static export of apps/app for Capacitor
-bun run cap:sync            # build:native + copy into the iOS/Android projects
+bun run db:start | db:reset | db:test | db:types
+bun run --cwd packages/database db:test:sync     # copy the pgTAP preamble
+bun run --cwd packages/design-system tokens      # regenerate tokens.css
 bun run gen:package         # scaffold packages/<name>
 ```
 
-Run `check`, `typecheck` and `test` before every commit.
+Run `check`, `typecheck` and `test` before every commit, and `db:test` for
+any schema change. Integration tests run against a local stack with
+`SUPABASE_INTEGRATION=1` (see `.github/workflows/ci.yml`).
 
-## Rules
+## SAL rules
+
+- **RLS first.** Postgres Row Level Security is the security boundary for
+  every read and write. Every table has RLS enabled in the migration that
+  creates it, and every policy has a pgTAP test. CI fails when a table lacks
+  RLS (`00_structure.test.sql`).
+- **Permissions, never role names.** Policies and code ask
+  `access.has_permission(permission, scope_type, scope_id)` ("can this user
+  `events.manage` for programme X?"). Roles live only in
+  `access.role_assignments`, written only through `access.assign_role()`.
+  Never read roles from `user_metadata` or `app_metadata`.
+- **Atomic multi-step operations are Postgres functions** called by RPC
+  (ledger sign-off, ballots, blind ids, waitlist promotion, transitions).
+- **No secrets in `app` or `web`.** The service-role key lives only in
+  `apps/api` and CI. New env vars go in the package's `keys.ts` and every
+  affected `.env.example`.
+- **Paired fields.** Translatable columns come in pairs (`title_en`,
+  `title_ar`, …). Store times as `timestamptz` (UTC); display Asia/Baghdad.
+- **Blind review.** Readers never receive author identity before a decision;
+  verify against network responses, not the UI.
+- **Money.** The charity ledger is append-only (corrections are reversing
+  entries); only signed-off entries count. No online payments of any kind.
+- **Documents.** Never present a draft document as adopted. Every document
+  page shows its status from the registry.
+- **Content.** Don't invent names, dates, figures or quotes. Missing text is a
+  `TODO(content): …` placeholder listed in `PROGRESS.md`. Arabic written for
+  this platform (not taken from a source) is listed as `needs-native-review`.
+- **Brand book (binding, SAL v4).** Components use only the role tokens
+  (`surface`, `surface-tint`, `text`, `text-secondary`, `text-meta`, `title`,
+  `accent-line`, `band`, `on-band`, plus `rule`). Never add a colour. No
+  shadows. Cards on `surface-tint` with the 8px card radius. At most one
+  crimson band per page; crimson never on ink. Light everywhere; the ink
+  theme (`data-theme="dark"`) only on the "why" pages and the Open Call page.
+  Logos are used exactly as supplied in `brand/logos`, never redrawn.
+  Functional icons only (menu, close, back, chevron, search, external link,
+  check), each with an accessible label; no decorative icons, no emoji.
+  British spelling; no exclamation marks in headings; "AUIB Society of Arts
+  and Letters" on first formal use, then "the Society" or "SAL", never "the club".
+- **Copy formats.** Dates as "Tuesday, October 13", times as "6:00 PM", money
+  as "50,000 IQD": use `formatLongDate`, `formatClock` and `formatIqd` from
+  `@repo/internationalization/format` (Latin digits, Baghdad time).
+
+## General rules
 
 - **Package manager:** Bun with the hoisted linker (`bunfig.toml`). Declare every
   dependency a package imports; keep versions aligned across workspaces. Bun
-  installs and runs scripts; Next.js runs on Node (`next build`, not
-  `bun --bun next build`).
-- **Auth:** never authorize with `user_metadata` — users can edit it. In
-  `apps/app`, query with `useAuth().supabase` (the browser or native client) so
-  Row Level Security applies; gates like `RequireAuth` are only UX. In
-  `apps/api`, identify callers with `authenticateRequest` (Bearer token) and
-  check their membership/role. The admin client (`@repo/database/admin`)
-  bypasses RLS and is only for webhooks, cron jobs and other trusted server
-  code. `@repo/auth/server` is for server-rendered apps only.
-- **Database:** schema changes are migrations with RLS policies and tests.
-- **Secrets:** never in client code, logs or commits. New env vars go in the
-  package's `keys.ts` and every affected `.env.example`.
-- **Files:** use `@repo/storage`. Organization files live under
-  `<organization id>/` and avatars under `<user id>/`; the bucket policies
-  depend on that layout.
-- **Analytics:** record events with `track()` from `@repo/analytics/client` — one
-  event catalogue mapped to GA4, Meta and TikTok — instead of calling `gtag`,
-  `fbq` or `ttq` directly. Server-confirmed purchases go through
-  `@repo/analytics/conversions` with the same event id. Ad pixels never load
-  inside the Capacitor apps.
-- **Payments:** in-app (native) checkout is controlled by
-  `project.commerce.allowNativeCheckout`. Digital goods must not be sold
-  through third-party checkout inside the iOS/Android apps.
+  installs and runs scripts; Next.js runs on Node (`next build`).
+- **Auth:** email sign-in (AUIB address first; magic link or password). In
+  `apps/app`, query with `useAuth().supabase` so RLS applies. In `apps/api`,
+  identify callers with `authenticateRequest` and re-check permissions with
+  `hasPermission` (`apps/api/lib/permissions.ts`). The admin client
+  (`@repo/database/admin`) bypasses RLS: webhooks, cron and trusted server
+  code only.
+- **Files:** use `@repo/storage`. Private buckets (`submissions`, `receipts`,
+  `library`) are reached only through signed URLs issued by `apps/api`.
+- **Analytics:** GA4 only, on `apps/web`, loaded only when `NEXT_PUBLIC_GA_ID`
+  is set. Record events with `track()` from `@repo/analytics/client`.
 - **Translations:** every UI string comes from
-  `packages/internationalization/messages/{ar,en}.json` (`useTranslations` /
-  `getTranslations`), checked by `bun run check:i18n`. Pass numbers and dates
-  into messages already formatted with `@repo/internationalization/format`
-  (Latin digits, Baghdad time); ICU `#`/`{n, number}` would use Arabic-Indic
-  digits. Link with `Link`/`useRouter` from
-  `@repo/internationalization/navigation` so URLs keep their `/ar` or `/en`.
+  `packages/internationalization/messages/{ar,en}.json`, checked by
+  `bun run check:i18n`. Pass numbers and dates into messages already
+  formatted; ICU `#` would use Arabic-Indic digits. Link with `Link`/`useRouter`
+  from `@repo/internationalization/navigation`.
 - **Localization:** UI must work in Arabic (RTL) and English (LTR). Use logical
   Tailwind utilities (`ms-*`, `pe-*`, `start-*`, `text-start`), never physical
-  ones (`ml-*`, `pr-*`, `left-*`, `text-left`); `bun run check:rtl` enforces
-  this. Icons that point along the reading direction (arrows, chevrons) get
-  `rtl:rotate-180`. Dates default to `Asia/Baghdad`.
-- **Optional modules:** code that belongs to an optional module (see
-  `scripts/template/modules.ts`) is wrapped in `// <module:id>` …
-  `// </module:id>` markers (`{/* … */}` in JSX, `#` in env files). Keep markers
-  balanced; `bun run check:placeholders` verifies them.
-- **Placeholders:** project-specific values use double-brace tokens such as the
-  project name token in `README.md`. Only `bun run init` should replace them.
+  ones; `bun run check:rtl` enforces this. Icons that point along the reading
+  direction get `rtl:rotate-180`. Arabic text sits one step larger with
+  1.8–2.0 leading (handled by `:lang(ar)` in the design system).
+- **Optional modules:** code belonging to an optional module is wrapped in
+  `// <module:id>` … `// </module:id>` markers. Keep markers balanced;
+  `bun run check:placeholders` verifies them.
 - **shadcn/ui:** files in `packages/design-system/components/ui` are generated;
   update them with the shadcn CLI rather than hand-editing where possible.
-
-<!-- BEGIN:turborepo-agent-rules -->
+  SAL components live in `packages/design-system/components/sal`.
 
 # This is NOT the Turborepo you know
 

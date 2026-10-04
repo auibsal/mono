@@ -1,34 +1,46 @@
 import { project } from "@repo/config";
+import { type LogoVariant, logos } from "../brand/logos";
 import { cn } from "../lib/utils";
 
 interface BrandLogoProps {
   readonly className?: string;
-  readonly showName?: boolean;
+  /** "dark" on crimson or ink grounds: uses the reversed file. */
+  readonly ground?: "light" | "dark";
+  readonly locale?: string;
+  readonly variant?: LogoVariant;
 }
 
 /**
- * Placeholder brand mark. Replace the SVG with the organization's logo; every
- * app renders the brand through this component.
+ * The SAL logo from brand/logos, exactly as supplied. Until the files are
+ * installed it prints the Society's name instead (never a drawn imitation).
  */
-export const BrandLogo = ({ className, showName = true }: BrandLogoProps) => (
-  <span className={cn("inline-flex items-center gap-2", className)}>
-    <svg
-      aria-hidden="true"
-      className="size-5 shrink-0"
-      fill="none"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect fill="currentColor" height="24" rx="6" width="24" />
-      <path
-        d="M7 12h10M12 7v10"
-        stroke="var(--background)"
-        strokeLinecap="round"
-        strokeWidth="2"
-      />
-    </svg>
-    {showName ? (
-      <span className="whitespace-nowrap font-semibold">{project.name}</span>
-    ) : null}
-  </span>
-);
+export const BrandLogo = ({
+  className,
+  ground = "light",
+  locale = "en",
+  variant = "horizontal",
+}: BrandLogoProps) => {
+  const name = locale === "ar" ? project.nameAr : project.name;
+
+  if (!logos.installed) {
+    return (
+      <span
+        className={cn("inline-flex items-baseline gap-2 font-bold", className)}
+      >
+        <span>{project.shortName}</span>
+        <span className="font-normal text-sm">{name}</span>
+      </span>
+    );
+  }
+
+  return (
+    // biome-ignore lint/performance/noImgElement: SVG logo, served as-is
+    <img
+      alt={name}
+      className={cn("h-8 w-auto", className)}
+      height={32}
+      src={logos[variant][ground === "dark" ? "onDark" : "onLight"]}
+      width={160}
+    />
+  );
+};

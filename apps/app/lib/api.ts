@@ -1,7 +1,6 @@
 import type { Database } from "@repo/database";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { env } from "@/env";
-import { detectPlatform } from "./platform";
 
 export class ApiError extends Error {
   readonly code: string;
@@ -16,9 +15,8 @@ export class ApiError extends Error {
 }
 
 /**
- * Calls apps/api (checkout, webhooks portal, collaboration tokens) with the
- * user's access token. The API verifies it and applies its own checks; the
- * platform header lets it enforce the store billing rules.
+ * Calls apps/api (exports, signed URLs, account deletion…) with the member's
+ * access token. The API verifies it and re-checks permissions itself.
  */
 export const callApi = async <T>(
   supabase: SupabaseClient<Database>,
@@ -42,7 +40,6 @@ export const callApi = async <T>(
     headers: {
       Authorization: `Bearer ${session.access_token}`,
       "Content-Type": "application/json",
-      "x-client-platform": detectPlatform(),
     },
     method: "POST",
   });

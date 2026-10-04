@@ -1,12 +1,16 @@
 import type { Database } from "@repo/database";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { type BucketId, buckets } from "./buckets";
-import { checkFile, fileNameOf, objectPath, StorageError } from "./files";
+import {
+  anonymousObjectPath,
+  checkFile,
+  objectPath,
+  StorageError,
+} from "./files";
 
 /**
- * File storage on Supabase Storage. Every helper takes the caller's Supabase
- * client (browser, server or native), so the bucket policies decide what the
- * signed-in user may read and write.
+ * File storage on Supabase Storage. Upload helpers take the caller's
+ * Supabase client, so the bucket policies decide what they may write.
  */
 
 type Client = SupabaseClient<Database>;
@@ -49,58 +53,91 @@ const assertAllowed = (bucket: keyof typeof buckets, file: File) => {
   }
 };
 
-/** Uploads a private file for an organization the user belongs to. */
-export const uploadOrganizationFile = (
+/**
+ * Uploads a Waraq submission file under a random name. The bucket policy
+ * only lets the author write into their own submission while it is in intake.
+ */
+export const uploadSubmissionFile = (
   supabase: Client,
-  organizationId: string,
+  submissionId: string,
   file: File
 ) => {
-  assertAllowed("orgFiles", file);
+  assertAllowed("submissions", file);
   return upload(
     supabase,
-    buckets.orgFiles.id,
-    objectPath(organizationId, file.name),
+    buckets.submissions.id,
+    anonymousObjectPath(submissionId, file.type),
     file
   );
 };
 
-/** Uploads the signed-in user's profile picture; returns its public URL. */
+/** Uploads a receipt for a campaign (charity.manage holders). */
+export const uploadReceipt = (
+  supabase: Client,
+  campaignId: string,
+  file: File
+) => {
+  assertAllowed("receipts", file);
+  return upload(
+    supabase,
+    buckets.receipts.id,
+    anonymousObjectPath(campaignId, file.type),
+    file
+  );
+};
+
+/** Uploads a public image or PDF into an area of the media bucket. */
+export const uploadMedia = async (
+  supabase: Client,
+  area: string,
+  file: File
+) => {
+  assertAllowed("media", file);
+  const stored = await upload(
+    supabase,
+    buckets.media.id,
+    objectPath(area, file.name),
+    file
+  );
+  return { ...stored, url: getMediaUrl(supabase, stored.path) };
+};
+
+/** Uploads the signed-in member's picture to media/avatars/<user id>/. */
 export const uploadAvatar = async (
   supabase: Client,
   userId: string,
   file: File
 ) => {
-  assertAllowed("avatars", file);
+  assertAllowed("media", file);
   const stored = await upload(
     supabase,
-    buckets.avatars.id,
-    objectPath(userId, file.name),
+    buckets.media.id,
+    anonymousObjectPath(`avatars/${userId}`, file.type),
     file
   );
-  return { ...stored, url: getAvatarUrl(supabase, stored.path) };
+  return { ...stored, url: getMediaUrl(supabase, stored.path) };
 };
 
-/** Public URL of an avatar. Avatars are readable by anyone with the URL. */
-export const getAvatarUrl = (supabase: Client, path: string) =>
-  supabase.storage.from(buckets.avatars.id).getPublicUrl(path).data.publicUrl;
+/** Public URL of a media object. */
+export const getMediaUrl = (supabase: Client, path: string) =>
+  supabase.storage.from(buckets.media.id).getPublicUrl(path).data.publicUrl;
 
 /**
- * A time-limited link to a private organization file. With `download`,
- * browsers save it under its original name (or the name you pass).
+ * A short-lived link to a private object. Only apps/api calls this, with
+ * the admin client, after checking the caller may see the file.
  */
-export const getOrganizationFileUrl = async (
-  supabase: Client,
+export const createSignedFileUrl = async (
+  admin: Client,
+  bucket: Exclude<BucketId, "media">,
   path: string,
   {
     download,
-    expiresIn = 60 * 60,
-  }: { download?: string | boolean; expiresIn?: number } = {}
+    expiresIn = 5 * 60,
+  }: { download?: string; expiresIn?: number } = {}
 ) => {
-  const { data, error } = await supabase.storage
-    .from(buckets.orgFiles.id)
-    .createSignedUrl(path, expiresIn, {
-      download: download === true ? fileNameOf(path) : download,
-    });
+  const { data, error } = await admin.storage
+    .from(bucket)
+    .createSignedUrl(path, expiresIn, { download });
 
   if (error || !data) {
     throw new StorageError(
@@ -109,42 +146,6 @@ export const getOrganizationFileUrl = async (
     );
   }
   return data.signedUrl;
-};
-
-/** Files in an organization's folder, newest first. */
-export const listOrganizationFiles = async (
-  supabase: Client,
-  organizationId: string,
-  { limit = 100, offset = 0 }: { limit?: number; offset?: number } = {}
-): Promise<(StoredFile & { createdAt: string | null })[]> => {
-  const { data, error } = await supabase.storage
-    .from(buckets.orgFiles.id)
-    .list(organizationId, {
-      limit,
-      offset,
-      sortBy: { column: "created_at", order: "desc" },
-    });
-
-  if (error) {
-    throw new StorageError("request_failed", error.message);
-  }
-
-  // Folders have no id; files carry their size and type in metadata.
-  return (data ?? []).flatMap((object) => {
-    if (object.id === null) {
-      return [];
-    }
-    const path = `${organizationId}/${object.name}`;
-    return [
-      {
-        createdAt: object.created_at,
-        name: fileNameOf(path),
-        path,
-        size: object.metadata?.size ?? 0,
-        type: object.metadata?.mimetype ?? "",
-      },
-    ];
-  });
 };
 
 /** Deletes files the user is allowed to delete. */
@@ -199,9 +200,9 @@ const listFolder = async (
 };
 
 /**
- * Deletes a whole folder, such as `<organization id>` in org-files or
- * `<user id>` in avatars. Used with the admin client when an organization or
- * an account is deleted; returns how many files were removed.
+ * Deletes a whole folder, such as `avatars/<user id>` in media. Used with
+ * the admin client when an account is deleted; returns how many files were
+ * removed.
  */
 export const removeFolder = async (
   supabase: Client,
@@ -220,6 +221,7 @@ export const removeFolder = async (
 
 export { type BucketId, type BucketKey, buckets } from "./buckets";
 export {
+  anonymousObjectPath,
   checkFile,
   decodeFileName,
   encodeFileName,

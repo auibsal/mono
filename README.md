@@ -1,82 +1,52 @@
-# {{PROJECT_NAME}}
+# AUIB Society of Arts and Letters — platform
 
-{{ORG_NAME}}'s production monorepo: a Next.js + Supabase SaaS platform built for
-Iraq-first products. It ships Arabic (RTL) and English (LTR) out of the box, takes
-local payments through Wayl, and can be packaged as native iOS and Android apps.
+The web platform of the AUIB Society of Arts and Letters (SAL, «جمعية الفنون
+والآداب»), the bilingual student society for literature, theatre and the arts
+at the American University of Iraq – Baghdad. *The paper and the pen.*
 
-> **Starting a new project from this template?** Run `bun install && bun run init`
-> first. It asks for your organization and project details, fills in every
-> placeholder token, sets up environment files and removes the modules you don't need.
+| App | What it is | Deployed at |
+| --- | --- | --- |
+| `apps/web` | Public site, `/en` and `/ar` | auibsal.org |
+| `apps/app` | **The Nexus**: member portal and role-gated admin (static export) | nexus.auibsal.org |
+| `apps/api` | Email, cron, calendar feeds, revalidation, exports, deletion | api.auibsal.org |
+| `apps/email` | React Email templates (bilingual) | used by `api` |
+| `apps/docs` | Developer handbook and admin guide | docs.auibsal.org |
+| `apps/storybook` | Design-system workbench | not public |
 
-## Stack
-
-| Concern | Choice |
-| --- | --- |
-| Monorepo | Turborepo + Bun workspaces |
-| Web apps | Next.js (App Router), React, Tailwind CSS v4, shadcn/ui |
-| Auth & database | Supabase (Postgres, Row Level Security, phone OTP) |
-| Payments | Provider-agnostic `@repo/payments` with Wayl (ZainCash, FIB, Qi Card, cards) |
-| Localization | Arabic + English, RTL-aware design system, `Asia/Baghdad` dates, IQD |
-| Mobile | Capacitor (iOS + Android) from the same `apps/app` codebase |
-| Analytics | GTM, GA4, Meta Pixel, TikTok Pixel, server-side conversions |
-| Hosting | Vercel (apps) + Cloudflare (DNS, Turnstile, R2) |
-| Quality | Biome via Ultracite, TypeScript strict, Vitest, GitHub Actions |
-
-## Structure
-
-```
-apps/
-  web/        Marketing site (port 3001)
-  app/        Main product — web + iOS/Android via Capacitor (port 3000)
-  api/        Webhooks, cron jobs and server-only endpoints (port 3002)
-  email/      React Email templates (port 3003)
-  docs/       Mintlify documentation (port 3004)
-  storybook/  Design-system workbench (port 6006)
-packages/
-  config/     Project identity, locales and regional settings (single source of truth)
-  auth/       Supabase Auth clients, phone OTP, session middleware
-  database/   Supabase schema, migrations, RLS tests and generated types
-  payments/   Payment-provider interface, Wayl provider, billing logic
-  design-system/, internationalization/, analytics/, security/, seo/, …
-scripts/      Template init and repository checks
-```
+Data lives in Supabase (Postgres with Row Level Security on every table,
+Auth, Storage). Hosting is Vercel.
 
 ## Getting started
 
-Prerequisites: Node.js 22+, [Bun](https://bun.sh), and Docker if you want to run
-Supabase locally.
+Prerequisites: Node.js 22+, [Bun](https://bun.sh), Docker (for the local
+Supabase stack).
 
 ```sh
 bun install
-bun run init      # first time only, when creating a project from the template
-bun run dev       # starts every app
+bun run db:start      # local Supabase: migrations + reference data
+bun run dev           # every app: app :3000, web :3001, api :3002
 ```
 
-Each app reads its environment from `.env.local` (created by `init` from the
-`.env.example` files). Without credentials the apps still start; integrations whose
-keys are missing are disabled.
+Copy each app's `.env.example` to `.env.local` and fill in the local keys from
+`bunx supabase status` (run in `packages/database`).
 
-## Common scripts
+## Checks
 
-| Script | What it does |
-| --- | --- |
-| `bun run dev` | Run all apps in development |
-| `bun run build` | Build all apps |
-| `bun run check` / `bun run fix` | Lint and format with Biome |
-| `bun run typecheck` | Type-check every workspace |
-| `bun run test` | Run all unit tests |
-| `bun run check:placeholders` | Fail if placeholder tokens remain after init |
-| `bun run check:rtl` / `bun run check:i18n` | Physical Tailwind utilities / UI text missing from the messages files |
-| `bun run db:start` / `db:reset` / `db:test` / `db:types` | Local Supabase, migrations, RLS tests, generated types |
-| `bun run build:native` / `bun run cap:sync` | Static export of `apps/app` / copy it into the iOS and Android projects |
+```sh
+bun run check         # Biome
+bun run typecheck
+bun run test
+bun run db:test       # pgTAP: RLS and RPC behaviour
+bun run check:placeholders && bun run check:rtl && bun run check:i18n
+```
 
 ## Further reading
 
-- `ARCHITECTURE_AND_INTEGRATIONS.md` — how the apps fit together, and step-by-step
-  setup for the template generator, Supabase migrations and RLS, the Capacitor apps,
-  tracking, Wayl payments and Vercel environment variables
-- `AGENTS.md` — conventions for humans and AI agents
+- `PROGRESS.md` — the build checklist, decisions, blocked items, content still
+  needed and Arabic awaiting native review
+- `AGENTS.md` — rules for humans and AI agents
+- `ARCHITECTURE_AND_INTEGRATIONS.md` — how the pieces fit together and how to
+  set up Supabase, Vercel, Resend and the domains
 - `.github/CONTRIBUTING.md` — workflow and local checks
-- `THIRD_PARTY_NOTICES.md` — licenses of included open-source code
 
-Repository: {{REPO_URL}} · Support: {{SUPPORT_EMAIL}}
+Repository: https://github.com/auibsal/mono · Contact: hello@auibsal.org

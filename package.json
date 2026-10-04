@@ -1,5 +1,5 @@
 {
-  "name": "monorepo-template",
+  "name": "sal",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,10 +11,8 @@
     "analyze": "turbo analyze",
     "boundaries": "turbo boundaries",
     "build": "turbo build",
-    "build:native": "turbo build:native --filter=app",
     "bump-deps": "bunx npm-check-updates --deep -u && bun install",
     "bump-ui": "bunx shadcn@latest add --all --overwrite -c packages/design-system",
-    "cap:sync": "turbo cap:sync --filter=app",
     "check": "ultracite check",
     "check:i18n": "bun scripts/check-i18n.ts",
     "check:placeholders": "bun scripts/check-placeholders.ts",
@@ -28,9 +26,7 @@
     "dev": "turbo dev",
     "fix": "ultracite fix",
     "gen:package": "turbo gen package",
-    "init": "bun scripts/init.ts",
     "test": "turbo test",
-    "test:template": "vitest run --dir scripts",
     "typecheck": "turbo typecheck"
   },
   "overrides": {

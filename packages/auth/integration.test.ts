@@ -1,89 +1,96 @@
 /**
  * Runs against a local Supabase stack. Export the local keys printed by
- * `supabase status -o env` (API_URL, PUBLISHABLE_KEY), then:
+ * `supabase status -o env` (API_URL, PUBLISHABLE_KEY, SECRET_KEY), then:
  *   SUPABASE_INTEGRATION=1 bun run --cwd packages/auth test
- * Uses the test OTP from supabase/config.toml (+964 770 000 0000 / 123456).
  */
 import type { Database } from "@repo/database";
 import { createClient } from "@supabase/supabase-js";
 import { beforeAll, describe, expect, test } from "vitest";
-import { listMemberships, pickActiveOrganization } from "./organizations";
-import { sendPhoneOtp, verifyPhoneOtp } from "./otp";
+import { signInWithPassword } from "./email";
 
 const url = process.env.API_URL ?? "http://127.0.0.1:54321";
 const publishableKey = process.env.PUBLISHABLE_KEY ?? "";
+// createClient needs a key even when the suite is skipped.
+const placeholderKey = "skipped";
+const secretKey = process.env.SECRET_KEY ?? "";
 
-describe.skipIf(!(process.env.SUPABASE_INTEGRATION && publishableKey))(
-  "auth (local Supabase)",
-  () => {
-    let supabase: ReturnType<typeof createClient<Database>>;
+describe.skipIf(
+  !(process.env.SUPABASE_INTEGRATION && publishableKey && secretKey)
+)("auth (local Supabase)", () => {
+  const admin = createClient<Database>(url, secretKey || placeholderKey, {
+    auth: { persistSession: false },
+  });
+  const password = "integration-test-1";
+  const stamp = Date.now();
 
-    beforeAll(() => {
-      supabase = createClient<Database>(url, publishableKey, {
-        auth: { persistSession: false },
-      });
-    });
-
-    test("signs in with a phone OTP and works inside an organization", async () => {
-      const sent = await sendPhoneOtp(supabase, "٠٧٧٠ ٠٠٠ ٠٠٠٠", {
-        fullName: "Test User",
-        locale: "en",
-      });
-      expect(sent).toMatchObject({ ok: true, phone: "+9647700000000" });
-
-      const verified = await verifyPhoneOtp(
-        supabase,
-        "+9647700000000",
-        "123456"
-      );
-      expect(verified.ok).toBe(true);
-      const userId = verified.ok ? verified.value.userId : "";
-
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("full_name, locale")
-        .eq("id", userId)
-        .single();
-      expect(profile?.locale).toBeDefined();
-
-      const slug = `org-${Date.now()}`;
-      const { data: organization, error } = await supabase.rpc(
-        "create_organization",
-        { org_name: "Integration Org", org_slug: slug }
-      );
+  beforeAll(async () => {
+    const results = await Promise.all(
+      [`aa${stamp}@auib.edu.iq`, `bb${stamp}@example.com`].map((email) =>
+        admin.auth.admin.createUser({
+          email,
+          email_confirm: true,
+          password,
+          user_metadata: { full_name_en: "Integration" },
+        })
+      )
+    );
+    for (const { error } of results) {
       expect(error).toBeNull();
+    }
+  });
 
-      const memberships = await listMemberships(supabase, userId);
-      expect(
-        pickActiveOrganization(memberships, organization?.id)
-      ).toMatchObject({
-        role: "owner",
-        slug,
-      });
+  test("an AUIB account is a member as soon as it signs in", async () => {
+    const supabase = createClient<Database>(
+      url,
+      publishableKey || placeholderKey,
+      {
+        auth: { persistSession: false },
+      }
+    );
+    const result = await signInWithPassword(
+      supabase,
+      `AA${stamp}@auib.edu.iq`,
+      password
+    );
+    expect(result.ok).toBe(true);
 
-      const { error: insertError } = await supabase.from("projects").insert({
-        created_by: userId,
-        name: "First",
-        organization_id: organization?.id ?? "",
-      });
-      expect(insertError).toBeNull();
+    const { data } = await supabase.schema("membership").rpc("my_status");
+    expect(data?.[0]).toMatchObject({ is_member: true, verified: true });
+  });
 
-      // Billing tables are read-only for users, even owners.
-      const { error: forged } = await supabase.from("payments").insert({
-        amount: 1000,
-        organization_id: organization?.id,
-        provider: "wayl",
-        reference_id: `forged-${slug}`,
-      });
-      expect(forged?.code).toBe("42501");
+  test("another domain waits in the verification queue", async () => {
+    const supabase = createClient<Database>(
+      url,
+      publishableKey || placeholderKey,
+      {
+        auth: { persistSession: false },
+      }
+    );
+    await signInWithPassword(supabase, `bb${stamp}@example.com`, password);
 
-      await supabase.auth.signOut();
-    });
+    const { data } = await supabase.schema("membership").rpc("my_status");
+    expect(data?.[0]).toMatchObject({ is_member: false, verified: false });
 
-    test("rejects a wrong code", async () => {
-      await sendPhoneOtp(supabase, "07700000000");
-      const result = await verifyPhoneOtp(supabase, "+9647700000000", "000000");
-      expect(result).toMatchObject({ code: "invalid_code", ok: false });
-    });
-  }
-);
+    const { data: requests } = await supabase
+      .schema("membership")
+      .from("verification_requests")
+      .select("status");
+    expect(requests).toEqual([{ status: "pending" }]);
+  });
+
+  test("a wrong password is reported as invalid credentials", async () => {
+    const supabase = createClient<Database>(
+      url,
+      publishableKey || placeholderKey,
+      {
+        auth: { persistSession: false },
+      }
+    );
+    const result = await signInWithPassword(
+      supabase,
+      `aa${stamp}@auib.edu.iq`,
+      "wrong-password-1"
+    );
+    expect(result).toEqual({ code: "invalid_credentials", ok: false });
+  });
+});

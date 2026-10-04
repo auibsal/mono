@@ -15,7 +15,7 @@ interface LocaleLayoutProperties {
   }>;
 }
 
-// Every page is prerendered once per language (also for the static export).
+// Every page is prerendered once per language (static export).
 export const generateStaticParams = () => locales.map((locale) => ({ locale }));
 export const dynamicParams = false;
 
@@ -28,12 +28,12 @@ const LocaleLayout = async ({ children, params }: LocaleLayoutProperties) => {
 
   setRequestLocale(locale);
   const dir = getDirection(locale);
-  const { app, auth, billing, common } = await getMessages();
+  const { auth, common, nexus } = await getMessages();
 
   return (
     <>
       <DocumentLanguage dir={dir} locale={locale} />
-      <NextIntlClientProvider messages={{ app, auth, billing, common }}>
+      <NextIntlClientProvider messages={{ auth, common, nexus }}>
         <DesignSystemProvider dir={dir} labels={common.ui}>
           <AppProviders>{children}</AppProviders>
         </DesignSystemProvider>

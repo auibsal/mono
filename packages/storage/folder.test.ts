@@ -38,7 +38,7 @@ test("removeFolder deletes every file, including subfolders", async () => {
     "org/invoices": [{ id: "2", name: "2026.pdf" }],
   });
 
-  await expect(removeFolder(client, "org-files", "org")).resolves.toBe(2);
+  await expect(removeFolder(client, "library", "org")).resolves.toBe(2);
   expect(removed.flat().sort()).toEqual(["org/a.pdf", "org/invoices/2026.pdf"]);
 });
 
@@ -49,7 +49,7 @@ test("removeFolder pages through large folders", async () => {
   }));
   const { bucket, client, removed } = fakeStorage({ user: files });
 
-  await expect(removeFolder(client, "avatars", "user")).resolves.toBe(1500);
+  await expect(removeFolder(client, "media", "user")).resolves.toBe(1500);
   expect(bucket.list).toHaveBeenCalledTimes(2);
   expect(removed.map((batch) => batch.length)).toEqual([1000, 500]);
 });
@@ -57,6 +57,6 @@ test("removeFolder pages through large folders", async () => {
 test("removeFolder does nothing for an empty folder", async () => {
   const { bucket, client } = fakeStorage({});
 
-  await expect(removeFolder(client, "avatars", "nobody")).resolves.toBe(0);
+  await expect(removeFolder(client, "media", "nobody")).resolves.toBe(0);
   expect(bucket.remove).not.toHaveBeenCalled();
 });

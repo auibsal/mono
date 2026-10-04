@@ -8,16 +8,19 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { FullPageSpinner } from "@/components/states";
+import { safeNextPath, stripLocale } from "@/lib/navigation";
 
 /**
- * Web landing page for OAuth and magic links (PKCE): exchanges the code for
- * a session. The native apps handle the same link in the native bridge.
+ * Landing page for confirmation, magic and recovery links (PKCE): exchanges
+ * the code for a session, then returns the member to where they started.
  */
 export const AuthCallback = () => {
   const t = useTranslations("auth.callback");
   const { supabase } = useAuth();
   const router = useRouter();
-  const code = useSearchParams().get("code");
+  const params = useSearchParams();
+  const code = params.get("code");
+  const next = safeNextPath(params.get("next"));
   const [failed, setFailed] = useState(false);
   // A code can be exchanged once; keep the promise so a second effect run
   // (React strict mode) waits for the same exchange.
@@ -34,17 +37,20 @@ export const AuthCallback = () => {
       if (error) {
         setFailed(true);
       } else {
-        router.replace("/");
+        router.replace(next ? stripLocale(next) : "/");
       }
     });
-  }, [code, router, supabase]);
+  }, [code, next, router, supabase]);
 
   if (!failed) {
     return <FullPageSpinner />;
   }
 
   return (
-    <main className="flex min-h-dvh flex-col items-center justify-center gap-4 p-6 text-center">
+    <main
+      className="flex min-h-dvh flex-col items-center justify-center gap-4 p-6 text-center"
+      id="main"
+    >
       <p role="alert">{t("failed")}</p>
       <Button asChild variant="outline">
         <Link href="/sign-in">{t("retry")}</Link>

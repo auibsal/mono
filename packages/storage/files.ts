@@ -76,6 +76,23 @@ export const decodeFileName = (encoded: string) => {
 export const objectPath = (prefix: string, fileName: string) =>
   `${prefix}/${crypto.randomUUID()}_${encodeFileName(fileName)}`;
 
+const EXTENSIONS: Record<string, string> = {
+  "application/pdf": "pdf",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+    "docx",
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/svg+xml": "svg",
+  "image/webp": "webp",
+};
+
+/**
+ * A key that carries nothing about the original file: `<prefix>/<random>.<ext>`.
+ * Used for submissions and receipts, where a file name could identify a person.
+ */
+export const anonymousObjectPath = (prefix: string, mimeType: string) =>
+  `${prefix}/${crypto.randomUUID()}.${EXTENSIONS[mimeType] ?? "bin"}`;
+
 /** The original file name of a key made by `objectPath`. */
 export const fileNameOf = (path: string) => {
   const segment = path.slice(path.lastIndexOf("/") + 1);

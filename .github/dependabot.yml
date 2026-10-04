@@ -25,8 +25,6 @@ updates:
         patterns: ["react", "react-dom", "@types/react", "@types/react-dom"]
       supabase:
         patterns: ["@supabase/*", "supabase"]
-      capacitor:
-        patterns: ["@capacitor/*", "@capacitor-community/*"]
       storybook:
         patterns: ["storybook", "@storybook/*", "@chromatic-com/*", "chromatic"]
       sentry:

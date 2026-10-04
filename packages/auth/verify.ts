@@ -8,7 +8,7 @@ const BEARER = /^Bearer\s+(.+)$/i;
 
 /**
  * Authenticates an API request by its `Authorization: Bearer <access token>`
- * header — how the Capacitor apps and other origins call apps/api, where
+ * header — how the Nexus (a static site on another origin) calls apps/api, where
  * cookies are not shared. Returns the verified claims and a client that acts
  * as that user, so Row Level Security applies to its queries.
  */

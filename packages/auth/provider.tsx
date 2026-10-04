@@ -22,7 +22,7 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 interface AuthProviderProps {
   readonly children: ReactNode;
-  /** Defaults to the cookie-based browser client; pass the native client in Capacitor. */
+  /** Defaults to the cookie-based browser client. */
   readonly client?: SupabaseClient<Database>;
   /** User resolved on the server, to avoid a loading flash. */
   readonly initialUser?: User | null;

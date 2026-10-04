@@ -14,9 +14,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@repo/design-system/components/ui/dropdown-menu";
-import { LogOutIcon, UserIcon } from "lucide-react";
+import { LogOutIcon } from "lucide-react";
 import { type AuthMessages, defaultAuthMessages } from "../messages";
-import { formatPhone } from "../phone";
 import { useAuth } from "../provider";
 
 const WHITESPACE = /\s+/;
@@ -50,9 +49,9 @@ export const UserMenu = ({
   }
 
   const name: string | undefined =
-    displayName || user.user_metadata?.full_name || undefined;
-  const contact = user.phone ? formatPhone(user.phone) : (user.email ?? "");
-  const avatarUrl: string | undefined = user.user_metadata?.avatar_url;
+    displayName || user.user_metadata?.full_name_en || undefined;
+  const contact = user.email ?? "";
+  const avatarUrl: string | undefined = undefined;
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -65,14 +64,12 @@ export const UserMenu = ({
         <Button className="h-auto gap-2 px-2 py-1.5" variant="ghost">
           <Avatar className="size-7">
             {avatarUrl ? <AvatarImage alt="" src={avatarUrl} /> : null}
-            <AvatarFallback>
-              {name ? getInitials(name) : <UserIcon className="size-4" />}
-            </AvatarFallback>
+            <AvatarFallback>{getInitials(name ?? contact)}</AvatarFallback>
           </Avatar>
           {name ? (
             <span className="truncate text-start text-sm">{name}</span>
           ) : (
-            // Phone numbers read left-to-right in Arabic too.
+            // Email addresses read left-to-right in Arabic too.
             <span className="truncate text-sm" dir="ltr">
               {contact}
             </span>

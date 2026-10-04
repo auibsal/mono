@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  anonymousObjectPath,
   checkFile,
   decodeFileName,
   encodeFileName,
@@ -47,18 +48,27 @@ describe("file names in keys", () => {
 
 describe("checkFile", () => {
   it("applies the bucket limits", () => {
-    expect(checkFile("avatars", { size: 1000, type: "image/png" })).toBeNull();
-    expect(checkFile("avatars", { size: 1000, type: "image/gif" })).toBe(
+    expect(
+      checkFile("submissions", { size: 1000, type: "application/pdf" })
+    ).toBeNull();
+    expect(checkFile("submissions", { size: 1000, type: "image/gif" })).toBe(
       "type_not_allowed"
     );
     expect(
-      checkFile("avatars", { size: 3 * 1024 * 1024, type: "image/png" })
+      checkFile("receipts", { size: 11 * 1024 * 1024, type: "image/png" })
     ).toBe("too_large");
-    expect(checkFile("orgFiles", { size: 0, type: "text/plain" })).toBe(
-      "empty"
-    );
+    expect(checkFile("library", { size: 0, type: "text/plain" })).toBe("empty");
     expect(
-      checkFile("orgFiles", { size: 10, type: "application/x-anything" })
+      checkFile("library", { size: 10, type: "application/x-anything" })
     ).toBeNull();
+  });
+});
+
+const RANDOM_PDF_PATH = /^abc\/[0-9a-f-]{36}\.pdf$/;
+
+describe("anonymous keys", () => {
+  it("carry nothing about the original file name", () => {
+    const path = anonymousObjectPath("abc", "application/pdf");
+    expect(path).toMatch(RANDOM_PDF_PATH);
   });
 });

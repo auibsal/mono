@@ -1,8 +1,8 @@
-import { Dashboard } from "@/components/screens/dashboard";
+import { MemberHome } from "@/components/home/member-home";
 import { titleFrom } from "@/lib/metadata";
 
-export const generateMetadata = titleFrom((t) => t("app.dashboard.title"));
+export const generateMetadata = titleFrom((t) => t("nexus.nav.home"));
 
-const DashboardPage = () => <Dashboard />;
+const HomePage = () => <MemberHome />;
 
-export default DashboardPage;
+export default HomePage;

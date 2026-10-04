@@ -1,127 +1,166 @@
 /**
- * Runs against a local Supabase stack. Export the local keys printed by
- * `supabase status -o env` (API_URL, PUBLISHABLE_KEY), then:
+ * Runs against a local Supabase stack (API_URL, PUBLISHABLE_KEY, SECRET_KEY
+ * from `supabase status -o env`):
  *   SUPABASE_INTEGRATION=1 bun run --cwd packages/storage test
- * Signs in with its own test OTP number from supabase/config.toml.
+ *
+ * Acceptance: no submission or receipt file is reachable without a valid
+ * signed URL.
  */
 import type { Database } from "@repo/database";
 import { createClient } from "@supabase/supabase-js";
 import { beforeAll, describe, expect, test } from "vitest";
 import {
   buckets,
-  getOrganizationFileUrl,
-  listOrganizationFiles,
-  removeFiles,
+  createSignedFileUrl,
   StorageError,
-  uploadAvatar,
-  uploadOrganizationFile,
+  uploadReceipt,
+  uploadSubmissionFile,
 } from "./index";
 
 const url = process.env.API_URL ?? "http://127.0.0.1:54321";
 const publishableKey = process.env.PUBLISHABLE_KEY ?? "";
+// createClient needs a key even when the suite is skipped.
+const placeholderKey = "skipped";
+const secretKey = process.env.SECRET_KEY ?? "";
 
-describe.skipIf(!(process.env.SUPABASE_INTEGRATION && publishableKey))(
-  "storage (local Supabase)",
-  () => {
-    const client = () =>
-      createClient<Database>(url, publishableKey, {
-        auth: { persistSession: false },
-      });
-    let supabase: ReturnType<typeof client>;
-    let userId: string;
-    let organizationId: string;
-
-    beforeAll(async () => {
-      supabase = client();
-      await supabase.auth.signInWithOtp({ phone: "+9647700000901" });
-      const { data } = await supabase.auth.verifyOtp({
-        phone: "+9647700000901",
-        token: "123456",
-        type: "sms",
-      });
-      userId = data.user?.id ?? "";
-
-      const { data: organization } = await supabase.rpc("create_organization", {
-        org_name: "Storage Org",
-        org_slug: `storage-${Date.now()}`,
-      });
-      organizationId = organization?.id ?? "";
+describe.skipIf(
+  !(process.env.SUPABASE_INTEGRATION && publishableKey && secretKey)
+)("storage (local Supabase)", () => {
+  const stamp = Date.now();
+  const password = "integration-test-1";
+  const admin = createClient<Database>(url, secretKey || placeholderKey, {
+    auth: { persistSession: false },
+  });
+  const anon = createClient<Database>(url, publishableKey || placeholderKey, {
+    auth: { persistSession: false },
+  });
+  const signIn = async (email: string) => {
+    const client = createClient<Database>(
+      url,
+      publishableKey || placeholderKey,
+      { auth: { persistSession: false } }
+    );
+    await client.auth.signInWithPassword({ email, password });
+    return client;
+  };
+  const pdf = () =>
+    new File(["%PDF-1.4 test"], "My Name - Poem.pdf", {
+      type: "application/pdf",
     });
+  let submissionId = "";
+  let filePath = "";
 
-    test("members upload, list and download organization files", async () => {
-      const content = "سلام";
-      const file = new File([content], "تقرير الربع الأول.txt", {
-        type: "text/plain",
-      });
+  beforeAll(async () => {
+    const [authorId = ""] = await Promise.all(
+      ["author", "other"].map(async (name) => {
+        const { data } = await admin.auth.admin.createUser({
+          email: `${name}${stamp}@auib.edu.iq`,
+          email_confirm: true,
+          password,
+        });
+        return data.user?.id ?? "";
+      })
+    );
+    await admin
+      .schema("membership")
+      .from("pledges")
+      .insert([
+        {
+          pledge_type: "human_authorship",
+          user_id: authorId,
+          version: "1",
+        },
+        { pledge_type: "member", user_id: authorId, version: "1" },
+      ]);
+    const issue = await admin
+      .schema("journal")
+      .from("issues")
+      .insert({
+        number: (stamp % 900) + 1,
+        slug: `st-${stamp}`,
+        title_ar: "ت",
+        title_en: "ST",
+        volume: 98,
+      })
+      .select("id")
+      .single();
+    const call = await admin
+      .schema("journal")
+      .from("calls")
+      .insert({
+        closes_at: new Date(Date.now() + 86_400_000).toISOString(),
+        is_published: true,
+        issue_id: issue.data?.id ?? "",
+        opens_at: new Date(Date.now() - 86_400_000).toISOString(),
+        title_ar: "ت",
+        title_en: "ST",
+      })
+      .select("id")
+      .single();
+    const author = await signIn(`author${stamp}@auib.edu.iq`);
+    const submission = await author
+      .schema("journal")
+      .from("submissions")
+      .insert({
+        call_id: call.data?.id ?? "",
+        category: "poetry",
+        human_authorship_confirmed: true,
+        language: "en",
+        title: "Upload test",
+      })
+      .select("id")
+      .single();
+    submissionId = submission.data?.id ?? "";
+  });
 
-      const stored = await uploadOrganizationFile(
-        supabase,
-        organizationId,
-        file
-      );
-      expect(stored.name).toBe("تقرير الربع الأول.txt");
-      expect(stored.path.startsWith(`${organizationId}/`)).toBe(true);
+  test("the author uploads under a random name that hides the original", async () => {
+    const author = await signIn(`author${stamp}@auib.edu.iq`);
+    const stored = await uploadSubmissionFile(author, submissionId, pdf());
+    filePath = stored.path;
+    expect(filePath).toMatch(
+      new RegExp(`^${submissionId}/[0-9a-f-]{36}\\.pdf$`)
+    );
+    expect(filePath).not.toContain("Name");
+  });
 
-      const files = await listOrganizationFiles(supabase, organizationId);
-      expect(files).toContainEqual(
-        expect.objectContaining({
-          name: "تقرير الربع الأول.txt",
-          path: stored.path,
-          size: new TextEncoder().encode(content).length,
-        })
-      );
+  test("nobody downloads a submission without a signed URL", async () => {
+    const author = await signIn(`author${stamp}@auib.edu.iq`);
+    const other = await signIn(`other${stamp}@auib.edu.iq`);
+    const results = await Promise.all(
+      [anon, other, author].map((client) =>
+        client.storage.from(buckets.submissions.id).download(filePath)
+      )
+    );
+    for (const { data, error } of results) {
+      expect(data).toBeNull();
+      expect(error).not.toBeNull();
+    }
+    const {
+      data: { publicUrl },
+    } = admin.storage.from(buckets.submissions.id).getPublicUrl(filePath);
+    expect((await fetch(publicUrl)).ok).toBe(false);
+  });
 
-      const signedUrl = await getOrganizationFileUrl(supabase, stored.path, {
-        download: true,
-        expiresIn: 60,
-      });
-      const response = await fetch(signedUrl);
-      expect(await response.text()).toBe(content);
-      expect(response.headers.get("content-disposition")).toContain(
-        encodeURIComponent("تقرير")
-      );
-
-      // Signed-out visitors can't read private files.
-      const { data: anonymous } = await client()
-        .storage.from(buckets.orgFiles.id)
-        .download(stored.path);
-      expect(anonymous).toBeNull();
-
-      await removeFiles(supabase, buckets.orgFiles.id, [stored.path]);
-      expect(await listOrganizationFiles(supabase, organizationId)).toEqual([]);
+  test("a signed URL from the API works, briefly", async () => {
+    const signed = await createSignedFileUrl(admin, "submissions", filePath, {
+      expiresIn: 60,
     });
+    expect((await fetch(signed)).ok).toBe(true);
+  });
 
-    test("non-members can't write into another organization's folder", async () => {
-      const file = new File(["x"], "x.txt", { type: "text/plain" });
-      await expect(
-        uploadOrganizationFile(supabase, crypto.randomUUID(), file)
-      ).rejects.toBeInstanceOf(StorageError);
-    });
+  test("other members cannot write into someone else's submission", async () => {
+    const other = await signIn(`other${stamp}@auib.edu.iq`);
+    await expect(
+      uploadSubmissionFile(other, submissionId, pdf())
+    ).rejects.toBeInstanceOf(StorageError);
+  });
 
-    test("avatars are public and limited to images", async () => {
-      // A 1×1 PNG.
-      const png = Uint8Array.from(
-        atob(
-          "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
-        ),
-        (char) => char.charCodeAt(0)
-      );
-      const avatar = await uploadAvatar(
-        supabase,
-        userId,
-        new File([png], "me.png", { type: "image/png" })
-      );
-      expect((await fetch(avatar.url)).status).toBe(200);
-
-      await expect(
-        uploadAvatar(
-          supabase,
-          userId,
-          new File(["GIF89a"], "me.gif", { type: "image/gif" })
-        )
-      ).rejects.toMatchObject({ code: "type_not_allowed" });
-
-      await removeFiles(supabase, buckets.avatars.id, [avatar.path]);
-    });
-  }
-);
+  test("receipts are closed to members and visitors", async () => {
+    const other = await signIn(`other${stamp}@auib.edu.iq`);
+    await expect(
+      uploadReceipt(other, "00000000-0000-4000-8000-000000000000", pdf())
+    ).rejects.toBeInstanceOf(StorageError);
+    const { data } = await anon.storage.from(buckets.receipts.id).list("");
+    expect(data ?? []).toEqual([]);
+  });
+});

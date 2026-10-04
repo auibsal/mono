@@ -1,0 +1,65 @@
+{
+  "$description": "SAL v4 design tokens. INTERIM: transcribed from the platform brief (§4) because brand/tokens.json is not in the repo yet. Replace this file with brand/tokens.json and re-run `bun run --cwd packages/design-system tokens`. Never add a colour.",
+  "palette": {
+    "crimson": "#9c213e",
+    "crimson-700": "#7e1a32",
+    "crimson-100": "#ebcbd3",
+    "crimson-50": "#f7ecef",
+    "ink": "#273236",
+    "ink-70": "#4a5559",
+    "ink-50": "#6e777a",
+    "white": "#ffffff",
+    "paper": "#faf7f5",
+    "rule": "#e3dedf"
+  },
+  "roles": {
+    "light": {
+      "surface": "white",
+      "surface-tint": "paper",
+      "text": "ink",
+      "text-secondary": "ink-70",
+      "text-meta": "ink-50",
+      "title": "crimson",
+      "accent-line": "crimson",
+      "rule": "rule",
+      "band": "crimson",
+      "on-band": "white"
+    },
+    "dark": {
+      "surface": "ink",
+      "surface-tint": "ink-70",
+      "text": "white",
+      "text-secondary": "rule",
+      "text-meta": "crimson-100",
+      "title": "white",
+      "accent-line": "crimson-100",
+      "rule": "ink-50",
+      "band": "white",
+      "on-band": "ink"
+    }
+  },
+  "radius": {
+    "card": "8px"
+  },
+  "contrast": {
+    "$description": "Text pairs that must reach WCAG AA (4.5:1). ink-50 only for captions on white.",
+    "light": [
+      ["text", "surface"],
+      ["text", "surface-tint"],
+      ["text-secondary", "surface"],
+      ["text-secondary", "surface-tint"],
+      ["text-meta", "surface"],
+      ["title", "surface"],
+      ["title", "surface-tint"],
+      ["on-band", "band"]
+    ],
+    "dark": [
+      ["text", "surface"],
+      ["text-secondary", "surface"],
+      ["text-meta", "surface"],
+      ["title", "surface"],
+      ["on-band", "band"],
+      ["text", "surface-tint"]
+    ]
+  }
+}
