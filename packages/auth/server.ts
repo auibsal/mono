@@ -5,12 +5,8 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
+import { authCookieOptions } from "./cookies";
 import { keys } from "./keys";
-import {
-  ACTIVE_ORGANIZATION_COOKIE,
-  listMemberships,
-  pickActiveOrganization,
-} from "./organizations";
 
 /** Session-bound client for Server Components, Route Handlers and Actions. */
 export const createClient = async () => {
@@ -28,6 +24,7 @@ export const createClient = async () => {
     NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
     {
+      cookieOptions: authCookieOptions(),
       cookies: {
         getAll() {
           return cookieStore.getAll();
@@ -56,30 +53,16 @@ export const currentUser = cache(async () => {
 });
 
 /**
- * The caller's identity and active organization, resolved from memberships
- * (never from user-editable metadata). Cached per request.
+ * The caller's user id from the verified JWT (null if signed out). Roles and
+ * permissions come from the database (access.has_permission), never from
+ * the token's metadata. Cached per request.
  */
 export const auth = cache(async () => {
   const supabase = await createClient();
   // Verifies the JWT locally with the project's signing keys when available.
   const { data } = await supabase.auth.getClaims();
-  const userId = data?.claims.sub ?? null;
 
-  if (!userId) {
-    return { orgId: null, role: null, userId: null };
-  }
-
-  const cookieStore = await cookies();
-  const active = pickActiveOrganization(
-    await listMemberships(supabase, userId),
-    cookieStore.get(ACTIVE_ORGANIZATION_COOKIE)?.value
-  );
-
-  return {
-    orgId: active?.id ?? null,
-    role: active?.role ?? null,
-    userId,
-  };
+  return { userId: data?.claims.sub ?? null };
 });
 
 /** Redirects to the sign-in page when nobody is signed in. */

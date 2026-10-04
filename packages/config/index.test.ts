@@ -14,13 +14,19 @@ describe("project config", () => {
     expect(project.locale.enabled).toContain(project.locale.default);
   });
 
+  test("serves SAL from auibsal.org with English and Arabic", () => {
+    expect(project.domain).toBe("auibsal.org");
+    expect(project.hosts.app).toBe("https://nexus.auibsal.org");
+    expect([...project.locale.enabled].sort()).toEqual(["ar", "en"]);
+  });
+
   test("defaults to Iraq regional settings", () => {
     expect(project.region.timeZone).toBe("Asia/Baghdad");
     expect(project.region.currency).toBe("IQD");
   });
 
   test("functional fields are undefined or valid, never a raw token", () => {
-    for (const value of [project.url, project.supportEmail, project.bundleId]) {
+    for (const value of [project.url, project.supportEmail, project.repoUrl]) {
       if (value !== undefined) {
         expect(isPlaceholder(value)).toBe(false);
       }

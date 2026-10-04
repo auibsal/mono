@@ -141,3 +141,41 @@ export const formatCurrency = (
  */
 export const inProjectTimeZone = (value: DateInput) =>
   new TZDate(toDate(value), TIME_ZONE);
+
+// ── SAL copy rules (brand book) ─────────────────────────────────────────────
+// Dates as "Tuesday, October 13", times as "6:00 PM", money as "50,000 IQD".
+// Latin digits and Baghdad time in both languages.
+
+const brandIntl = (locale: Locale) =>
+  locale === "ar" ? intlLocale(locale) : "en-US-u-ca-gregory-nu-latn";
+
+/** "Tuesday, October 13" / «الثلاثاء، ١٣ تشرين الأول» in Latin digits. */
+export const formatLongDate = (
+  value: DateInput,
+  locale: Locale = defaultLocale,
+  withYear = false
+) =>
+  new Intl.DateTimeFormat(brandIntl(locale), {
+    day: "numeric",
+    month: "long",
+    timeZone: TIME_ZONE,
+    weekday: "long",
+    ...(withYear ? { year: "numeric" } : {}),
+  }).format(toDate(value));
+
+/** "6:00 PM" (12-hour clock in both languages). */
+export const formatClock = (value: DateInput, locale: Locale = defaultLocale) =>
+  new Intl.DateTimeFormat(brandIntl(locale), {
+    hour: "numeric",
+    hour12: true,
+    minute: "2-digit",
+    timeZone: TIME_ZONE,
+  }).format(toDate(value));
+
+/** "50,000 IQD" / «50,000 دينار». */
+export const formatIqd = (amount: number, locale: Locale = defaultLocale) => {
+  const digits = new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: 0,
+  }).format(amount);
+  return locale === "ar" ? `${digits} دينار` : `${digits} IQD`;
+};

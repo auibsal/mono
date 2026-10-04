@@ -4,13 +4,6 @@
   "scripts": {
     "analyze": "ANALYZE=true npm run build",
     "build": "next build",
-    "build:native": "BUILD_TARGET=native next build",
-    "cap:add": "cap add ios && cap add android",
-    "cap:open:android": "cap open android",
-    "cap:open:ios": "cap open ios",
-    "cap:run:android": "cap run android",
-    "cap:run:ios": "cap run ios",
-    "cap:sync": "cap sync",
     "clean": "git clean -xdf .cache .turbo dist node_modules out",
     "dev": "next dev -p 3000",
     "start": "next start",
@@ -18,12 +11,6 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@aparajita/capacitor-secure-storage": "^8.0.1",
-    "@capacitor/android": "^8.5.2",
-    "@capacitor/app": "^8.1.2",
-    "@capacitor/browser": "^8.0.5",
-    "@capacitor/core": "^8.5.2",
-    "@capacitor/ios": "^8.5.2",
     "@repo/analytics": "workspace:*",
     "@repo/auth": "workspace:*",
     "@repo/config": "workspace:*",
@@ -33,7 +20,6 @@
     "@repo/next-config": "workspace:*",
     "@repo/notifications": "workspace:*",
     "@repo/observability": "workspace:*",
-    "@repo/payments": "workspace:*",
     "@repo/security": "workspace:*",
     "@sentry/nextjs": "^10.42.0",
     "@supabase/supabase-js": "^2.115.0",
@@ -50,7 +36,6 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@capacitor/cli": "^8.5.2",
     "@repo/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "^4.2.1",
     "@testing-library/dom": "^10.4.1",

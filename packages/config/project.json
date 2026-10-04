@@ -1,15 +1,32 @@
 {
   "orgName": "AUIB Society of Arts and Letters",
+  "orgNameAr": "جمعية الفنون والآداب",
   "orgSlug": "auibsal",
   "name": "AUIB Society of Arts and Letters",
+  "nameAr": "جمعية الفنون والآداب",
+  "shortName": "SAL",
+  "motto": {
+    "en": "The paper and the pen",
+    "ar": "والقرطاسُ والقلم"
+  },
   "slug": "sal",
+  "domain": "auibsal.org",
   "url": "https://auibsal.org",
+  "hosts": {
+    "web": "https://auibsal.org",
+    "app": "https://nexus.auibsal.org",
+    "api": "https://api.auibsal.org",
+    "docs": "https://docs.auibsal.org"
+  },
   "supportEmail": "hello@auibsal.org",
   "repoUrl": "https://github.com/auibsal/mono",
-  "bundleId": "org.auibsal.nexus",
+  "journal": {
+    "name_en": "Waraq",
+    "name_ar": "ورق"
+  },
   "locale": {
     "default": "en",
-    "enabled": ["ar", "en"]
+    "enabled": ["en", "ar"]
   },
   "region": {
     "country": "IQ",
@@ -17,8 +34,5 @@
     "currency": "IQD",
     "numberingSystem": "latn",
     "weekStartsOn": 6
-  },
-  "commerce": {
-    "allowNativeCheckout": false
   }
 }

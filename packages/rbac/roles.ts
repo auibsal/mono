@@ -1,0 +1,289 @@
+import type { Permission, ScopeType } from "./permissions";
+
+export interface RoleDefinition {
+  /** Scope this role is normally assigned in. */
+  defaultScope: ScopeType;
+  isCouncil: boolean;
+  nameAr: string;
+  nameEn: string;
+  permissions: readonly Permission[];
+  /** Largest spend (IQD) the holder may lead with the Treasurer. */
+  spendingLimitIqd: number | null;
+}
+
+/** Role bundles, mirrored from the reference-data migration. */
+export const roles = {
+  president: {
+    defaultScope: "global",
+    isCouncil: true,
+    nameAr: "الرئيس",
+    nameEn: "President",
+    permissions: [
+      "members.verify",
+      "members.manage",
+      "roles.assign",
+      "events.manage",
+      "events.checkin",
+      "content.manage",
+      "journal.manage",
+      "charity.manage",
+      "programmes.manage",
+      "governance.manage",
+      "library.read",
+      "library.council",
+      "audit.read",
+      "settings.manage",
+      "spending.request",
+    ],
+    spendingLimitIqd: 250_000,
+  },
+  vice_president: {
+    defaultScope: "global",
+    isCouncil: true,
+    nameAr: "نائب الرئيس",
+    nameEn: "Vice President",
+    permissions: [
+      "members.verify",
+      "members.manage",
+      "events.manage",
+      "events.checkin",
+      "content.manage",
+      "programmes.manage",
+      "governance.manage",
+      "library.read",
+      "library.council",
+      "spending.request",
+    ],
+    spendingLimitIqd: null,
+  },
+  general_secretary: {
+    defaultScope: "global",
+    isCouncil: true,
+    nameAr: "الأمين العام",
+    nameEn: "General Secretary",
+    permissions: [
+      "members.verify",
+      "members.manage",
+      "content.manage",
+      "governance.manage",
+      "governance.minutes.write",
+      "library.read",
+      "library.council",
+      "audit.read",
+      "spending.request",
+    ],
+    spendingLimitIqd: null,
+  },
+  treasurer: {
+    defaultScope: "global",
+    isCouncil: true,
+    nameAr: "أمين الصندوق",
+    nameEn: "Treasurer",
+    permissions: [
+      "charity.manage",
+      "charity.ledger.write",
+      "charity.ledger.signoff",
+      "spending.request",
+      "spending.countersign",
+      "library.read",
+      "library.council",
+      "audit.read",
+    ],
+    spendingLimitIqd: null,
+  },
+  director: {
+    defaultScope: "global",
+    isCouncil: true,
+    nameAr: "مدير",
+    nameEn: "Director",
+    permissions: [
+      "events.checkin",
+      "library.read",
+      "library.council",
+      "spending.request",
+    ],
+    spendingLimitIqd: 50_000,
+  },
+  faculty_advisor: {
+    defaultScope: "global",
+    isCouncil: false,
+    nameAr: "المستشار من الهيئة التدريسية",
+    nameEn: "Faculty Advisor",
+    permissions: ["library.read", "library.council", "audit.read"],
+    spendingLimitIqd: null,
+  },
+  elections_committee: {
+    defaultScope: "global",
+    isCouncil: false,
+    nameAr: "لجنة الانتخابات",
+    nameEn: "Elections Committee",
+    permissions: ["elections.manage"],
+    spendingLimitIqd: null,
+  },
+  eic: {
+    defaultScope: "issue",
+    isCouncil: false,
+    nameAr: "رئيس التحرير",
+    nameEn: "Editor-in-Chief",
+    permissions: [
+      "journal.manage",
+      "journal.decide",
+      "journal.publish",
+      "library.read",
+    ],
+    spendingLimitIqd: null,
+  },
+  managing_editor: {
+    defaultScope: "issue",
+    isCouncil: false,
+    nameAr: "مدير التحرير",
+    nameEn: "Managing Editor",
+    permissions: [
+      "journal.manage",
+      "journal.decide",
+      "journal.publish",
+      "library.read",
+    ],
+    spendingLimitIqd: null,
+  },
+  submissions_manager: {
+    defaultScope: "issue",
+    isCouncil: false,
+    nameAr: "مسؤول المشاركات",
+    nameEn: "Submissions Manager",
+    permissions: ["journal.identity.view", "library.read"],
+    spendingLimitIqd: null,
+  },
+  section_editor: {
+    defaultScope: "issue",
+    isCouncil: false,
+    nameAr: "محرر القسم",
+    nameEn: "Section Editor",
+    permissions: ["journal.manage", "library.read"],
+    spendingLimitIqd: null,
+  },
+  arabic_editor: {
+    defaultScope: "issue",
+    isCouncil: false,
+    nameAr: "محرر القسم العربي",
+    nameEn: "Arabic Editor",
+    permissions: ["journal.manage", "library.read"],
+    spendingLimitIqd: null,
+  },
+  reader: {
+    defaultScope: "issue",
+    isCouncil: false,
+    nameAr: "قارئ",
+    nameEn: "Reader",
+    permissions: ["journal.review", "library.read"],
+    spendingLimitIqd: null,
+  },
+  copy_editor: {
+    defaultScope: "issue",
+    isCouncil: false,
+    nameAr: "المدقق اللغوي",
+    nameEn: "Copy Editor",
+    permissions: ["journal.publish", "library.read"],
+    spendingLimitIqd: null,
+  },
+  digital_editor: {
+    defaultScope: "issue",
+    isCouncil: false,
+    nameAr: "المحرر الرقمي",
+    nameEn: "Digital Editor",
+    permissions: ["journal.publish", "content.manage", "library.read"],
+    spendingLimitIqd: null,
+  },
+  art_director: {
+    defaultScope: "issue",
+    isCouncil: false,
+    nameAr: "المدير الفني",
+    nameEn: "Art Director",
+    permissions: ["journal.publish", "library.read"],
+    spendingLimitIqd: null,
+  },
+  layout_designer: {
+    defaultScope: "issue",
+    isCouncil: false,
+    nameAr: "مصمم الإخراج",
+    nameEn: "Layout Designer",
+    permissions: ["journal.publish", "library.read"],
+    spendingLimitIqd: null,
+  },
+  communications_lead: {
+    defaultScope: "issue",
+    isCouncil: false,
+    nameAr: "مسؤول التواصل",
+    nameEn: "Communications Lead",
+    permissions: ["content.manage", "library.read"],
+    spendingLimitIqd: null,
+  },
+  events_lead: {
+    defaultScope: "issue",
+    isCouncil: false,
+    nameAr: "مسؤول الفعاليات",
+    nameEn: "Events Lead",
+    permissions: ["events.manage", "events.checkin", "library.read"],
+    spendingLimitIqd: null,
+  },
+  advisory_board: {
+    defaultScope: "issue",
+    isCouncil: false,
+    nameAr: "الهيئة الاستشارية",
+    nameEn: "Advisory Board",
+    permissions: ["journal.advise"],
+    spendingLimitIqd: null,
+  },
+  programme_lead: {
+    defaultScope: "programme",
+    isCouncil: false,
+    nameAr: "قائد البرنامج",
+    nameEn: "Programme Lead",
+    permissions: [
+      "events.manage",
+      "events.checkin",
+      "programmes.manage",
+      "content.manage",
+      "library.read",
+    ],
+    spendingLimitIqd: null,
+  },
+  event_staff: {
+    defaultScope: "programme",
+    isCouncil: false,
+    nameAr: "فريق الفعالية",
+    nameEn: "Event Staff",
+    permissions: ["events.checkin"],
+    spendingLimitIqd: null,
+  },
+  campaign_lead: {
+    defaultScope: "campaign",
+    isCouncil: false,
+    nameAr: "قائد الحملة",
+    nameEn: "Campaign Lead",
+    permissions: ["charity.manage", "charity.ledger.write", "library.read"],
+    spendingLimitIqd: null,
+  },
+  tech_admin: {
+    defaultScope: "global",
+    isCouncil: false,
+    nameAr: "المسؤول التقني",
+    nameEn: "Technical Administrator",
+    permissions: [
+      "members.verify",
+      "settings.manage",
+      "audit.read",
+      "content.manage",
+    ],
+    spendingLimitIqd: null,
+  },
+} as const satisfies Record<string, RoleDefinition>;
+
+export type Role = keyof typeof roles;
+
+export const roleKeys = Object.keys(roles) as Role[];
+
+/** Spending thresholds from the Bylaws, in IQD. Above the highest: Council vote. */
+export const highestSpendingLimitIqd = Math.max(
+  ...roleKeys.map((key) => roles[key].spendingLimitIqd ?? 0)
+);

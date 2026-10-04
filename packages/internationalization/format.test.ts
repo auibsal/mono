@@ -3,9 +3,12 @@ import { describe, expect, test } from "vitest";
 import { getDirection } from "./config";
 import {
   formatCalendarDate,
+  formatClock,
   formatCurrency,
   formatDate,
   formatDateTime,
+  formatIqd,
+  formatLongDate,
   formatMonthYear,
   formatRelativeTime,
   formatWeekday,
@@ -69,5 +72,27 @@ describe("regional formatting", () => {
     expect(formatCalendarDate(october, "ar")).toBe("15 تشرين الأول 2026");
     // 15 October 2026 is a Thursday.
     expect(formatWeekday(october, "en")).toBe("Thu");
+  });
+});
+
+describe("SAL copy rules", () => {
+  const evening = "2026-10-13T15:00:00Z"; // 6:00 PM in Baghdad
+
+  test("dates read 'Tuesday, October 13'", () => {
+    expect(formatLongDate(evening, "en")).toBe("Tuesday, October 13");
+  });
+
+  test("times read '6:00 PM'", () => {
+    expect(formatClock(evening, "en")).toBe("6:00 PM");
+  });
+
+  test("Arabic keeps Latin digits", () => {
+    expect(formatLongDate(evening, "ar")).toMatch(/13/);
+    expect(formatClock(evening, "ar")).toMatch(/6:00/);
+  });
+
+  test("money reads '50,000 IQD'", () => {
+    expect(formatIqd(50_000, "en")).toBe("50,000 IQD");
+    expect(formatIqd(50_000, "ar")).toBe("50,000 دينار");
   });
 });

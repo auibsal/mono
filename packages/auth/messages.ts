@@ -1,53 +1,26 @@
-import type { OtpErrorCode } from "./otp";
+import type { EmailAuthErrorCode } from "./email";
 
 /**
  * Texts used by the auth components. English defaults live here; apps pass
- * translated messages (see the `auth` namespace in @repo/internationalization).
+ * translated messages (the `auth` namespace in @repo/internationalization).
  */
 export interface AuthMessages {
-  changePhone: string;
-  codeLabel: string;
-  codeSentTo: string;
-  continue: string;
-  createOrganization: string;
-  errors: Record<OtpErrorCode, string>;
-  fullNameLabel: string;
-  organizations: string;
-  phoneHint: string;
-  phoneLabel: string;
-  resend: string;
-  resendIn: string;
-  sending: string;
+  errors: Record<EmailAuthErrorCode, string>;
   signOut: string;
-  verify: string;
-  verifying: string;
 }
 
 export const defaultAuthMessages: AuthMessages = {
-  changePhone: "Use a different number",
-  codeLabel: "Verification code",
-  codeSentTo: "We sent a 6-digit code to {phone}.",
-  continue: "Continue",
-  createOrganization: "Create organization",
   errors: {
-    captcha_failed: "Please complete the security check and try again.",
-    delivery_failed: "We couldn't send the code. Please try again shortly.",
-    invalid_code: "That code is incorrect or has expired.",
-    invalid_phone: "Enter a valid mobile number, e.g. 0770 123 4567.",
+    email_not_confirmed: "Confirm your email address first: check your inbox.",
+    invalid_credentials: "That email and password don't match.",
+    invalid_email: "Enter a valid email address.",
     rate_limited: "Too many attempts. Please wait a moment and try again.",
     signups_disabled: "New sign-ups are currently closed.",
     unknown: "Something went wrong. Please try again.",
+    user_exists: "An account with this email already exists. Sign in instead.",
+    weak_password: "Use at least 10 characters, with letters and numbers.",
   },
-  fullNameLabel: "Full name",
-  organizations: "Organizations",
-  phoneHint: "We'll text you a verification code.",
-  phoneLabel: "Mobile number",
-  resend: "Resend code",
-  resendIn: "Resend code in {seconds}s",
-  sending: "Sending…",
   signOut: "Sign out",
-  verify: "Verify",
-  verifying: "Verifying…",
 };
 
 const PLACEHOLDER = /\{(\w+)\}/g;
