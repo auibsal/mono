@@ -73,16 +73,19 @@ jobs:
       - name: Lint schema
         working-directory: packages/database
         run: bunx supabase db lint --level warning --fail-on warning
+      - name: pgTAP preamble is in sync
+        working-directory: packages/database
+        run: bun scripts/sync-test-preamble.ts --check
       - name: Row Level Security tests (pgTAP)
         working-directory: packages/database
         run: bunx supabase test db
       - name: Generated types are up to date
         run: |
-          (cd packages/database && bunx supabase gen types typescript --local --schema public) \
+          (cd packages/database && bunx supabase gen types typescript --local --schema public,core,access,membership,events,journal,charity,programmes,governance,content) \
             | bunx biome format --stdin-file-path=packages/database/types.ts > "$RUNNER_TEMP/types.ts"
           diff -u packages/database/types.ts "$RUNNER_TEMP/types.ts" \
             || (echo "Run 'bun run db:types' and commit the result." && exit 1)
-      - name: Integration tests (auth, billing, storage)
+      - name: Integration tests (auth, storage, data)
         run: |
           eval "$(cd packages/database && bunx supabase status -o env | grep -E '^(API_URL|PUBLISHABLE_KEY|SECRET_KEY)=' | sed 's/^/export /')"
-          SUPABASE_INTEGRATION=1 bunx turbo test --filter=@repo/auth --filter=@repo/payments --filter=@repo/storage
+          SUPABASE_INTEGRATION=1 bunx turbo test --filter=@repo/auth --filter=@repo/storage --filter=@repo/sal-data

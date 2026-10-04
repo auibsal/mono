@@ -7,362 +7,133 @@ export type Json =
   | Json[];
 
 export type Database = {
-  public: {
+  access: {
     Tables: {
-      invitations: {
+      permissions: {
         Row: {
-          accepted_at: string | null;
-          created_at: string;
-          expires_at: string;
-          id: string;
-          invited_by: string | null;
-          invitee: string;
-          organization_id: string;
-          role: Database["public"]["Enums"]["org_role"];
-          token: string;
+          description: string;
+          key: string;
         };
         Insert: {
-          accepted_at?: string | null;
-          created_at?: string;
-          expires_at?: string;
-          id?: string;
-          invited_by?: string | null;
-          invitee: string;
-          organization_id: string;
-          role?: Database["public"]["Enums"]["org_role"];
-          token?: string;
+          description: string;
+          key: string;
         };
         Update: {
-          accepted_at?: string | null;
-          created_at?: string;
-          expires_at?: string;
-          id?: string;
-          invited_by?: string | null;
-          invitee?: string;
-          organization_id?: string;
-          role?: Database["public"]["Enums"]["org_role"];
-          token?: string;
+          description?: string;
+          key?: string;
         };
-        Relationships: [
-          {
-            foreignKeyName: "invitations_organization_id_fkey";
-            columns: ["organization_id"];
-            isOneToOne: false;
-            referencedRelation: "organizations";
-            referencedColumns: ["id"];
-          },
-        ];
+        Relationships: [];
       };
-      memberships: {
+      role_assignments: {
         Row: {
+          assigned_by: string | null;
           created_at: string;
-          organization_id: string;
-          role: Database["public"]["Enums"]["org_role"];
+          ends_at: string | null;
+          id: string;
+          note: string | null;
+          role: string;
+          scope_id: string | null;
+          scope_type: string;
+          starts_at: string;
+          title_ar: string | null;
+          title_en: string | null;
           user_id: string;
         };
         Insert: {
+          assigned_by?: string | null;
           created_at?: string;
-          organization_id: string;
-          role?: Database["public"]["Enums"]["org_role"];
+          ends_at?: string | null;
+          id?: string;
+          note?: string | null;
+          role: string;
+          scope_id?: string | null;
+          scope_type?: string;
+          starts_at?: string;
+          title_ar?: string | null;
+          title_en?: string | null;
           user_id: string;
         };
         Update: {
+          assigned_by?: string | null;
           created_at?: string;
-          organization_id?: string;
-          role?: Database["public"]["Enums"]["org_role"];
+          ends_at?: string | null;
+          id?: string;
+          note?: string | null;
+          role?: string;
+          scope_id?: string | null;
+          scope_type?: string;
+          starts_at?: string;
+          title_ar?: string | null;
+          title_en?: string | null;
           user_id?: string;
         };
         Relationships: [
           {
-            foreignKeyName: "memberships_organization_id_fkey";
-            columns: ["organization_id"];
+            foreignKeyName: "role_assignments_role_fkey";
+            columns: ["role"];
             isOneToOne: false;
-            referencedRelation: "organizations";
-            referencedColumns: ["id"];
+            referencedRelation: "roles";
+            referencedColumns: ["key"];
           },
         ];
       };
-      organizations: {
+      role_permissions: {
         Row: {
-          created_at: string;
-          created_by: string | null;
-          id: string;
-          name: string;
-          slug: string;
-          updated_at: string;
+          permission: string;
+          role: string;
         };
         Insert: {
-          created_at?: string;
-          created_by?: string | null;
-          id?: string;
-          name: string;
-          slug: string;
-          updated_at?: string;
+          permission: string;
+          role: string;
         };
         Update: {
-          created_at?: string;
-          created_by?: string | null;
-          id?: string;
-          name?: string;
-          slug?: string;
-          updated_at?: string;
+          permission?: string;
+          role?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "role_permissions_permission_fkey";
+            columns: ["permission"];
+            isOneToOne: false;
+            referencedRelation: "permissions";
+            referencedColumns: ["key"];
+          },
+          {
+            foreignKeyName: "role_permissions_role_fkey";
+            columns: ["role"];
+            isOneToOne: false;
+            referencedRelation: "roles";
+            referencedColumns: ["key"];
+          },
+        ];
       };
-      payments: {
+      roles: {
         Row: {
-          amount: number;
-          checkout_url: string | null;
-          created_at: string;
-          currency: string;
           description: string | null;
-          id: string;
-          metadata: NonNullable<Json>;
-          organization_id: string | null;
-          paid_at: string | null;
-          payment_method: string | null;
-          provider: string;
-          provider_payment_id: string | null;
-          reference_id: string;
-          refunded_amount: number;
-          status: Database["public"]["Enums"]["payment_status"];
-          subscription_id: string | null;
-          updated_at: string;
-          user_id: string | null;
+          is_council: boolean;
+          key: string;
+          name_ar: string;
+          name_en: string;
+          sort: number;
+          spending_limit_iqd: number | null;
         };
         Insert: {
-          amount: number;
-          checkout_url?: string | null;
-          created_at?: string;
-          currency?: string;
           description?: string | null;
-          id?: string;
-          metadata?: NonNullable<Json>;
-          organization_id?: string | null;
-          paid_at?: string | null;
-          payment_method?: string | null;
-          provider: string;
-          provider_payment_id?: string | null;
-          reference_id: string;
-          refunded_amount?: number;
-          status?: Database["public"]["Enums"]["payment_status"];
-          subscription_id?: string | null;
-          updated_at?: string;
-          user_id?: string | null;
+          is_council?: boolean;
+          key: string;
+          name_ar: string;
+          name_en: string;
+          sort?: number;
+          spending_limit_iqd?: number | null;
         };
         Update: {
-          amount?: number;
-          checkout_url?: string | null;
-          created_at?: string;
-          currency?: string;
           description?: string | null;
-          id?: string;
-          metadata?: NonNullable<Json>;
-          organization_id?: string | null;
-          paid_at?: string | null;
-          payment_method?: string | null;
-          provider?: string;
-          provider_payment_id?: string | null;
-          reference_id?: string;
-          refunded_amount?: number;
-          status?: Database["public"]["Enums"]["payment_status"];
-          subscription_id?: string | null;
-          updated_at?: string;
-          user_id?: string | null;
-        };
-        Relationships: [
-          {
-            foreignKeyName: "payments_organization_id_fkey";
-            columns: ["organization_id"];
-            isOneToOne: false;
-            referencedRelation: "organizations";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "payments_subscription_id_fkey";
-            columns: ["subscription_id"];
-            isOneToOne: false;
-            referencedRelation: "subscriptions";
-            referencedColumns: ["id"];
-          },
-        ];
-      };
-      plans: {
-        Row: {
-          active: boolean;
-          amount: number;
-          billing_interval: Database["public"]["Enums"]["billing_interval"];
-          created_at: string;
-          currency: string;
-          description: string | null;
-          id: string;
-          name: string;
-        };
-        Insert: {
-          active?: boolean;
-          amount: number;
-          billing_interval: Database["public"]["Enums"]["billing_interval"];
-          created_at?: string;
-          currency?: string;
-          description?: string | null;
-          id: string;
-          name: string;
-        };
-        Update: {
-          active?: boolean;
-          amount?: number;
-          billing_interval?: Database["public"]["Enums"]["billing_interval"];
-          created_at?: string;
-          currency?: string;
-          description?: string | null;
-          id?: string;
-          name?: string;
-        };
-        Relationships: [];
-      };
-      profiles: {
-        Row: {
-          avatar_url: string | null;
-          created_at: string;
-          full_name: string | null;
-          id: string;
-          locale: string;
-          updated_at: string;
-        };
-        Insert: {
-          avatar_url?: string | null;
-          created_at?: string;
-          full_name?: string | null;
-          id: string;
-          locale?: string;
-          updated_at?: string;
-        };
-        Update: {
-          avatar_url?: string | null;
-          created_at?: string;
-          full_name?: string | null;
-          id?: string;
-          locale?: string;
-          updated_at?: string;
-        };
-        Relationships: [];
-      };
-      projects: {
-        Row: {
-          created_at: string;
-          created_by: string | null;
-          id: string;
-          name: string;
-          organization_id: string;
-          updated_at: string;
-        };
-        Insert: {
-          created_at?: string;
-          created_by?: string | null;
-          id?: string;
-          name: string;
-          organization_id: string;
-          updated_at?: string;
-        };
-        Update: {
-          created_at?: string;
-          created_by?: string | null;
-          id?: string;
-          name?: string;
-          organization_id?: string;
-          updated_at?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: "projects_organization_id_fkey";
-            columns: ["organization_id"];
-            isOneToOne: false;
-            referencedRelation: "organizations";
-            referencedColumns: ["id"];
-          },
-        ];
-      };
-      subscriptions: {
-        Row: {
-          cancel_at_period_end: boolean;
-          created_at: string;
-          current_period_end: string | null;
-          current_period_start: string | null;
-          id: string;
-          organization_id: string;
-          plan_id: string;
-          provider: string;
-          status: Database["public"]["Enums"]["subscription_status"];
-          updated_at: string;
-        };
-        Insert: {
-          cancel_at_period_end?: boolean;
-          created_at?: string;
-          current_period_end?: string | null;
-          current_period_start?: string | null;
-          id?: string;
-          organization_id: string;
-          plan_id: string;
-          provider: string;
-          status?: Database["public"]["Enums"]["subscription_status"];
-          updated_at?: string;
-        };
-        Update: {
-          cancel_at_period_end?: boolean;
-          created_at?: string;
-          current_period_end?: string | null;
-          current_period_start?: string | null;
-          id?: string;
-          organization_id?: string;
-          plan_id?: string;
-          provider?: string;
-          status?: Database["public"]["Enums"]["subscription_status"];
-          updated_at?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: "subscriptions_organization_id_fkey";
-            columns: ["organization_id"];
-            isOneToOne: false;
-            referencedRelation: "organizations";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "subscriptions_plan_id_fkey";
-            columns: ["plan_id"];
-            isOneToOne: false;
-            referencedRelation: "plans";
-            referencedColumns: ["id"];
-          },
-        ];
-      };
-      webhook_events: {
-        Row: {
-          event_key: string;
-          id: number;
-          payload: NonNullable<Json>;
-          processed_at: string | null;
-          provider: string;
-          received_at: string;
-          reference_id: string | null;
-        };
-        Insert: {
-          event_key: string;
-          id?: never;
-          payload: NonNullable<Json>;
-          processed_at?: string | null;
-          provider: string;
-          received_at?: string;
-          reference_id?: string | null;
-        };
-        Update: {
-          event_key?: string;
-          id?: never;
-          payload?: NonNullable<Json>;
-          processed_at?: string | null;
-          provider?: string;
-          received_at?: string;
-          reference_id?: string | null;
+          is_council?: boolean;
+          key?: string;
+          name_ar?: string;
+          name_en?: string;
+          sort?: number;
+          spending_limit_iqd?: number | null;
         };
         Relationships: [];
       };
@@ -371,63 +142,3121 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      accept_invitation: {
-        Args: { invitation_token: string };
+      assign_role: {
+        Args: {
+          ends_at?: string;
+          note?: string;
+          role_key: string;
+          scope_id?: string;
+          scope_type?: string;
+          starts_at?: string;
+          target_user: string;
+          title_ar?: string;
+          title_en?: string;
+        };
         Returns: string;
       };
-      account_deletion_blockers: {
+      bootstrap_founder: { Args: { email: string }; Returns: string };
+      end_role_assignment: {
+        Args: { assignment_id: string; ends_at?: string };
+        Returns: undefined;
+      };
+      has_permission: {
+        Args: { permission: string; scope_id?: string; scope_type?: string };
+        Returns: boolean;
+      };
+      has_permission_anywhere: {
+        Args: { permission: string };
+        Returns: boolean;
+      };
+      my_permissions: {
         Args: Record<PropertyKey, never>;
         Returns: {
-          name: string;
-          organization_id: string;
-          other_members: number;
-          slug: string;
-        }[];
-      };
-      create_organization: {
-        Args: { org_name: string; org_slug: string };
-        Returns: {
-          created_at: string;
-          created_by: string | null;
-          id: string;
-          name: string;
-          slug: string;
-          updated_at: string;
-        };
-        SetofOptions: {
-          from: "*";
-          to: "organizations";
-          isOneToOne: true;
-          isSetofReturn: false;
-        };
-      };
-      pending_invitations: {
-        Args: Record<PropertyKey, never>;
-        Returns: {
-          expires_at: string;
-          organization_id: string;
-          organization_name: string;
-          role: Database["public"]["Enums"]["org_role"];
-          token: string;
+          permission: string;
+          scope_id: string;
+          scope_type: string;
         }[];
       };
     };
     Enums: {
-      billing_interval: "month" | "year";
-      org_role: "owner" | "admin" | "member";
-      payment_status:
-        | "pending"
-        | "paid"
-        | "failed"
-        | "canceled"
-        | "expired"
-        | "refunded";
-      subscription_status:
-        | "incomplete"
-        | "active"
-        | "past_due"
-        | "canceled"
-        | "expired";
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
+  charity: {
+    Tables: {
+      campaigns: {
+        Row: {
+          cost_per_unit_iqd: number | null;
+          created_at: string;
+          ends_on: string | null;
+          id: string;
+          partner_id: string | null;
+          price_list: NonNullable<Json>;
+          programme_id: string | null;
+          slug: string;
+          starts_on: string | null;
+          status: string;
+          summary_ar: string | null;
+          summary_en: string | null;
+          target_units: number | null;
+          title_ar: string;
+          title_en: string;
+          unit_label_ar: string;
+          unit_label_en: string;
+          updated_at: string;
+        };
+        Insert: {
+          cost_per_unit_iqd?: number | null;
+          created_at?: string;
+          ends_on?: string | null;
+          id?: string;
+          partner_id?: string | null;
+          price_list?: NonNullable<Json>;
+          programme_id?: string | null;
+          slug: string;
+          starts_on?: string | null;
+          status?: string;
+          summary_ar?: string | null;
+          summary_en?: string | null;
+          target_units?: number | null;
+          title_ar: string;
+          title_en: string;
+          unit_label_ar?: string;
+          unit_label_en?: string;
+          updated_at?: string;
+        };
+        Update: {
+          cost_per_unit_iqd?: number | null;
+          created_at?: string;
+          ends_on?: string | null;
+          id?: string;
+          partner_id?: string | null;
+          price_list?: NonNullable<Json>;
+          programme_id?: string | null;
+          slug?: string;
+          starts_on?: string | null;
+          status?: string;
+          summary_ar?: string | null;
+          summary_en?: string | null;
+          target_units?: number | null;
+          title_ar?: string;
+          title_en?: string;
+          unit_label_ar?: string;
+          unit_label_en?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "campaigns_partner_id_fkey";
+            columns: ["partner_id"];
+            isOneToOne: false;
+            referencedRelation: "partners";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      impact_metrics: {
+        Row: {
+          campaign_id: string;
+          created_at: string;
+          id: string;
+          label_ar: string;
+          label_en: string;
+          published_at: string | null;
+          report_ar: string | null;
+          report_en: string | null;
+          sort: number;
+          unit_ar: string | null;
+          unit_en: string | null;
+          updated_at: string;
+          value: number;
+        };
+        Insert: {
+          campaign_id: string;
+          created_at?: string;
+          id?: string;
+          label_ar: string;
+          label_en: string;
+          published_at?: string | null;
+          report_ar?: string | null;
+          report_en?: string | null;
+          sort?: number;
+          unit_ar?: string | null;
+          unit_en?: string | null;
+          updated_at?: string;
+          value: number;
+        };
+        Update: {
+          campaign_id?: string;
+          created_at?: string;
+          id?: string;
+          label_ar?: string;
+          label_en?: string;
+          published_at?: string | null;
+          report_ar?: string | null;
+          report_en?: string | null;
+          sort?: number;
+          unit_ar?: string | null;
+          unit_en?: string | null;
+          updated_at?: string;
+          value?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "impact_metrics_campaign_id_fkey";
+            columns: ["campaign_id"];
+            isOneToOne: false;
+            referencedRelation: "campaigns";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      ledger_entries: {
+        Row: {
+          amount_iqd: number;
+          campaign_id: string;
+          counted_by: string;
+          counted_with: string;
+          created_at: string;
+          created_by: string;
+          id: string;
+          note: string | null;
+          occurred_on: string;
+          reverses_entry_id: string | null;
+          source: Database["charity"]["Enums"]["source"];
+        };
+        Insert: {
+          amount_iqd: number;
+          campaign_id: string;
+          counted_by: string;
+          counted_with: string;
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          note?: string | null;
+          occurred_on?: string;
+          reverses_entry_id?: string | null;
+          source: Database["charity"]["Enums"]["source"];
+        };
+        Update: {
+          amount_iqd?: number;
+          campaign_id?: string;
+          counted_by?: string;
+          counted_with?: string;
+          created_at?: string;
+          created_by?: string;
+          id?: string;
+          note?: string | null;
+          occurred_on?: string;
+          reverses_entry_id?: string | null;
+          source?: Database["charity"]["Enums"]["source"];
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ledger_entries_campaign_id_fkey";
+            columns: ["campaign_id"];
+            isOneToOne: false;
+            referencedRelation: "campaigns";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ledger_entries_reverses_entry_id_fkey";
+            columns: ["reverses_entry_id"];
+            isOneToOne: true;
+            referencedRelation: "ledger_entries";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      ledger_signoffs: {
+        Row: {
+          entry_id: string;
+          signed_at: string;
+          signed_by: string;
+        };
+        Insert: {
+          entry_id: string;
+          signed_at?: string;
+          signed_by?: string;
+        };
+        Update: {
+          entry_id?: string;
+          signed_at?: string;
+          signed_by?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ledger_signoffs_entry_id_fkey";
+            columns: ["entry_id"];
+            isOneToOne: true;
+            referencedRelation: "ledger_entries";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      partners: {
+        Row: {
+          created_at: string;
+          description_ar: string | null;
+          description_en: string | null;
+          id: string;
+          logo_path: string | null;
+          name_ar: string;
+          name_en: string;
+          slug: string;
+          updated_at: string;
+          url: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          description_ar?: string | null;
+          description_en?: string | null;
+          id?: string;
+          logo_path?: string | null;
+          name_ar: string;
+          name_en: string;
+          slug: string;
+          updated_at?: string;
+          url?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          description_ar?: string | null;
+          description_en?: string | null;
+          id?: string;
+          logo_path?: string | null;
+          name_ar?: string;
+          name_en?: string;
+          slug?: string;
+          updated_at?: string;
+          url?: string | null;
+        };
+        Relationships: [];
+      };
+      receipts: {
+        Row: {
+          amount_iqd: number | null;
+          campaign_id: string;
+          created_at: string;
+          description_ar: string | null;
+          description_en: string;
+          id: string;
+          is_public: boolean;
+          ledger_entry_id: string | null;
+          storage_path: string;
+          uploaded_by: string | null;
+        };
+        Insert: {
+          amount_iqd?: number | null;
+          campaign_id: string;
+          created_at?: string;
+          description_ar?: string | null;
+          description_en: string;
+          id?: string;
+          is_public?: boolean;
+          ledger_entry_id?: string | null;
+          storage_path: string;
+          uploaded_by?: string | null;
+        };
+        Update: {
+          amount_iqd?: number | null;
+          campaign_id?: string;
+          created_at?: string;
+          description_ar?: string | null;
+          description_en?: string;
+          id?: string;
+          is_public?: boolean;
+          ledger_entry_id?: string | null;
+          storage_path?: string;
+          uploaded_by?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "receipts_campaign_id_fkey";
+            columns: ["campaign_id"];
+            isOneToOne: false;
+            referencedRelation: "campaigns";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "receipts_ledger_entry_id_fkey";
+            columns: ["ledger_entry_id"];
+            isOneToOne: false;
+            referencedRelation: "ledger_entries";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      campaign_progress: {
+        Args: { campaign_id?: string };
+        Returns: {
+          campaign_id: string;
+          cost_per_unit_iqd: number;
+          counted_iqd: number;
+          pending_iqd: number;
+          target_units: number;
+          units: number;
+        }[];
+      };
+    };
+    Enums: {
+      source:
+        | "table_cash"
+        | "stickers"
+        | "blind_date"
+        | "fill_a_bag"
+        | "book_sales"
+        | "donation"
+        | "other";
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
+  content: {
+    Tables: {
+      announcements: {
+        Row: {
+          audience: string;
+          body_ar: string | null;
+          body_en: string | null;
+          created_at: string;
+          created_by: string | null;
+          ends_at: string | null;
+          id: string;
+          is_banner: boolean;
+          link: string | null;
+          starts_at: string;
+          title_ar: string;
+          title_en: string;
+        };
+        Insert: {
+          audience?: string;
+          body_ar?: string | null;
+          body_en?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          ends_at?: string | null;
+          id?: string;
+          is_banner?: boolean;
+          link?: string | null;
+          starts_at?: string;
+          title_ar: string;
+          title_en: string;
+        };
+        Update: {
+          audience?: string;
+          body_ar?: string | null;
+          body_en?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          ends_at?: string | null;
+          id?: string;
+          is_banner?: boolean;
+          link?: string | null;
+          starts_at?: string;
+          title_ar?: string;
+          title_en?: string;
+        };
+        Relationships: [];
+      };
+      document_sections: {
+        Row: {
+          anchor: string;
+          body: string;
+          code: string;
+          id: string;
+          locale: string;
+          path: string;
+          search: unknown;
+          status: string;
+          title: string;
+          updated_at: string;
+        };
+        Insert: {
+          anchor?: string;
+          body: string;
+          code: string;
+          id?: string;
+          locale: string;
+          path: string;
+          search?: never;
+          status: string;
+          title: string;
+          updated_at?: string;
+        };
+        Update: {
+          anchor?: string;
+          body?: string;
+          code?: string;
+          id?: string;
+          locale?: string;
+          path?: string;
+          search?: never;
+          status?: string;
+          title?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      homepage_slots: {
+        Row: {
+          body_ar: string | null;
+          body_en: string | null;
+          key: string;
+          link: string | null;
+          ref_id: string | null;
+          ref_type: string | null;
+          sort: number;
+          title_ar: string | null;
+          title_en: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          body_ar?: string | null;
+          body_en?: string | null;
+          key: string;
+          link?: string | null;
+          ref_id?: string | null;
+          ref_type?: string | null;
+          sort?: number;
+          title_ar?: string | null;
+          title_en?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          body_ar?: string | null;
+          body_en?: string | null;
+          key?: string;
+          link?: string | null;
+          ref_id?: string | null;
+          ref_type?: string | null;
+          sort?: number;
+          title_ar?: string | null;
+          title_en?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      media_assets: {
+        Row: {
+          alt_ar: string;
+          alt_en: string;
+          consent_note: string | null;
+          created_at: string;
+          height: number | null;
+          id: string;
+          mime_type: string;
+          storage_path: string;
+          uploaded_by: string | null;
+          width: number | null;
+        };
+        Insert: {
+          alt_ar?: string;
+          alt_en?: string;
+          consent_note?: string | null;
+          created_at?: string;
+          height?: number | null;
+          id?: string;
+          mime_type: string;
+          storage_path: string;
+          uploaded_by?: string | null;
+          width?: number | null;
+        };
+        Update: {
+          alt_ar?: string;
+          alt_en?: string;
+          consent_note?: string | null;
+          created_at?: string;
+          height?: number | null;
+          id?: string;
+          mime_type?: string;
+          storage_path?: string;
+          uploaded_by?: string | null;
+          width?: number | null;
+        };
+        Relationships: [];
+      };
+      news_posts: {
+        Row: {
+          author_id: string | null;
+          body_ar: string | null;
+          body_en: string | null;
+          cover_path: string | null;
+          created_at: string;
+          excerpt_ar: string | null;
+          excerpt_en: string | null;
+          id: string;
+          programme_id: string | null;
+          publish_at: string | null;
+          published_at: string | null;
+          search: unknown;
+          slug: string;
+          status: string;
+          title_ar: string;
+          title_en: string;
+          updated_at: string;
+        };
+        Insert: {
+          author_id?: string | null;
+          body_ar?: string | null;
+          body_en?: string | null;
+          cover_path?: string | null;
+          created_at?: string;
+          excerpt_ar?: string | null;
+          excerpt_en?: string | null;
+          id?: string;
+          programme_id?: string | null;
+          publish_at?: string | null;
+          published_at?: string | null;
+          search?: never;
+          slug: string;
+          status?: string;
+          title_ar: string;
+          title_en: string;
+          updated_at?: string;
+        };
+        Update: {
+          author_id?: string | null;
+          body_ar?: string | null;
+          body_en?: string | null;
+          cover_path?: string | null;
+          created_at?: string;
+          excerpt_ar?: string | null;
+          excerpt_en?: string | null;
+          id?: string;
+          programme_id?: string | null;
+          publish_at?: string | null;
+          published_at?: string | null;
+          search?: never;
+          slug?: string;
+          status?: string;
+          title_ar?: string;
+          title_en?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      pages: {
+        Row: {
+          body_ar: string | null;
+          body_en: string | null;
+          created_at: string;
+          id: string;
+          published_at: string | null;
+          slug: string;
+          status: string;
+          title_ar: string;
+          title_en: string;
+          updated_at: string;
+        };
+        Insert: {
+          body_ar?: string | null;
+          body_en?: string | null;
+          created_at?: string;
+          id?: string;
+          published_at?: string | null;
+          slug: string;
+          status?: string;
+          title_ar: string;
+          title_en: string;
+          updated_at?: string;
+        };
+        Update: {
+          body_ar?: string | null;
+          body_en?: string | null;
+          created_at?: string;
+          id?: string;
+          published_at?: string | null;
+          slug?: string;
+          status?: string;
+          title_ar?: string;
+          title_en?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      search: {
+        Args: { max_results?: number; query: string };
+        Returns: {
+          id: string;
+          kind: string;
+          occurred_at: string;
+          rank: number;
+          slug: string;
+          snippet: string;
+          title_ar: string;
+          title_en: string;
+        }[];
+      };
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
+  core: {
+    Tables: {
+      activity_log: {
+        Row: {
+          actor_id: string | null;
+          id: number;
+          new_row: Json | null;
+          occurred_at: string;
+          old_row: Json | null;
+          operation: string;
+          row_id: string | null;
+          table_name: string;
+          table_schema: string;
+        };
+        Insert: {
+          actor_id?: string | null;
+          id?: never;
+          new_row?: Json | null;
+          occurred_at?: string;
+          old_row?: Json | null;
+          operation: string;
+          row_id?: string | null;
+          table_name: string;
+          table_schema: string;
+        };
+        Update: {
+          actor_id?: string | null;
+          id?: never;
+          new_row?: Json | null;
+          occurred_at?: string;
+          old_row?: Json | null;
+          operation?: string;
+          row_id?: string | null;
+          table_name?: string;
+          table_schema?: string;
+        };
+        Relationships: [];
+      };
+      blackouts: {
+        Row: {
+          ends_on: string;
+          id: string;
+          label_ar: string;
+          label_en: string;
+          semester_id: string;
+          starts_on: string;
+        };
+        Insert: {
+          ends_on: string;
+          id?: string;
+          label_ar: string;
+          label_en: string;
+          semester_id: string;
+          starts_on: string;
+        };
+        Update: {
+          ends_on?: string;
+          id?: string;
+          label_ar?: string;
+          label_en?: string;
+          semester_id?: string;
+          starts_on?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "blackouts_semester_id_fkey";
+            columns: ["semester_id"];
+            isOneToOne: false;
+            referencedRelation: "semesters";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      outbox: {
+        Row: {
+          attempts: number;
+          created_at: string;
+          id: number;
+          kind: string;
+          last_error: string | null;
+          payload: NonNullable<Json>;
+          processed_at: string | null;
+        };
+        Insert: {
+          attempts?: number;
+          created_at?: string;
+          id?: never;
+          kind: string;
+          last_error?: string | null;
+          payload?: NonNullable<Json>;
+          processed_at?: string | null;
+        };
+        Update: {
+          attempts?: number;
+          created_at?: string;
+          id?: never;
+          kind?: string;
+          last_error?: string | null;
+          payload?: NonNullable<Json>;
+          processed_at?: string | null;
+        };
+        Relationships: [];
+      };
+      profiles: {
+        Row: {
+          avatar_path: string | null;
+          bio: string | null;
+          camera_shy: boolean;
+          created_at: string;
+          full_name_ar: string | null;
+          full_name_en: string;
+          id: string;
+          locale: string;
+          notify_email: boolean;
+          personal_email: string | null;
+          setup_completed_at: string | null;
+          updated_at: string;
+          verified_at: string | null;
+        };
+        Insert: {
+          avatar_path?: string | null;
+          bio?: string | null;
+          camera_shy?: boolean;
+          created_at?: string;
+          full_name_ar?: string | null;
+          full_name_en?: string;
+          id: string;
+          locale?: string;
+          notify_email?: boolean;
+          personal_email?: string | null;
+          setup_completed_at?: string | null;
+          updated_at?: string;
+          verified_at?: string | null;
+        };
+        Update: {
+          avatar_path?: string | null;
+          bio?: string | null;
+          camera_shy?: boolean;
+          created_at?: string;
+          full_name_ar?: string | null;
+          full_name_en?: string;
+          id?: string;
+          locale?: string;
+          notify_email?: boolean;
+          personal_email?: string | null;
+          setup_completed_at?: string | null;
+          updated_at?: string;
+          verified_at?: string | null;
+        };
+        Relationships: [];
+      };
+      programmes: {
+        Row: {
+          created_at: string;
+          id: string;
+          is_active: boolean;
+          kind: string;
+          name_ar: string;
+          name_en: string;
+          slug: string;
+          sort: number;
+          summary_ar: string | null;
+          summary_en: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          is_active?: boolean;
+          kind: string;
+          name_ar: string;
+          name_en: string;
+          slug: string;
+          sort?: number;
+          summary_ar?: string | null;
+          summary_en?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          is_active?: boolean;
+          kind?: string;
+          name_ar?: string;
+          name_en?: string;
+          slug?: string;
+          sort?: number;
+          summary_ar?: string | null;
+          summary_en?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      semesters: {
+        Row: {
+          code: string;
+          created_at: string;
+          ends_on: string;
+          id: string;
+          name_ar: string;
+          name_en: string;
+          starts_on: string;
+        };
+        Insert: {
+          code: string;
+          created_at?: string;
+          ends_on: string;
+          id?: string;
+          name_ar: string;
+          name_en: string;
+          starts_on: string;
+        };
+        Update: {
+          code?: string;
+          created_at?: string;
+          ends_on?: string;
+          id?: string;
+          name_ar?: string;
+          name_en?: string;
+          starts_on?: string;
+        };
+        Relationships: [];
+      };
+      settings: {
+        Row: {
+          description: string | null;
+          is_public: boolean;
+          key: string;
+          updated_at: string;
+          updated_by: string | null;
+          value: NonNullable<Json>;
+        };
+        Insert: {
+          description?: string | null;
+          is_public?: boolean;
+          key: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          value: NonNullable<Json>;
+        };
+        Update: {
+          description?: string | null;
+          is_public?: boolean;
+          key?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          value?: NonNullable<Json>;
+        };
+        Relationships: [];
+      };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      current_semester: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          code: string;
+          created_at: string;
+          ends_on: string;
+          id: string;
+          name_ar: string;
+          name_en: string;
+          starts_on: string;
+        };
+        SetofOptions: {
+          from: "*";
+          to: "semesters";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
+      previous_semester: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          code: string;
+          created_at: string;
+          ends_on: string;
+          id: string;
+          name_ar: string;
+          name_en: string;
+          starts_on: string;
+        };
+        SetofOptions: {
+          from: "*";
+          to: "semesters";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
+  events: {
+    Tables: {
+      campus_events: {
+        Row: {
+          all_day: boolean;
+          description: string | null;
+          ends_at: string | null;
+          fetched_at: string;
+          id: string;
+          location: string | null;
+          starts_at: string;
+          title: string;
+          uid: string;
+          url: string | null;
+        };
+        Insert: {
+          all_day?: boolean;
+          description?: string | null;
+          ends_at?: string | null;
+          fetched_at?: string;
+          id?: string;
+          location?: string | null;
+          starts_at: string;
+          title: string;
+          uid: string;
+          url?: string | null;
+        };
+        Update: {
+          all_day?: boolean;
+          description?: string | null;
+          ends_at?: string | null;
+          fetched_at?: string;
+          id?: string;
+          location?: string | null;
+          starts_at?: string;
+          title?: string;
+          uid?: string;
+          url?: string | null;
+        };
+        Relationships: [];
+      };
+      check_ins: {
+        Row: {
+          checked_in_at: string;
+          checked_in_by: string | null;
+          event_id: string;
+          id: string;
+          method: string;
+          rsvp_id: string | null;
+          user_id: string;
+        };
+        Insert: {
+          checked_in_at?: string;
+          checked_in_by?: string | null;
+          event_id: string;
+          id?: string;
+          method: string;
+          rsvp_id?: string | null;
+          user_id: string;
+        };
+        Update: {
+          checked_in_at?: string;
+          checked_in_by?: string | null;
+          event_id?: string;
+          id?: string;
+          method?: string;
+          rsvp_id?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "check_ins_event_id_fkey";
+            columns: ["event_id"];
+            isOneToOne: false;
+            referencedRelation: "events";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "check_ins_rsvp_id_fkey";
+            columns: ["rsvp_id"];
+            isOneToOne: false;
+            referencedRelation: "rsvps";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      event_staff: {
+        Row: {
+          added_by: string | null;
+          duty: string | null;
+          event_id: string;
+          user_id: string;
+        };
+        Insert: {
+          added_by?: string | null;
+          duty?: string | null;
+          event_id: string;
+          user_id: string;
+        };
+        Update: {
+          added_by?: string | null;
+          duty?: string | null;
+          event_id?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "event_staff_event_id_fkey";
+            columns: ["event_id"];
+            isOneToOne: false;
+            referencedRelation: "events";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      events: {
+        Row: {
+          body_ar: string | null;
+          body_en: string | null;
+          capacity: number | null;
+          created_at: string;
+          created_by: string | null;
+          ends_at: string | null;
+          id: string;
+          image_path: string | null;
+          members_only: boolean;
+          programme_id: string | null;
+          published_at: string | null;
+          questions: NonNullable<Json>;
+          rsvp_enabled: boolean;
+          search: unknown;
+          slug: string;
+          starts_at: string;
+          status: string;
+          summary_ar: string | null;
+          summary_en: string | null;
+          title_ar: string;
+          title_en: string;
+          updated_at: string;
+          venue_ar: string | null;
+          venue_en: string | null;
+        };
+        Insert: {
+          body_ar?: string | null;
+          body_en?: string | null;
+          capacity?: number | null;
+          created_at?: string;
+          created_by?: string | null;
+          ends_at?: string | null;
+          id?: string;
+          image_path?: string | null;
+          members_only?: boolean;
+          programme_id?: string | null;
+          published_at?: string | null;
+          questions?: NonNullable<Json>;
+          rsvp_enabled?: boolean;
+          search?: never;
+          slug: string;
+          starts_at: string;
+          status?: string;
+          summary_ar?: string | null;
+          summary_en?: string | null;
+          title_ar: string;
+          title_en: string;
+          updated_at?: string;
+          venue_ar?: string | null;
+          venue_en?: string | null;
+        };
+        Update: {
+          body_ar?: string | null;
+          body_en?: string | null;
+          capacity?: number | null;
+          created_at?: string;
+          created_by?: string | null;
+          ends_at?: string | null;
+          id?: string;
+          image_path?: string | null;
+          members_only?: boolean;
+          programme_id?: string | null;
+          published_at?: string | null;
+          questions?: NonNullable<Json>;
+          rsvp_enabled?: boolean;
+          search?: never;
+          slug?: string;
+          starts_at?: string;
+          status?: string;
+          summary_ar?: string | null;
+          summary_en?: string | null;
+          title_ar?: string;
+          title_en?: string;
+          updated_at?: string;
+          venue_ar?: string | null;
+          venue_en?: string | null;
+        };
+        Relationships: [];
+      };
+      rsvps: {
+        Row: {
+          answers: NonNullable<Json>;
+          cancelled_at: string | null;
+          created_at: string;
+          event_id: string;
+          from_waitlist: boolean;
+          id: string;
+          status: string;
+          ticket_code: string;
+          user_id: string;
+        };
+        Insert: {
+          answers?: NonNullable<Json>;
+          cancelled_at?: string | null;
+          created_at?: string;
+          event_id: string;
+          from_waitlist?: boolean;
+          id?: string;
+          status?: string;
+          ticket_code?: string;
+          user_id: string;
+        };
+        Update: {
+          answers?: NonNullable<Json>;
+          cancelled_at?: string | null;
+          created_at?: string;
+          event_id?: string;
+          from_waitlist?: boolean;
+          id?: string;
+          status?: string;
+          ticket_code?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "rsvps_event_id_fkey";
+            columns: ["event_id"];
+            isOneToOne: false;
+            referencedRelation: "events";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      waitlist: {
+        Row: {
+          answers: NonNullable<Json>;
+          created_at: string;
+          event_id: string;
+          id: string;
+          status: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          answers?: NonNullable<Json>;
+          created_at?: string;
+          event_id: string;
+          id?: string;
+          status?: string;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          answers?: NonNullable<Json>;
+          created_at?: string;
+          event_id?: string;
+          id?: string;
+          status?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "waitlist_event_id_fkey";
+            columns: ["event_id"];
+            isOneToOne: false;
+            referencedRelation: "events";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      cancel_rsvp: { Args: { event_id: string }; Returns: undefined };
+      check_in: {
+        Args: { event_id: string; target_user?: string; ticket_code?: string };
+        Returns: {
+          already: boolean;
+          full_name_ar: string;
+          full_name_en: string;
+          user_id: string;
+        }[];
+      };
+      confirmed_count: { Args: { event_id: string }; Returns: number };
+      find_attendee: {
+        Args: { event_id: string; query: string };
+        Returns: {
+          email: string;
+          full_name_ar: string;
+          full_name_en: string;
+          has_rsvp: boolean;
+          user_id: string;
+        }[];
+      };
+      rsvp: { Args: { answers?: Json; event_id: string }; Returns: string };
+      waitlist_position: { Args: { event_id: string }; Returns: number };
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
+  governance: {
+    Tables: {
+      ballot_receipts: {
+        Row: {
+          election_id: string;
+          user_id: string;
+        };
+        Insert: {
+          election_id: string;
+          user_id: string;
+        };
+        Update: {
+          election_id?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ballot_receipts_election_id_fkey";
+            columns: ["election_id"];
+            isOneToOne: false;
+            referencedRelation: "elections";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      ballots: {
+        Row: {
+          choices: NonNullable<Json>;
+          election_id: string;
+          id: string;
+        };
+        Insert: {
+          choices: NonNullable<Json>;
+          election_id: string;
+          id?: string;
+        };
+        Update: {
+          choices?: NonNullable<Json>;
+          election_id?: string;
+          id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ballots_election_id_fkey";
+            columns: ["election_id"];
+            isOneToOne: false;
+            referencedRelation: "elections";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      candidates: {
+        Row: {
+          created_at: string;
+          decided_at: string | null;
+          decided_by: string | null;
+          id: string;
+          position_id: string;
+          statement_ar: string | null;
+          statement_en: string | null;
+          status: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          decided_at?: string | null;
+          decided_by?: string | null;
+          id?: string;
+          position_id: string;
+          statement_ar?: string | null;
+          statement_en?: string | null;
+          status?: string;
+          user_id?: string;
+        };
+        Update: {
+          created_at?: string;
+          decided_at?: string | null;
+          decided_by?: string | null;
+          id?: string;
+          position_id?: string;
+          statement_ar?: string | null;
+          statement_en?: string | null;
+          status?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "candidates_position_id_fkey";
+            columns: ["position_id"];
+            isOneToOne: false;
+            referencedRelation: "positions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      council_terms: {
+        Row: {
+          created_at: string;
+          ends_on: string;
+          id: string;
+          name_ar: string;
+          name_en: string;
+          starts_on: string;
+        };
+        Insert: {
+          created_at?: string;
+          ends_on: string;
+          id?: string;
+          name_ar: string;
+          name_en: string;
+          starts_on: string;
+        };
+        Update: {
+          created_at?: string;
+          ends_on?: string;
+          id?: string;
+          name_ar?: string;
+          name_en?: string;
+          starts_on?: string;
+        };
+        Relationships: [];
+      };
+      election_results: {
+        Row: {
+          ballots_counted: number;
+          computed_at: string;
+          election_id: string;
+          position_id: string;
+          ron_won: boolean;
+          rounds: NonNullable<Json>;
+          winner_candidate_id: string | null;
+        };
+        Insert: {
+          ballots_counted: number;
+          computed_at?: string;
+          election_id: string;
+          position_id: string;
+          ron_won?: boolean;
+          rounds: NonNullable<Json>;
+          winner_candidate_id?: string | null;
+        };
+        Update: {
+          ballots_counted?: number;
+          computed_at?: string;
+          election_id?: string;
+          position_id?: string;
+          ron_won?: boolean;
+          rounds?: NonNullable<Json>;
+          winner_candidate_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "election_results_election_id_fkey";
+            columns: ["election_id"];
+            isOneToOne: false;
+            referencedRelation: "elections";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "election_results_position_id_fkey";
+            columns: ["position_id"];
+            isOneToOne: false;
+            referencedRelation: "positions";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "election_results_winner_candidate_id_fkey";
+            columns: ["winner_candidate_id"];
+            isOneToOne: false;
+            referencedRelation: "candidates";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      elections: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          eligible_count: number | null;
+          id: string;
+          nominations_close_at: string;
+          nominations_open_at: string;
+          status: string;
+          title_ar: string;
+          title_en: string;
+          updated_at: string;
+          voting_closes_at: string;
+          voting_opens_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          eligible_count?: number | null;
+          id?: string;
+          nominations_close_at: string;
+          nominations_open_at: string;
+          status?: string;
+          title_ar: string;
+          title_en: string;
+          updated_at?: string;
+          voting_closes_at: string;
+          voting_opens_at: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          eligible_count?: number | null;
+          id?: string;
+          nominations_close_at?: string;
+          nominations_open_at?: string;
+          status?: string;
+          title_ar?: string;
+          title_en?: string;
+          updated_at?: string;
+          voting_closes_at?: string;
+          voting_opens_at?: string;
+        };
+        Relationships: [];
+      };
+      library_documents: {
+        Row: {
+          audience: string;
+          code: string | null;
+          created_at: string;
+          id: string;
+          status: string;
+          storage_path: string;
+          title_ar: string | null;
+          title_en: string;
+          updated_at: string;
+          uploaded_by: string | null;
+          version: string;
+        };
+        Insert: {
+          audience: string;
+          code?: string | null;
+          created_at?: string;
+          id?: string;
+          status?: string;
+          storage_path: string;
+          title_ar?: string | null;
+          title_en: string;
+          updated_at?: string;
+          uploaded_by?: string | null;
+          version?: string;
+        };
+        Update: {
+          audience?: string;
+          code?: string | null;
+          created_at?: string;
+          id?: string;
+          status?: string;
+          storage_path?: string;
+          title_ar?: string | null;
+          title_en?: string;
+          updated_at?: string;
+          uploaded_by?: string | null;
+          version?: string;
+        };
+        Relationships: [];
+      };
+      minutes: {
+        Row: {
+          adopted_on: string | null;
+          body: string;
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          meeting_on: string;
+          status: string;
+          text_ar: string | null;
+          text_en: string;
+          title_ar: string | null;
+          title_en: string;
+          updated_at: string;
+        };
+        Insert: {
+          adopted_on?: string | null;
+          body?: string;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          meeting_on: string;
+          status?: string;
+          text_ar?: string | null;
+          text_en?: string;
+          title_ar?: string | null;
+          title_en: string;
+          updated_at?: string;
+        };
+        Update: {
+          adopted_on?: string | null;
+          body?: string;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          meeting_on?: string;
+          status?: string;
+          text_ar?: string | null;
+          text_en?: string;
+          title_ar?: string | null;
+          title_en?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      positions: {
+        Row: {
+          election_id: string;
+          id: string;
+          role_key: string;
+          sort: number;
+          title_ar: string;
+          title_en: string;
+        };
+        Insert: {
+          election_id: string;
+          id?: string;
+          role_key: string;
+          sort?: number;
+          title_ar: string;
+          title_en: string;
+        };
+        Update: {
+          election_id?: string;
+          id?: string;
+          role_key?: string;
+          sort?: number;
+          title_ar?: string;
+          title_en?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "positions_election_id_fkey";
+            columns: ["election_id"];
+            isOneToOne: false;
+            referencedRelation: "elections";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      resolutions: {
+        Row: {
+          adopted_on: string | null;
+          body: string;
+          code: string;
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          minutes_id: string | null;
+          status: string;
+          text_ar: string | null;
+          text_en: string;
+          title_ar: string | null;
+          title_en: string;
+          updated_at: string;
+          votes_abstain: number | null;
+          votes_against: number | null;
+          votes_for: number | null;
+        };
+        Insert: {
+          adopted_on?: string | null;
+          body?: string;
+          code: string;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          minutes_id?: string | null;
+          status?: string;
+          text_ar?: string | null;
+          text_en: string;
+          title_ar?: string | null;
+          title_en: string;
+          updated_at?: string;
+          votes_abstain?: number | null;
+          votes_against?: number | null;
+          votes_for?: number | null;
+        };
+        Update: {
+          adopted_on?: string | null;
+          body?: string;
+          code?: string;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          minutes_id?: string | null;
+          status?: string;
+          text_ar?: string | null;
+          text_en?: string;
+          title_ar?: string | null;
+          title_en?: string;
+          updated_at?: string;
+          votes_abstain?: number | null;
+          votes_against?: number | null;
+          votes_for?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "resolutions_minutes_id_fkey";
+            columns: ["minutes_id"];
+            isOneToOne: false;
+            referencedRelation: "minutes";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      spending_approvals: {
+        Row: {
+          amount_iqd: number;
+          approved_at: string | null;
+          campaign_id: string | null;
+          created_at: string;
+          decision_note: string | null;
+          id: string;
+          lead_approver: string | null;
+          lead_limit_iqd: number | null;
+          programme_id: string | null;
+          purpose_ar: string | null;
+          purpose_en: string;
+          requested_by: string | null;
+          resolution_id: string | null;
+          status: string;
+          treasurer_approver: string | null;
+        };
+        Insert: {
+          amount_iqd: number;
+          approved_at?: string | null;
+          campaign_id?: string | null;
+          created_at?: string;
+          decision_note?: string | null;
+          id?: string;
+          lead_approver?: string | null;
+          lead_limit_iqd?: number | null;
+          programme_id?: string | null;
+          purpose_ar?: string | null;
+          purpose_en: string;
+          requested_by?: string | null;
+          resolution_id?: string | null;
+          status?: string;
+          treasurer_approver?: string | null;
+        };
+        Update: {
+          amount_iqd?: number;
+          approved_at?: string | null;
+          campaign_id?: string | null;
+          created_at?: string;
+          decision_note?: string | null;
+          id?: string;
+          lead_approver?: string | null;
+          lead_limit_iqd?: number | null;
+          programme_id?: string | null;
+          purpose_ar?: string | null;
+          purpose_en?: string;
+          requested_by?: string | null;
+          resolution_id?: string | null;
+          status?: string;
+          treasurer_approver?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "spending_approvals_resolution_id_fkey";
+            columns: ["resolution_id"];
+            isOneToOne: false;
+            referencedRelation: "resolutions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      voters: {
+        Row: {
+          election_id: string;
+          user_id: string;
+        };
+        Insert: {
+          election_id: string;
+          user_id: string;
+        };
+        Update: {
+          election_id?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "voters_election_id_fkey";
+            columns: ["election_id"];
+            isOneToOne: false;
+            referencedRelation: "elections";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      approve_spending: { Args: { approval_id: string }; Returns: string };
+      cast_ballot: {
+        Args: { choices: Json; election_id: string };
+        Returns: undefined;
+      };
+      council_roster: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          full_name_ar: string;
+          full_name_en: string;
+          role: string;
+          role_name_ar: string;
+          role_name_en: string;
+          sort: number;
+          title_ar: string;
+          title_en: string;
+        }[];
+      };
+      count_election: { Args: { election_id: string }; Returns: undefined };
+      decide_candidate: {
+        Args: { approve: boolean; candidate_id: string };
+        Returns: undefined;
+      };
+      nominate: {
+        Args: {
+          position_id: string;
+          statement_ar?: string;
+          statement_en: string;
+        };
+        Returns: string;
+      };
+      open_voting: { Args: { election_id: string }; Returns: number };
+      reject_spending: {
+        Args: { approval_id: string; note: string };
+        Returns: undefined;
+      };
+      request_spending: {
+        Args: {
+          amount_iqd: number;
+          campaign_id?: string;
+          programme_id?: string;
+          purpose_ar?: string;
+          purpose_en: string;
+          resolution_id?: string;
+        };
+        Returns: string;
+      };
+      turnout: {
+        Args: { election_id: string };
+        Returns: {
+          eligible: number;
+          voted: number;
+        }[];
+      };
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
+  journal: {
+    Tables: {
+      agreements: {
+        Row: {
+          id: string;
+          signed_at: string;
+          signed_by: string;
+          signer_name: string;
+          submission_id: string;
+          version: string;
+        };
+        Insert: {
+          id?: string;
+          signed_at?: string;
+          signed_by?: string;
+          signer_name: string;
+          submission_id: string;
+          version: string;
+        };
+        Update: {
+          id?: string;
+          signed_at?: string;
+          signed_by?: string;
+          signer_name?: string;
+          submission_id?: string;
+          version?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "agreements_submission_id_fkey";
+            columns: ["submission_id"];
+            isOneToOne: true;
+            referencedRelation: "submissions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      assignments: {
+        Row: {
+          assigned_at: string;
+          assigned_by: string | null;
+          blind_entry_id: string;
+          id: string;
+          read_number: number;
+          reader_id: string;
+        };
+        Insert: {
+          assigned_at?: string;
+          assigned_by?: string | null;
+          blind_entry_id: string;
+          id?: string;
+          read_number: number;
+          reader_id: string;
+        };
+        Update: {
+          assigned_at?: string;
+          assigned_by?: string | null;
+          blind_entry_id?: string;
+          id?: string;
+          read_number?: number;
+          reader_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "assignments_blind_entry_id_fkey";
+            columns: ["blind_entry_id"];
+            isOneToOne: false;
+            referencedRelation: "blind_entries";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      blind_entries: {
+        Row: {
+          blind_id: string;
+          body_html: string | null;
+          call_id: string;
+          category: Database["journal"]["Enums"]["category"];
+          created_at: string;
+          editor_notes: string | null;
+          flag_note: string | null;
+          flagged: boolean;
+          id: string;
+          issue_id: string;
+          language: Database["journal"]["Enums"]["language"];
+          source_text: string | null;
+          status: Database["journal"]["Enums"]["submission_status"];
+          title: string;
+          updated_at: string;
+        };
+        Insert: {
+          blind_id: string;
+          body_html?: string | null;
+          call_id: string;
+          category: Database["journal"]["Enums"]["category"];
+          created_at?: string;
+          editor_notes?: string | null;
+          flag_note?: string | null;
+          flagged?: boolean;
+          id?: string;
+          issue_id: string;
+          language: Database["journal"]["Enums"]["language"];
+          source_text?: string | null;
+          status?: Database["journal"]["Enums"]["submission_status"];
+          title: string;
+          updated_at?: string;
+        };
+        Update: {
+          blind_id?: string;
+          body_html?: string | null;
+          call_id?: string;
+          category?: Database["journal"]["Enums"]["category"];
+          created_at?: string;
+          editor_notes?: string | null;
+          flag_note?: string | null;
+          flagged?: boolean;
+          id?: string;
+          issue_id?: string;
+          language?: Database["journal"]["Enums"]["language"];
+          source_text?: string | null;
+          status?: Database["journal"]["Enums"]["submission_status"];
+          title?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "blind_entries_call_id_fkey";
+            columns: ["call_id"];
+            isOneToOne: false;
+            referencedRelation: "calls";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "blind_entries_issue_id_fkey";
+            columns: ["issue_id"];
+            isOneToOne: false;
+            referencedRelation: "issues";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      blind_keys: {
+        Row: {
+          blind_entry_id: string;
+          submission_id: string;
+        };
+        Insert: {
+          blind_entry_id: string;
+          submission_id: string;
+        };
+        Update: {
+          blind_entry_id?: string;
+          submission_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "blind_keys_blind_entry_id_fkey";
+            columns: ["blind_entry_id"];
+            isOneToOne: true;
+            referencedRelation: "blind_entries";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "blind_keys_submission_id_fkey";
+            columns: ["submission_id"];
+            isOneToOne: true;
+            referencedRelation: "submissions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      calls: {
+        Row: {
+          closes_at: string;
+          created_at: string;
+          eligibility_ar: string | null;
+          eligibility_en: string | null;
+          id: string;
+          is_published: boolean;
+          issue_id: string;
+          max_per_person: number;
+          opens_at: string;
+          theme_ar: string | null;
+          theme_en: string | null;
+          title_ar: string;
+          title_en: string;
+          updated_at: string;
+        };
+        Insert: {
+          closes_at: string;
+          created_at?: string;
+          eligibility_ar?: string | null;
+          eligibility_en?: string | null;
+          id?: string;
+          is_published?: boolean;
+          issue_id: string;
+          max_per_person?: number;
+          opens_at: string;
+          theme_ar?: string | null;
+          theme_en?: string | null;
+          title_ar: string;
+          title_en: string;
+          updated_at?: string;
+        };
+        Update: {
+          closes_at?: string;
+          created_at?: string;
+          eligibility_ar?: string | null;
+          eligibility_en?: string | null;
+          id?: string;
+          is_published?: boolean;
+          issue_id?: string;
+          max_per_person?: number;
+          opens_at?: string;
+          theme_ar?: string | null;
+          theme_en?: string | null;
+          title_ar?: string;
+          title_en?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "calls_issue_id_fkey";
+            columns: ["issue_id"];
+            isOneToOne: false;
+            referencedRelation: "issues";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      contributors: {
+        Row: {
+          bio_ar: string | null;
+          bio_en: string | null;
+          created_at: string;
+          id: string;
+          name_ar: string | null;
+          name_en: string;
+          slug: string;
+          updated_at: string;
+          user_id: string | null;
+        };
+        Insert: {
+          bio_ar?: string | null;
+          bio_en?: string | null;
+          created_at?: string;
+          id?: string;
+          name_ar?: string | null;
+          name_en: string;
+          slug: string;
+          updated_at?: string;
+          user_id?: string | null;
+        };
+        Update: {
+          bio_ar?: string | null;
+          bio_en?: string | null;
+          created_at?: string;
+          id?: string;
+          name_ar?: string | null;
+          name_en?: string;
+          slug?: string;
+          updated_at?: string;
+          user_id?: string | null;
+        };
+        Relationships: [];
+      };
+      decisions: {
+        Row: {
+          blind_entry_id: string;
+          decided_at: string;
+          decided_by: string | null;
+          decision: string;
+          id: string;
+          notes: string | null;
+        };
+        Insert: {
+          blind_entry_id: string;
+          decided_at?: string;
+          decided_by?: string | null;
+          decision: string;
+          id?: string;
+          notes?: string | null;
+        };
+        Update: {
+          blind_entry_id?: string;
+          decided_at?: string;
+          decided_by?: string | null;
+          decision?: string;
+          id?: string;
+          notes?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "decisions_blind_entry_id_fkey";
+            columns: ["blind_entry_id"];
+            isOneToOne: true;
+            referencedRelation: "blind_entries";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      issues: {
+        Row: {
+          cover_path: string | null;
+          created_at: string;
+          editors_note_ar: string | null;
+          editors_note_en: string | null;
+          id: string;
+          number: number;
+          pdf_path: string | null;
+          publish_at: string | null;
+          published_at: string | null;
+          slug: string;
+          status: string;
+          theme_ar: string | null;
+          theme_en: string | null;
+          title_ar: string;
+          title_en: string;
+          updated_at: string;
+          volume: number;
+        };
+        Insert: {
+          cover_path?: string | null;
+          created_at?: string;
+          editors_note_ar?: string | null;
+          editors_note_en?: string | null;
+          id?: string;
+          number: number;
+          pdf_path?: string | null;
+          publish_at?: string | null;
+          published_at?: string | null;
+          slug: string;
+          status?: string;
+          theme_ar?: string | null;
+          theme_en?: string | null;
+          title_ar: string;
+          title_en: string;
+          updated_at?: string;
+          volume: number;
+        };
+        Update: {
+          cover_path?: string | null;
+          created_at?: string;
+          editors_note_ar?: string | null;
+          editors_note_en?: string | null;
+          id?: string;
+          number?: number;
+          pdf_path?: string | null;
+          publish_at?: string | null;
+          published_at?: string | null;
+          slug?: string;
+          status?: string;
+          theme_ar?: string | null;
+          theme_en?: string | null;
+          title_ar?: string;
+          title_en?: string;
+          updated_at?: string;
+          volume?: number;
+        };
+        Relationships: [];
+      };
+      piece_bodies: {
+        Row: {
+          body_ar: string | null;
+          body_en: string | null;
+          piece_id: string;
+          updated_at: string;
+        };
+        Insert: {
+          body_ar?: string | null;
+          body_en?: string | null;
+          piece_id: string;
+          updated_at?: string;
+        };
+        Update: {
+          body_ar?: string | null;
+          body_en?: string | null;
+          piece_id?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "piece_bodies_piece_id_fkey";
+            columns: ["piece_id"];
+            isOneToOne: true;
+            referencedRelation: "pieces";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      pieces: {
+        Row: {
+          category: Database["journal"]["Enums"]["category"];
+          contributor_id: string;
+          created_at: string;
+          credit_ar: string | null;
+          credit_en: string | null;
+          id: string;
+          image_path: string | null;
+          issue_id: string | null;
+          language: Database["journal"]["Enums"]["language"];
+          members_only: boolean;
+          publish_at: string | null;
+          published_at: string | null;
+          search: unknown;
+          slug: string;
+          sort: number;
+          status: string;
+          submission_id: string | null;
+          title_ar: string | null;
+          title_en: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          category: Database["journal"]["Enums"]["category"];
+          contributor_id: string;
+          created_at?: string;
+          credit_ar?: string | null;
+          credit_en?: string | null;
+          id?: string;
+          image_path?: string | null;
+          issue_id?: string | null;
+          language: Database["journal"]["Enums"]["language"];
+          members_only?: boolean;
+          publish_at?: string | null;
+          published_at?: string | null;
+          search?: never;
+          slug: string;
+          sort?: number;
+          status?: string;
+          submission_id?: string | null;
+          title_ar?: string | null;
+          title_en?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          category?: Database["journal"]["Enums"]["category"];
+          contributor_id?: string;
+          created_at?: string;
+          credit_ar?: string | null;
+          credit_en?: string | null;
+          id?: string;
+          image_path?: string | null;
+          issue_id?: string | null;
+          language?: Database["journal"]["Enums"]["language"];
+          members_only?: boolean;
+          publish_at?: string | null;
+          published_at?: string | null;
+          search?: never;
+          slug?: string;
+          sort?: number;
+          status?: string;
+          submission_id?: string | null;
+          title_ar?: string | null;
+          title_en?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pieces_contributor_id_fkey";
+            columns: ["contributor_id"];
+            isOneToOne: false;
+            referencedRelation: "contributors";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "pieces_issue_id_fkey";
+            columns: ["issue_id"];
+            isOneToOne: false;
+            referencedRelation: "issues";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "pieces_submission_id_fkey";
+            columns: ["submission_id"];
+            isOneToOne: false;
+            referencedRelation: "submissions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      scores: {
+        Row: {
+          archive_factor: number;
+          assignment_id: string;
+          comment: string | null;
+          craft: number;
+          depth: number;
+          id: string;
+          submitted_at: string;
+          total: number | null;
+          updated_at: string;
+          voice: number;
+        };
+        Insert: {
+          archive_factor: number;
+          assignment_id: string;
+          comment?: string | null;
+          craft: number;
+          depth: number;
+          id?: string;
+          submitted_at?: string;
+          total?: never;
+          updated_at?: string;
+          voice: number;
+        };
+        Update: {
+          archive_factor?: number;
+          assignment_id?: string;
+          comment?: string | null;
+          craft?: number;
+          depth?: number;
+          id?: string;
+          submitted_at?: string;
+          total?: never;
+          updated_at?: string;
+          voice?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "scores_assignment_id_fkey";
+            columns: ["assignment_id"];
+            isOneToOne: true;
+            referencedRelation: "assignments";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      status_history: {
+        Row: {
+          changed_at: string;
+          changed_by: string | null;
+          from_status: Database["journal"]["Enums"]["submission_status"] | null;
+          id: number;
+          note: string | null;
+          submission_id: string;
+          to_status: Database["journal"]["Enums"]["submission_status"];
+        };
+        Insert: {
+          changed_at?: string;
+          changed_by?: string | null;
+          from_status?:
+            | Database["journal"]["Enums"]["submission_status"]
+            | null;
+          id?: never;
+          note?: string | null;
+          submission_id: string;
+          to_status: Database["journal"]["Enums"]["submission_status"];
+        };
+        Update: {
+          changed_at?: string;
+          changed_by?: string | null;
+          from_status?:
+            | Database["journal"]["Enums"]["submission_status"]
+            | null;
+          id?: never;
+          note?: string | null;
+          submission_id?: string;
+          to_status?: Database["journal"]["Enums"]["submission_status"];
+        };
+        Relationships: [
+          {
+            foreignKeyName: "status_history_submission_id_fkey";
+            columns: ["submission_id"];
+            isOneToOne: false;
+            referencedRelation: "submissions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      submission_files: {
+        Row: {
+          blind_path: string | null;
+          created_at: string;
+          id: string;
+          kind: string;
+          mime_type: string;
+          size_bytes: number;
+          storage_path: string;
+          submission_id: string;
+        };
+        Insert: {
+          blind_path?: string | null;
+          created_at?: string;
+          id?: string;
+          kind: string;
+          mime_type: string;
+          size_bytes: number;
+          storage_path: string;
+          submission_id: string;
+        };
+        Update: {
+          blind_path?: string | null;
+          created_at?: string;
+          id?: string;
+          kind?: string;
+          mime_type?: string;
+          size_bytes?: number;
+          storage_path?: string;
+          submission_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "submission_files_submission_id_fkey";
+            columns: ["submission_id"];
+            isOneToOne: false;
+            referencedRelation: "submissions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      submissions: {
+        Row: {
+          author_id: string;
+          body_html: string | null;
+          call_id: string;
+          category: Database["journal"]["Enums"]["category"];
+          cover_note: string | null;
+          created_at: string;
+          human_authorship_confirmed: boolean;
+          id: string;
+          intake_note: string | null;
+          intake_returned_at: string | null;
+          language: Database["journal"]["Enums"]["language"];
+          rights_note: string | null;
+          source_author: string | null;
+          source_text: string | null;
+          status: Database["journal"]["Enums"]["submission_status"];
+          title: string;
+          updated_at: string;
+        };
+        Insert: {
+          author_id?: string;
+          body_html?: string | null;
+          call_id: string;
+          category: Database["journal"]["Enums"]["category"];
+          cover_note?: string | null;
+          created_at?: string;
+          human_authorship_confirmed: boolean;
+          id?: string;
+          intake_note?: string | null;
+          intake_returned_at?: string | null;
+          language: Database["journal"]["Enums"]["language"];
+          rights_note?: string | null;
+          source_author?: string | null;
+          source_text?: string | null;
+          status?: Database["journal"]["Enums"]["submission_status"];
+          title: string;
+          updated_at?: string;
+        };
+        Update: {
+          author_id?: string;
+          body_html?: string | null;
+          call_id?: string;
+          category?: Database["journal"]["Enums"]["category"];
+          cover_note?: string | null;
+          created_at?: string;
+          human_authorship_confirmed?: boolean;
+          id?: string;
+          intake_note?: string | null;
+          intake_returned_at?: string | null;
+          language?: Database["journal"]["Enums"]["language"];
+          rights_note?: string | null;
+          source_author?: string | null;
+          source_text?: string | null;
+          status?: Database["journal"]["Enums"]["submission_status"];
+          title?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "submissions_call_id_fkey";
+            columns: ["call_id"];
+            isOneToOne: false;
+            referencedRelation: "calls";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      assign_reader: {
+        Args: {
+          blind_entry_id: string;
+          read_number: number;
+          reader_id: string;
+        };
+        Returns: string;
+      };
+      decide: {
+        Args: { blind_entry_id: string; decision: string; notes?: string };
+        Returns: string;
+      };
+      entry_author: {
+        Args: { blind_entry_id: string };
+        Returns: {
+          author_name_ar: string;
+          author_name_en: string;
+        }[];
+      };
+      return_for_formatting: {
+        Args: { note: string; submission_id: string };
+        Returns: undefined;
+      };
+      sign_agreement: {
+        Args: { signer_name: string; submission_id: string };
+        Returns: string;
+      };
+      transition_submission: {
+        Args: {
+          id: string;
+          note?: string;
+          to_status: Database["journal"]["Enums"]["submission_status"];
+        };
+        Returns: Database["journal"]["Enums"]["submission_status"];
+      };
+    };
+    Enums: {
+      category:
+        | "poetry"
+        | "fiction"
+        | "creative_nonfiction"
+        | "short_drama"
+        | "art_photography"
+        | "translation"
+        | "six_words";
+      language: "en" | "ar" | "bilingual";
+      submission_status:
+        | "received"
+        | "intake_check"
+        | "in_review"
+        | "third_read"
+        | "selection"
+        | "accepted"
+        | "declined"
+        | "withdrawn";
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
+  membership: {
+    Tables: {
+      activity_records: {
+        Row: {
+          created_at: string;
+          event_id: string | null;
+          id: string;
+          kind: string;
+          note: string | null;
+          occurred_at: string;
+          recorded_by: string | null;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          event_id?: string | null;
+          id?: string;
+          kind: string;
+          note?: string | null;
+          occurred_at?: string;
+          recorded_by?: string | null;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          event_id?: string | null;
+          id?: string;
+          kind?: string;
+          note?: string | null;
+          occurred_at?: string;
+          recorded_by?: string | null;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+      calendar_tokens: {
+        Row: {
+          created_at: string;
+          token: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          token?: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          token?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+      memberships: {
+        Row: {
+          created_at: string;
+          member_since: string;
+          tier: Database["membership"]["Enums"]["tier"];
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          member_since?: string;
+          tier?: Database["membership"]["Enums"]["tier"];
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          member_since?: string;
+          tier?: Database["membership"]["Enums"]["tier"];
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+      pledges: {
+        Row: {
+          accepted_at: string;
+          id: string;
+          pledge_type: Database["membership"]["Enums"]["pledge_type"];
+          user_id: string;
+          version: string;
+        };
+        Insert: {
+          accepted_at?: string;
+          id?: string;
+          pledge_type: Database["membership"]["Enums"]["pledge_type"];
+          user_id?: string;
+          version: string;
+        };
+        Update: {
+          accepted_at?: string;
+          id?: string;
+          pledge_type?: Database["membership"]["Enums"]["pledge_type"];
+          user_id?: string;
+          version?: string;
+        };
+        Relationships: [];
+      };
+      verification_requests: {
+        Row: {
+          created_at: string;
+          decided_at: string | null;
+          decided_by: string | null;
+          decision_note: string | null;
+          email: string;
+          id: string;
+          statement: string | null;
+          status: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          decided_at?: string | null;
+          decided_by?: string | null;
+          decision_note?: string | null;
+          email: string;
+          id?: string;
+          statement?: string | null;
+          status?: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          decided_at?: string | null;
+          decided_by?: string | null;
+          decision_note?: string | null;
+          email?: string;
+          id?: string;
+          statement?: string | null;
+          status?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      accept_pledge: {
+        Args: {
+          kind: Database["membership"]["Enums"]["pledge_type"];
+          version: string;
+        };
+        Returns: undefined;
+      };
+      activity_count: { Args: { uid?: string }; Returns: number };
+      add_manual_activity: {
+        Args: { note: string; occurred_at?: string; target_user: string };
+        Returns: string;
+      };
+      calendar_token: { Args: Record<PropertyKey, never>; Returns: string };
+      current_pledge_version: {
+        Args: { kind: Database["membership"]["Enums"]["pledge_type"] };
+        Returns: string;
+      };
+      decide_verification: {
+        Args: { approve: boolean; note?: string; request_id: string };
+        Returns: undefined;
+      };
+      has_current_pledges: { Args: { uid?: string }; Returns: boolean };
+      is_member: { Args: { uid?: string }; Returns: boolean };
+      is_voting_member: { Args: { uid?: string }; Returns: boolean };
+      my_status: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          activities: number;
+          is_member: boolean;
+          member_since: string;
+          pending_pledges: Database["membership"]["Enums"]["pledge_type"][];
+          tier: Database["membership"]["Enums"]["tier"];
+          verified: boolean;
+          voting_member: boolean;
+        }[];
+      };
+      reset_calendar_token: {
+        Args: Record<PropertyKey, never>;
+        Returns: string;
+      };
+      set_tier: {
+        Args: {
+          new_tier: Database["membership"]["Enums"]["tier"];
+          target_user: string;
+        };
+        Returns: undefined;
+      };
+    };
+    Enums: {
+      pledge_type: "human_authorship" | "member";
+      tier: "member" | "fellow" | "honorary" | "alumni";
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
+  programmes: {
+    Tables: {
+      episodes: {
+        Row: {
+          created_at: string;
+          id: string;
+          number: number | null;
+          programme_id: string;
+          published_at: string | null;
+          season: number | null;
+          segment: string | null;
+          slug: string;
+          summary_ar: string | null;
+          summary_en: string | null;
+          title_ar: string;
+          title_en: string;
+          updated_at: string;
+          youtube_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          number?: number | null;
+          programme_id: string;
+          published_at?: string | null;
+          season?: number | null;
+          segment?: string | null;
+          slug: string;
+          summary_ar?: string | null;
+          summary_en?: string | null;
+          title_ar: string;
+          title_en: string;
+          updated_at?: string;
+          youtube_id: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          number?: number | null;
+          programme_id?: string;
+          published_at?: string | null;
+          season?: number | null;
+          segment?: string | null;
+          slug?: string;
+          summary_ar?: string | null;
+          summary_en?: string | null;
+          title_ar?: string;
+          title_en?: string;
+          updated_at?: string;
+          youtube_id?: string;
+        };
+        Relationships: [];
+      };
+      reels: {
+        Row: {
+          caption_ar: string | null;
+          caption_en: string | null;
+          created_at: string;
+          episode_id: string | null;
+          id: string;
+          platform: string;
+          programme_id: string;
+          published_at: string | null;
+          url: string;
+        };
+        Insert: {
+          caption_ar?: string | null;
+          caption_en?: string | null;
+          created_at?: string;
+          episode_id?: string | null;
+          id?: string;
+          platform: string;
+          programme_id: string;
+          published_at?: string | null;
+          url: string;
+        };
+        Update: {
+          caption_ar?: string | null;
+          caption_en?: string | null;
+          created_at?: string;
+          episode_id?: string | null;
+          id?: string;
+          platform?: string;
+          programme_id?: string;
+          published_at?: string | null;
+          url?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "reels_episode_id_fkey";
+            columns: ["episode_id"];
+            isOneToOne: false;
+            referencedRelation: "episodes";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      removal_requests: {
+        Row: {
+          action_taken: string | null;
+          closed_at: string | null;
+          content_url: string | null;
+          created_at: string;
+          details: string;
+          due_at: string;
+          handled_by: string | null;
+          id: string;
+          programme_id: string | null;
+          requester_email: string;
+          requester_name: string;
+          status: string;
+        };
+        Insert: {
+          action_taken?: string | null;
+          closed_at?: string | null;
+          content_url?: string | null;
+          created_at?: string;
+          details: string;
+          due_at?: string;
+          handled_by?: string | null;
+          id?: string;
+          programme_id?: string | null;
+          requester_email: string;
+          requester_name: string;
+          status?: string;
+        };
+        Update: {
+          action_taken?: string | null;
+          closed_at?: string | null;
+          content_url?: string | null;
+          created_at?: string;
+          details?: string;
+          due_at?: string;
+          handled_by?: string | null;
+          id?: string;
+          programme_id?: string | null;
+          requester_email?: string;
+          requester_name?: string;
+          status?: string;
+        };
+        Relationships: [];
+      };
+      rotas: {
+        Row: {
+          created_at: string;
+          ends_on: string | null;
+          id: string;
+          programme_id: string;
+          starts_on: string | null;
+          title_ar: string;
+          title_en: string;
+        };
+        Insert: {
+          created_at?: string;
+          ends_on?: string | null;
+          id?: string;
+          programme_id: string;
+          starts_on?: string | null;
+          title_ar: string;
+          title_en: string;
+        };
+        Update: {
+          created_at?: string;
+          ends_on?: string | null;
+          id?: string;
+          programme_id?: string;
+          starts_on?: string | null;
+          title_ar?: string;
+          title_en?: string;
+        };
+        Relationships: [];
+      };
+      shift_signups: {
+        Row: {
+          created_at: string;
+          shift_id: string;
+          status: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          shift_id: string;
+          status?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Update: {
+          created_at?: string;
+          shift_id?: string;
+          status?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "shift_signups_shift_id_fkey";
+            columns: ["shift_id"];
+            isOneToOne: false;
+            referencedRelation: "shifts";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      shifts: {
+        Row: {
+          capacity: number;
+          created_at: string;
+          ends_at: string;
+          event_id: string | null;
+          id: string;
+          location_ar: string | null;
+          location_en: string | null;
+          role_ar: string;
+          role_en: string;
+          rota_id: string;
+          starts_at: string;
+        };
+        Insert: {
+          capacity?: number;
+          created_at?: string;
+          ends_at: string;
+          event_id?: string | null;
+          id?: string;
+          location_ar?: string | null;
+          location_en?: string | null;
+          role_ar: string;
+          role_en: string;
+          rota_id: string;
+          starts_at: string;
+        };
+        Update: {
+          capacity?: number;
+          created_at?: string;
+          ends_at?: string;
+          event_id?: string | null;
+          id?: string;
+          location_ar?: string | null;
+          location_en?: string | null;
+          role_ar?: string;
+          role_en?: string;
+          rota_id?: string;
+          starts_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "shifts_rota_id_fkey";
+            columns: ["rota_id"];
+            isOneToOne: false;
+            referencedRelation: "rotas";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      six_words: {
+        Row: {
+          created_at: string;
+          id: string;
+          language: string;
+          moderated_at: string | null;
+          moderated_by: string | null;
+          show_name: boolean;
+          status: string;
+          text: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          language: string;
+          moderated_at?: string | null;
+          moderated_by?: string | null;
+          show_name?: boolean;
+          status?: string;
+          text: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          language?: string;
+          moderated_at?: string | null;
+          moderated_by?: string | null;
+          show_name?: boolean;
+          status?: string;
+          text?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      moderate_six_words: {
+        Args: { approve: boolean; entry_id: string };
+        Returns: undefined;
+      };
+      sign_up_for_shift: { Args: { shift_id: string }; Returns: undefined };
+      six_words_wall: {
+        Args: { max_results?: number };
+        Returns: {
+          author_ar: string;
+          author_en: string;
+          created_at: string;
+          id: string;
+          language: string;
+          text: string;
+        }[];
+      };
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
+  public: {
+    Tables: {
+      [_ in never]: never;
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      [_ in never]: never;
+    };
+    Enums: {
+      [_ in never]: never;
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -556,25 +3385,68 @@ export type CompositeTypes<
     : never;
 
 export const Constants = {
-  public: {
+  access: {
+    Enums: {},
+  },
+  charity: {
     Enums: {
-      billing_interval: ["month", "year"],
-      org_role: ["owner", "admin", "member"],
-      payment_status: [
-        "pending",
-        "paid",
-        "failed",
-        "canceled",
-        "expired",
-        "refunded",
-      ],
-      subscription_status: [
-        "incomplete",
-        "active",
-        "past_due",
-        "canceled",
-        "expired",
+      source: [
+        "table_cash",
+        "stickers",
+        "blind_date",
+        "fill_a_bag",
+        "book_sales",
+        "donation",
+        "other",
       ],
     },
+  },
+  content: {
+    Enums: {},
+  },
+  core: {
+    Enums: {},
+  },
+  events: {
+    Enums: {},
+  },
+  governance: {
+    Enums: {},
+  },
+  journal: {
+    Enums: {
+      category: [
+        "poetry",
+        "fiction",
+        "creative_nonfiction",
+        "short_drama",
+        "art_photography",
+        "translation",
+        "six_words",
+      ],
+      language: ["en", "ar", "bilingual"],
+      submission_status: [
+        "received",
+        "intake_check",
+        "in_review",
+        "third_read",
+        "selection",
+        "accepted",
+        "declined",
+        "withdrawn",
+      ],
+    },
+  },
+  membership: {
+    Enums: {
+      pledge_type: ["human_authorship", "member"],
+      tier: ["member", "fellow", "honorary", "alumni"],
+    },
+  },
+  programmes: {
+    Enums: {},
+  },
+  public: {
+    Enums: {},
   },
 } as const;

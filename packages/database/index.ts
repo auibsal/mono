@@ -12,6 +12,17 @@ export {
   type TablesUpdate,
 } from "./types";
 
-export type OrgRole = import("./types").Enums<"org_role">;
-export type PaymentStatus = import("./types").Enums<"payment_status">;
-export type SubscriptionStatus = import("./types").Enums<"subscription_status">;
+/** Schemas exposed through the Data API (PostgREST). */
+export const schemas = [
+  "core",
+  "access",
+  "membership",
+  "events",
+  "journal",
+  "charity",
+  "programmes",
+  "governance",
+  "content",
+] as const;
+
+export type Schema = (typeof schemas)[number];
