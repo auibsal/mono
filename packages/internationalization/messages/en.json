@@ -1,35 +1,35 @@
 {
   "common": {
+    "society": "AUIB Society of Arts and Letters",
+    "societyShort": "SAL",
+    "motto": "The paper and the pen",
+    "programmeLine": "a Society of Arts and Letters programme",
     "language": "Language",
     "switchLanguage": "Switch language",
-    "theme": {
-      "toggle": "Toggle theme",
-      "light": "Light",
-      "dark": "Dark",
-      "system": "System"
-    },
+    "otherLanguage": "العربية",
+    "skipToContent": "Skip to content",
     "loading": "Loading…",
     "error": "Something went wrong.",
+    "errorDescription": "An unexpected error occurred. Please try again.",
     "retry": "Try again",
     "back": "Back",
     "cancel": "Cancel",
+    "confirm": "Confirm",
     "save": "Save",
     "saving": "Saving…",
     "saved": "Saved",
     "optional": "Optional",
+    "required": "Required",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
-    "errorDescription": "An unexpected error occurred. Please try again.",
+    "search": "Search",
+    "externalLink": "(opens in a new tab)",
+    "copy": "Copy",
+    "copied": "Copied",
     "notFound": {
       "title": "Page not found",
       "description": "The page you're looking for doesn't exist or has moved.",
       "home": "Go to the home page"
-    },
-    "status": {
-      "operational": "All systems normal",
-      "partial": "Partial outage",
-      "degraded": "Degraded performance",
-      "unknown": "Unable to fetch status"
     },
     "ui": {
       "close": "Close",
@@ -46,459 +46,242 @@
     }
   },
   "auth": {
-    "changePhone": "Use a different number",
-    "codeLabel": "Verification code",
-    "codeSentTo": "We sent a 6-digit code to {phone}.",
-    "continue": "Continue",
-    "createOrganization": "Create organization",
+    "signOut": "Sign out",
+    "email": "Email",
+    "emailHint": "Use your AUIB address (@auib.edu.iq) if you have one.",
+    "password": "Password",
+    "passwordHint": "At least 10 characters, with letters and numbers.",
     "errors": {
-      "captcha_failed": "Please complete the security check and try again.",
-      "delivery_failed": "We couldn't send the code. Please try again shortly.",
-      "invalid_code": "That code is incorrect or has expired.",
-      "invalid_phone": "Enter a valid mobile number, e.g. 0770 123 4567.",
+      "email_not_confirmed": "Confirm your email address first: check your inbox.",
+      "invalid_credentials": "That email and password don't match.",
+      "invalid_email": "Enter a valid email address.",
       "rate_limited": "Too many attempts. Please wait a moment and try again.",
       "signups_disabled": "New sign-ups are currently closed.",
-      "unknown": "Something went wrong. Please try again."
+      "unknown": "Something went wrong. Please try again.",
+      "user_exists": "An account with this email already exists. Sign in instead.",
+      "weak_password": "Use at least 10 characters, with letters and numbers."
     },
-    "fullNameLabel": "Full name",
-    "organizations": "Organizations",
-    "phoneHint": "We'll text you a verification code.",
-    "phoneLabel": "Mobile number",
-    "resend": "Resend code",
-    "resendIn": "Resend code in {seconds}s",
-    "sending": "Sending…",
     "signIn": {
-      "title": "Welcome back",
-      "description": "Sign in with your mobile number.",
-      "noAccount": "Don't have an account?",
-      "signUpLink": "Sign up",
+      "title": "Sign in to the Nexus",
+      "description": "The members' portal of the AUIB Society of Arts and Letters.",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "magicLink": "Email me a sign-in link instead",
+      "usePassword": "Use my password instead",
+      "sendLink": "Send the link",
+      "linkSent": "If an account exists for {email}, a sign-in link is on its way.",
+      "forgot": "Forgotten your password?",
+      "noAccount": "New to the Society?",
+      "createAccount": "Create an account",
       "deleted": "Your account has been deleted."
     },
-    "signOut": "Sign out",
     "signUp": {
-      "title": "Create an account",
-      "description": "Sign up with your mobile number.",
-      "haveAccount": "Already have an account?",
-      "signInLink": "Sign in"
+      "title": "Join the Society",
+      "description": "Membership is free and open. AUIB addresses are verified straight away; other addresses are checked by the Council.",
+      "fullNameEn": "Full name (English)",
+      "fullNameAr": "Full name (Arabic)",
+      "statement": "Who are you to the Society?",
+      "statementHint": "For non-AUIB addresses: alumni, guest writer, partner… This helps the Council verify you.",
+      "submit": "Create account",
+      "submitting": "Creating account…",
+      "checkInbox": "Check your inbox",
+      "checkInboxBody": "We sent a confirmation link to {email}. Open it on this device to finish signing up.",
+      "haveAccount": "Already a member?",
+      "signIn": "Sign in"
     },
-    "verify": "Verify",
-    "verifying": "Verifying…",
+    "forgot": {
+      "title": "Reset your password",
+      "description": "We'll email you a link to choose a new password.",
+      "submit": "Send reset link",
+      "sent": "If an account exists for {email}, a reset link is on its way."
+    },
+    "reset": {
+      "title": "Choose a new password",
+      "submit": "Save password",
+      "done": "Your password has been changed."
+    },
     "callback": {
-      "title": "Signing you in…",
-      "failed": "We couldn't complete the sign-in. Please try again.",
+      "title": "Signing you in",
+      "failed": "This link has expired or was already used.",
       "retry": "Back to sign in"
     }
   },
-  "billing": {
-    "pay": "Pay {amount}",
-    "webOnly": "Purchases are made on our website. Sign in there to manage your plan.",
-    "status": {
-      "active": "Active",
-      "past_due": "Payment due",
-      "incomplete": "Awaiting payment",
-      "canceled": "Canceled",
-      "expired": "Expired"
+  "nexus": {
+    "name": "The Nexus",
+    "nav": {
+      "label": "Nexus",
+      "home": "Home",
+      "events": "Events",
+      "waraq": "Waraq",
+      "programmes": "Programmes",
+      "society": "Society",
+      "profile": "Profile and privacy",
+      "admin": "Administration",
+      "publicSite": "auibsal.org"
     },
-    "title": "Billing",
-    "description": "Your plan and payments.",
-    "currentPlan": "Current plan",
-    "noPlan": "You don't have a plan yet.",
-    "renews": "Renews on {date}",
-    "choosePlan": "Choose a plan",
-    "perMonth": "/ month",
-    "perYear": "/ year",
-    "current": "Current plan",
-    "redirecting": "Opening the payment page…",
-    "payments": "Payment history",
-    "noPayments": "No payments yet.",
-    "paymentStatus": {
-      "pending": "Pending",
-      "paid": "Paid",
-      "failed": "Failed",
-      "canceled": "Canceled",
-      "expired": "Expired",
-      "refunded": "Refunded"
-    },
-    "managersOnly": "Only owners and admins can manage billing.",
-    "noPlans": "No plans are available yet.",
     "errors": {
-      "checkout": "We couldn't start the payment. Please try again."
+      "loadFailed": "We couldn't load this. Check your connection and try again.",
+      "saveFailed": "We couldn't save your changes. Please try again."
+    },
+    "pending": {
+      "title": "Your account is waiting for verification",
+      "body": "Accounts on addresses outside AUIB are checked by the Council. We'll email you as soon as yours is approved.",
+      "statement": "What you told us",
+      "editStatement": "Update what you told us"
+    },
+    "setup": {
+      "kicker": "Membership",
+      "title": "Before you begin",
+      "description": "Two pledges and a few choices. You can change the choices later in Profile and privacy.",
+      "pledges": "Pledges",
+      "humanAuthorship": {
+        "title": "Human Authorship pledge",
+        "body": "TODO(content): Human Authorship pledge text. In short: work I submit to the Society is my own, made without generative AI.",
+        "accept": "I make the Human Authorship pledge"
+      },
+      "member": {
+        "title": "Member Pledge (SAL-POL-01)",
+        "body": "TODO(content): Member Pledge text from the Policy Manual, SAL-POL-01.",
+        "accept": "I make the Member Pledge",
+        "read": "Read the full pledge"
+      },
+      "renewed": "A pledge has a new version. Please read and accept it again.",
+      "preferences": "Your choices",
+      "locale": "Language for the Nexus and emails",
+      "notifications": "Email me about events, calls and Society notices",
+      "cameraShy": "I'm camera-shy: please don't photograph or film me",
+      "cameraShyHint": "You'll get a camera-shy sticker at events, and we'll leave you out of SAL photos and videos.",
+      "personalEmail": "Personal email for after you graduate",
+      "personalEmailHint": "So you can stay in touch as an alumni member. Never shown publicly.",
+      "submit": "Enter the Nexus"
+    },
+    "home": {
+      "greeting": "Welcome, {name}",
+      "card": {
+        "title": "Membership card",
+        "memberSince": "Member since {date}",
+        "tier": "Tier",
+        "voting": "Voting Member",
+        "notVoting": "Not yet a Voting Member",
+        "qr": "Show this code at events to check in"
+      },
+      "tiers": {
+        "member": "Member",
+        "fellow": "Fellow",
+        "honorary": "Honorary member",
+        "alumni": "Alumni member"
+      },
+      "events": {
+        "title": "My next events",
+        "empty": "You haven't RSVPed to anything yet.",
+        "browse": "Browse events",
+        "ticket": "Ticket",
+        "waitlist": "Waitlist place {position}",
+        "cancel": "Cancel RSVP",
+        "cancelConfirm": "Cancel your place at {event}? Someone on the waitlist will get it.",
+        "addToCalendar": "Add to calendar"
+      },
+      "voting": {
+        "title": "Voting eligibility",
+        "progress": "{count} of 2 activities this semester and last",
+        "rule": "A Voting Member has two recorded activities in the current or previous semester (Constitution, SAL-GOV-01).",
+        "history": "Activity history",
+        "noHistory": "No activities recorded yet. Checking in at an event counts."
+      },
+      "notices": {
+        "title": "Society notices",
+        "empty": "No notices right now.",
+        "vote": "Vote"
+      },
+      "waraq": {
+        "title": "Waraq",
+        "openCall": "{call} closes {date}",
+        "daysLeft": "{days, plural, one {{daysText} day left} other {{daysText} days left}}",
+        "submit": "Submit work",
+        "mine": "My submissions",
+        "none": "No open call at the moment."
+      },
+      "programmes": {
+        "title": "My programmes",
+        "empty": "You're not on any rota yet.",
+        "confirm": "Confirm",
+        "swap": "Ask to swap"
+      },
+      "calendar": {
+        "title": "My calendar feed",
+        "description": "A private link with your RSVPs, every SAL event and the AUIB campus calendar. Subscribe in Apple Calendar, Google Calendar or Outlook.",
+        "copy": "Copy link",
+        "reset": "Reset link",
+        "resetConfirm": "The old link will stop working in every calendar that uses it."
+      },
+      "sixWords": {
+        "title": "Six Words",
+        "description": "Your entry in the Book of Members.",
+        "empty": "You haven't written your six words yet.",
+        "write": "Write my six words",
+        "pending": "Waiting for moderation"
+      }
+    },
+    "waraq": {
+      "status": {
+        "received": "Received",
+        "intake_check": "Intake check",
+        "in_review": "In review",
+        "third_read": "Third read",
+        "selection": "Selection",
+        "accepted": "Accepted",
+        "declined": "Declined",
+        "withdrawn": "Withdrawn"
+      }
+    },
+    "profile": {
+      "title": "Profile and privacy",
+      "bio": "Bio",
+      "bioHint": "Up to 50 words.",
+      "bioCount": "{count} of 50 words",
+      "delete": {
+        "title": "Delete account",
+        "description": "Deletes your account, your RSVPs and your profile. Published Waraq pieces stay under the agreement you signed.",
+        "phrase": "delete my account",
+        "prompt": "Type “{phrase}” to confirm.",
+        "submit": "Delete my account",
+        "deleting": "Deleting…",
+        "failed": "We couldn't delete your account. Please try again."
+      }
     }
   },
   "web": {
-    "global": {
-      "primaryCta": "Book a call",
-      "secondaryCta": "Sign up"
-    },
-    "header": {
-      "home": "Home",
-      "product": {
-        "title": "Product",
-        "description": "Managing a small business today is already tough.",
-        "pricing": "Pricing"
-      },
-      "blog": "Blog",
-      "docs": "Docs",
-      "contact": "Contact",
+    "nav": {
+      "about": "About",
+      "programmes": "Programmes",
+      "waraq": "Waraq",
+      "events": "Events",
+      "give": "Give",
+      "join": "Join",
+      "news": "News",
+      "documents": "Documents",
       "signIn": "Sign in",
-      "signUp": "Get started"
-    },
-    "home": {
-      "meta": {
-        "title": "A better way to run your business",
-        "description": "Replace this description with a short summary of what your product does and who it is for."
-      },
-      "hero": {
-        "announcement": "Read our latest article",
-        "contact": "Get in touch",
-        "signUp": "Sign up"
-      },
-      "cases": {
-        "title": "Empowering Success Stories Across the Globe",
-        "logo": "Logo {number}"
-      },
-      "features": {
-        "title": "Powerful Tools for Modern Business",
-        "description": "Discover how our cutting-edge features can revolutionize your daily operations.",
-        "items": [
-          {
-            "title": "Streamlined Operations",
-            "description": "Our platform streamlines operations, reduces complexity, and helps small businesses thrive in the modern economy."
-          },
-          {
-            "title": "Real-Time Analytics",
-            "description": "Get instant insights into your business performance with comprehensive analytics and reporting tools."
-          },
-          {
-            "title": "Automated Workflows",
-            "description": "Save time and reduce errors with intelligent automation that handles repetitive tasks for you."
-          },
-          {
-            "title": "Secure Transactions",
-            "description": "Rest easy knowing your business operations are protected by enterprise-grade security and encryption."
-          }
-        ]
-      },
-      "stats": {
-        "title": "Real Results, Real Impact",
-        "description": "Replace these numbers with your own metrics.",
-        "items": [
-          {
-            "title": "Monthly active users",
-            "metric": "100000",
-            "delta": "10",
-            "type": "unit"
-          },
-          {
-            "title": "Daily active users",
-            "metric": "10000",
-            "delta": "-5",
-            "type": "unit"
-          },
-          {
-            "title": "Monthly recurring revenue",
-            "metric": "100000",
-            "delta": "20",
-            "type": "currency"
-          },
-          {
-            "title": "Cost per acquisition",
-            "metric": "100",
-            "delta": "-10",
-            "type": "currency"
-          }
-        ]
-      },
-      "testimonials": {
-        "title": "Hear from Our Thriving Community",
-        "items": [
-          {
-            "title": "Placeholder testimonial 1",
-            "description": "Replace this quote with real feedback from a customer, with their permission.",
-            "author": {
-              "name": "Customer name",
-              "image": ""
-            }
-          },
-          {
-            "title": "Placeholder testimonial 2",
-            "description": "Replace this quote with real feedback from a customer, with their permission.",
-            "author": {
-              "name": "Customer name",
-              "image": ""
-            }
-          },
-          {
-            "title": "Placeholder testimonial 3",
-            "description": "Replace this quote with real feedback from a customer, with their permission.",
-            "author": {
-              "name": "Customer name",
-              "image": ""
-            }
-          }
-        ],
-        "by": "By"
-      },
-      "faq": {
-        "title": "Common Questions, Expert Answers",
-        "description": "Answers to the questions customers ask most often. Replace these with your own.",
-        "cta": "Any questions? Reach out",
-        "items": [
-          {
-            "question": "What does the product do?",
-            "answer": "Replace this answer with a one-paragraph description of your product."
-          },
-          {
-            "question": "How do I pay?",
-            "answer": "We accept ZainCash, FIB, Qi Card and other local payment methods through our secure checkout."
-          },
-          {
-            "question": "Is my data secure?",
-            "answer": "Data is encrypted in transit and at rest, and every account can only access its own organization's data."
-          },
-          {
-            "question": "How do I get support?",
-            "answer": "Contact our support team and we will get back to you as soon as possible."
-          }
-        ]
-      },
-      "cta": {
-        "title": "Start Your Business Transformation",
-        "description": "Join thousands of forward-thinking businesses who have already modernized their operations. Our platform offers the tools, support, and efficiency you need to succeed in today's competitive market. Get started in minutes."
-      },
-      "beta": "Beta feature now available"
-    },
-    "blog": {
-      "meta": {
-        "title": "Blog",
-        "description": "Thoughts, ideas, and opinions."
-      },
-      "back": "Back to blog",
-      "published": "Published",
-      "readingTime": "{count, plural, one {{minutes} min read} other {{minutes} min read}}",
-      "sections": "Sections",
-      "tags": "Tags"
-    },
-    "contact": {
-      "meta": {
-        "title": "Let's Talk About Your Business",
-        "description": "Schedule a consultation with our team to discuss how we can help streamline your operations and drive growth for your business."
-      },
-      "hero": {
-        "benefits": [
-          {
-            "title": "Personalized Consultation",
-            "description": "Get tailored solutions and expert advice specific to your business needs."
-          },
-          {
-            "title": "Seamless Integration",
-            "description": "We seamlessly integrate with your existing systems to ensure a smooth transition and minimal disruption."
-          },
-          {
-            "title": "Expert Guidance",
-            "description": "Our team of experts will guide you through the process, ensuring you get the most out of our platform."
-          }
-        ],
-        "form": {
-          "title": "Book a meeting",
-          "date": "Preferred date",
-          "pickDate": "Pick a date",
-          "name": "Full name",
-          "email": "Email",
-          "message": "How can we help?",
-          "cta": "Book the meeting",
-          "sending": "Sending…",
-          "success": "Thanks! We'll be in touch shortly.",
-          "errors": {
-            "invalid": "Please enter your name, a valid email and a message.",
-            "rate_limited": "You've already sent a message today. Please try again tomorrow.",
-            "unavailable": "The contact form isn't available right now. Please email us instead.",
-            "unknown": "Something went wrong. Please try again."
-          }
-        }
-      }
-    },
-    "pricing": {
-      "meta": {
-        "title": "Pricing",
-        "description": "Simple plans that grow with your business."
-      },
-      "title": "Prices that make sense",
-      "description": "Pay monthly in Iraqi dinars with ZainCash, FIB, Qi Card or other local payment methods.",
-      "perMonth": "/ month",
-      "custom": "Custom",
-      "tryIt": "Try it",
-      "contactUs": "Contact us",
-      "featuresTitle": "Features",
-      "included": "Included",
-      "notIncluded": "Not included",
-      "members": "{count, plural, one {{members} member} other {{members} members}}",
-      "plans": {
-        "starter": {
-          "name": "Starter",
-          "description": "Everything a small team needs to get going."
-        },
-        "growth": {
-          "name": "Growth",
-          "description": "For growing businesses with more people and more work."
-        },
-        "enterprise": {
-          "name": "Enterprise",
-          "description": "Custom terms, onboarding and support for larger organizations."
-        }
-      },
-      "features": {
-        "sso": "Single sign-on",
-        "ai": "AI assistant",
-        "history": "Version history",
-        "members": "Team members",
-        "collaboration": "Real-time collaboration",
-        "automation": "Workflow automation"
-      }
+      "nexus": "The Nexus"
     },
     "footer": {
-      "home": "Home",
-      "pages": "Pages",
-      "blog": "Blog",
-      "docs": "Docs",
-      "legal": "Legal"
-    },
-    "legal": {
-      "back": "Back to home"
-    }
-  },
-  "app": {
-    "nav": {
-      "label": "Navigation",
-      "dashboard": "Projects",
+      "contact": "Contact",
+      "mediaKit": "Media kit",
+      "privacy": "Privacy and photo policy",
+      "sideQuestCare": "Side Quest care",
       "search": "Search",
-      "billing": "Billing",
-      "settings": "Settings",
-      "webhooks": "Webhooks"
+      "university": "A student society at the American University of Iraq – Baghdad."
     },
-    "roles": {
-      "owner": "Owner",
-      "admin": "Admin",
-      "member": "Member"
-    },
-    "search": {
-      "placeholder": "Search projects",
-      "submit": "Search",
-      "title": "Search",
-      "resultsFor": "Results for “{query}”",
-      "empty": "No projects match “{query}”.",
-      "prompt": "Type a project name to search."
-    },
-    "dashboard": {
-      "title": "Projects",
-      "description": "Everything your organization is working on.",
-      "empty": {
-        "title": "No projects yet",
-        "description": "Create your first project to get started."
-      },
-      "newProject": "New project",
-      "projectName": "Project name",
-      "create": "Create",
-      "creating": "Creating…",
-      "createdAt": "Created {date}"
-    },
-    "onboarding": {
-      "title": "Welcome to {name}",
-      "description": "Let's set up your account. It only takes a minute.",
-      "stepOf": "Step {current} of {total}",
-      "profile": {
-        "title": "What should we call you?",
-        "description": "Your name is shown to your teammates.",
-        "fullName": "Full name",
-        "language": "Preferred language",
-        "languageHint": "Used in the app and in the messages we send you.",
-        "submit": "Continue"
-      },
-      "invitations": {
-        "title": "You've been invited",
-        "description": "Join an organization that invited you, or create your own below.",
-        "join": "Join",
-        "joining": "Joining…",
-        "as": "as {role}"
-      },
-      "organization": {
-        "title": "Create your organization",
-        "description": "An organization holds your team, projects and billing.",
-        "name": "Organization name",
-        "namePlaceholder": "e.g. Al-Rafidain Trading",
-        "slug": "Address",
-        "slugHint": "Lowercase English letters, numbers and dashes. Used in links.",
-        "submit": "Create organization",
-        "submitting": "Creating…"
-      },
-      "errors": {
-        "nameRequired": "Enter a name.",
-        "slugInvalid": "Use 2–64 lowercase letters, numbers and single dashes.",
-        "slugTaken": "That address is already taken. Try another one.",
-        "unknown": "Something went wrong. Please try again."
-      }
-    },
-    "organizations": {
-      "new": {
-        "title": "New organization",
-        "description": "Create another organization for a different team or business."
-      }
-    },
-    "invite": {
-      "title": "Accept invitation",
-      "description": "You've been invited to join an organization.",
-      "accept": "Accept invitation",
-      "accepting": "Accepting…",
-      "missing": "This invitation link is incomplete. Ask for a new one.",
-      "signInFirst": "Sign in with the phone number or email the invitation was sent to.",
-      "errors": {
-        "expired": "This invitation has expired or was already used.",
-        "wrongAccount": "This invitation was sent to a different phone number or email.",
-        "unknown": "Something went wrong. Please try again."
-      }
-    },
-    "settings": {
-      "title": "Settings",
-      "profile": {
-        "title": "Profile",
-        "description": "How you appear to your teammates.",
-        "phone": "Mobile number"
-      },
-      "organization": {
-        "title": "Organization",
-        "description": "Only owners and admins can change these settings.",
-        "name": "Organization name",
-        "slug": "Address"
-      },
-      "deleteAccount": {
-        "title": "Delete account",
-        "description": "Permanently delete your account and personal data. This can't be undone.",
-        "open": "Delete account",
-        "dialogTitle": "Delete your account?",
-        "consequences": "Your profile, photo and sign-in are deleted, and you leave every organization you belong to. Payment records are kept for accounting, without your name.",
-        "confirmLabel": "To confirm, type “{phrase}”",
-        "confirmPhrase": "delete my account",
-        "confirm": "Delete my account permanently",
-        "deleting": "Deleting…",
-        "failed": "Your account couldn't be deleted. Please try again.",
-        "checking": "Checking your organizations…",
-        "blockers": {
-          "title": "First, resolve your organizations",
-          "description": "You're the only owner of the organizations below. Make another member an owner, or delete the organization. Then you can delete your account.",
-          "handOver": "Make another member an owner",
-          "makeOwner": "Make owner",
-          "onlyMember": "You're the only member, so this organization can only be deleted.",
-          "unnamed": "Member without a name",
-          "deleteOrganization": "Delete organization",
-          "deleteConfirmLabel": "This deletes {name} with its projects, members and files. Type “{slug}” to confirm.",
-          "deleteConfirm": "Delete {name}",
-          "failed": "That didn't work. Please try again."
-        }
-      }
-    },
-    "errors": {
-      "loadFailed": "We couldn't load this page.",
-      "unknown": "Something went wrong. Please try again."
+    "home": {
+      "title": "The paper and the pen",
+      "lede": "The AUIB Society of Arts and Letters is a bilingual student society for literature, theatre and the arts.",
+      "nextEvents": "Coming up",
+      "noEvents": "No events announced yet.",
+      "allEvents": "All events",
+      "latestWaraq": "Latest from Waraq",
+      "warmth": "Warmth Meter",
+      "openCalls": "Open calls",
+      "join": "Join the Society",
+      "joinBody": "Membership is free and open to every AUIB student."
     }
   }
 }

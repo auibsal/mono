@@ -48,7 +48,11 @@ export const eventColumns =
  */
 export const publicEvents = async (
   client: Client,
-  { from = new Date(), limit = 50, programmeId }: { from?: Date; limit?: number; programmeId?: string } = {}
+  {
+    from = new Date(),
+    limit = 50,
+    programmeId,
+  }: { from?: Date; limit?: number; programmeId?: string } = {}
 ) => {
   let query = events(client)
     .from("events")
@@ -75,7 +79,11 @@ export const publicEvent = async (client: Client, eventSlug: string) =>
       .maybeSingle()
   );
 
-export const rsvp = async (client: Client, eventId: string, answers: Record<string, string> = {}) =>
+export const rsvp = async (
+  client: Client,
+  eventId: string,
+  answers: Record<string, string> = {}
+) =>
   unwrap(await events(client).rpc("rsvp", { answers, event_id: eventId })) as
     | "already"
     | "confirmed"
@@ -88,6 +96,8 @@ export const myRsvps = async (client: Client) =>
   unwrap(
     await events(client)
       .from("rsvps")
-      .select(`id, status, ticket_code, from_waitlist, event:events(${eventColumns})`)
+      .select(
+        `id, status, ticket_code, from_waitlist, event:events(${eventColumns})`
+      )
       .eq("status", "confirmed")
   );

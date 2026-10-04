@@ -1,5 +1,5 @@
-export * from "./client";
 export * as charity from "./charity";
+export * from "./client";
 export * as content from "./content";
 export * as events from "./events";
 export * as governance from "./governance";

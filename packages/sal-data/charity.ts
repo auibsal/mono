@@ -33,7 +33,9 @@ export interface CampaignProgress {
 /** Counted (signed-off) totals and the Warmth Meter. */
 export const campaignProgress = async (client: Client, campaignId?: string) =>
   (unwrap(
-    await client.schema("charity").rpc("campaign_progress", { campaign_id: campaignId })
+    await client
+      .schema("charity")
+      .rpc("campaign_progress", { campaign_id: campaignId })
   ) ?? []) as CampaignProgress[];
 
 export const activeCampaigns = async (client: Client) =>

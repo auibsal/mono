@@ -9,21 +9,35 @@ import { beforeAll, describe, expect, test } from "vitest";
 
 const url = process.env.API_URL ?? "http://127.0.0.1:54321";
 const publishableKey = process.env.PUBLISHABLE_KEY ?? "";
+// createClient needs a key even when the suite is skipped.
+const placeholderKey = "skipped";
 const secretKey = process.env.SECRET_KEY ?? "";
-const enabled = Boolean(process.env.SUPABASE_INTEGRATION && publishableKey && secretKey);
+const enabled = Boolean(
+  process.env.SUPABASE_INTEGRATION && publishableKey && secretKey
+);
 
 describe.skipIf(!enabled)("blind review over the Data API", () => {
   const stamp = Date.now();
   const password = "integration-test-1";
-  const admin = createClient<Database>(url, secretKey, { auth: { persistSession: false } });
+  const admin = createClient<Database>(url, secretKey || placeholderKey, {
+    auth: { persistSession: false },
+  });
   const as = async (email: string) => {
-    const client = createClient<Database>(url, publishableKey, { auth: { persistSession: false } });
+    const client = createClient<Database>(
+      url,
+      publishableKey || placeholderKey,
+      { auth: { persistSession: false } }
+    );
     const { error } = await client.auth.signInWithPassword({ email, password });
     expect(error).toBeNull();
     return client;
   };
   const people = {
-    author: { email: `author${stamp}@auib.edu.iq`, id: "", name: `Hidden Author ${stamp}` },
+    author: {
+      email: `author${stamp}@auib.edu.iq`,
+      id: "",
+      name: `Hidden Author ${stamp}`,
+    },
     manager: { email: `sm${stamp}@auib.edu.iq`, id: "", name: "Manager" },
     reader: { email: `reader${stamp}@auib.edu.iq`, id: "", name: "Reader" },
   };
@@ -31,21 +45,29 @@ describe.skipIf(!enabled)("blind review over the Data API", () => {
   let callId = "";
 
   beforeAll(async () => {
-    for (const person of Object.values(people)) {
-      const { data, error } = await admin.auth.admin.createUser({
-        email: person.email,
-        email_confirm: true,
-        password,
-        user_metadata: { full_name_en: person.name },
-      });
-      expect(error).toBeNull();
-      person.id = data.user?.id ?? "";
-    }
+    await Promise.all(
+      Object.values(people).map(async (person) => {
+        const { data, error } = await admin.auth.admin.createUser({
+          email: person.email,
+          email_confirm: true,
+          password,
+          user_metadata: { full_name_en: person.name },
+        });
+        expect(error).toBeNull();
+        person.id = data.user?.id ?? "";
+      })
+    );
 
     const journal = admin.schema("journal");
     const issue = await journal
       .from("issues")
-      .insert({ number: stamp % 1000, slug: `it-${stamp}`, title_ar: "ت", title_en: "IT", volume: 99 })
+      .insert({
+        number: stamp % 1000,
+        slug: `it-${stamp}`,
+        title_ar: "ت",
+        title_en: "IT",
+        volume: 99,
+      })
       .select("id")
       .single();
     issueId = issue.data?.id ?? "";
@@ -63,14 +85,34 @@ describe.skipIf(!enabled)("blind review over the Data API", () => {
       .single();
     callId = call.data?.id ?? "";
 
-    await admin.schema("access").from("role_assignments").insert([
-      { role: "submissions_manager", scope_id: issueId, scope_type: "issue", user_id: people.manager.id },
-      { role: "reader", scope_id: issueId, scope_type: "issue", user_id: people.reader.id },
-    ]);
-    await admin.schema("membership").from("pledges").insert([
-      { pledge_type: "human_authorship", user_id: people.author.id, version: "1" },
-      { pledge_type: "member", user_id: people.author.id, version: "1" },
-    ]);
+    await admin
+      .schema("access")
+      .from("role_assignments")
+      .insert([
+        {
+          role: "submissions_manager",
+          scope_id: issueId,
+          scope_type: "issue",
+          user_id: people.manager.id,
+        },
+        {
+          role: "reader",
+          scope_id: issueId,
+          scope_type: "issue",
+          user_id: people.reader.id,
+        },
+      ]);
+    await admin
+      .schema("membership")
+      .from("pledges")
+      .insert([
+        {
+          pledge_type: "human_authorship",
+          user_id: people.author.id,
+          version: "1",
+        },
+        { pledge_type: "member", user_id: people.author.id, version: "1" },
+      ]);
   });
 
   test("the reader's responses carry no author identity", async () => {
@@ -93,11 +135,25 @@ describe.skipIf(!enabled)("blind review over the Data API", () => {
 
     const manager = await as(people.manager.email);
     const journal = manager.schema("journal");
-    await journal.rpc("transition_submission", { id: submissionId, to_status: "intake_check" });
-    await journal.rpc("transition_submission", { id: submissionId, to_status: "in_review" });
-    const key = await journal.from("blind_keys").select("blind_entry_id").eq("submission_id", submissionId).single();
+    await journal.rpc("transition_submission", {
+      id: submissionId,
+      to_status: "intake_check",
+    });
+    await journal.rpc("transition_submission", {
+      id: submissionId,
+      to_status: "in_review",
+    });
+    const key = await journal
+      .from("blind_keys")
+      .select("blind_entry_id")
+      .eq("submission_id", submissionId)
+      .single();
     const entryId = key.data?.blind_entry_id ?? "";
-    const assigned = await journal.rpc("assign_reader", { blind_entry_id: entryId, read_number: 1, reader_id: people.reader.id });
+    const assigned = await journal.rpc("assign_reader", {
+      blind_entry_id: entryId,
+      read_number: 1,
+      reader_id: people.reader.id,
+    });
     expect(assigned.error).toBeNull();
 
     const reader = await as(people.reader.email);

@@ -15,12 +15,17 @@ const testsDir = join(root, "tests", "database");
 const START = "-- <preamble>";
 const END = "-- </preamble>";
 
-const preamble = (await readFile(join(root, "test-helpers", "preamble.sql"), "utf8")).trim();
+const preamble = (
+  await readFile(join(root, "test-helpers", "preamble.sql"), "utf8")
+).trim();
 const check = process.argv.includes("--check");
 const stale: string[] = [];
 
-for (const file of (await readdir(testsDir)).filter((name) => name.endsWith(".sql"))) {
+const files = (await readdir(testsDir)).filter((name) => name.endsWith(".sql"));
+
+for (const file of files) {
   const path = join(testsDir, file);
+  // biome-ignore lint/performance/noAwaitInLoops: a handful of files, read in order
   const source = await readFile(path, "utf8");
   const start = source.indexOf(START);
   const end = source.indexOf(END);
@@ -40,6 +45,8 @@ for (const file of (await readdir(testsDir)).filter((name) => name.endsWith(".sq
 }
 
 if (check && stale.length > 0) {
-  console.error(`Stale pgTAP preamble in: ${stale.join(", ")}. Run db:test:sync.`);
+  console.error(
+    `Stale pgTAP preamble in: ${stale.join(", ")}. Run db:test:sync.`
+  );
   process.exit(1);
 }

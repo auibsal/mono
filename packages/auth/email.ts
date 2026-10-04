@@ -8,7 +8,8 @@ const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
 export const normalizeEmail = (email: string) => email.trim().toLowerCase();
 
-export const isValidEmail = (email: string) => EMAIL.test(normalizeEmail(email));
+export const isValidEmail = (email: string) =>
+  EMAIL.test(normalizeEmail(email));
 
 export const isAuibEmail = (email: string) =>
   normalizeEmail(email).split("@")[1] === AUIB_DOMAIN;

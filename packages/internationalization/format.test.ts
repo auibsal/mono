@@ -87,8 +87,8 @@ describe("SAL copy rules", () => {
   });
 
   test("Arabic keeps Latin digits", () => {
-    expect(formatLongDate(evening, "ar")).toMatch(/13/);
-    expect(formatClock(evening, "ar")).toMatch(/6:00/);
+    expect(formatLongDate(evening, "ar")).toContain("13");
+    expect(formatClock(evening, "ar")).toContain("6:00");
   });
 
   test("money reads '50,000 IQD'", () => {

@@ -7,18 +7,41 @@ import sanitizeHtml from "sanitize-html";
  */
 const options: sanitizeHtml.IOptions = {
   allowedAttributes: {
-    a: ["href", "title", "lang", "dir", "rel"],
     "*": ["lang", "dir"],
+    a: ["href", "title", "lang", "dir", "rel"],
   },
   allowedSchemes: ["https", "mailto"],
   allowedTags: [
-    "p", "br", "hr", "h2", "h3", "h4", "blockquote", "ul", "ol", "li",
-    "strong", "b", "em", "i", "u", "s", "sup", "sub", "a", "span",
-    "figure", "figcaption", "pre", "code",
+    "p",
+    "br",
+    "hr",
+    "h2",
+    "h3",
+    "h4",
+    "blockquote",
+    "ul",
+    "ol",
+    "li",
+    "strong",
+    "b",
+    "em",
+    "i",
+    "u",
+    "s",
+    "sup",
+    "sub",
+    "a",
+    "span",
+    "figure",
+    "figcaption",
+    "pre",
+    "code",
   ],
   disallowedTagsMode: "discard",
   transformTags: {
-    a: sanitizeHtml.simpleTransform("a", { rel: "noopener noreferrer nofollow" }),
+    a: sanitizeHtml.simpleTransform("a", {
+      rel: "noopener noreferrer nofollow",
+    }),
   },
 };
 

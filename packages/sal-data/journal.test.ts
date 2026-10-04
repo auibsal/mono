@@ -13,9 +13,19 @@ import {
   submissionSchema,
 } from "./journal";
 
-const migrations = join(import.meta.dirname, "..", "database", "supabase", "migrations");
+const RANDOM_PDF_PATH = /^abc\/[0-9a-f-]{36}\.pdf$/;
+const migrations = join(
+  import.meta.dirname,
+  "..",
+  "database",
+  "supabase",
+  "migrations"
+);
 const journalSql = readFileSync(
-  join(migrations, readdirSync(migrations).find((f) => f.endsWith("_journal.sql")) ?? ""),
+  join(
+    migrations,
+    readdirSync(migrations).find((f) => f.endsWith("_journal.sql")) ?? ""
+  ),
   "utf8"
 );
 
@@ -39,14 +49,20 @@ describe("categories", () => {
 describe("rubric v2", () => {
   test("limits match the database check constraints", () => {
     for (const key of criteria) {
-      expect(journalSql).toContain(`${key} smallint not null check (${key} between ${rubric[key].min} and ${rubric[key].max})`);
+      expect(journalSql).toContain(
+        `${key} smallint not null check (${key} between ${rubric[key].min} and ${rubric[key].max})`
+      );
     }
   });
 
   test("weights match the generated total column", () => {
-    const formula = criteria.map((key) => `${key} * ${rubric[key].weight / rubric[key].max}`).join(" + ");
+    const formula = criteria
+      .map((key) => `${key} * ${rubric[key].weight / rubric[key].max}`)
+      .join(" + ");
     expect(journalSql.replace(/\s+/g, " ")).toContain(formula);
-    expect(criteria.reduce((sum, key) => sum + rubric[key].weight, 0)).toBe(100);
+    expect(criteria.reduce((sum, key) => sum + rubric[key].weight, 0)).toBe(
+      100
+    );
   });
 
   test("the zod schema rejects out-of-range scores", () => {
@@ -58,8 +74,12 @@ describe("rubric v2", () => {
   });
 
   test("totals, bands and the third-read rule", () => {
-    expect(rubricTotal({ archive_factor: 5, craft: 5, depth: 5, voice: 5 })).toBe(100);
-    expect(rubricTotal({ archive_factor: 1, craft: 1, depth: 1, voice: 1 })).toBe(20);
+    expect(
+      rubricTotal({ archive_factor: 5, craft: 5, depth: 5, voice: 5 })
+    ).toBe(100);
+    expect(
+      rubricTotal({ archive_factor: 1, craft: 1, depth: 1, voice: 1 })
+    ).toBe(20);
     expect(band(80)).toBe("strong");
     expect(band(65)).toBe("consider");
     expect(band(64)).toBe("decline");
@@ -77,21 +97,32 @@ describe("submission form", () => {
   };
 
   test("a translation needs its source and a rights note", () => {
-    expect(submissionSchema.safeParse({ ...base, category: "translation" }).success).toBe(false);
     expect(
-      submissionSchema.safeParse({ ...base, category: "translation", rights_note: "PD", source_text: "x" }).success
+      submissionSchema.safeParse({ ...base, category: "translation" }).success
+    ).toBe(false);
+    expect(
+      submissionSchema.safeParse({
+        ...base,
+        category: "translation",
+        rights_note: "PD",
+        source_text: "x",
+      }).success
     ).toBe(true);
   });
 
   test("the Human Authorship pledge is required", () => {
     expect(
-      submissionSchema.safeParse({ ...base, category: "poetry", human_authorship_confirmed: false }).success
+      submissionSchema.safeParse({
+        ...base,
+        category: "poetry",
+        human_authorship_confirmed: false,
+      }).success
     ).toBe(false);
   });
 
   test("files get random names under the submission folder", () => {
     const path = submissionObjectPath("abc", "application/pdf");
-    expect(path).toMatch(/^abc\/[0-9a-f-]{36}\.pdf$/);
+    expect(path).toMatch(RANDOM_PDF_PATH);
     expect(path).not.toBe(submissionObjectPath("abc", "application/pdf"));
   });
 });

@@ -33,7 +33,9 @@ export const localized = <T extends Record<string, unknown>>(
 ): string => {
   const primary = row[`${field}_${locale === "ar" ? "ar" : "en"}`];
   const fallback = row[`${field}_${locale === "ar" ? "en" : "ar"}`];
-  return (typeof primary === "string" && primary) ||
+  return (
+    (typeof primary === "string" && primary) ||
     (typeof fallback === "string" && fallback) ||
-    "";
+    ""
+  );
 };

@@ -3,9 +3,11 @@ import { type Client, unwrap } from "./client";
 
 export const BIO_MAX_WORDS = 50;
 
+const WHITESPACE = /\s+/;
+
 export const wordCount = (value: string) => {
   const trimmed = value.trim();
-  return trimmed ? trimmed.split(/\s+/).length : 0;
+  return trimmed ? trimmed.split(WHITESPACE).length : 0;
 };
 
 export const profileSchema = z.object({
@@ -36,7 +38,9 @@ export interface MemberStatus {
   voting_member: boolean;
 }
 
-export const myStatus = async (client: Client): Promise<MemberStatus | null> => {
+export const myStatus = async (
+  client: Client
+): Promise<MemberStatus | null> => {
   const rows = unwrap(await membership(client).rpc("my_status"));
   return (rows?.[0] as MemberStatus | undefined) ?? null;
 };
@@ -44,8 +48,11 @@ export const myStatus = async (client: Client): Promise<MemberStatus | null> => 
 /** Constitution: a Voting Member has this many activities this or last semester. */
 export const VOTING_ACTIVITIES = 2;
 
-export const acceptPledge = async (client: Client, kind: "human_authorship" | "member", version: string) =>
-  unwrap(await membership(client).rpc("accept_pledge", { kind, version }));
+export const acceptPledge = async (
+  client: Client,
+  kind: "human_authorship" | "member",
+  version: string
+) => unwrap(await membership(client).rpc("accept_pledge", { kind, version }));
 
 export const calendarToken = async (client: Client) =>
   unwrap(await membership(client).rpc("calendar_token"));

@@ -12,7 +12,8 @@ export const spendingRequestSchema = z.object({
 });
 
 /** Above the highest lead limit, an adopted Council resolution is required. */
-export const needsCouncilVote = (amountIqd: number) => amountIqd > highestSpendingLimitIqd;
+export const needsCouncilVote = (amountIqd: number) =>
+  amountIqd > highestSpendingLimitIqd;
 
 export const RON = "RON" as const;
 
@@ -21,16 +22,23 @@ export const ballotSchema = z.record(
   z.uuid(),
   z
     .array(z.union([z.uuid(), z.literal(RON)]))
-    .refine((ranks) => new Set(ranks).size === ranks.length, { message: "duplicate_rank" })
+    .refine((ranks) => new Set(ranks).size === ranks.length, {
+      message: "duplicate_rank",
+    })
 );
 
 export type Ballot = z.infer<typeof ballotSchema>;
 
-export const castBallot = async (client: Client, electionId: string, ballot: Ballot) =>
+export const castBallot = async (
+  client: Client,
+  electionId: string,
+  ballot: Ballot
+) =>
   unwrap(
-    await client
-      .schema("governance")
-      .rpc("cast_ballot", { choices: ballotSchema.parse(ballot), election_id: electionId })
+    await client.schema("governance").rpc("cast_ballot", {
+      choices: ballotSchema.parse(ballot),
+      election_id: electionId,
+    })
   );
 
 export const councilRoster = async (client: Client) =>

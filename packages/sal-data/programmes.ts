@@ -28,7 +28,13 @@ export const youtubeEmbedUrl = (youtubeId: string) =>
   `https://www.youtube-nocookie.com/embed/${encodeURIComponent(youtubeId)}`;
 
 export const sixWordsWall = async (client: Client, limit = 200) =>
-  unwrap(await client.schema("programmes").rpc("six_words_wall", { max_results: limit })) ?? [];
+  unwrap(
+    await client
+      .schema("programmes")
+      .rpc("six_words_wall", { max_results: limit })
+  ) ?? [];
 
 export const programmes = async (client: Client) =>
-  unwrap(await client.schema("core").from("programmes").select("*").order("sort"));
+  unwrap(
+    await client.schema("core").from("programmes").select("*").order("sort")
+  );

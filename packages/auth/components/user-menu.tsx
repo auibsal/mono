@@ -64,9 +64,7 @@ export const UserMenu = ({
         <Button className="h-auto gap-2 px-2 py-1.5" variant="ghost">
           <Avatar className="size-7">
             {avatarUrl ? <AvatarImage alt="" src={avatarUrl} /> : null}
-            <AvatarFallback>
-              {getInitials(name ?? contact)}
-            </AvatarFallback>
+            <AvatarFallback>{getInitials(name ?? contact)}</AvatarFallback>
           </Avatar>
           {name ? (
             <span className="truncate text-start text-sm">{name}</span>

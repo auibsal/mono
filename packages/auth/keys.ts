@@ -16,7 +16,8 @@ export const keys = () =>
     // Treat KEY="" (as in .env.example) as unset.
     emptyStringAsUndefined: true,
     runtimeEnv: {
-      NEXT_PUBLIC_AUTH_COOKIE_DOMAIN: process.env.NEXT_PUBLIC_AUTH_COOKIE_DOMAIN,
+      NEXT_PUBLIC_AUTH_COOKIE_DOMAIN:
+        process.env.NEXT_PUBLIC_AUTH_COOKIE_DOMAIN,
       NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:
         process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
       NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,

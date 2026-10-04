@@ -8,7 +8,10 @@ export const categories = Constants.journal.Enums.category;
 export type Category = Enums<{ schema: "journal" }, "category">;
 
 export const submissionStatuses = Constants.journal.Enums.submission_status;
-export type SubmissionStatus = Enums<{ schema: "journal" }, "submission_status">;
+export type SubmissionStatus = Enums<
+  { schema: "journal" },
+  "submission_status"
+>;
 
 /** Board columns, in order (Accepted, Declined and Withdrawn share the last). */
 export const boardColumns = [
@@ -19,7 +22,11 @@ export const boardColumns = [
   "selection",
 ] as const satisfies readonly SubmissionStatus[];
 
-export const finalStatuses = ["accepted", "declined", "withdrawn"] as const satisfies readonly SubmissionStatus[];
+export const finalStatuses = [
+  "accepted",
+  "declined",
+  "withdrawn",
+] as const satisfies readonly SubmissionStatus[];
 
 /**
  * Rubric v2. Each criterion 1–5, weighted to a total out of 100 — the same
@@ -34,7 +41,12 @@ export const rubric = {
 } as const;
 
 export type Criterion = keyof typeof rubric;
-export const criteria = ["craft", "voice", "depth", "archive_factor"] as const satisfies readonly Criterion[];
+export const criteria = [
+  "craft",
+  "voice",
+  "depth",
+  "archive_factor",
+] as const satisfies readonly Criterion[];
 
 const criterion = (key: Criterion) =>
   z.number().int().min(rubric[key].min).max(rubric[key].max);
@@ -51,7 +63,10 @@ export type ScoreInput = z.infer<typeof scoreSchema>;
 
 /** Same formula as the database: score × weight ÷ 5. */
 export const rubricTotal = (score: Pick<ScoreInput, Criterion>) =>
-  criteria.reduce((sum, key) => sum + (score[key] * rubric[key].weight) / rubric[key].max, 0);
+  criteria.reduce(
+    (sum, key) => sum + (score[key] * rubric[key].weight) / rubric[key].max,
+    0
+  );
 
 /** Third read when the two blind reads differ by more than this. */
 export const THIRD_READ_SPREAD = 20;
@@ -98,10 +113,18 @@ export const submissionSchema = z
   .superRefine((value, context) => {
     if (value.category === "translation") {
       if (!value.source_text?.trim()) {
-        context.addIssue({ code: "custom", message: "source_required", path: ["source_text"] });
+        context.addIssue({
+          code: "custom",
+          message: "source_required",
+          path: ["source_text"],
+        });
       }
       if (!value.rights_note?.trim()) {
-        context.addIssue({ code: "custom", message: "rights_required", path: ["rights_note"] });
+        context.addIssue({
+          code: "custom",
+          message: "rights_required",
+          path: ["rights_note"],
+        });
       }
     }
   });
@@ -109,11 +132,15 @@ export const submissionSchema = z
 export type SubmissionInput = z.infer<typeof submissionSchema>;
 
 /** A random object name for the private bucket: <submission id>/<random>.<ext>. */
-export const submissionObjectPath = (submissionId: string, mimeType: string) => {
+export const submissionObjectPath = (
+  submissionId: string,
+  mimeType: string
+) => {
   const ext =
     {
       "application/pdf": "pdf",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+        "docx",
       "image/jpeg": "jpg",
       "image/png": "png",
     }[mimeType] ?? "bin";
@@ -124,11 +151,17 @@ export const submissionObjectPath = (submissionId: string, mimeType: string) => 
 
 const journal = (client: Client) => client.schema("journal");
 
-export const createSubmission = async (client: Client, input: SubmissionInput) =>
+export const createSubmission = async (
+  client: Client,
+  input: SubmissionInput
+) =>
   unwrap(
     await journal(client)
       .from("submissions")
-      .insert({ ...input, body_html: input.body_html ? sanitizeRichText(input.body_html) : null })
+      .insert({
+        ...input,
+        body_html: input.body_html ? sanitizeRichText(input.body_html) : null,
+      })
       .select("id")
       .single()
   );
@@ -137,7 +170,9 @@ export const mySubmissions = async (client: Client) =>
   unwrap(
     await journal(client)
       .from("submissions")
-      .select("id, title, category, status, created_at, call_id, intake_note, intake_returned_at")
+      .select(
+        "id, title, category, status, created_at, call_id, intake_note, intake_returned_at"
+      )
       .order("created_at", { ascending: false })
   );
 
@@ -164,20 +199,40 @@ export const latestPieces = async (client: Client, limit = 6) =>
   unwrap(
     await journal(client)
       .from("pieces")
-      .select("id, slug, title_en, title_ar, category, language, members_only, published_at, contributor:contributors(slug, name_en, name_ar)")
+      .select(
+        "id, slug, title_en, title_ar, category, language, members_only, published_at, contributor:contributors(slug, name_en, name_ar)"
+      )
       .order("published_at", { ascending: false })
       .limit(limit)
   );
 
-export const transition = async (client: Client, id: string, to: SubmissionStatus, note?: string) =>
-  unwrap(await journal(client).rpc("transition_submission", { id, note, to_status: to }));
+export const transition = async (
+  client: Client,
+  id: string,
+  to: SubmissionStatus,
+  note?: string
+) =>
+  unwrap(
+    await journal(client).rpc("transition_submission", {
+      id,
+      note,
+      to_status: to,
+    })
+  );
 
-export const submitScore = async (client: Client, assignmentId: string, input: ScoreInput) => {
+export const submitScore = async (
+  client: Client,
+  assignmentId: string,
+  input: ScoreInput
+) => {
   const score = scoreSchema.parse(input);
   return unwrap(
     await journal(client)
       .from("scores")
-      .upsert({ assignment_id: assignmentId, ...score }, { onConflict: "assignment_id" })
+      .upsert(
+        { assignment_id: assignmentId, ...score },
+        { onConflict: "assignment_id" }
+      )
       .select("total")
       .single()
   );
