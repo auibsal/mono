@@ -1,0 +1,36 @@
+{
+  "name": "@repo/internationalization",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./index.ts",
+    "./config": "./config.ts",
+    "./format": "./format.ts",
+    "./navigation": "./navigation.ts",
+    "./proxy": "./proxy.ts",
+    "./request": "./request.ts",
+    "./routing": "./routing.ts",
+    "./messages/*": "./messages/*"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@date-fns/tz": "^1.5.0",
+    "@repo/config": "workspace:*",
+    "next-intl": "^4.14.9",
+    "react": "19.3.0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "25.3.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "date-fns": "^4.1.0",
+    "next": "16.3.8",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
+  }
+}

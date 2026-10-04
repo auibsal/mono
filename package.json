@@ -1,0 +1,57 @@
+{
+  "name": "monorepo-template",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "analyze": "turbo analyze",
+    "boundaries": "turbo boundaries",
+    "build": "turbo build",
+    "build:native": "turbo build:native --filter=app",
+    "bump-deps": "bunx npm-check-updates --deep -u && bun install",
+    "bump-ui": "bunx shadcn@latest add --all --overwrite -c packages/design-system",
+    "cap:sync": "turbo cap:sync --filter=app",
+    "check": "ultracite check",
+    "check:i18n": "bun scripts/check-i18n.ts",
+    "check:placeholders": "bun scripts/check-placeholders.ts",
+    "check:rtl": "bun scripts/check-rtl.ts",
+    "clean": "git clean -xdf node_modules",
+    "db:reset": "bun run --cwd packages/database db:reset",
+    "db:start": "bun run --cwd packages/database db:start",
+    "db:stop": "bun run --cwd packages/database db:stop",
+    "db:test": "bun run --cwd packages/database db:test",
+    "db:types": "bun run --cwd packages/database db:types",
+    "dev": "turbo dev",
+    "fix": "ultracite fix",
+    "gen:package": "turbo gen package",
+    "init": "bun scripts/init.ts",
+    "test": "turbo test",
+    "test:template": "vitest run --dir scripts",
+    "typecheck": "turbo typecheck"
+  },
+  "overrides": {
+    "parse5": "^7.2.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.9",
+    "@clack/prompts": "^1.1.0",
+    "@repo/typescript-config": "workspace:*",
+    "@turbo/gen": "^2.8.14",
+    "@types/node": "25.3.5",
+    "turbo": "^2.8.14",
+    "typescript": "^7.0.2",
+    "ultracite": "7.12.2",
+    "vitest": "^5.0.3"
+  },
+  "packageManager": "bun@1.3.10",
+  "engines": {
+    "node": ">=22"
+  },
+  "trustedDependencies": [
+    "supabase"
+  ]
+}

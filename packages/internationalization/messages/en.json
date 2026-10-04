@@ -1,0 +1,504 @@
+{
+  "common": {
+    "language": "Language",
+    "switchLanguage": "Switch language",
+    "theme": {
+      "toggle": "Toggle theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "loading": "Loading…",
+    "error": "Something went wrong.",
+    "retry": "Try again",
+    "back": "Back",
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "optional": "Optional",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "errorDescription": "An unexpected error occurred. Please try again.",
+    "notFound": {
+      "title": "Page not found",
+      "description": "The page you're looking for doesn't exist or has moved.",
+      "home": "Go to the home page"
+    },
+    "status": {
+      "operational": "All systems normal",
+      "partial": "Partial outage",
+      "degraded": "Degraded performance",
+      "unknown": "Unable to fetch status"
+    },
+    "ui": {
+      "close": "Close",
+      "loading": "Loading",
+      "more": "More",
+      "morePages": "More pages",
+      "nextPage": "Go to next page",
+      "nextSlide": "Next slide",
+      "previousPage": "Go to previous page",
+      "previousSlide": "Previous slide",
+      "sidebar": "Sidebar",
+      "sidebarDescription": "Displays the mobile sidebar.",
+      "toggleSidebar": "Toggle sidebar"
+    }
+  },
+  "auth": {
+    "changePhone": "Use a different number",
+    "codeLabel": "Verification code",
+    "codeSentTo": "We sent a 6-digit code to {phone}.",
+    "continue": "Continue",
+    "createOrganization": "Create organization",
+    "errors": {
+      "captcha_failed": "Please complete the security check and try again.",
+      "delivery_failed": "We couldn't send the code. Please try again shortly.",
+      "invalid_code": "That code is incorrect or has expired.",
+      "invalid_phone": "Enter a valid mobile number, e.g. 0770 123 4567.",
+      "rate_limited": "Too many attempts. Please wait a moment and try again.",
+      "signups_disabled": "New sign-ups are currently closed.",
+      "unknown": "Something went wrong. Please try again."
+    },
+    "fullNameLabel": "Full name",
+    "organizations": "Organizations",
+    "phoneHint": "We'll text you a verification code.",
+    "phoneLabel": "Mobile number",
+    "resend": "Resend code",
+    "resendIn": "Resend code in {seconds}s",
+    "sending": "Sending…",
+    "signIn": {
+      "title": "Welcome back",
+      "description": "Sign in with your mobile number.",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign up",
+      "deleted": "Your account has been deleted."
+    },
+    "signOut": "Sign out",
+    "signUp": {
+      "title": "Create an account",
+      "description": "Sign up with your mobile number.",
+      "haveAccount": "Already have an account?",
+      "signInLink": "Sign in"
+    },
+    "verify": "Verify",
+    "verifying": "Verifying…",
+    "callback": {
+      "title": "Signing you in…",
+      "failed": "We couldn't complete the sign-in. Please try again.",
+      "retry": "Back to sign in"
+    }
+  },
+  "billing": {
+    "pay": "Pay {amount}",
+    "webOnly": "Purchases are made on our website. Sign in there to manage your plan.",
+    "status": {
+      "active": "Active",
+      "past_due": "Payment due",
+      "incomplete": "Awaiting payment",
+      "canceled": "Canceled",
+      "expired": "Expired"
+    },
+    "title": "Billing",
+    "description": "Your plan and payments.",
+    "currentPlan": "Current plan",
+    "noPlan": "You don't have a plan yet.",
+    "renews": "Renews on {date}",
+    "choosePlan": "Choose a plan",
+    "perMonth": "/ month",
+    "perYear": "/ year",
+    "current": "Current plan",
+    "redirecting": "Opening the payment page…",
+    "payments": "Payment history",
+    "noPayments": "No payments yet.",
+    "paymentStatus": {
+      "pending": "Pending",
+      "paid": "Paid",
+      "failed": "Failed",
+      "canceled": "Canceled",
+      "expired": "Expired",
+      "refunded": "Refunded"
+    },
+    "managersOnly": "Only owners and admins can manage billing.",
+    "noPlans": "No plans are available yet.",
+    "errors": {
+      "checkout": "We couldn't start the payment. Please try again."
+    }
+  },
+  "web": {
+    "global": {
+      "primaryCta": "Book a call",
+      "secondaryCta": "Sign up"
+    },
+    "header": {
+      "home": "Home",
+      "product": {
+        "title": "Product",
+        "description": "Managing a small business today is already tough.",
+        "pricing": "Pricing"
+      },
+      "blog": "Blog",
+      "docs": "Docs",
+      "contact": "Contact",
+      "signIn": "Sign in",
+      "signUp": "Get started"
+    },
+    "home": {
+      "meta": {
+        "title": "A better way to run your business",
+        "description": "Replace this description with a short summary of what your product does and who it is for."
+      },
+      "hero": {
+        "announcement": "Read our latest article",
+        "contact": "Get in touch",
+        "signUp": "Sign up"
+      },
+      "cases": {
+        "title": "Empowering Success Stories Across the Globe",
+        "logo": "Logo {number}"
+      },
+      "features": {
+        "title": "Powerful Tools for Modern Business",
+        "description": "Discover how our cutting-edge features can revolutionize your daily operations.",
+        "items": [
+          {
+            "title": "Streamlined Operations",
+            "description": "Our platform streamlines operations, reduces complexity, and helps small businesses thrive in the modern economy."
+          },
+          {
+            "title": "Real-Time Analytics",
+            "description": "Get instant insights into your business performance with comprehensive analytics and reporting tools."
+          },
+          {
+            "title": "Automated Workflows",
+            "description": "Save time and reduce errors with intelligent automation that handles repetitive tasks for you."
+          },
+          {
+            "title": "Secure Transactions",
+            "description": "Rest easy knowing your business operations are protected by enterprise-grade security and encryption."
+          }
+        ]
+      },
+      "stats": {
+        "title": "Real Results, Real Impact",
+        "description": "Replace these numbers with your own metrics.",
+        "items": [
+          {
+            "title": "Monthly active users",
+            "metric": "100000",
+            "delta": "10",
+            "type": "unit"
+          },
+          {
+            "title": "Daily active users",
+            "metric": "10000",
+            "delta": "-5",
+            "type": "unit"
+          },
+          {
+            "title": "Monthly recurring revenue",
+            "metric": "100000",
+            "delta": "20",
+            "type": "currency"
+          },
+          {
+            "title": "Cost per acquisition",
+            "metric": "100",
+            "delta": "-10",
+            "type": "currency"
+          }
+        ]
+      },
+      "testimonials": {
+        "title": "Hear from Our Thriving Community",
+        "items": [
+          {
+            "title": "Placeholder testimonial 1",
+            "description": "Replace this quote with real feedback from a customer, with their permission.",
+            "author": {
+              "name": "Customer name",
+              "image": ""
+            }
+          },
+          {
+            "title": "Placeholder testimonial 2",
+            "description": "Replace this quote with real feedback from a customer, with their permission.",
+            "author": {
+              "name": "Customer name",
+              "image": ""
+            }
+          },
+          {
+            "title": "Placeholder testimonial 3",
+            "description": "Replace this quote with real feedback from a customer, with their permission.",
+            "author": {
+              "name": "Customer name",
+              "image": ""
+            }
+          }
+        ],
+        "by": "By"
+      },
+      "faq": {
+        "title": "Common Questions, Expert Answers",
+        "description": "Answers to the questions customers ask most often. Replace these with your own.",
+        "cta": "Any questions? Reach out",
+        "items": [
+          {
+            "question": "What does the product do?",
+            "answer": "Replace this answer with a one-paragraph description of your product."
+          },
+          {
+            "question": "How do I pay?",
+            "answer": "We accept ZainCash, FIB, Qi Card and other local payment methods through our secure checkout."
+          },
+          {
+            "question": "Is my data secure?",
+            "answer": "Data is encrypted in transit and at rest, and every account can only access its own organization's data."
+          },
+          {
+            "question": "How do I get support?",
+            "answer": "Contact our support team and we will get back to you as soon as possible."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Start Your Business Transformation",
+        "description": "Join thousands of forward-thinking businesses who have already modernized their operations. Our platform offers the tools, support, and efficiency you need to succeed in today's competitive market. Get started in minutes."
+      },
+      "beta": "Beta feature now available"
+    },
+    "blog": {
+      "meta": {
+        "title": "Blog",
+        "description": "Thoughts, ideas, and opinions."
+      },
+      "back": "Back to blog",
+      "published": "Published",
+      "readingTime": "{count, plural, one {{minutes} min read} other {{minutes} min read}}",
+      "sections": "Sections",
+      "tags": "Tags"
+    },
+    "contact": {
+      "meta": {
+        "title": "Let's Talk About Your Business",
+        "description": "Schedule a consultation with our team to discuss how we can help streamline your operations and drive growth for your business."
+      },
+      "hero": {
+        "benefits": [
+          {
+            "title": "Personalized Consultation",
+            "description": "Get tailored solutions and expert advice specific to your business needs."
+          },
+          {
+            "title": "Seamless Integration",
+            "description": "We seamlessly integrate with your existing systems to ensure a smooth transition and minimal disruption."
+          },
+          {
+            "title": "Expert Guidance",
+            "description": "Our team of experts will guide you through the process, ensuring you get the most out of our platform."
+          }
+        ],
+        "form": {
+          "title": "Book a meeting",
+          "date": "Preferred date",
+          "pickDate": "Pick a date",
+          "name": "Full name",
+          "email": "Email",
+          "message": "How can we help?",
+          "cta": "Book the meeting",
+          "sending": "Sending…",
+          "success": "Thanks! We'll be in touch shortly.",
+          "errors": {
+            "invalid": "Please enter your name, a valid email and a message.",
+            "rate_limited": "You've already sent a message today. Please try again tomorrow.",
+            "unavailable": "The contact form isn't available right now. Please email us instead.",
+            "unknown": "Something went wrong. Please try again."
+          }
+        }
+      }
+    },
+    "pricing": {
+      "meta": {
+        "title": "Pricing",
+        "description": "Simple plans that grow with your business."
+      },
+      "title": "Prices that make sense",
+      "description": "Pay monthly in Iraqi dinars with ZainCash, FIB, Qi Card or other local payment methods.",
+      "perMonth": "/ month",
+      "custom": "Custom",
+      "tryIt": "Try it",
+      "contactUs": "Contact us",
+      "featuresTitle": "Features",
+      "included": "Included",
+      "notIncluded": "Not included",
+      "members": "{count, plural, one {{members} member} other {{members} members}}",
+      "plans": {
+        "starter": {
+          "name": "Starter",
+          "description": "Everything a small team needs to get going."
+        },
+        "growth": {
+          "name": "Growth",
+          "description": "For growing businesses with more people and more work."
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "description": "Custom terms, onboarding and support for larger organizations."
+        }
+      },
+      "features": {
+        "sso": "Single sign-on",
+        "ai": "AI assistant",
+        "history": "Version history",
+        "members": "Team members",
+        "collaboration": "Real-time collaboration",
+        "automation": "Workflow automation"
+      }
+    },
+    "footer": {
+      "home": "Home",
+      "pages": "Pages",
+      "blog": "Blog",
+      "docs": "Docs",
+      "legal": "Legal"
+    },
+    "legal": {
+      "back": "Back to home"
+    }
+  },
+  "app": {
+    "nav": {
+      "label": "Navigation",
+      "dashboard": "Projects",
+      "search": "Search",
+      "billing": "Billing",
+      "settings": "Settings",
+      "webhooks": "Webhooks"
+    },
+    "roles": {
+      "owner": "Owner",
+      "admin": "Admin",
+      "member": "Member"
+    },
+    "search": {
+      "placeholder": "Search projects",
+      "submit": "Search",
+      "title": "Search",
+      "resultsFor": "Results for “{query}”",
+      "empty": "No projects match “{query}”.",
+      "prompt": "Type a project name to search."
+    },
+    "dashboard": {
+      "title": "Projects",
+      "description": "Everything your organization is working on.",
+      "empty": {
+        "title": "No projects yet",
+        "description": "Create your first project to get started."
+      },
+      "newProject": "New project",
+      "projectName": "Project name",
+      "create": "Create",
+      "creating": "Creating…",
+      "createdAt": "Created {date}"
+    },
+    "onboarding": {
+      "title": "Welcome to {name}",
+      "description": "Let's set up your account. It only takes a minute.",
+      "stepOf": "Step {current} of {total}",
+      "profile": {
+        "title": "What should we call you?",
+        "description": "Your name is shown to your teammates.",
+        "fullName": "Full name",
+        "language": "Preferred language",
+        "languageHint": "Used in the app and in the messages we send you.",
+        "submit": "Continue"
+      },
+      "invitations": {
+        "title": "You've been invited",
+        "description": "Join an organization that invited you, or create your own below.",
+        "join": "Join",
+        "joining": "Joining…",
+        "as": "as {role}"
+      },
+      "organization": {
+        "title": "Create your organization",
+        "description": "An organization holds your team, projects and billing.",
+        "name": "Organization name",
+        "namePlaceholder": "e.g. Al-Rafidain Trading",
+        "slug": "Address",
+        "slugHint": "Lowercase English letters, numbers and dashes. Used in links.",
+        "submit": "Create organization",
+        "submitting": "Creating…"
+      },
+      "errors": {
+        "nameRequired": "Enter a name.",
+        "slugInvalid": "Use 2–64 lowercase letters, numbers and single dashes.",
+        "slugTaken": "That address is already taken. Try another one.",
+        "unknown": "Something went wrong. Please try again."
+      }
+    },
+    "organizations": {
+      "new": {
+        "title": "New organization",
+        "description": "Create another organization for a different team or business."
+      }
+    },
+    "invite": {
+      "title": "Accept invitation",
+      "description": "You've been invited to join an organization.",
+      "accept": "Accept invitation",
+      "accepting": "Accepting…",
+      "missing": "This invitation link is incomplete. Ask for a new one.",
+      "signInFirst": "Sign in with the phone number or email the invitation was sent to.",
+      "errors": {
+        "expired": "This invitation has expired or was already used.",
+        "wrongAccount": "This invitation was sent to a different phone number or email.",
+        "unknown": "Something went wrong. Please try again."
+      }
+    },
+    "settings": {
+      "title": "Settings",
+      "profile": {
+        "title": "Profile",
+        "description": "How you appear to your teammates.",
+        "phone": "Mobile number"
+      },
+      "organization": {
+        "title": "Organization",
+        "description": "Only owners and admins can change these settings.",
+        "name": "Organization name",
+        "slug": "Address"
+      },
+      "deleteAccount": {
+        "title": "Delete account",
+        "description": "Permanently delete your account and personal data. This can't be undone.",
+        "open": "Delete account",
+        "dialogTitle": "Delete your account?",
+        "consequences": "Your profile, photo and sign-in are deleted, and you leave every organization you belong to. Payment records are kept for accounting, without your name.",
+        "confirmLabel": "To confirm, type “{phrase}”",
+        "confirmPhrase": "delete my account",
+        "confirm": "Delete my account permanently",
+        "deleting": "Deleting…",
+        "failed": "Your account couldn't be deleted. Please try again.",
+        "checking": "Checking your organizations…",
+        "blockers": {
+          "title": "First, resolve your organizations",
+          "description": "You're the only owner of the organizations below. Make another member an owner, or delete the organization. Then you can delete your account.",
+          "handOver": "Make another member an owner",
+          "makeOwner": "Make owner",
+          "onlyMember": "You're the only member, so this organization can only be deleted.",
+          "unnamed": "Member without a name",
+          "deleteOrganization": "Delete organization",
+          "deleteConfirmLabel": "This deletes {name} with its projects, members and files. Type “{slug}” to confirm.",
+          "deleteConfirm": "Delete {name}",
+          "failed": "That didn't work. Please try again."
+        }
+      }
+    },
+    "errors": {
+      "loadFailed": "We couldn't load this page.",
+      "unknown": "Something went wrong. Please try again."
+    }
+  }
+}

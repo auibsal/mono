@@ -1,0 +1,37 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]
+
+  # One grouped PR per family keeps versions aligned across workspaces
+  # (separate per-directory PRs previously left packages on old versions).
+  - package-ecosystem: bun
+    directories:
+      - /
+      - /apps/*
+      - /packages/*
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 10
+    groups:
+      next:
+        patterns: ["next", "@next/*", "eslint-config-next"]
+      react:
+        patterns: ["react", "react-dom", "@types/react", "@types/react-dom"]
+      supabase:
+        patterns: ["@supabase/*", "supabase"]
+      capacitor:
+        patterns: ["@capacitor/*", "@capacitor-community/*"]
+      storybook:
+        patterns: ["storybook", "@storybook/*", "@chromatic-com/*", "chromatic"]
+      sentry:
+        patterns: ["@sentry/*"]
+      tooling:
+        patterns: ["@biomejs/*", "ultracite", "turbo", "@turbo/*", "typescript", "vitest", "@vitest/*"]
+      minor-and-patch:
+        update-types: [minor, patch]

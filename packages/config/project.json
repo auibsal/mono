@@ -1,0 +1,24 @@
+{
+  "orgName": "{{ORG_NAME}}",
+  "orgSlug": "{{ORG_SLUG}}",
+  "name": "{{PROJECT_NAME}}",
+  "slug": "{{PROJECT_SLUG}}",
+  "url": "{{PROJECT_URL}}",
+  "supportEmail": "{{SUPPORT_EMAIL}}",
+  "repoUrl": "{{REPO_URL}}",
+  "bundleId": "{{BUNDLE_ID}}",
+  "locale": {
+    "default": "ar",
+    "enabled": ["ar", "en"]
+  },
+  "region": {
+    "country": "IQ",
+    "timeZone": "Asia/Baghdad",
+    "currency": "IQD",
+    "numberingSystem": "latn",
+    "weekStartsOn": 6
+  },
+  "commerce": {
+    "allowNativeCheckout": false
+  }
+}

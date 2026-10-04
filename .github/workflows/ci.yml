@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  # Integrations are optional at build time; real keys live in Vercel.
+  SKIP_ENV_VALIDATION: "true"
+  NEXT_PUBLIC_APP_URL: http://localhost:3000
+  NEXT_PUBLIC_WEB_URL: http://localhost:3001
+  NEXT_PUBLIC_API_URL: http://localhost:3002
+  TURBO_TELEMETRY_DISABLED: "1"
+
+jobs:
+  checks:
+    name: Lint, typecheck, test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - run: bun run check
+      - run: bun run typecheck
+      - run: bun run test
+      - run: bun run check:placeholders
+      - run: bun run check:rtl
+      - run: bun run check:i18n
+
+  build:
+    name: Build apps
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      # Bun installs and runs scripts; Next.js itself runs on Node.
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - run: bun install --frozen-lockfile
+      # apps/web also needs BASEHUB_TOKEN while the CMS module is installed.
+      - run: bunx turbo build --filter=api --filter=app
+      # The static export bundled into the iOS/Android apps (Capacitor).
+      - run: bunx turbo build:native --filter=app
+
+  database:
+    name: Database (migrations, RLS, integration)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - name: Start Supabase (applies migrations and seed)
+        working-directory: packages/database
+        run: bunx supabase start -x studio,imgproxy,mailpit,logflare,vector,supavisor,edge-runtime,realtime,postgres-meta
+      - name: Lint schema
+        working-directory: packages/database
+        run: bunx supabase db lint --level warning --fail-on warning
+      - name: Row Level Security tests (pgTAP)
+        working-directory: packages/database
+        run: bunx supabase test db
+      - name: Generated types are up to date
+        run: |
+          (cd packages/database && bunx supabase gen types typescript --local --schema public) \
+            | bunx biome format --stdin-file-path=packages/database/types.ts > "$RUNNER_TEMP/types.ts"
+          diff -u packages/database/types.ts "$RUNNER_TEMP/types.ts" \
+            || (echo "Run 'bun run db:types' and commit the result." && exit 1)
+      - name: Integration tests (auth, billing, storage)
+        run: |
+          eval "$(cd packages/database && bunx supabase status -o env | grep -E '^(API_URL|PUBLISHABLE_KEY|SECRET_KEY)=' | sed 's/^/export /')"
+          SUPABASE_INTEGRATION=1 bunx turbo test --filter=@repo/auth --filter=@repo/payments --filter=@repo/storage
