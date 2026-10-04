@@ -13,7 +13,7 @@
     "@react-email/preview-server": "5.2.9",
     "@repo/email": "workspace:*",
     "react": "19.3.0",
-    "react-email": "5.2.9"
+    "react-email": "6.11.0"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
