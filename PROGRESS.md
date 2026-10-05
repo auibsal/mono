@@ -11,36 +11,55 @@ Branch: `claude/new-session-qosn60`.
 
 These stop parts of the work. Everything else continues around them.
 
-- [ ] **`brand/` is not in the repo** (BRAND-BOOK.md, tokens.json, Ubuntu
-      Arabic fonts, components HTML + bundle.css, 13 logo SVGs). Until it
-      arrives: tokens are transcribed from the §4 palette
-      (`packages/design-system/tokens/sal.tokens.json`, marked INTERIM), the
-      ink-theme role mapping and type sizes are my interim choices, Ubuntu
-      Arabic falls back to the system font (never a substitute face), and
-      `BrandLogo` prints the Society's name (logos are never redrawn).
-- [ ] **`docs-source/` is not in the repo.** Every document in §6 needs its
-      source PDF/DOCX; pages will be built with structure and `TODO(content)`.
+- [x] **`brand/`** (2026-10-05): the v4 design-system export (BRAND-BOOK.md
+      from its README, tokens.json/css, Ubuntu Arabic, components, the 13 logo
+      SVGs, the retired Key for reference) and the v4 guide PDF
+      (SAL-BRD-01, Version 4 · Draft 2).
+- [x] **`docs-source/`** (2026-10-05): the six public founding documents
+      (SAL-GOV-01, GOV-02, GOV-03, POL-01, STR-01, MEM-01). The repo is
+      public, so the restricted ones are **not** committed: the Founding
+      Proposal (Council only), Operations Playbook, Templates & Forms,
+      Printables and the Operations Tracker go to the private `library`
+      bucket through the Nexus library. **Still missing:** the Waraq
+      Submission Guidelines, Editorial Rubric, Masthead Handbook,
+      Publication Agreement, Issue Playbook, the Charity (Second Chapter)
+      Playbook and Operations Kit, and the Side Quest care rules — unless
+      they are sections of the documents above (to check while converting).
 - [x] Founder bootstrapped (global `president`, 2026-10-04).
 - [x] Supabase project `auibsal.org` (`fghzahtzgelqnpwdhwjo`, eu-central-1):
       migrations applied, SAL schemas exposed, Auth site and redirect URLs
       set, email sign-up only.
 - [x] Vercel team `theideaiq`: sal-web (auibsal.org, www), sal-nexus
       (nexus.auibsal.org), sal-api (api.auibsal.org), functions in fra1.
-- [ ] **Resend:** `auibsal.org` is verified in the owner's other Resend team.
-      Need a sending key from it as `RESEND_TOKEN` + `RESEND_FROM` on sal-api,
-      and the same key as Supabase Auth SMTP (`smtp.resend.com:465`, user
-      `resend`). Until then Supabase's built-in mailer only reaches the
-      Supabase team, so new members can't confirm their address.
+- [x] Resend set up by the owner (2026-10-05); verify RESEND_* on sal-api and
+      Supabase SMTP with a real sign-up.
 - [ ] **sal-web holds server secrets** copied by the Supabase integration
       (`SUPABASE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`,
       `SUPABASE_JWT_SECRET`, `POSTGRES_*`). Delete them from the project.
-- [ ] Fall 2026 and Spring 2027 semester dates; exam weeks.
-- [ ] AUIB public calendar iCal URL.
-- [ ] Natrok Athar's cost per winter set (40,000 IQD placeholder).
-- [ ] `docs.auibsal.org`: public or protected?
-- [ ] GA4 measurement ID (optional).
+- [ ] Fall 2026 and Spring 2027 semester dates; exam weeks. The owner points
+      to the AUIB feed for them; it holds events, not term dates, so the
+      dates still need entering in Settings → Semesters.
+- [x] AUIB calendar: `https://auib.edu.iq/events/list/?ical=1`. Cloudflare
+      answers this sandbox with a bot challenge (403); test from the cron.
+- [x] Cost per winter set: not final; the UI uses the 40,000 IQD placeholder
+      setting (`charity.cost_per_set_iqd`), marked as a placeholder.
+- [x] `docs.auibsal.org`: public, `noindex` (decision below).
+- [x] GA4: later; the code stays behind `NEXT_PUBLIC_GA_ID`.
+- [x] Collaboration is back in scope (owner, 2026-10-05): Liveblocks, with
+      the secret key in apps/api only (decision below).
 
 ## Decisions
+
+- **Public repository:** auibsal/mono is public, so `docs-source/` holds
+  only documents the brief lists as public. Restricted documents live in the
+  private `library` bucket, reached through signed URLs.
+- **docs.auibsal.org is public with `noindex`.** It holds the developer
+  handbook and the admin guide; nothing in it is secret (RLS is the boundary,
+  not obscurity), and Council members need it without Vercel accounts.
+- **Tokens come from `brand/tokens.json`** (generator + tests). Two platform
+  additions, both existing tones: the `rule` role (light `rule`, ink
+  `ink-70`) and captions on crimson-50/paper switch to `ink-70`, as the
+  brand's contrast table requires.
 
 - `bun run init` kept notifications, feature-flags and rate-limit; removed
   cms (BaseHub, not Supabase-backed), collaboration, webhooks and ai.
@@ -90,17 +109,17 @@ These stop parts of the work. Everything else continues around them.
 - [ ] Supabase Auth email templates (bilingual, branded) in `supabase/templates`
 
 ### Design system (§4)
-- [x] Tokens → CSS variables (generator + test; INTERIM source until tokens.json)
+- [x] Tokens → CSS variables, generated from `brand/tokens.json` (tests: palette, contrast, staleness)
 - [x] shadcn variables aliased to role tokens; ink theme via `data-theme="dark"`
 - [x] No shadows (theme-level), 8px card radius, hairline/band utilities
 - [x] Ubuntu / Ubuntu Mono / Amiri / Literata via next/font/google
-- [ ] Ubuntu Arabic via next/font/local (**blocked: brand/fonts**)
-- [x] Type styles (INTERIM sizes): display, lede, heading, subheading, body, caption, kicker, code; `:lang(ar)` one step larger, 1.9 leading
-- [ ] Logos into web/app public, favicon/app icon/OG (**blocked: brand/logos**)
+- [x] Ubuntu Arabic via next/font/local (byte-checked against brand/fonts)
+- [x] Type styles from the brand (Display 1.02, Lede 300/1.3, Body 1.5, Caption 1.4, Kicker 0.06em); `:lang(ar)` one step larger, 1.8–2.0 leading, 1.4 at display
+- [x] Logos in web/app public/brand (byte-checked), favicon = sal-avatar.svg
+- [ ] Open Graph images from SocialPost (apps/web)
 - [x] Storybook: light/ink themes and an LTR/RTL toolbar; SAL stories
 - [ ] Re-theme pass over every shadcn story in both directions (visual check)
-- [x] FormHeader, DocumentHeader, DocumentFooter, SalCard (INTERIM layouts)
-- [ ] SocialPost + Open Graph images (**needs brand/components**)
+- [x] FormHeader, DocumentHeader, DocumentFooter, SocialPost ported from brand/components; SalCard
 - [x] Copy formats: `formatLongDate`, `formatClock`, `formatIqd` (tested)
 - [x] Skip link, visible focus, reduced motion, functional icons only so far
 
@@ -177,7 +196,7 @@ Covered by automated tests so far:
 
 ## Content still needed
 
-- Every document source in §6 (`docs-source/` missing).
+- The Waraq, Second Chapter and Side Quest documents listed above.
 - Human Authorship pledge text and Member Pledge text (SAL-POL-01) —
   currently `TODO(content)` in the messages files.
 - Founders' Roll names; the Faculty Advisor's name.

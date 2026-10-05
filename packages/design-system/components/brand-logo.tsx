@@ -6,41 +6,33 @@ interface BrandLogoProps {
   readonly className?: string;
   /** "dark" on crimson or ink grounds: uses the reversed file. */
   readonly ground?: "light" | "dark";
+  /** Rendered height in pixels (the width follows the file's proportions). */
+  readonly height?: number;
   readonly locale?: string;
   readonly variant?: LogoVariant;
 }
 
 /**
- * The SAL logo from brand/logos, exactly as supplied. Until the files are
- * installed it prints the Society's name instead (never a drawn imitation).
+ * The SAL logo from brand/logos, exactly as supplied: an <img> of the SVG,
+ * never redrawn. The alt text is the Society's name in the page language.
  */
 export const BrandLogo = ({
   className,
   ground = "light",
+  height = 40,
   locale = "en",
   variant = "horizontal",
 }: BrandLogoProps) => {
-  const name = locale === "ar" ? project.nameAr : project.name;
-
-  if (!logos.installed) {
-    return (
-      <span
-        className={cn("inline-flex items-baseline gap-2 font-bold", className)}
-      >
-        <span>{project.shortName}</span>
-        <span className="font-normal text-sm">{name}</span>
-      </span>
-    );
-  }
-
+  const file = logos[variant];
   return (
-    // biome-ignore lint/performance/noImgElement: SVG logo, served as-is
+    // biome-ignore lint/performance/noImgElement: SVG logo, served as supplied
     <img
-      alt={name}
-      className={cn("h-8 w-auto", className)}
-      height={32}
-      src={logos[variant][ground === "dark" ? "onDark" : "onLight"]}
-      width={160}
+      alt={locale === "ar" ? project.nameAr : project.name}
+      className={cn("block w-auto", className)}
+      height={height}
+      src={ground === "dark" ? file.onDark : file.onLight}
+      style={{ height }}
+      width={Math.round(height * file.aspect)}
     />
   );
 };

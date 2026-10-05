@@ -84,7 +84,7 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
       <header className="border-rule border-b">
         <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-4 py-3">
           <Link className="shrink-0" href="/">
-            <BrandLogo locale={locale} />
+            <BrandLogo height={64} locale={locale} />
             <span className="sr-only">{t("nexus.name")}</span>
           </Link>
           <nav

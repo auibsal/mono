@@ -53,7 +53,7 @@ export const Header = () => {
     <header className="border-rule border-b bg-surface">
       <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-4 py-4">
         <Link className="shrink-0" href="/">
-          <BrandLogo locale={locale} />
+          <BrandLogo height={64} locale={locale} />
         </Link>
         <nav aria-label={tc("society")} className="ms-auto hidden lg:block">
           {links}

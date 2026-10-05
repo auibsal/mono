@@ -50,7 +50,7 @@ const Home = async ({ params }: HomeProps) => {
   return (
     <>
       <section className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-16">
-        <BrandLogo className="h-16" locale={locale} variant="bilingual" />
+        <BrandLogo height={96} locale={locale} variant="bilingual" />
         <h1 className="type-display">{t("title")}</h1>
         <p className="type-lede max-w-2xl">{t("lede")}</p>
       </section>

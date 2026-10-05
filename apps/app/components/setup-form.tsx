@@ -127,7 +127,7 @@ export const SetupForm = () => {
 
   return (
     <>
-      <FormHeader kicker={t("kicker")} title={t("title")}>
+      <FormHeader code={t("kicker")} title={t("title")}>
         {isRenewal ? t("renewed") : t("description")}
       </FormHeader>
       <form className="grid gap-6" onSubmit={submit}>
