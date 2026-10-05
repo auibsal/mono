@@ -147,7 +147,7 @@ These stop parts of the work. Everything else continues around them.
 - [x] Home: membership card + QR, next events + ticket QR + cancel + .ics, voting eligibility, notices, Waraq call countdown + my submissions, programmes, calendar feed (copy/reset), Six Words
 - [x] Profile and privacy, account deletion through apps/api
 - [ ] Events pages (browse, RSVP with questions, tickets, past attendance)
-- [ ] Waraq: submit (Tiptap + uploads), my submissions, sign agreement
+- [x] Waraq: submit (rich text or files, translation fields, Human Authorship reconfirmed each time), my submissions, revise when returned, withdraw, sign the Publication Agreement (text is `TODO(content)`)
 - [ ] Programmes (rotas, sign-ups); Society (Book of Members, roster, minutes, elections)
 
 ### Nexus — admin (§8)
@@ -206,8 +206,12 @@ Covered by automated tests so far:
 ## Content still needed
 
 - The Waraq, Second Chapter and Side Quest documents listed above.
-- Human Authorship pledge text and Member Pledge text (SAL-POL-01) —
-  currently `TODO(content)` in the messages files.
+- A formal Human Authorship pledge wording: the setup page shows Policy
+  Manual P10.1 (English verbatim) until one exists. The Member Pledge is now
+  the SAL-POL-01 text verbatim (the manual itself flags its Arabic for a
+  native check).
+- The Publication Agreement text that authors sign in the Nexus
+  (`TODO(content)` in `nexus.waraq.agreement.body`).
 - Founders' Roll names; the Faculty Advisor's name.
 - Programme descriptions (all 12) and the care promise for Side Quest.
 - Traditions (Charter Night, the Ribbon, the Term Card) text.
@@ -224,3 +228,6 @@ Covered by automated tests so far:
 - `charity.campaigns.unit_label_ar` default «أطفال كُسوا».
 - `core.semesters` names in pgTAP fixtures are test-only (no review needed).
 - The transliteration «النِّكسَس» for "the Nexus".
+- The Arabic of Policy Manual P10.1 on the setup page (translated for the
+  platform; the manual has no Arabic for it) and the Arabic programme names
+  for "the Prizes" in it (the other programme names match the reference data).

@@ -26,6 +26,7 @@ import { LanguageSwitcher } from "./language-switcher";
 // Sections are added here as their pages land (see PROGRESS.md).
 const memberLinks = [
   { href: "/", key: "home" },
+  { href: "/waraq", key: "waraq" },
   { href: "/profile", key: "profile" },
 ] as const;
 
