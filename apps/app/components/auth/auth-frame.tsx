@@ -13,7 +13,7 @@ export const AuthFrame = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="mx-auto flex w-full max-w-md items-center justify-between px-4 py-4">
-        <BrandLogo locale={locale} />
+        <BrandLogo height={64} locale={locale} />
         <LanguageSwitcher />
       </header>
       <main

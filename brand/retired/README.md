@@ -1,0 +1,1 @@
+Retired: do not use on anything new. These are the round SAL Key and the lockups built on it, from Brand & Identity v3 (SAL-BRD-01, Draft 1). They are kept for reference and for reprinting existing material only. The current identity is in Logos.

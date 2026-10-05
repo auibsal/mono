@@ -130,6 +130,12 @@
   --radius-lg: var(--radius);
   --radius-xl: var(--radius);
   --radius-card: var(--sal-radius-card);
+  --radius-swatch: var(--sal-radius-swatch);
+  /* Space from the brand: gap-gap, p-card-padding, px-page-margin… */
+  --spacing-gap: var(--sal-gap);
+  --spacing-gap-tight: var(--sal-gap-tight);
+  --spacing-card-padding: var(--sal-card-padding);
+  --spacing-page-margin: var(--sal-page-margin);
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
 
@@ -227,10 +233,6 @@
 
 /* ── SAL base ────────────────────────────────────────────────────────────── */
 @layer base {
-  :root {
-    /* Replace with the next/font/local variable once brand/fonts is added. */
-    --font-ubuntu-arabic: "Ubuntu Arabic";
-  }
   html {
     color: var(--text);
     background-color: var(--surface);
@@ -243,6 +245,17 @@
   }
   :lang(ar) :lang(ar) {
     font-size: 1em;
+  }
+
+  /*
+   * ink-50 (text-meta) fails on crimson-50 and paper (4.0 / 4.3:1): on those
+   * grounds captions and meta use the secondary text colour (ink-70).
+   */
+  .bg-surface-tint,
+  .bg-paper,
+  .bg-card,
+  .bg-muted {
+    --text-meta: var(--text-secondary);
   }
 
   :focus-visible {
@@ -263,28 +276,42 @@
 }
 
 /*
- * Type styles: screen equivalents of the brand book's Display, Lede,
- * Heading, Body, Caption and Kicker (and ar-* through :lang(ar) above).
- * INTERIM sizes until BRAND-BOOK.md is supplied.
+ * Type styles: screen equivalents of the brand book's print-* styles
+ * (brand/tokens.json): Display 700 at 1.02 leading, Lede 300 at 1.3, Heading
+ * 700, Body 400 at 1.5, Caption 400 at 1.4 in text-meta, Kicker 700 tracked
+ * 0.06em in accent-line. Arabic (ar-*): one step larger through :lang(ar),
+ * 1.4 leading at display size, Regular for ledes (Ubuntu Arabic has no Light).
  */
 @utility type-display {
-  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.02;
   color: var(--title);
-  letter-spacing: -0.01em;
+  &:lang(ar),
+  :lang(ar) & {
+    line-height: 1.4;
+  }
 }
 @utility type-lede {
-  font-size: 1.25rem;
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
   font-weight: 300;
-  line-height: 1.5;
+  line-height: 1.3;
   color: var(--text-secondary);
+  &:lang(ar),
+  :lang(ar) & {
+    font-weight: 400;
+    line-height: 1.8;
+  }
 }
 @utility type-heading {
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 1.25;
   color: var(--title);
+  &:lang(ar),
+  :lang(ar) & {
+    line-height: 1.8;
+  }
 }
 @utility type-subheading {
   font-size: 1.125rem;
@@ -295,20 +322,20 @@
 @utility type-body {
   font-size: 1rem;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.5;
   color: var(--text);
 }
 @utility type-caption {
-  font-size: 0.875rem;
-  line-height: 1.45;
+  font-size: 0.8125rem;
+  line-height: 1.4;
   color: var(--text-meta);
 }
 @utility type-kicker {
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--title);
+  color: var(--accent-line);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.06em;
 }
 /* Document codes and clause numbers. */
 @utility type-code {
@@ -319,11 +346,11 @@
 /* Hairlines: accent-line under table heads, rule between rows. */
 @utility hairline {
   border-color: var(--rule);
-  border-bottom-width: 1px;
+  border-bottom-width: var(--sal-hairline);
 }
 @utility hairline-accent {
   border-color: var(--accent-line);
-  border-bottom-width: 1px;
+  border-bottom-width: var(--sal-hairline);
 }
 /* The one full-bleed band per page. */
 @utility band {
@@ -332,6 +359,7 @@
 }
 /* Waraq reading pages: paper ground, literary faces for the text only. */
 @utility reading {
+  --text-meta: var(--text-secondary);
   font-family: var(--font-literary-en);
   font-size: 1.125rem;
   line-height: 1.75;

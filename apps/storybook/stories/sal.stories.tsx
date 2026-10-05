@@ -3,6 +3,7 @@ import { SalCard } from "@repo/design-system/components/sal/card";
 import { DocumentFooter } from "@repo/design-system/components/sal/document-footer";
 import { DocumentHeader } from "@repo/design-system/components/sal/document-header";
 import { FormHeader } from "@repo/design-system/components/sal/form-header";
+import { SocialPost } from "@repo/design-system/components/sal/social-post";
 import type { Meta, StoryObj } from "@storybook/react";
 
 /**
@@ -41,8 +42,8 @@ export const TypeStyles: Story = {
 
 export const Form: Story = {
   render: () => (
-    <FormHeader kicker="Membership" title="Before you begin">
-      Two pledges and a few choices.
+    <FormHeader code="SAL-OPS-02 · F-14" title="Event Proposal">
+      Labels are nouns; money fields give their unit.
     </FormHeader>
   ),
 };
@@ -51,13 +52,16 @@ export const Document: Story = {
   render: () => (
     <article className="grid max-w-3xl gap-6">
       <DocumentHeader
-        code="SAL-GOV-01"
-        titleAr="الدستور"
-        titleEn="Constitution"
-        version="1"
+        code="SAL-BRD-01"
+        nameAr="جمعية الفنون والآداب"
+        subtitle="The Society’s design system, version 4: a new symbol and wordmarks, one hue, two languages"
+        title="Brand & Identity"
       />
-      <p className="type-body">TODO(content): document text.</p>
-      <DocumentFooter code="SAL-GOV-01" motto="والقرطاسُ والقلم" />
+      <DocumentFooter
+        code="SAL-BRD-01"
+        end="Version 4 · Draft 2"
+        title="Brand & Identity v4"
+      />
     </article>
   ),
 };
@@ -75,7 +79,42 @@ export const Card: Story = {
 };
 
 export const Logo: Story = {
-  render: () => <BrandLogo />,
+  render: () => (
+    <div className="grid gap-6">
+      <BrandLogo height={64} />
+      <BrandLogo height={64} variant="bilingual" />
+      <div className="band p-6">
+        <BrandLogo ground="dark" height={64} />
+      </div>
+    </div>
+  ),
+};
+
+export const Posts: Story = {
+  render: () => (
+    <div className="grid max-w-4xl grid-cols-2 gap-gap md:grid-cols-4">
+      <SocialPost
+        date="Tuesday, October 13"
+        ground="crimson"
+        headline="Charter Day."
+      />
+      <SocialPost
+        date="Opens Sunday, October 18"
+        ground="ink"
+        headline="Every role. One call."
+      />
+      <SocialPost
+        date="No audition, no fee"
+        ground="white"
+        headline="Free. For every student."
+      />
+      <SocialPost
+        date="Monthly, from December"
+        ground="tint"
+        headline="The Majlis."
+      />
+    </div>
+  ),
 };
 
 export const Band: Story = {
