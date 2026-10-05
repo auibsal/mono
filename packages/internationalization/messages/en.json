@@ -501,7 +501,118 @@
         "checkInPerson": "Check in",
         "count": "{count} checked in",
         "noResults": "No member found."
+      },
+      "content": {
+        "title": "Content",
+        "lede": "News, pages, notices, the homepage and the media library. Rich text is sanitised when saved and again when shown.",
+        "tabs": {
+          "news": "News",
+          "pages": "Pages",
+          "announcements": "Notices",
+          "homepage": "Homepage",
+          "media": "Media library"
+        },
+        "newNews": "New post",
+        "newPage": "New page",
+        "columns": {
+          "title": "Title",
+          "status": "Status",
+          "date": "Date",
+          "slug": "Address",
+          "audience": "Audience",
+          "window": "Shown"
+        },
+        "titleField": "Title",
+        "excerpt": "Excerpt (one or two sentences)",
+        "body": "Text",
+        "bodyEn": "Text in English",
+        "bodyAr": "Text in Arabic",
+        "cover": "Cover image",
+        "publishAt": "Publish at (for scheduled posts)",
+        "pageSlugHint": "Lowercase words and hyphens; use / for a section, e.g. about/traditions.",
+        "notFound": "Nothing with this link.",
+        "errors": {
+          "title": "Give the title in both languages.",
+          "slug": "Check the web address: lowercase letters, numbers and hyphens.",
+          "publish_at": "A scheduled post needs a publish time.",
+          "banner_public": "A site-wide banner must be public.",
+          "ends_before_start": "The end must come after the start.",
+          "link": "The link must be a full address (https://…)."
+        },
+        "publishConfirm": "Publish now? It appears on auibsal.org at once.",
+        "publish": "Publish",
+        "unpublish": "Back to draft",
+        "unpublishConfirm": "Take this down from the site and keep it as a draft?",
+        "delete": "Delete",
+        "deleteConfirm": "Delete this for good?",
+        "announcement": {
+          "new": "New notice",
+          "edit": "Edit notice",
+          "body": "Text",
+          "link": "Link (optional)",
+          "audience": "Who sees it",
+          "public": "Everyone (auibsal.org)",
+          "members": "Members (the Nexus)",
+          "banner": "Site-wide banner on auibsal.org",
+          "starts": "Show from",
+          "ends": "Show until (optional)",
+          "always": "Until removed"
+        },
+        "slots": {
+          "lede": "What the public home page shows beside its fixed sections. Leave a slot empty to hide it.",
+          "keys": {
+            "hero_note": "Line under the hero",
+            "feature_1": "Featured item 1",
+            "feature_2": "Featured item 2",
+            "feature_3": "Featured item 3"
+          },
+          "refType": "Points to",
+          "none": "Nothing (text only)",
+          "refTypes": {
+            "event": "Event",
+            "piece": "Waraq piece",
+            "issue": "Waraq issue",
+            "news": "News post",
+            "campaign": "Campaign",
+            "call": "Open call",
+            "page": "Page"
+          },
+          "refId": "Which one",
+          "text": "Text",
+          "link": "Link (optional)",
+          "clear": "Clear slot"
+        },
+        "media": {
+          "lede": "Published images for news, events and pages. Our own photos, with consent; never identifiable children.",
+          "upload": "Add to the library",
+          "alt": "Description for screen readers",
+          "consent": "Consent note (who agreed, and when)",
+          "copy": "Copy address",
+          "empty": "No images yet.",
+          "removeConfirm": "Remove this image from the library and from storage? Pages using it will lose it.",
+          "remove": "Remove"
+        },
+        "scheduleConfirm": "Schedule this post? It is published on its own at the publish time."
       }
+    },
+    "editor": {
+      "toolbar": "Formatting",
+      "bold": "Bold",
+      "italic": "Italic",
+      "heading": "Heading",
+      "subheading": "Subheading",
+      "bullets": "List",
+      "numbers": "Numbered list",
+      "quote": "Quote",
+      "link": "Link",
+      "unlink": "Remove link",
+      "linkPrompt": "Link address (https://…)",
+      "undo": "Undo",
+      "redo": "Redo",
+      "connecting": "Connecting to the shared draft…",
+      "alsoEditing": "Also here: {names}",
+      "liveNote": "Changes appear for everyone editing; Save writes them to the record.",
+      "offline": "Co-editing is off; you are editing alone."
     }
   },
   "web": {

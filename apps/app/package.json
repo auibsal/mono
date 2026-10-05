@@ -11,7 +11,11 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
+    "@liveblocks/client": "^3.24.3",
+    "@liveblocks/react": "^3.24.3",
+    "@liveblocks/react-tiptap": "^3.24.3",
     "@repo/auth": "workspace:*",
+    "@repo/collaboration": "workspace:*",
     "@repo/config": "workspace:*",
     "@repo/database": "workspace:*",
     "@repo/design-system": "workspace:*",
@@ -28,6 +32,11 @@
     "@supabase/supabase-js": "^2.115.0",
     "@t3-oss/env-nextjs": "^0.13.10",
     "@tanstack/react-query": "^5.104.1",
+    "@tiptap/core": "^3.31.4",
+    "@tiptap/pm": "^3.31.4",
+    "@tiptap/react": "^3.31.4",
+    "@tiptap/starter-kit": "^3.31.4",
+    "@tiptap/suggestion": "^3.31.4",
     "import-in-the-middle": "^3.0.0",
     "jsqr": "^1.4.0",
     "lucide-react": "^1.41.0",
@@ -37,6 +46,7 @@
     "react-dom": "19.3.0",
     "react-qr-code": "^2.0.18",
     "require-in-the-middle": "8.0.1",
+    "yjs": "^13.6.27",
     "zod": "^4.3.6"
   },
   "devDependencies": {

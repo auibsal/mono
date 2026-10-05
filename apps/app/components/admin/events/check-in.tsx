@@ -53,7 +53,7 @@ type Outcome =
 const SCAN_INTERVAL_MS = 250;
 
 /** Reads a DOM ref (null until mounted). */
-const current = <T,>(ref: RefObject<T | null>): T | null => ref.current;
+const current = <T,>(ref: RefObject<T | null>): T | null => ref.current; // i18n-ignore: code, not text
 const SAME_CODE_PAUSE_MS = 3000;
 
 export const CheckInScreen = () => {

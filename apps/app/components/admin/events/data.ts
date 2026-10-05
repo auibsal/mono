@@ -9,7 +9,7 @@ import { useGrants } from "@/lib/queries";
 
 /** Programmes, limited to the ones a permission covers (all for a global grant). */
 export const useProgrammeOptions = (
-  permission: "events.manage" | "programmes.manage" = "events.manage"
+  permission: "events.manage" | "programmes.manage" | null = "events.manage"
 ) => {
   const { supabase } = useAuth();
   const locale = useLocale();
@@ -25,7 +25,9 @@ export const useProgrammeOptions = (
       ) ?? [],
     queryKey: ["admin", "programmes"],
   });
-  const scopes = scopesFor(grants.data, permission, "programme");
+  const scopes = permission
+    ? scopesFor(grants.data, permission, "programme")
+    : ("all" as const);
   const options = (programmes.data ?? [])
     .filter((p) => scopes === "all" || scopes.includes(p.id))
     .map((p) => ({ id: p.id, label: localized(p, "name", locale) }));

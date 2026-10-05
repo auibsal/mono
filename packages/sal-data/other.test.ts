@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { ledgerEntrySchema } from "./charity";
+import { announcementSchema, newsSchema, pageSchema } from "./content";
 import { ballotSchema, needsCouncilVote } from "./governance";
 import { profileSchema, wordCount } from "./membership";
 import { sixWordsSchema } from "./programmes";
@@ -59,5 +60,51 @@ describe("schemas", () => {
   test("Council vote above 250,000 IQD", () => {
     expect(needsCouncilVote(250_000)).toBe(false);
     expect(needsCouncilVote(250_001)).toBe(true);
+  });
+});
+
+describe("content schemas match the database", () => {
+  const news = {
+    cover_path: null,
+    programme_id: null,
+    publish_at: null,
+    slug: "charter-night",
+    status: "draft" as const,
+    title_ar: "ليلة الميثاق",
+    title_en: "Charter Night",
+  };
+
+  test("scheduled news needs a publish time", () => {
+    expect(newsSchema.safeParse(news).success).toBe(true);
+    expect(newsSchema.safeParse({ ...news, status: "scheduled" }).success).toBe(
+      false
+    );
+  });
+
+  test("page slugs may nest; news slugs may not", () => {
+    const page = {
+      slug: "about/traditions",
+      status: "draft" as const,
+      title_ar: "تقاليد",
+      title_en: "Traditions",
+    };
+    expect(pageSchema.safeParse(page).success).toBe(true);
+    expect(newsSchema.safeParse({ ...news, slug: "a/b" }).success).toBe(false);
+  });
+
+  test("a banner is always public, as the table requires", () => {
+    const a = {
+      audience: "members" as const,
+      ends_at: null,
+      is_banner: true,
+      link: null,
+      starts_at: "2026-10-05T09:00:00.000Z",
+      title_ar: "تنبيه",
+      title_en: "Notice",
+    };
+    expect(announcementSchema.safeParse(a).success).toBe(false);
+    expect(
+      announcementSchema.safeParse({ ...a, audience: "public" }).success
+    ).toBe(true);
   });
 });
