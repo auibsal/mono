@@ -3,7 +3,7 @@ import { ledgerEntrySchema } from "./charity";
 import { announcementSchema, newsSchema, pageSchema } from "./content";
 import { ballotSchema, needsCouncilVote } from "./governance";
 import { profileSchema, wordCount } from "./membership";
-import { sixWordsSchema } from "./programmes";
+import { isReelUrl, sixWordsSchema, timeLeft, youtubeId } from "./programmes";
 
 const id = (n: number) => `00000000-0000-4000-8000-00000000000${n}`;
 
@@ -106,5 +106,43 @@ describe("content schemas match the database", () => {
     expect(
       announcementSchema.safeParse({ ...a, audience: "public" }).success
     ).toBe(true);
+  });
+});
+
+describe("Side Quest", () => {
+  test("reads the video id from every YouTube link shape", () => {
+    const video = "dQw4w9WgXcQ";
+    for (const link of [
+      video,
+      `https://www.youtube.com/watch?v=${video}&t=10`,
+      `https://youtu.be/${video}`,
+      `https://www.youtube.com/shorts/${video}`,
+      `https://www.youtube.com/embed/${video}`,
+      `https://www.youtube-nocookie.com/embed/${video}`,
+    ]) {
+      expect(youtubeId(link), link).toBe(video);
+    }
+    expect(youtubeId("https://vimeo.com/123")).toBeNull();
+    expect(youtubeId("not a link")).toBeNull();
+  });
+
+  test("reel links match the database check", () => {
+    expect(isReelUrl("https://www.instagram.com/reel/abc/")).toBe(true);
+    expect(isReelUrl("http://instagram.com/reel/abc/")).toBe(false);
+    expect(isReelUrl("https://example.com/x")).toBe(false);
+  });
+
+  test("the 24-hour clock counts down and then over", () => {
+    const now = new Date("2026-10-05T12:00:00Z");
+    expect(timeLeft("2026-10-06T10:30:00Z", now)).toEqual({
+      hours: 22,
+      minutes: 30,
+      overdue: false,
+    });
+    expect(timeLeft("2026-10-05T11:15:00Z", now)).toEqual({
+      hours: 0,
+      minutes: 45,
+      overdue: true,
+    });
   });
 });

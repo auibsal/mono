@@ -727,6 +727,102 @@
         "none": "No member with that name.",
         "change": "Change",
         "choose": "Choose"
+      },
+      "programmes": {
+        "title": "Programmes",
+        "lede": "Side Quest episodes and reels, Six Words moderation, rotas and shifts, and removal requests.",
+        "programme": "Programme",
+        "tabs": {
+          "episodes": "Episodes",
+          "reels": "Reels",
+          "sixWords": "Six Words ({count})",
+          "rotas": "Rotas",
+          "removals": "Removal requests ({count})"
+        },
+        "episodes": {
+          "new": "New episode",
+          "edit": "Edit episode",
+          "titleField": "Title",
+          "summary": "Summary",
+          "season": "Season",
+          "number": "Episode",
+          "segment": "Segment (e.g. BusTalks)",
+          "youtube": "YouTube link or video id",
+          "youtubeHint": "Embedded in privacy-enhanced mode (youtube-nocookie.com).",
+          "youtubeError": "That isn't a YouTube link or an 11-character video id.",
+          "published": "Published",
+          "draft": "Not published",
+          "publish": "Publish",
+          "unpublish": "Unpublish",
+          "careNote": "Before publishing: releases signed, camera-shy members not shown, guests given their 48-hour review."
+        },
+        "reels": {
+          "new": "New reel",
+          "platform": "Platform",
+          "platforms": {
+            "instagram": "Instagram",
+            "tiktok": "TikTok",
+            "youtube_shorts": "YouTube Shorts"
+          },
+          "url": "Link",
+          "urlError": "Use an Instagram, TikTok or YouTube link (https://…).",
+          "caption": "Caption",
+          "episode": "From episode (optional)",
+          "none": "None"
+        },
+        "sixWords": {
+          "lede": "Approve pieces for the public wall. An edit sends a piece back here.",
+          "empty": "Nothing waiting.",
+          "approve": "Approve",
+          "reject": "Decline",
+          "anonymous": "Wants no name on the wall"
+        },
+        "rotas": {
+          "new": "New rota",
+          "titleField": "Rota",
+          "startsOn": "From",
+          "endsOn": "To",
+          "shifts": "Shifts",
+          "addShift": "Add a shift",
+          "role": "Role",
+          "location": "Where",
+          "starts": "Starts",
+          "ends": "Ends",
+          "capacity": "People needed",
+          "signups": "{count} of {capacity}",
+          "noShifts": "No shifts yet.",
+          "statuses": {
+            "signed_up": "Signed up",
+            "confirmed": "Confirmed",
+            "swap_requested": "Asked to swap",
+            "cancelled": "Cancelled"
+          },
+          "confirm": "Confirm",
+          "release": "Release",
+          "deleteShift": "Delete shift",
+          "deleteShiftConfirm": "Delete this shift and its sign-ups?"
+        },
+        "removals": {
+          "lede": "The Side Quest care promise: every request is handled within 24 hours.",
+          "empty": "No open requests.",
+          "from": "From {name}",
+          "content": "Content",
+          "due": "Due {time}",
+          "left": "{hours} h {minutes} min left",
+          "overdue": "Overdue by {hours} h {minutes} min",
+          "statuses": {
+            "open": "Open",
+            "in_progress": "In progress",
+            "removed": "Removed",
+            "declined": "Declined",
+            "closed": "Closed"
+          },
+          "action": "Action taken (needed to close)",
+          "start": "Start handling",
+          "close": "Close with this status",
+          "closeConfirm": "Close this request? Write down what was done.",
+          "recent": "Recently closed"
+        }
       }
     },
     "editor": {
