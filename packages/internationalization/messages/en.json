@@ -593,6 +593,140 @@
           "remove": "Remove"
         },
         "scheduleConfirm": "Schedule this post? It is published on its own at the publish time."
+      },
+      "charity": {
+        "title": "Charity",
+        "lede": "Second Chapter campaigns. Money is recorded, never collected online: cash is counted by two people, and an entry counts only after a different person signs it off.",
+        "campaigns": "Campaigns",
+        "newCampaign": "New campaign",
+        "partners": "Partners",
+        "newPartner": "New partner",
+        "columns": {
+          "campaign": "Campaign",
+          "status": "Status",
+          "counted": "Counted",
+          "pending": "Waiting for sign-off",
+          "units": "Warmth Meter",
+          "date": "Date",
+          "amount": "Amount",
+          "source": "Source",
+          "countedBy": "Counted by",
+          "signedOff": "Signed off",
+          "note": "Note",
+          "description": "Description",
+          "public": "On the transparency page"
+        },
+        "statuses": {
+          "draft": "Draft",
+          "active": "Active",
+          "closed": "Closed"
+        },
+        "sources": {
+          "table_cash": "Table cash",
+          "stickers": "Stickers",
+          "blind_date": "Blind date with a book",
+          "fill_a_bag": "Fill a Bag",
+          "book_sales": "Book sales",
+          "donation": "Donation (in person)",
+          "other": "Other"
+        },
+        "tabs": {
+          "settings": "Campaign",
+          "ledger": "Ledger",
+          "signoff": "Sign-off queue ({count})",
+          "receipts": "Receipts",
+          "impact": "Impact reports"
+        },
+        "campaign": {
+          "titleField": "Title",
+          "summary": "Summary",
+          "partner": "Partner",
+          "noPartner": "No partner",
+          "startsOn": "Starts on",
+          "endsOn": "Ends on",
+          "costPerUnit": "Cost per winter set (IQD)",
+          "costPlaceholder": "Empty uses the Society setting ({amount}), a placeholder until Natrok Athar confirms the price.",
+          "unitLabel": "What the meter counts",
+          "target": "Target (sets)",
+          "priceList": "Price list (display only)",
+          "priceListHint": "Shown on the campaign page. No online payment of any kind.",
+          "priceItem": "Item",
+          "prices": "Prices in IQD, separated by commas",
+          "addPrice": "Add an item",
+          "removePrice": "Remove item",
+          "status": "Status",
+          "notFound": "No campaign with this link, or your roles don't cover it."
+        },
+        "ledger": {
+          "lede": "Entries can't be edited or deleted. To correct one, record a reversing entry, then the right amount.",
+          "record": "Record money counted",
+          "amount": "Amount (IQD)",
+          "source": "Source",
+          "occurredOn": "Counted on",
+          "countedBy": "Counted by",
+          "countedWith": "Counted with",
+          "countedHint": "You must be one of the two people who counted.",
+          "note": "Note (optional)",
+          "recordButton": "Record entry",
+          "recordConfirm": "Record {amount} counted by {a} and {b}? Entries can't be changed afterwards.",
+          "waiting": "Waiting",
+          "reverse": "Reverse",
+          "reverseConfirm": "Record a reversing entry of {amount}? It cancels this entry; record the right amount separately.",
+          "reversal": "Reversal of an earlier entry",
+          "reversed": "Reversed",
+          "me": "me",
+          "twoCounters": "Two different people must count.",
+          "amountError": "Give a whole amount in IQD, above zero.",
+          "export": "Export ledger",
+          "totals": "{counted} counted · {pending} waiting for sign-off"
+        },
+        "signoff": {
+          "lede": "Check each entry against the cash or the count sheet, then sign it off. You can't sign off an entry you recorded.",
+          "empty": "Nothing waiting for you.",
+          "sign": "Sign off",
+          "signConfirm": "Sign off {amount}? It will count in the totals and the Warmth Meter.",
+          "recordedBy": "Recorded by {name}"
+        },
+        "receipts": {
+          "lede": "Receipts are private files. The transparency page shows only those marked public, through short-lived links.",
+          "upload": "Upload a receipt",
+          "file": "File (PDF, JPEG or PNG)",
+          "description": "What it is",
+          "amount": "Amount (IQD, optional)",
+          "entry": "Ledger entry (optional)",
+          "public": "Show on the transparency page",
+          "view": "View",
+          "makePublic": "Make public",
+          "makePrivate": "Make private",
+          "remove": "Delete",
+          "removeConfirm": "Delete this receipt? The file is removed too.",
+          "noPhotos": "Never upload photos of identifiable children."
+        },
+        "impact": {
+          "lede": "Figures for the transparency page, published when you choose.",
+          "label": "What was measured",
+          "value": "Figure",
+          "unit": "Unit (optional)",
+          "report": "Report (optional)",
+          "publish": "Publish",
+          "unpublish": "Unpublish",
+          "published": "Published",
+          "add": "Add a figure"
+        },
+        "partner": {
+          "name": "Name",
+          "nameHint": "Partners with Arabic names are named in Arabic first.",
+          "description": "About them",
+          "url": "Website (https://…)",
+          "logo": "Logo"
+        }
+      },
+      "picker": {
+        "search": "Type a name",
+        "hint": "At least two letters.",
+        "none": "No member with that name.",
+        "change": "Change",
+        "choose": "Choose"
       }
     },
     "editor": {
