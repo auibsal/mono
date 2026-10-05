@@ -78,6 +78,7 @@ export const objectPath = (prefix: string, fileName: string) =>
 
 const EXTENSIONS: Record<string, string> = {
   "application/pdf": "pdf",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
     "docx",
   "image/jpeg": "jpg",

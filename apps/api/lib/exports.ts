@@ -173,6 +173,68 @@ const ledgerRows = async (
   };
 };
 
+/** The spending approvals log (RLS: requesters, approvers, governance). */
+const spendingRows = async (session: ApiSession): Promise<ExportTable> => {
+  const rows =
+    unwrap(
+      await session.supabase
+        .schema("governance")
+        .from("spending_approvals")
+        .select(
+          "created_at, purpose_en, purpose_ar, amount_iqd, status, requested_by, lead_approver, lead_limit_iqd, treasurer_approver, approved_at, decision_note"
+        )
+        .order("created_at", { ascending: false })
+    ) ?? [];
+  const ids = [
+    ...new Set(
+      rows.flatMap((r) => [
+        r.requested_by,
+        r.lead_approver,
+        r.treasurer_approver,
+      ])
+    ),
+  ].filter((id): id is string => Boolean(id));
+  const profiles = ids.length
+    ? (unwrap(
+        await session.supabase
+          .schema("core")
+          .from("profiles")
+          .select("id, full_name_en")
+          .in("id", ids)
+      ) ?? [])
+    : [];
+  const name = (id: string | null) =>
+    profiles.find((p) => p.id === id)?.full_name_en ?? "";
+  return {
+    header: [
+      "requested_at",
+      "purpose_en",
+      "purpose_ar",
+      "amount_iqd",
+      "status",
+      "requested_by",
+      "lead_approver",
+      "lead_limit_iqd",
+      "treasurer",
+      "approved_at",
+      "decision_note",
+    ],
+    rows: rows.map((r) => [
+      r.created_at,
+      r.purpose_en,
+      r.purpose_ar,
+      r.amount_iqd,
+      r.status,
+      name(r.requested_by),
+      name(r.lead_approver),
+      r.lead_limit_iqd,
+      name(r.treasurer_approver),
+      r.approved_at,
+      r.decision_note,
+    ]),
+  };
+};
+
 export const exportsByName: Record<string, ExportDefinition> = {
   attendance: {
     permissions: ["events.manage", "events.checkin"],
@@ -210,5 +272,13 @@ export const exportsByName: Record<string, ExportDefinition> = {
         m.voting_member ? "yes" : "no",
       ]),
     }),
+  },
+  spending: {
+    permissions: [
+      "governance.manage",
+      "spending.request",
+      "spending.countersign",
+    ],
+    run: spendingRows,
   },
 };

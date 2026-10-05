@@ -823,6 +823,148 @@
           "closeConfirm": "Close this request? Write down what was done.",
           "recent": "Recently closed"
         }
+      },
+      "governance": {
+        "title": "Governance",
+        "lede": "Council terms, minutes and resolutions (draft until adopted), the spending approvals log, the internal library and elections.",
+        "tabs": {
+          "council": "Council",
+          "minutes": "Minutes",
+          "resolutions": "Resolutions",
+          "spending": "Spending",
+          "library": "Library",
+          "elections": "Elections"
+        },
+        "bodies": {
+          "council": "Council",
+          "general_assembly": "General Assembly"
+        },
+        "statuses": {
+          "draft": "Draft — not yet adopted",
+          "adopted": "Adopted",
+          "rejected": "Rejected",
+          "withdrawn": "Withdrawn",
+          "superseded": "Superseded",
+          "pending": "Pending",
+          "approved": "Approved"
+        },
+        "council": {
+          "roster": "Current Council",
+          "rosterHint": "From active role assignments; change it in Members → a member → Roles.",
+          "empty": "No Council roles are assigned.",
+          "terms": "Council terms",
+          "newTerm": "Add a term",
+          "name": "Name (e.g. Founding Council 2026–27)",
+          "startsOn": "Starts on",
+          "endsOn": "Ends on"
+        },
+        "minutes": {
+          "new": "New minutes",
+          "meetingOn": "Meeting date",
+          "body": "Body",
+          "titleField": "Title",
+          "text": "Minutes",
+          "adopt": "Mark adopted",
+          "adoptedOn": "Adopted on",
+          "adoptConfirm": "Mark these minutes adopted? Members will see them in the Nexus. Only do this after the vote.",
+          "notFound": "No minutes with this link.",
+          "draftNote": "Drafts are visible only to minute-takers and governance managers."
+        },
+        "resolutions": {
+          "new": "New resolution",
+          "edit": "Edit resolution",
+          "code": "Code (R-2026-01)",
+          "codeError": "Use the form R-YYYY-NN, e.g. R-2026-01.",
+          "titleField": "Title",
+          "text": "Text",
+          "votes": "Votes",
+          "for": "For",
+          "against": "Against",
+          "abstain": "Abstain",
+          "minutes": "Recorded in minutes",
+          "noMinutes": "Not linked",
+          "adoptedOnError": "An adopted resolution needs its adoption date, and only then."
+        },
+        "spending": {
+          "lede": "Director + Treasurer: up to 50,000 IQD. President + Treasurer: up to 250,000 IQD. Above that: an adopted Council resolution.",
+          "request": "Request approval",
+          "purpose": "Purpose",
+          "amount": "Amount (IQD)",
+          "resolution": "Council resolution (needed above 250,000 IQD)",
+          "none": "None",
+          "requestedBy": "Requested by {name}",
+          "lead": "Lead approver: {name}",
+          "treasurer": "Treasurer: {name}",
+          "approve": "Approve",
+          "approveConfirm": "Approve {amount} for “{purpose}”? The database checks your limit and the second approver.",
+          "reject": "Reject",
+          "rejectNote": "Reason",
+          "rejectConfirm": "Reject this request?",
+          "needsResolution": "Above 250,000 IQD: choose the adopted Council resolution.",
+          "export": "Export log"
+        },
+        "library": {
+          "lede": "Internal documents in a private bucket. Role-holders read the role library; the Council reads everything.",
+          "upload": "Add a document",
+          "file": "File",
+          "code": "Document code (e.g. SAL-OPS-01)",
+          "titleField": "Title",
+          "audience": "Who may read it",
+          "audiences": {
+            "role": "Members with a role",
+            "council": "The Council only"
+          },
+          "version": "Version",
+          "status": "Status",
+          "open": "Open",
+          "empty": "No documents yet."
+        },
+        "elections": {
+          "flagOff": "Online elections are off (Settings → Feature flags). The Committee and Student Life decide whether a vote uses them.",
+          "new": "New election",
+          "titleField": "Title",
+          "nominationsOpen": "Nominations open",
+          "nominationsClose": "Nominations close",
+          "votingOpens": "Voting opens",
+          "votingCloses": "Voting closes",
+          "statuses": {
+            "draft": "Draft",
+            "nominations": "Nominations open",
+            "review": "Committee review",
+            "voting": "Voting",
+            "closed": "Counted",
+            "published": "Results published"
+          },
+          "positions": "Positions",
+          "addPositions": "Add the four Executive Board positions",
+          "candidates": "Candidates",
+          "noCandidates": "No nominations yet.",
+          "approveCandidate": "Approve",
+          "rejectCandidate": "Reject",
+          "candidateStatuses": {
+            "nominated": "Nominated",
+            "approved": "Approved",
+            "rejected": "Rejected",
+            "withdrawn": "Withdrawn"
+          },
+          "openNominations": "Open nominations",
+          "startReview": "Close nominations for review",
+          "openVoting": "Open voting",
+          "openVotingConfirm": "Open voting now? The list of eligible voters is fixed at this moment.",
+          "count": "Count the ballots",
+          "countConfirm": "Count now? Polls must have closed. The round-by-round results are stored.",
+          "publish": "Publish results",
+          "publishConfirm": "Publish the results to members?",
+          "turnout": "Turnout: {voted} of {eligible}",
+          "results": "Results",
+          "round": "Round {number}",
+          "winner": "Elected: {name}",
+          "ronWon": "Re-open nominations won: the post is filled by new nominations.",
+          "ron": "Re-open nominations",
+          "exhausted": "{count} exhausted",
+          "notFound": "No election with this link.",
+          "dateError": "Check the dates: nominations close after they open, voting opens after nominations close, and closes after it opens."
+        }
       }
     },
     "editor": {
