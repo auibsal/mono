@@ -158,7 +158,8 @@ These stop parts of the work. Everything else continues around them.
 - [x] Charity (campaigns, ledger with sign-off and reversals, receipts through signed URLs; winter-set cost is a placeholder setting)
 - [x] Programmes, Governance (minutes co-edited, elections, spending, library uploads), Activity log, Settings
 - [x] Waraq issues, pieces, contributors; accepted work becomes a draft piece; publishing blocked until the agreement is signed
-- [ ] Waraq pipeline board (intake, readers, third read, selection, decisions, reveal) — task in progress
+- [x] Waraq pipeline (`/admin/pipeline`): per-issue tabs by role — my reading (rubric v2 scoring), intake (return for formatting, send to blind review, originals via `/files/submission`), reader assignment, drag-and-drop board with a keyboard Move menu, selection by average and band, decisions with author reveal, Advisory Board flagged view, calls
+- [x] Blind copies: `/files/blind` strips PDF info/XMP/annotation authors, image EXIF, DOCX properties and revision authors; never falls back to the original
 - [x] CSV exports through apps/api (members, attendance, ledger, spending)
 - [ ] Apply migrations `20261005000000_admin` and `20261005000100_waraq_publishing` to production
 

@@ -2,9 +2,12 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, test } from "vitest";
 import {
+  averageTotal,
   band,
+  canEditorMove,
   categories,
   criteria,
+  editorMoves,
   needsThirdRead,
   rubric,
   rubricTotal,
@@ -13,6 +16,8 @@ import {
   submissionSchema,
 } from "./journal";
 
+const TRANSITION_PAIR =
+  /\(\s*\x27([a-z_]+)\x27(?:::journal\.submission_status)?,\s*\x27([a-z_]+)\x27(?:::journal\.submission_status)?\)/g;
 const RANDOM_PDF_PATH = /^abc\/[0-9a-f-]{36}\.pdf$/;
 const migrations = join(
   import.meta.dirname,
@@ -124,5 +129,30 @@ describe("submission form", () => {
     const path = submissionObjectPath("abc", "application/pdf");
     expect(path).toMatch(RANDOM_PDF_PATH);
     expect(path).not.toBe(submissionObjectPath("abc", "application/pdf"));
+  });
+});
+
+describe("the board", () => {
+  test("every editor move is a transition the database allows", () => {
+    const allowed = new Set(
+      [...journalSql.matchAll(TRANSITION_PAIR)].map(([, a, b]) => `${a}>${b}`)
+    );
+    for (const [from, targets] of Object.entries(editorMoves)) {
+      for (const to of targets ?? []) {
+        expect(allowed.has(`${from}>${to}`), `${from} → ${to}`).toBe(true);
+      }
+    }
+  });
+
+  test("editors cannot run intake or decide by dragging", () => {
+    expect(canEditorMove("received", "intake_check")).toBe(false);
+    expect(canEditorMove("selection", "accepted")).toBe(false);
+    expect(canEditorMove("in_review", "selection")).toBe(true);
+  });
+
+  test("averages ignore reads not yet scored", () => {
+    expect(averageTotal([])).toBeNull();
+    expect(averageTotal([null, undefined])).toBeNull();
+    expect(averageTotal([80, null, 71])).toBe(75.5);
   });
 });

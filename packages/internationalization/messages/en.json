@@ -1101,6 +1101,170 @@
           "new": "New contributor",
           "edit": "Edit contributor"
         }
+      },
+      "pipeline": {
+        "title": "Waraq: pipeline",
+        "lede": "The blind review of submissions, from intake to decision. Each person sees only their part: the Submissions Manager holds the key and never scores; readers and editors work from blind ids; author names appear only after a decision.",
+        "noIssues": "No issue has you in its review team yet.",
+        "tabs": {
+          "reading": "My reading",
+          "intake": "Intake",
+          "readers": "Readers",
+          "board": "Board",
+          "selection": "Selection",
+          "decided": "Decided",
+          "flagged": "Flagged",
+          "calls": "Calls"
+        },
+        "columns": {
+          "blindId": "Blind id",
+          "title": "Title",
+          "category": "Category",
+          "status": "Status",
+          "author": "Author",
+          "files": "Files",
+          "received": "Received",
+          "read": "Read",
+          "yourScore": "Your score",
+          "scores": "Reads and average",
+          "decision": "Decision",
+          "decided": "Decided",
+          "flagNote": "Note for the Advisory Board"
+        },
+        "readNumber": "Read {number}",
+        "scored": "Scored {total}",
+        "noScores": "No scores yet",
+        "scoreLine": "Reads {reads}, average {average} ({band})",
+        "flaggedMark": "Flagged",
+        "formerReader": "A former reader",
+        "bands": {
+          "strong": "strong",
+          "consider": "consider",
+          "decline": "decline"
+        },
+        "decisions": {
+          "accept": "Accept",
+          "accept_with_edits": "Accept with edits",
+          "decline": "Decline"
+        },
+        "fileKinds": {
+          "manuscript": "Manuscript",
+          "image": "Image",
+          "source": "Source text"
+        },
+        "reading": {
+          "note": "Score each piece on its own, before discussing it with anyone. You see only your own scores.",
+          "empty": "Nothing assigned to you for this issue."
+        },
+        "flagged": {
+          "empty": "No pieces have been flagged for the Advisory Board."
+        },
+        "intake": {
+          "note": "Check formatting only: no scoring at intake. Return work that needs fixing; send the rest to blind review, which hides the author from everyone else.",
+          "show": "Show",
+          "inIntake": "In intake",
+          "all": "All submissions",
+          "empty": "No submissions in intake.",
+          "returned": "Returned for formatting"
+        },
+        "readers": {
+          "note": "Two blind reads per piece; a third when the first two differ by more than 20 points. No one reads their own work.",
+          "noTeam": "No readers hold a role for this issue yet. Assign the Reader role in Members.",
+          "empty": "No pieces are waiting for readers.",
+          "choose": "Choose a reader",
+          "assign": "Assign",
+          "unassign": "Remove",
+          "unassignConfirm": "Remove this reader? Any score they have sent for this piece is removed too."
+        },
+        "board": {
+          "note": "Drag a card to another column, or use its Move menu. Intake stays with the Submissions Manager, and accepting or declining is recorded on the piece.",
+          "moveTo": "Move to…",
+          "moveLabel": "Move {id}",
+          "decided": "Decided"
+        },
+        "selection": {
+          "note": "Strongest first. Open a piece to record the decision.",
+          "viewOnly": "Strongest first. Decisions are recorded by the Editor-in-Chief.",
+          "empty": "Nothing in selection yet."
+        },
+        "decided": {
+          "note": "Author names appear once a decision is recorded.",
+          "empty": "No decisions yet."
+        },
+        "submission": {
+          "title": "Submission",
+          "notFound": "No submission with this link, or your roles don't cover it.",
+          "actions": "Intake",
+          "intakeNote": "A formatting check, not a judgement of the work.",
+          "startCheck": "Start the intake check",
+          "toReview": "Send to blind review",
+          "toReviewConfirm": "Send this piece to blind review? It gets a blind id and readers will see it without the author's name.",
+          "withdraw": "Withdraw",
+          "withdrawConfirm": "Withdraw this submission? Do this only at the author's request.",
+          "returnNote": "What needs fixing",
+          "returnHint": "The author receives this note and can revise the submission.",
+          "return": "Return for formatting",
+          "returnedOn": "Returned on {date}:",
+          "files": "Files (originals)",
+          "noFiles": "No files attached.",
+          "text": "Text",
+          "source": "Source text",
+          "coverNote": "Cover note",
+          "history": "History"
+        },
+        "entry": {
+          "title": "Piece",
+          "notFound": "No piece with this link, or your roles don't cover it.",
+          "text": "Text",
+          "noText": "Submitted as a file.",
+          "files": "Files",
+          "filesNote": "Copies with the author's details removed from the file properties. Links last five minutes.",
+          "getFiles": "Get the files",
+          "preparing": "Preparing…",
+          "noFiles": "No files attached.",
+          "fileUnavailable": "this file couldn't be prepared; ask the Submissions Manager.",
+          "yourRead": "Your read (read {number})",
+          "rubricNote": "Rubric v2: each criterion from 1 to 5, weighted to a total out of 100.",
+          "scoresClosed": "Scoring has closed for this piece.",
+          "reads": "Reads",
+          "noReads": "No readers assigned yet.",
+          "notScored": "not scored yet",
+          "editorNotes": "Editors' notes",
+          "flag": "Flag for the Advisory Board",
+          "decide": "Decision",
+          "decideNote": "The decision is final and reveals the author's name to the review team.",
+          "decisionNotes": "Notes (shared with the author for edits)",
+          "decideConfirm": "Record this decision? It cannot be changed here, and the author is told.",
+          "record": "Record the decision",
+          "author": "Author"
+        },
+        "rubric": {
+          "craft": "Craft ({weight})",
+          "voice": "Voice ({weight})",
+          "depth": "Depth ({weight})",
+          "archive_factor": "Archive Factor ({weight})",
+          "choose": "Choose",
+          "comment": "Comment (optional)",
+          "incomplete": "Score all four criteria to see the total.",
+          "total": "{total} out of 100 ({band})"
+        },
+        "calls": {
+          "titleField": "Title",
+          "theme": "Theme",
+          "eligibility": "Eligibility",
+          "window": "Open",
+          "opens": "Opens",
+          "closes": "Closes",
+          "max": "Submissions per person",
+          "maxHint": "From 1 to 10.",
+          "publish": "Published (members can see it and submit while it is open)",
+          "published": "Published",
+          "hidden": "Not published",
+          "empty": "No calls for this issue yet.",
+          "new": "New call",
+          "edit": "Edit call",
+          "cancelEdit": "Cancel"
+        }
       }
     },
     "editor": {
