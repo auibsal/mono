@@ -12,6 +12,8 @@ import { useId, useState } from "react";
 interface ImageFieldProps {
   /** Folder in the public media bucket, e.g. "events". */
   readonly area: string;
+  /** "pdf" takes a PDF (issue PDFs) and shows a link instead of a preview. */
+  readonly kind?: "image" | "pdf";
   readonly label?: string;
   readonly onChange: (path: string | null) => void;
   /** Object path in the media bucket, or null. */
@@ -24,6 +26,7 @@ interface ImageFieldProps {
  */
 export const ImageField = ({
   area,
+  kind = "image",
   label,
   onChange,
   value,
@@ -66,14 +69,26 @@ export const ImageField = ({
       <Label htmlFor={id}>{label ?? t("image")}</Label>
       {value ? (
         <div className="flex flex-wrap items-end gap-3">
-          {/* biome-ignore lint/performance/noImgElement: a preview of a just-uploaded object */}
-          <img
-            alt={t("imageAlt")}
-            className="h-32 w-auto rounded-card"
-            height={128}
-            src={getMediaUrl(supabase, value)}
-            width={192}
-          />
+          {kind === "pdf" ? (
+            <a
+              className="break-all text-sm underline underline-offset-4"
+              dir="ltr"
+              href={getMediaUrl(supabase, value)}
+              rel="noopener"
+              target="_blank"
+            >
+              {value.slice(value.lastIndexOf("/") + 1)}
+            </a>
+          ) : (
+            // biome-ignore lint/performance/noImgElement: a preview of a just-uploaded object
+            <img
+              alt={t("imageAlt")}
+              className="h-32 w-auto rounded-card"
+              height={128}
+              src={getMediaUrl(supabase, value)}
+              width={192}
+            />
+          )}
           <Button
             onClick={() => onChange(null)}
             size="sm"
@@ -85,13 +100,18 @@ export const ImageField = ({
         </div>
       ) : null}
       <Input
-        accept="image/jpeg,image/png,image/webp"
+        accept={
+          kind === "pdf" ? "application/pdf" : "image/jpeg,image/png,image/webp"
+        }
         disabled={busy}
         id={id}
         onChange={(e) => upload(e.target.files?.[0])}
         type="file"
       />
-      <p className="type-caption">{busy ? t("uploading") : t("noImageNote")}</p>
+      <p className="type-caption">
+        {busy ? t("uploading") : null}
+        {!busy && kind === "image" ? t("noImageNote") : null}
+      </p>
       {problem ? (
         <p className="text-sm text-title" role="alert">
           {problem}

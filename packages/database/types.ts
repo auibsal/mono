@@ -2666,6 +2666,20 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      accepted_unplaced: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          agreement_signed: boolean;
+          blind_entry_id: string;
+          blind_id: string;
+          category: Database["journal"]["Enums"]["category"];
+          decided_at: string;
+          decision: string;
+          issue_id: string;
+          language: Database["journal"]["Enums"]["language"];
+          title: string;
+        }[];
+      };
       assign_reader: {
         Args: {
           blind_entry_id: string;
@@ -2685,6 +2699,7 @@ export type Database = {
           author_name_en: string;
         }[];
       };
+      piece_from_entry: { Args: { blind_entry_id: string }; Returns: string };
       return_for_formatting: {
         Args: { note: string; submission_id: string };
         Returns: undefined;

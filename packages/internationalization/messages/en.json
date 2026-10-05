@@ -1027,6 +1027,80 @@
         "flagConfirm": "Change this for everyone, at once?",
         "banner": "The site-wide banner is a public notice: Content → Notices.",
         "emails": "Email templates are part of the code (apps/email), bilingual and on brand; ask the technical administrator to change them."
+      },
+      "journal": {
+        "title": "Waraq: issues and pieces",
+        "lede": "Issues, pieces and contributors. Accepted work becomes a draft piece here; nothing from a submission is published before its author signs the Publication Agreement.",
+        "tabs": {
+          "issues": "Issues",
+          "accepted": "Accepted, to place ({count})",
+          "pieces": "Pieces",
+          "contributors": "Contributors"
+        },
+        "newIssue": "New issue",
+        "newPiece": "New piece",
+        "volumeNumber": "Vol. {volume}, No. {number}",
+        "columns": {
+          "issue": "Issue",
+          "piece": "Piece",
+          "category": "Category",
+          "contributor": "Contributor",
+          "status": "Status",
+          "agreement": "Agreement",
+          "decided": "Decided"
+        },
+        "categories": {
+          "poetry": "Poetry",
+          "fiction": "Fiction",
+          "creative_nonfiction": "Creative Nonfiction",
+          "short_drama": "Short Drama",
+          "art_photography": "Art & Photography",
+          "translation": "Translation",
+          "six_words": "Six Words"
+        },
+        "languages": {
+          "en": "English",
+          "ar": "Arabic",
+          "bilingual": "Bilingual"
+        },
+        "signed": "Signed",
+        "notSigned": "Not yet signed",
+        "place": "Make a draft piece",
+        "noneAccepted": "No accepted work is waiting.",
+        "allIssues": "All issues",
+        "noIssue": "No issue yet",
+        "issue": {
+          "volume": "Volume",
+          "number": "Number",
+          "titleField": "Title",
+          "theme": "Theme",
+          "editorsNote": "Editor's note",
+          "cover": "Cover",
+          "pdf": "Issue PDF (two-cover print edition)",
+          "notFound": "No issue with this link, or your roles don't cover it.",
+          "publishConfirm": "Publish this issue? It appears on auibsal.org at once; its published pieces go with it."
+        },
+        "piece": {
+          "titleField": "Title",
+          "titleHint": "Fill the language(s) the piece is in.",
+          "credit": "Credit (e.g. “Translated from the Arabic by …”)",
+          "category": "Category",
+          "language": "Language",
+          "contributor": "Contributor",
+          "membersOnly": "Members only (listed publicly with a sign-in prompt; the text stays private)",
+          "sort": "Order in the issue",
+          "image": "Artwork or photograph",
+          "issue": "Issue",
+          "notFound": "No piece with this link, or your roles don't cover it.",
+          "agreementNeeded": "The author hasn't signed the Publication Agreement yet; publishing will wait for it.",
+          "publishConfirm": "Publish this piece? It appears on its issue's page at once."
+        },
+        "contributor": {
+          "name": "Name",
+          "bio": "Bio",
+          "new": "New contributor",
+          "edit": "Edit contributor"
+        }
       }
     },
     "editor": {
