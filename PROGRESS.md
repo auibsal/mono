@@ -151,8 +151,16 @@ These stop parts of the work. Everything else continues around them.
 - [ ] Programmes (rotas, sign-ups); Society (Book of Members, roster, minutes, elections)
 
 ### Nexus — admin (§8)
-- [ ] Overview, Members (queue, tiers, manual activity, roles), Events (+ QR check-in), Waraq issues/pieces, Pipeline board, Content, Charity, Programmes, Governance, Activity log, Settings
-- [ ] CSV exports through apps/api
+- [x] Shell and module gating by permission (UX only; RLS and RPCs enforce)
+- [x] Overview (`core.admin_overview()`), Members (directory, verification queue, tiers, manual activity, roles via `access.assign_role`)
+- [x] Events (editor, questions, attendance, camera QR check-in)
+- [x] Content (news, pages, announcements, homepage slots, media library; Liveblocks co-editing when enabled)
+- [x] Charity (campaigns, ledger with sign-off and reversals, receipts through signed URLs; winter-set cost is a placeholder setting)
+- [x] Programmes, Governance (minutes co-edited, elections, spending, library uploads), Activity log, Settings
+- [x] Waraq issues, pieces, contributors; accepted work becomes a draft piece; publishing blocked until the agreement is signed
+- [ ] Waraq pipeline board (intake, readers, third read, selection, decisions, reveal) — task in progress
+- [x] CSV exports through apps/api (members, attendance, ledger, spending)
+- [ ] Apply migrations `20261005000000_admin` and `20261005000100_waraq_publishing` to production
 
 ### Public site (§6)
 - [x] Layout (skip link, header, footer, language switch), home (events, Waraq, Warmth Meter, calls, join band), 404
