@@ -47,8 +47,8 @@ export const POST = async (
   }
 
   try {
-    const rows = await definition.rows(session, parsed.data);
-    return new Response(toCsv(definition.header, rows), {
+    const table = await definition.run(session, parsed.data);
+    return new Response(toCsv(table.header, table.rows), {
       headers: {
         ...headers,
         "cache-control": "no-store",
