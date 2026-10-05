@@ -53,3 +53,40 @@ export const callApi = async <T>(
 
   return json as T;
 };
+
+/** Like callApi, for endpoints that answer with text (CSV exports). */
+export const callApiText = async (
+  supabase: SupabaseClient<Database>,
+  path: string,
+  body: object,
+  fetchImpl: typeof fetch = fetch
+): Promise<string> => {
+  if (!env.NEXT_PUBLIC_API_URL) {
+    throw new ApiError(0, "api_not_configured");
+  }
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session) {
+    throw new ApiError(401, "unauthorized");
+  }
+
+  const response = await fetchImpl(`${env.NEXT_PUBLIC_API_URL}${path}`, {
+    body: JSON.stringify(body),
+    headers: {
+      Authorization: `Bearer ${session.access_token}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    const json = (await response.json().catch(() => ({}))) as {
+      error?: string;
+    };
+    throw new ApiError(response.status, json.error ?? "request_failed");
+  }
+
+  return response.text();
+};

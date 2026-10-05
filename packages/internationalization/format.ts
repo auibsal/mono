@@ -179,3 +179,43 @@ export const formatIqd = (amount: number, locale: Locale = defaultLocale) => {
   }).format(amount);
   return locale === "ar" ? `${digits} دينار` : `${digits} IQD`;
 };
+
+// ── Form fields in Baghdad time ─────────────────────────────────────────────
+// <input type="datetime-local"> has no time zone. Admin forms show and take
+// times as Baghdad wall-clock time, whatever the browser's zone, and store
+// them as UTC instants.
+
+const pad = (n: number) => String(n).padStart(2, "0");
+
+/** A UTC instant → "YYYY-MM-DDTHH:mm" in Baghdad (for datetime-local). */
+export const toZonedInputValue = (value: DateInput | null | undefined) => {
+  if (value === null || value === undefined || value === "") {
+    return "";
+  }
+  const zoned = new TZDate(toDate(value), TIME_ZONE);
+  return `${zoned.getFullYear()}-${pad(zoned.getMonth() + 1)}-${pad(zoned.getDate())}T${pad(zoned.getHours())}:${pad(zoned.getMinutes())}`;
+};
+
+const ZONED_INPUT = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/;
+
+/** "YYYY-MM-DDTHH:mm" in Baghdad → an ISO UTC string; null when empty or invalid. */
+export const fromZonedInputValue = (value: string) => {
+  const match = ZONED_INPUT.exec(value);
+  if (!match) {
+    return null;
+  }
+  const [, y, mo, d, h, mi] = match.map(Number) as number[];
+  const zoned = new TZDate(
+    y ?? 0,
+    (mo ?? 1) - 1,
+    d ?? 1,
+    h ?? 0,
+    mi ?? 0,
+    TIME_ZONE
+  );
+  return new Date(zoned.getTime()).toISOString();
+};
+
+/** A UTC instant → "YYYY-MM-DD", the Baghdad calendar day (for type="date"). */
+export const toZonedDateValue = (value: DateInput | null | undefined) =>
+  toZonedInputValue(value).slice(0, 10);

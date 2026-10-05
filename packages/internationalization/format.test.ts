@@ -12,8 +12,11 @@ import {
   formatMonthYear,
   formatRelativeTime,
   formatWeekday,
+  fromZonedInputValue,
   inProjectTimeZone,
   intlLocale,
+  toZonedDateValue,
+  toZonedInputValue,
   WEEK_STARTS_ON,
 } from "./format";
 
@@ -94,5 +97,26 @@ describe("SAL copy rules", () => {
   test("money reads '50,000 IQD'", () => {
     expect(formatIqd(50_000, "en")).toBe("50,000 IQD");
     expect(formatIqd(50_000, "ar")).toBe("50,000 دينار");
+  });
+});
+
+describe("Baghdad form values", () => {
+  test("an instant shows as Baghdad wall-clock time", () => {
+    expect(toZonedInputValue("2026-10-13T15:00:00Z")).toBe("2026-10-13T18:00");
+    expect(toZonedDateValue("2026-10-13T22:30:00Z")).toBe("2026-10-14");
+    expect(toZonedInputValue(null)).toBe("");
+  });
+
+  test("Baghdad wall-clock time is stored as UTC", () => {
+    expect(fromZonedInputValue("2026-10-13T18:00")).toBe(
+      "2026-10-13T15:00:00.000Z"
+    );
+    expect(fromZonedInputValue("")).toBeNull();
+    expect(fromZonedInputValue("13/10/2026")).toBeNull();
+  });
+
+  test("the two round-trip", () => {
+    const value = "2027-04-14T09:30";
+    expect(toZonedInputValue(fromZonedInputValue(value))).toBe(value);
   });
 });

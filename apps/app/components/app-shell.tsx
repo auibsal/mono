@@ -20,6 +20,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { MenuIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { type ReactNode, useState } from "react";
+import { useVisibleModules } from "./admin/admin-shell";
 import { LanguageSwitcher } from "./language-switcher";
 
 // Sections are added here as their pages land (see PROGRESS.md).
@@ -31,7 +32,11 @@ const memberLinks = [
 const NavLinks = ({ onNavigate }: { onNavigate?: () => void }) => {
   const t = useTranslations("nexus.nav");
   const pathname = usePathname();
-  const links = memberLinks;
+  const { visible } = useVisibleModules();
+  const links = [
+    ...memberLinks,
+    ...(visible.length > 0 ? [{ href: "/admin", key: "admin" } as const] : []),
+  ];
 
   return (
     <ul className="flex flex-col gap-1 lg:flex-row lg:gap-4">

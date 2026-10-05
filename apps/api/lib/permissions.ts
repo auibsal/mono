@@ -26,3 +26,14 @@ export const hasPermission = async (
     });
   return !error && data === true;
 };
+
+/** The permission in any scope (for showing a module or list at all). */
+export const hasPermissionAnywhere = async (
+  session: ApiSession,
+  permission: Permission
+) => {
+  const { data, error } = await session.supabase
+    .schema("access")
+    .rpc("has_permission_anywhere", { permission });
+  return !error && data === true;
+};

@@ -1065,6 +1065,7 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      admin_overview: { Args: Record<PropertyKey, never>; Returns: Json };
       current_semester: {
         Args: Record<PropertyKey, never>;
         Returns: {
@@ -2887,6 +2888,21 @@ export type Database = {
       decide_verification: {
         Args: { approve: boolean; note?: string; request_id: string };
         Returns: undefined;
+      };
+      directory: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          activities: number;
+          created_at: string;
+          email: string;
+          full_name_ar: string;
+          full_name_en: string;
+          member_since: string;
+          tier: Database["membership"]["Enums"]["tier"];
+          user_id: string;
+          verified_at: string;
+          voting_member: boolean;
+        }[];
       };
       has_current_pledges: { Args: { uid?: string }; Returns: boolean };
       is_member: { Args: { uid?: string }; Returns: boolean };

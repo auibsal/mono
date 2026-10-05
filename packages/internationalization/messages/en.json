@@ -248,6 +248,144 @@
         "deleting": "Deleting…",
         "failed": "We couldn't delete your account. Please try again."
       }
+    },
+    "admin": {
+      "title": "Administration",
+      "nav": {
+        "label": "Administration sections",
+        "overview": "Overview",
+        "members": "Members",
+        "events": "Events",
+        "journal": "Waraq: issues and pieces",
+        "pipeline": "Waraq: pipeline",
+        "content": "Content",
+        "charity": "Charity",
+        "programmes": "Programmes",
+        "governance": "Governance",
+        "activity": "Activity log",
+        "settings": "Settings"
+      },
+      "noAccess": "Your roles don't include this section. Ask the President or the General Secretary if you need it.",
+      "kit": {
+        "search": "Search",
+        "searchPlaceholder": "Name or email",
+        "filter": "Filter",
+        "all": "All",
+        "empty": "Nothing here yet.",
+        "noMatches": "Nothing matches.",
+        "rows": "{count, plural, one {{countText} row} other {{countText} rows}}",
+        "export": "Export CSV",
+        "exporting": "Exporting…",
+        "exportFailed": "The export failed. Try again.",
+        "english": "English",
+        "arabic": "Arabic",
+        "baghdadTime": "Baghdad time",
+        "new": "New",
+        "edit": "Edit",
+        "open": "Open",
+        "delete": "Delete",
+        "actionFailed": "That didn't work: {reason}",
+        "reasons": {
+          "forbidden": "your roles don't allow it.",
+          "conflict": "it clashes with an existing record.",
+          "invalid": "some values aren't accepted.",
+          "unknown": "an unexpected error. Try again."
+        },
+        "confirmTitle": "Are you sure?",
+        "back": "Back to the list"
+      },
+      "overview": {
+        "title": "Overview",
+        "members": "Members",
+        "votingMembers": "Voting Members",
+        "verificationPending": "Waiting for verification",
+        "upcomingRsvps": "RSVPs to upcoming events",
+        "openSubmissions": "Open Waraq submissions",
+        "campaigns": "Funds counted, active campaigns",
+        "counted": "{amount} counted",
+        "pending": "{amount} waiting for sign-off",
+        "noCampaigns": "No active campaign.",
+        "nothing": "Your roles don't include any of the overview figures."
+      },
+      "members": {
+        "title": "Members",
+        "lede": "Everyone with an account. Applicants from other email domains wait in the verification queue.",
+        "queue": "Verification queue ({count})",
+        "columns": {
+          "name": "Name",
+          "email": "Email",
+          "tier": "Tier",
+          "since": "Member since",
+          "activities": "Activities",
+          "voting": "Voting",
+          "status": "Status"
+        },
+        "filters": {
+          "tier": "Tier",
+          "voting": "Voting Members only",
+          "unverified": "Unverified only"
+        },
+        "yes": "Yes",
+        "no": "No",
+        "verified": "Verified",
+        "unverified": "Not verified",
+        "unnamed": "(no name)"
+      },
+      "member": {
+        "title": "Member",
+        "notFound": "No member with this link.",
+        "details": "Details",
+        "tier": "Tier",
+        "tierSaved": "Tier saved.",
+        "activity": "Activity records",
+        "activityLede": "Check-ins add records on their own. Add a manual record, with a note, for anything else that counts (it is logged).",
+        "kinds": {
+          "check_in": "Check-in",
+          "shift": "Shift",
+          "manual": "Manual"
+        },
+        "addActivity": "Add a manual record",
+        "note": "Note",
+        "when": "When",
+        "add": "Add record",
+        "roles": "Roles",
+        "rolesLede": "Assignments end on their own at the end date. The April handover works this way.",
+        "noRoles": "No roles.",
+        "active": "Active",
+        "ended": "Ended",
+        "upcoming": "Starts later",
+        "scopes": {
+          "global": "Society-wide",
+          "programme": "Programme",
+          "issue": "Waraq issue",
+          "campaign": "Campaign"
+        },
+        "endRole": "End now",
+        "endRoleConfirm": "End this assignment now? The permissions it grants stop at once.",
+        "assign": "Assign a role",
+        "role": "Role",
+        "scope": "Scope",
+        "scopeItem": "Which one",
+        "starts": "Starts",
+        "ends": "Ends (optional)",
+        "titleLabel": "Title shown on the roster (optional)",
+        "assignButton": "Assign role",
+        "assignConfirm": "Give {name} the role {role}? It grants that role's permissions from the start date.",
+        "choose": "Choose…"
+      },
+      "verification": {
+        "title": "Verification queue",
+        "lede": "Accounts from outside @auib.edu.iq (alumni, guests, external contributors). Approve only people you can place.",
+        "empty": "No one is waiting.",
+        "statement": "Their note",
+        "noStatement": "No note.",
+        "applied": "Applied",
+        "decisionNote": "Note to keep with the decision (optional)",
+        "approve": "Approve",
+        "reject": "Decline",
+        "approveConfirm": "Verify {email}? They become a member and can use the Nexus.",
+        "rejectConfirm": "Decline {email}? They will be told by email."
+      }
     }
   },
   "web": {
