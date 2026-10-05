@@ -147,12 +147,21 @@ These stop parts of the work. Everything else continues around them.
 - [x] Home: membership card + QR, next events + ticket QR + cancel + .ics, voting eligibility, notices, Waraq call countdown + my submissions, programmes, calendar feed (copy/reset), Six Words
 - [x] Profile and privacy, account deletion through apps/api
 - [ ] Events pages (browse, RSVP with questions, tickets, past attendance)
-- [ ] Waraq: submit (Tiptap + uploads), my submissions, sign agreement
+- [x] Waraq: submit (rich text or files, translation fields, Human Authorship reconfirmed each time), my submissions, revise when returned, withdraw, sign the Publication Agreement (text is `TODO(content)`)
 - [ ] Programmes (rotas, sign-ups); Society (Book of Members, roster, minutes, elections)
 
 ### Nexus — admin (§8)
-- [ ] Overview, Members (queue, tiers, manual activity, roles), Events (+ QR check-in), Waraq issues/pieces, Pipeline board, Content, Charity, Programmes, Governance, Activity log, Settings
-- [ ] CSV exports through apps/api
+- [x] Shell and module gating by permission (UX only; RLS and RPCs enforce)
+- [x] Overview (`core.admin_overview()`), Members (directory, verification queue, tiers, manual activity, roles via `access.assign_role`)
+- [x] Events (editor, questions, attendance, camera QR check-in)
+- [x] Content (news, pages, announcements, homepage slots, media library; Liveblocks co-editing when enabled)
+- [x] Charity (campaigns, ledger with sign-off and reversals, receipts through signed URLs; winter-set cost is a placeholder setting)
+- [x] Programmes, Governance (minutes co-edited, elections, spending, library uploads), Activity log, Settings
+- [x] Waraq issues, pieces, contributors; accepted work becomes a draft piece; publishing blocked until the agreement is signed
+- [x] Waraq pipeline (`/admin/pipeline`): per-issue tabs by role — my reading (rubric v2 scoring), intake (return for formatting, send to blind review, originals via `/files/submission`), reader assignment, drag-and-drop board with a keyboard Move menu, selection by average and band, decisions with author reveal, Advisory Board flagged view, calls
+- [x] Blind copies: `/files/blind` strips PDF info/XMP/annotation authors, image EXIF, DOCX properties and revision authors; never falls back to the original
+- [x] CSV exports through apps/api (members, attendance, ledger, spending)
+- [ ] Apply migrations `20261005000000_admin` and `20261005000100_waraq_publishing` to production
 
 ### Public site (§6)
 - [x] Layout (skip link, header, footer, language switch), home (events, Waraq, Warmth Meter, calls, join band), 404
@@ -197,8 +206,12 @@ Covered by automated tests so far:
 ## Content still needed
 
 - The Waraq, Second Chapter and Side Quest documents listed above.
-- Human Authorship pledge text and Member Pledge text (SAL-POL-01) —
-  currently `TODO(content)` in the messages files.
+- A formal Human Authorship pledge wording: the setup page shows Policy
+  Manual P10.1 (English verbatim) until one exists. The Member Pledge is now
+  the SAL-POL-01 text verbatim (the manual itself flags its Arabic for a
+  native check).
+- The Publication Agreement text that authors sign in the Nexus
+  (`TODO(content)` in `nexus.waraq.agreement.body`).
 - Founders' Roll names; the Faculty Advisor's name.
 - Programme descriptions (all 12) and the care promise for Side Quest.
 - Traditions (Charter Night, the Ribbon, the Term Card) text.
@@ -215,3 +228,6 @@ Covered by automated tests so far:
 - `charity.campaigns.unit_label_ar` default «أطفال كُسوا».
 - `core.semesters` names in pgTAP fixtures are test-only (no review needed).
 - The transliteration «النِّكسَس» for "the Nexus".
+- The Arabic of Policy Manual P10.1 on the setup page (translated for the
+  platform; the manual has no Arabic for it) and the Arabic programme names
+  for "the Prizes" in it (the other programme names match the reference data).

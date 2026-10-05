@@ -4,6 +4,7 @@ import {
   formatLongDate,
   formatNumber,
 } from "@repo/internationalization/format";
+import { Link } from "@repo/internationalization/navigation";
 import { localized } from "@repo/sal-data";
 import { useLocale, useTranslations } from "next-intl";
 import { useMySubmissions, useOpenCalls } from "@/lib/queries";
@@ -38,6 +39,12 @@ export const WaraqSection = () => {
             <p className="type-caption">
               {t("daysLeft", { days, daysText: formatNumber(days) })}
             </p>
+            <Link
+              className="text-sm underline underline-offset-4"
+              href={{ pathname: "/waraq/submit", query: { call: call.id } }}
+            >
+              {t("submit")}
+            </Link>
           </div>
         );
       })}
@@ -50,7 +57,15 @@ export const WaraqSection = () => {
                 className="flex justify-between gap-4 border-rule border-b pb-2"
                 key={submission.id}
               >
-                <span>{submission.title}</span>
+                <Link
+                  className="underline underline-offset-4"
+                  href={{
+                    pathname: "/waraq/submission",
+                    query: { id: submission.id },
+                  }}
+                >
+                  {submission.title}
+                </Link>
                 <span className="type-caption">
                   {tw(`status.${submission.status}`)}
                 </span>

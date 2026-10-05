@@ -84,6 +84,36 @@ export const band = (total: number): Band => {
   return total >= 65 ? "consider" : "decline";
 };
 
+/**
+ * The moves editors make on the board, mirroring private.allowed_transition
+ * for journal.manage / journal.decide (intake belongs to the Submissions
+ * Manager; accepting and declining go through journal.decide).
+ */
+export const editorMoves: Partial<
+  Record<SubmissionStatus, readonly SubmissionStatus[]>
+> = {
+  in_review: ["third_read", "selection"],
+  selection: ["in_review"],
+  third_read: ["selection"],
+};
+
+export const canEditorMove = (from: SubmissionStatus, to: SubmissionStatus) =>
+  editorMoves[from]?.includes(to) ?? false;
+
+/** Mean of the submitted read totals (rounded to one place), or null. */
+export const averageTotal = (
+  totals: readonly (number | null | undefined)[]
+) => {
+  const scored = totals.filter(
+    (total): total is number => typeof total === "number"
+  );
+  if (scored.length === 0) {
+    return null;
+  }
+  const mean = scored.reduce((sum, total) => sum + total, 0) / scored.length;
+  return Math.round(mean * 10) / 10;
+};
+
 export const MAX_SUBMISSIONS_PER_CALL = 2;
 export const MAX_SUBMISSIONS_PER_HOUR = 3;
 

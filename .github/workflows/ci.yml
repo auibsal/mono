@@ -58,7 +58,7 @@ jobs:
       # site must not contain the secret-key prefix or server-only names.
       - name: No secrets in client bundles
         run: |
-          ! grep -rlE "sb_secret_[A-Za-z0-9_-]{8,}|SUPABASE_SECRET_KEY|RESEND_TOKEN|CRON_SECRET|REVALIDATE_SECRET|DATABASE_WEBHOOK_SECRET" apps/app/out apps/web/.next/static
+          ! grep -rlE "sb_secret_[A-Za-z0-9_-]{8,}|SUPABASE_SECRET_KEY|RESEND_TOKEN|CRON_SECRET|REVALIDATE_SECRET|DATABASE_WEBHOOK_SECRET|LIVEBLOCKS_SECRET|sk_(dev|prod)_[A-Za-z0-9_-]{8,}" apps/app/out apps/web/.next/static
 
   database:
     name: Database (migrations, RLS, integration)

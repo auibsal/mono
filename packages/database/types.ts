@@ -1065,6 +1065,7 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      admin_overview: { Args: Record<PropertyKey, never>; Returns: Json };
       current_semester: {
         Args: Record<PropertyKey, never>;
         Returns: {
@@ -2665,6 +2666,20 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      accepted_unplaced: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          agreement_signed: boolean;
+          blind_entry_id: string;
+          blind_id: string;
+          category: Database["journal"]["Enums"]["category"];
+          decided_at: string;
+          decision: string;
+          issue_id: string;
+          language: Database["journal"]["Enums"]["language"];
+          title: string;
+        }[];
+      };
       assign_reader: {
         Args: {
           blind_entry_id: string;
@@ -2684,9 +2699,52 @@ export type Database = {
           author_name_en: string;
         }[];
       };
+      intake_queue: {
+        Args: { issue_id: string };
+        Returns: {
+          author_name_ar: string;
+          author_name_en: string;
+          blind_entry_id: string;
+          category: Database["journal"]["Enums"]["category"];
+          created_at: string;
+          file_count: number;
+          intake_note: string;
+          intake_returned_at: string;
+          language: Database["journal"]["Enums"]["language"];
+          status: Database["journal"]["Enums"]["submission_status"];
+          submission_id: string;
+          title: string;
+          updated_at: string;
+        }[];
+      };
+      piece_from_entry: { Args: { blind_entry_id: string }; Returns: string };
+      pipeline_issues: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          can_advise: boolean;
+          can_decide: boolean;
+          can_identity: boolean;
+          can_manage: boolean;
+          can_review: boolean;
+          id: string;
+          number: number;
+          status: string;
+          title_ar: string;
+          title_en: string;
+          volume: number;
+        }[];
+      };
       return_for_formatting: {
         Args: { note: string; submission_id: string };
         Returns: undefined;
+      };
+      review_team: {
+        Args: { issue_id: string };
+        Returns: {
+          full_name_ar: string;
+          full_name_en: string;
+          user_id: string;
+        }[];
       };
       sign_agreement: {
         Args: { signer_name: string; submission_id: string };
@@ -2887,6 +2945,21 @@ export type Database = {
       decide_verification: {
         Args: { approve: boolean; note?: string; request_id: string };
         Returns: undefined;
+      };
+      directory: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          activities: number;
+          created_at: string;
+          email: string;
+          full_name_ar: string;
+          full_name_en: string;
+          member_since: string;
+          tier: Database["membership"]["Enums"]["tier"];
+          user_id: string;
+          verified_at: string;
+          voting_member: boolean;
+        }[];
       };
       has_current_pledges: { Args: { uid?: string }; Returns: boolean };
       is_member: { Args: { uid?: string }; Returns: boolean };

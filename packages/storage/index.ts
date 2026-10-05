@@ -86,6 +86,25 @@ export const uploadReceipt = (
   );
 };
 
+/**
+ * Uploads an internal document to the private library bucket under a
+ * random name, library/<audience>/<random>.<ext> (governance.manage
+ * holders; read only through apps/api links).
+ */
+export const uploadLibraryFile = (
+  supabase: Client,
+  audience: "role" | "council",
+  file: File
+) => {
+  assertAllowed("library", file);
+  return upload(
+    supabase,
+    buckets.library.id,
+    anonymousObjectPath(audience, file.type),
+    file
+  );
+};
+
 /** Uploads a public image or PDF into an area of the media bucket. */
 export const uploadMedia = async (
   supabase: Client,
