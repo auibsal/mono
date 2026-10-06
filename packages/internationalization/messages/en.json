@@ -304,7 +304,8 @@
         "nameHint": "Typing your name is your signature.",
         "sign": "Sign the agreement",
         "signed": "Signed by {name} on {date}."
-      }
+      },
+      "pieceNotFound": "No published piece with this link."
     },
     "profile": {
       "title": "Profile and privacy",
@@ -1391,6 +1392,198 @@
       "openCalls": "Open calls",
       "join": "Join the Society",
       "joinBody": "Membership is free and open to every AUIB student."
+    },
+    "documents": {
+      "title": "Documents",
+      "lede": "The Society's founding documents: the Constitution, the rules that follow from it, and the plans and handbooks members use. Each page says whether the text is a draft or adopted.",
+      "englishOnly": "The documents are in English.",
+      "all": "All documents",
+      "statusLabel": "Status of this document",
+      "statuses": {
+        "draft": "Draft",
+        "adopted": "Adopted",
+        "superseded": "Superseded"
+      },
+      "status": {
+        "draft": "This is a draft, not an adopted text. It is for ratification by the General Assembly.",
+        "draftFor": "This is a draft, not an adopted text. It is for ratification at the Founding General Assembly on Charter Day, {date}.",
+        "adopted": "Adopted by the Society.",
+        "adoptedOn": "Adopted on {date}.",
+        "superseded": "Superseded by a later version. Kept for the record; it no longer applies."
+      },
+      "dated": "Dated {date}",
+      "read": "Read the PDF ({pages} pages)",
+      "download": "Download",
+      "contents": "Contents"
+    },
+    "events": {
+      "title": "Events",
+      "lede": "Readings, workshops, salons and nights out with the Society. Members-only events are listed in the Nexus.",
+      "subscribe": "Subscribe to the calendar",
+      "subscribeHint": "(adds every public event to your phone or computer calendar)",
+      "upcoming": "Coming up",
+      "past": "Past events",
+      "none": "No events announced yet.",
+      "all": "All events",
+      "cancelled": "This event has been cancelled.",
+      "rsvp": "RSVP in the Nexus",
+      "rsvpHint": "Sign in with your AUIB email to reserve a place.",
+      "addToCalendar": "Add to calendar"
+    },
+    "waraq": {
+      "title": "Waraq",
+      "lede": "Our bilingual literary journal (working title). Submissions are read blind: readers never see the author's name before a decision.",
+      "calls": "Open calls",
+      "noCalls": "No call is open at the moment.",
+      "closes": "Closes {date}",
+      "submit": "Submit in the Nexus",
+      "issues": "Issues",
+      "volumeNumber": "Vol. {volume}, No. {number}",
+      "latest": "Latest pieces",
+      "noPieces": "Nothing published yet.",
+      "inThisIssue": "In this issue",
+      "editorsNote": "Editor's note",
+      "coverAlt": "The issue's cover",
+      "pdf": "Download the print edition (PDF)",
+      "membersOnly": "Members",
+      "membersOnlyBody": "This piece is for members of the Society.",
+      "readInNexus": "Read it in the Nexus",
+      "contributor": "Contributor",
+      "work": "In Waraq",
+      "categories": {
+        "poetry": "Poetry",
+        "fiction": "Fiction",
+        "creative_nonfiction": "Creative Nonfiction",
+        "short_drama": "Short Drama",
+        "art_photography": "Art & Photography",
+        "translation": "Translation",
+        "six_words": "Six Words"
+      }
+    },
+    "about": {
+      "title": "About the Society",
+      "lede": "To cultivate a culture of literature and creative expression across AUIB.",
+      "draftNote": "Quoted from the draft Constitution (SAL-GOV-01), which the Founding General Assembly is asked to ratify on Charter Day.",
+      "preambleTitle": "Preamble",
+      "preamble": "We, students of the American University of Iraq – Baghdad, gathered as the Society of Arts and Letters, in a city that once kept the House of Wisdom and still keeps al-Mutanabbi Street, adopt this Constitution so that our Society is open to every student, governed in the open, careful with people and money, and built to outlast those who founded it.",
+      "mottoTitle": "Our motto",
+      "motto": "The paper and the pen",
+      "mottoNote": "From al-Mutanabbi's most quoted line: the horses, the night and the desert know me; so do the sword, the lance, the paper and the pen. We keep only the last two.",
+      "pillarsTitle": "Four pillars",
+      "pillars": {
+        "connecting": {
+          "title": "Connecting students",
+          "body": "From every college, into one room and onto one page."
+        },
+        "fostering": {
+          "title": "Fostering creativity",
+          "body": "Deadlines, editors and stages that turn drafts into finished work."
+        },
+        "celebrating": {
+          "title": "Celebrating culture",
+          "body": "Arabic and English side by side; Iraqi writing next to world writing."
+        },
+        "building": {
+          "title": "Building a community",
+          "body": "A society people stay in, and come back to."
+        }
+      },
+      "glanceTitle": "At a glance",
+      "glance": {
+        "open": {
+          "title": "Open and free",
+          "body": "Any enrolled AUIB student can join. No fee, no audition, no portfolio. Members who take part in two activities a semester vote."
+        },
+        "power": {
+          "title": "Members hold the power",
+          "body": "The General Assembly of all members elects the officers, changes this Constitution and can remove anyone who abuses a role."
+        },
+        "council": {
+          "title": "A Council runs the work",
+          "body": "Four elected officers and six appointed directors meet every two weeks, adopt the budget and greenlight programmes."
+        },
+        "elections": {
+          "title": "Elections every April",
+          "body": "Secret ballot with AUIB sign-in, run by a committee of non-candidates. Ranked choice when more than two stand. Presidents serve two terms at most."
+        },
+        "editors": {
+          "title": "Editors decide the art",
+          "body": "Programme editors and directors make creative calls. The Council overrules a selection only on grounds of law, safety or University policy, and in writing."
+        },
+        "money": {
+          "title": "Every dinar is logged",
+          "body": "Spending limits, two people on every cash count, receipts for everything, and charity money passed on in full."
+        },
+        "process": {
+          "title": "Fair process",
+          "body": "Anyone facing discipline hears the concern and can answer it. Removal of an officer needs two-thirds of members voting."
+        },
+        "last": {
+          "title": "Written to last",
+          "body": "Minutes, reports and an archive are kept for the next generation. Core principles can only be changed at two meetings, a month apart."
+        }
+      },
+      "nonPartisan": "Our Society is non-partisan and non-sectarian. Your writing and art can explore anything human. The Society itself takes no side in party or sect.",
+      "documents": "Read the founding documents"
+    },
+    "join": {
+      "title": "Join the Society",
+      "lede": "Membership is free and open to every AUIB student. There is no audition, no portfolio and no fee.",
+      "steps": {
+        "register": {
+          "title": "Register",
+          "body": "Sign up in the Nexus with your AUIB email and sign the Member Pledge."
+        },
+        "commonRoom": {
+          "title": "Join The Common Room",
+          "body": "Our Telegram channel, where reminders and room changes go first. Follow @auibsal too."
+        },
+        "twoThings": {
+          "title": "Come to two things",
+          "body": "Any two Society activities in a semester make you a Voting Member: you can vote in elections and stand for office."
+        }
+      },
+      "tiersTitle": "Kinds of membership",
+      "tiersYou": "You are a…",
+      "tiersIf": "if you…",
+      "tiersCan": "you can…",
+      "tiers": {
+        "member": {
+          "name": "Member",
+          "if": "have registered",
+          "can": "take part in everything, pitch ideas, apply for roles"
+        },
+        "voting": {
+          "name": "Voting Member",
+          "if": "took part in two activities this or last semester",
+          "can": "also vote and stand for election"
+        },
+        "fellow": {
+          "name": "Fellow",
+          "if": "gave outstanding service, named by the Council",
+          "can": "keep the title for life; your name in the Book of Fellows"
+        },
+        "honorary": {
+          "name": "Honorary Member",
+          "if": "are faculty, staff, an alumnus or a guest artist honoured by the Council",
+          "can": "join us as a friend and guest (no vote)"
+        },
+        "alumni": {
+          "name": "Alumni Member",
+          "if": "have graduated",
+          "can": "come back to Charter Night and mentor"
+        }
+      },
+      "firstMonthTitle": "Your first month",
+      "firstMonth": "Register · join The Common Room · type your six words · come to a Majlis with your buddy · tell us after your second event what you would like to do here.",
+      "cta": "Join in the Nexus",
+      "ctaHint": "Use your AUIB email address."
+    },
+    "programmes": {
+      "title": "Programmes",
+      "lede": "Four big programmes and a rhythm of small ones. The Term Card lists this semester's dates.",
+      "journal": "Read Waraq",
+      "events": "See the events"
     }
   }
 }

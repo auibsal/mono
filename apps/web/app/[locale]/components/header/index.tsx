@@ -19,7 +19,14 @@ type SectionKey =
   | "join"
   | "news"
   | "documents";
-const sections: { href: string; key: SectionKey }[] = [];
+const sections: { href: string; key: SectionKey }[] = [
+  { href: "/about", key: "about" },
+  { href: "/programmes", key: "programmes" },
+  { href: "/waraq", key: "waraq" },
+  { href: "/events", key: "events" },
+  { href: "/join", key: "join" },
+  { href: "/documents", key: "documents" },
+];
 
 /** Words-first header: horizontal lockup, sections, language, sign in. */
 export const Header = () => {
@@ -51,16 +58,16 @@ export const Header = () => {
 
   return (
     <header className="border-rule border-b bg-surface">
-      <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-4 py-4">
+      <div className="mx-auto flex w-full max-w-6xl items-center gap-2 px-4 py-4 sm:gap-4">
         <Link className="shrink-0" href="/">
           <BrandLogo height={64} locale={locale} />
         </Link>
         <nav aria-label={tc("society")} className="ms-auto hidden lg:block">
           {links}
         </nav>
-        <div className="ms-auto flex items-center gap-2 lg:ms-0">
+        <div className="ms-auto flex shrink-0 items-center gap-1 sm:gap-2 lg:ms-0">
           <Link
-            className="px-2 py-1 text-sm underline-offset-4 hover:underline"
+            className="whitespace-nowrap px-2 py-1 text-sm underline-offset-4 hover:underline"
             href={pathname}
             lang={other}
             locale={other}

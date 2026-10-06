@@ -267,3 +267,85 @@ export const submitScore = async (
       .single()
   );
 };
+
+// ── Published Waraq (public site) ───────────────────────────────────────────
+// Each query also filters to published rows, so a signed-in editor's client
+// would not show drafts either; RLS is still the boundary.
+
+const pieceListColumns =
+  "id, slug, title_en, title_ar, category, language, members_only, published_at, sort, contributor:contributors(slug, name_en, name_ar)";
+
+const published = <
+  T extends {
+    lte: (c: string, v: string) => T;
+    eq: (c: string, v: string) => T;
+  },
+>(
+  query: T
+) =>
+  query.eq("status", "published").lte("published_at", new Date().toISOString());
+
+export const issueBySlug = async (client: Client, slug: string) =>
+  unwrap(
+    await published(
+      journal(client).from("issues").select("*").eq("slug", slug)
+    ).maybeSingle()
+  );
+
+export const piecesInIssue = async (client: Client, issueId: string) =>
+  unwrap(
+    await published(
+      journal(client)
+        .from("pieces")
+        .select(pieceListColumns)
+        .eq("issue_id", issueId)
+    ).order("sort")
+  ) ?? [];
+
+/** A piece and its text. Members-only text is withheld by RLS (body null). */
+export const pieceBySlug = async (client: Client, slug: string) => {
+  const piece = unwrap(
+    await published(
+      journal(client)
+        .from("pieces")
+        .select(
+          `${pieceListColumns}, credit_en, credit_ar, image_path, issue:issues(slug, volume, number, title_en, title_ar)`
+        )
+        .eq("slug", slug)
+    ).maybeSingle()
+  );
+  if (!piece) {
+    return null;
+  }
+  const body = unwrap(
+    await journal(client)
+      .from("piece_bodies")
+      .select("body_en, body_ar")
+      .eq("piece_id", piece.id)
+      .maybeSingle()
+  );
+  return { ...piece, body };
+};
+
+export const contributorBySlug = async (client: Client, slug: string) => {
+  const contributor = unwrap(
+    await journal(client)
+      .from("contributors")
+      .select("id, slug, name_en, name_ar, bio_en, bio_ar")
+      .eq("slug", slug)
+      .maybeSingle()
+  );
+  if (!contributor) {
+    return null;
+  }
+  const pieces =
+    unwrap(
+      await published(
+        journal(client)
+          .from("pieces")
+          .select(pieceListColumns)
+          .eq("contributor_id", contributor.id)
+      ).order("published_at", { ascending: false })
+    ) ?? [];
+  return { ...contributor, pieces };
+};
