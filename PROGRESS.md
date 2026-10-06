@@ -167,7 +167,8 @@ These stop parts of the work. Everything else continues around them.
 - [x] Layout (skip link, header, footer, language switch), home (events, Waraq, Warmth Meter, calls, join band), 404
 - [x] Revalidation route (cache tags), sitemap (existing pages only, hreflang), robots
 - [x] Documents: registry (`packages/sal-data/documents.json`, one entry per docs-source PDF, status shown on every page; all six are Draft 1 for ratification on Charter Day), index and per-document pages with contents, PDFs published at build (`apps/web/scripts/copy-documents.mjs`). The documents are English-only; `/ar` says so.
-- [ ] About, Programmes, Waraq hub/pieces/contributors, Events (list, calendar, detail, .ics), Give + transparency, Join, News, Contact, Media kit, Privacy, Side Quest care + removal form, Search, structured data, OG images
+- [x] Events: upcoming and past lists, detail (cancelled notice, sanitised body, image, RSVP in the Nexus, add-to-calendar .ics), calendar subscription (webcal)
+- [ ] About, Programmes, Waraq hub/pieces/contributors, Give + transparency, Join, News, Contact, Media kit, Privacy, Side Quest care + removal form, Search, structured data, OG images
 
 ### API (§11)
 - [x] Account deletion; keep-alive cron; iCal: member feed, per-event, public feed

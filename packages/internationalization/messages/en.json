@@ -1414,6 +1414,20 @@
       "read": "Read the PDF ({pages} pages)",
       "download": "Download",
       "contents": "Contents"
+    },
+    "events": {
+      "title": "Events",
+      "lede": "Readings, workshops, salons and nights out with the Society. Members-only events are listed in the Nexus.",
+      "subscribe": "Subscribe to the calendar",
+      "subscribeHint": "(adds every public event to your phone or computer calendar)",
+      "upcoming": "Coming up",
+      "past": "Past events",
+      "none": "No events announced yet.",
+      "all": "All events",
+      "cancelled": "This event has been cancelled.",
+      "rsvp": "RSVP in the Nexus",
+      "rsvpHint": "Sign in with your AUIB email to reserve a place.",
+      "addToCalendar": "Add to calendar"
     }
   }
 }
