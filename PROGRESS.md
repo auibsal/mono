@@ -169,7 +169,8 @@ These stop parts of the work. Everything else continues around them.
 - [x] Documents: registry (`packages/sal-data/documents.json`, one entry per docs-source PDF, status shown on every page; all six are Draft 1 for ratification on Charter Day), index and per-document pages with contents, PDFs published at build (`apps/web/scripts/copy-documents.mjs`). The documents are English-only; `/ar` says so.
 - [x] Events: upcoming and past lists, detail (cancelled notice, sanitised body, image, RSVP in the Nexus, add-to-calendar .ics), calendar subscription (webcal)
 - [x] Waraq: hub (open calls → submit in the Nexus, issues, latest), issue, piece and contributor pages; members-only text stays in the Nexus (`/waraq/piece?slug=`)
-- [ ] About, Programmes, Give + transparency, Join, News, Contact, Media kit, Privacy, Side Quest care + removal form, Search, structured data, OG images
+- [x] About (Constitution preamble, motto, mission and "At a Glance", marked as quoted from the draft; Handbook pillars), Programmes (Handbook summaries, migration `20261006000000`), Join (Handbook steps and membership table; the Arabic is the Handbook's own welcome page where it exists)
+- [ ] Give + transparency, Join, News, Contact, Media kit, Privacy, Side Quest care + removal form, Search, structured data, OG images
 
 ### API (§11)
 - [x] Account deletion; keep-alive cron; iCal: member feed, per-event, public feed
@@ -217,7 +218,7 @@ Covered by automated tests so far:
   (`TODO(content)` in `nexus.waraq.agreement.body`).
 - Confirm the Member Handbook's status: its cover has no "Draft" label, but the registry lists it as a draft with the other founding documents.
 - Founders' Roll names; the Faculty Advisor's name.
-- Programme descriptions (all 12) and the care promise for Side Quest.
+- The care promise for Side Quest. (Programme descriptions now come from the Member Handbook.)
 - Traditions (Charter Night, the Ribbon, the Term Card) text.
 - Natrok Athar's description (both languages) and confirmed cost per winter set.
 
@@ -233,6 +234,8 @@ Covered by automated tests so far:
 - `core.semesters` names in pgTAP fixtures are test-only (no review needed).
 - The transliteration «النِّكسَس» for "the Nexus".
 - Arabic document titles in `packages/sal-data/documents.json` (except «دليل السياسات»).
+- `core.programmes.summary_ar` (migration `20261006000000`) and «ليلة المناظرة» for Motion Night (was «ليلة الصورة المتحركة», which meant a moving-image night).
+- `web.about` Arabic (translated from the Constitution and Handbook) and the parts of `web.join` that are not on the Handbook's Arabic welcome page.
 - The Arabic of Policy Manual P10.1 on the setup page (translated for the
   platform; the manual has no Arabic for it) and the Arabic programme names
   for "the Prizes" in it (the other programme names match the reference data).

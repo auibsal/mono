@@ -9,7 +9,10 @@ import type { MetadataRoute } from "next";
  */
 const staticPaths = [
   "",
+  "/about",
+  "/programmes",
   "/waraq",
+  "/join",
   "/events",
   "/documents",
   ...documents.documents.map((doc) => `/documents/${doc.slug}`),
