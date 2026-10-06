@@ -304,7 +304,8 @@
         "nameHint": "Typing your name is your signature.",
         "sign": "Sign the agreement",
         "signed": "Signed by {name} on {date}."
-      }
+      },
+      "pieceNotFound": "No published piece with this link."
     },
     "profile": {
       "title": "Profile and privacy",
@@ -1428,6 +1429,36 @@
       "rsvp": "RSVP in the Nexus",
       "rsvpHint": "Sign in with your AUIB email to reserve a place.",
       "addToCalendar": "Add to calendar"
+    },
+    "waraq": {
+      "title": "Waraq",
+      "lede": "Our bilingual literary journal (working title). Submissions are read blind: readers never see the author's name before a decision.",
+      "calls": "Open calls",
+      "noCalls": "No call is open at the moment.",
+      "closes": "Closes {date}",
+      "submit": "Submit in the Nexus",
+      "issues": "Issues",
+      "volumeNumber": "Vol. {volume}, No. {number}",
+      "latest": "Latest pieces",
+      "noPieces": "Nothing published yet.",
+      "inThisIssue": "In this issue",
+      "editorsNote": "Editor's note",
+      "coverAlt": "The issue's cover",
+      "pdf": "Download the print edition (PDF)",
+      "membersOnly": "Members",
+      "membersOnlyBody": "This piece is for members of the Society.",
+      "readInNexus": "Read it in the Nexus",
+      "contributor": "Contributor",
+      "work": "In Waraq",
+      "categories": {
+        "poetry": "Poetry",
+        "fiction": "Fiction",
+        "creative_nonfiction": "Creative Nonfiction",
+        "short_drama": "Short Drama",
+        "art_photography": "Art & Photography",
+        "translation": "Translation",
+        "six_words": "Six Words"
+      }
     }
   }
 }
