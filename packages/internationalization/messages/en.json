@@ -1391,6 +1391,29 @@
       "openCalls": "Open calls",
       "join": "Join the Society",
       "joinBody": "Membership is free and open to every AUIB student."
+    },
+    "documents": {
+      "title": "Documents",
+      "lede": "The Society's founding documents: the Constitution, the rules that follow from it, and the plans and handbooks members use. Each page says whether the text is a draft or adopted.",
+      "englishOnly": "The documents are in English.",
+      "all": "All documents",
+      "statusLabel": "Status of this document",
+      "statuses": {
+        "draft": "Draft",
+        "adopted": "Adopted",
+        "superseded": "Superseded"
+      },
+      "status": {
+        "draft": "This is a draft, not an adopted text. It is for ratification by the General Assembly.",
+        "draftFor": "This is a draft, not an adopted text. It is for ratification at the Founding General Assembly on Charter Day, {date}.",
+        "adopted": "Adopted by the Society.",
+        "adoptedOn": "Adopted on {date}.",
+        "superseded": "Superseded by a later version. Kept for the record; it no longer applies."
+      },
+      "dated": "Dated {date}",
+      "read": "Read the PDF ({pages} pages)",
+      "download": "Download",
+      "contents": "Contents"
     }
   }
 }

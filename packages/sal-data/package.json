@@ -8,6 +8,7 @@
     "./charity": "./charity.ts",
     "./client": "./client.ts",
     "./content": "./content.ts",
+    "./documents": "./documents.ts",
     "./events": "./events.ts",
     "./governance": "./governance.ts",
     "./journal": "./journal.ts",

@@ -1,12 +1,17 @@
 import { project } from "@repo/config";
 import { locales } from "@repo/internationalization";
+import { documents } from "@repo/sal-data";
 import type { MetadataRoute } from "next";
 
 /**
  * Only pages that exist, each with its Arabic/English alternates. Pages are
  * added here as they are built; members-only content never appears.
  */
-const staticPaths = [""];
+const staticPaths = [
+  "",
+  "/documents",
+  ...documents.documents.map((doc) => `/documents/${doc.slug}`),
+];
 
 const localized = (path: string): MetadataRoute.Sitemap => {
   const languages = Object.fromEntries(

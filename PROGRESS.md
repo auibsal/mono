@@ -161,12 +161,13 @@ These stop parts of the work. Everything else continues around them.
 - [x] Waraq pipeline (`/admin/pipeline`): per-issue tabs by role — my reading (rubric v2 scoring), intake (return for formatting, send to blind review, originals via `/files/submission`), reader assignment, drag-and-drop board with a keyboard Move menu, selection by average and band, decisions with author reveal, Advisory Board flagged view, calls
 - [x] Blind copies: `/files/blind` strips PDF info/XMP/annotation authors, image EXIF, DOCX properties and revision authors; never falls back to the original
 - [x] CSV exports through apps/api (members, attendance, ledger, spending)
-- [ ] Apply migrations `20261005000000_admin` and `20261005000100_waraq_publishing` to production
+- [x] Migrations `20261005000000_admin`, `…0100_waraq_publishing` and `…0200_waraq_pipeline` applied to production (2026-10-06)
 
 ### Public site (§6)
 - [x] Layout (skip link, header, footer, language switch), home (events, Waraq, Warmth Meter, calls, join band), 404
 - [x] Revalidation route (cache tags), sitemap (existing pages only, hreflang), robots
-- [ ] About, Programmes, Waraq hub/pieces/contributors, Events (list, calendar, detail, .ics), Give + transparency, Join, News, Documents (+ registry, MDX, status banners), Contact, Media kit, Privacy, Side Quest care + removal form, Search, structured data, OG images
+- [x] Documents: registry (`packages/sal-data/documents.json`, one entry per docs-source PDF, status shown on every page; all six are Draft 1 for ratification on Charter Day), index and per-document pages with contents, PDFs published at build (`apps/web/scripts/copy-documents.mjs`). The documents are English-only; `/ar` says so.
+- [ ] About, Programmes, Waraq hub/pieces/contributors, Events (list, calendar, detail, .ics), Give + transparency, Join, News, Contact, Media kit, Privacy, Side Quest care + removal form, Search, structured data, OG images
 
 ### API (§11)
 - [x] Account deletion; keep-alive cron; iCal: member feed, per-event, public feed
@@ -199,7 +200,7 @@ Covered by automated tests so far:
 - [x] Assignments stop at `ends_at` (pgTAP 10_access)
 - [ ] Sitemap lists only existing pages with alternates (e2e)
 - [ ] Every page renders in /ar and /en (e2e); check-rtl and check-i18n pass ✓ so far
-- [ ] Document pages show correct status (registry test, once documents exist)
+- [x] Document pages show correct status (registry test: every docs-source PDF registered; none marked adopted before ratification)
 - [ ] Emails arrive bilingual and on brand (needs Resend)
 - [ ] Secrets absent from builds — CI scan in place; verify on production builds
 
@@ -212,6 +213,7 @@ Covered by automated tests so far:
   native check).
 - The Publication Agreement text that authors sign in the Nexus
   (`TODO(content)` in `nexus.waraq.agreement.body`).
+- Confirm the Member Handbook's status: its cover has no "Draft" label, but the registry lists it as a draft with the other founding documents.
 - Founders' Roll names; the Faculty Advisor's name.
 - Programme descriptions (all 12) and the care promise for Side Quest.
 - Traditions (Charter Night, the Ribbon, the Term Card) text.
@@ -228,6 +230,7 @@ Covered by automated tests so far:
 - `charity.campaigns.unit_label_ar` default «أطفال كُسوا».
 - `core.semesters` names in pgTAP fixtures are test-only (no review needed).
 - The transliteration «النِّكسَس» for "the Nexus".
+- Arabic document titles in `packages/sal-data/documents.json` (except «دليل السياسات»).
 - The Arabic of Policy Manual P10.1 on the setup page (translated for the
   platform; the manual has no Arabic for it) and the Arabic programme names
   for "the Prizes" in it (the other programme names match the reference data).
