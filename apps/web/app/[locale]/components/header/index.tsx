@@ -24,6 +24,8 @@ const sections: { href: string; key: SectionKey }[] = [
   { href: "/programmes", key: "programmes" },
   { href: "/waraq", key: "waraq" },
   { href: "/events", key: "events" },
+  { href: "/give", key: "give" },
+  { href: "/news", key: "news" },
   { href: "/join", key: "join" },
   { href: "/documents", key: "documents" },
 ];

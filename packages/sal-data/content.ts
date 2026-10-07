@@ -109,3 +109,18 @@ export const announcementSchema = z
     message: "ends_before_start",
     path: ["ends_at"],
   });
+
+/** A published news post with its text (sanitise again on render). */
+export const newsBySlug = async (client: Client, slug: string) =>
+  unwrap(
+    await client
+      .schema("content")
+      .from("news_posts")
+      .select(
+        "id, slug, title_en, title_ar, excerpt_en, excerpt_ar, body_en, body_ar, cover_path, published_at"
+      )
+      .eq("slug", slug)
+      .eq("status", "published")
+      .lte("published_at", new Date().toISOString())
+      .maybeSingle()
+  );

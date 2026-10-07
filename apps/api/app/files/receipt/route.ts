@@ -55,3 +55,38 @@ export const POST = async (request: Request) => {
     return json({ error: "not_found" }, 404);
   }
 };
+
+/**
+ * GET /files/receipt?id=… — the transparency page's links. Public receipts
+ * only; redirects to a five-minute signed URL.
+ */
+export const GET = async (request: Request) => {
+  const parsed = body.safeParse({
+    id: new URL(request.url).searchParams.get("id"),
+  });
+  if (!parsed.success) {
+    return NextResponse.json({ error: "invalid_request" }, { status: 400 });
+  }
+  const admin = createAdminClient();
+  const { data: receipt } = await admin
+    .schema("charity")
+    .from("receipts")
+    .select("storage_path")
+    .eq("id", parsed.data.id)
+    .eq("is_public", true)
+    .maybeSingle();
+  if (!receipt) {
+    return NextResponse.json({ error: "not_found" }, { status: 404 });
+  }
+  try {
+    const url = await createSignedFileUrl(
+      admin,
+      "receipts",
+      receipt.storage_path
+    );
+    return NextResponse.redirect(url, 302);
+  } catch (error) {
+    log.error(`Receipt link failed: ${parseError(error)}`);
+    return NextResponse.json({ error: "not_found" }, { status: 404 });
+  }
+};

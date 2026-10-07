@@ -1584,6 +1584,144 @@
       "lede": "Four big programmes and a rhythm of small ones. The Term Card lists this semester's dates.",
       "journal": "Read Waraq",
       "events": "See the events"
+    },
+    "give": {
+      "title": "Give",
+      "lede": "Second Chapter, the charity book drive and fair, every fall. Edition 1: November 1–11, 2026, for Natrok Athar (نترك اثر).",
+      "waysTitle": "How to give",
+      "ways": {
+        "books": "Donate books",
+        "volunteer": "Volunteer at the fair",
+        "warm": "Keep a child warm"
+      },
+      "waysNote": "We take no payments online. Give in person at the drive and the fair, where every amount is counted and recorded.",
+      "meterTitle": "Warmth Meter",
+      "meterUnits": "{units} of {target} {label}",
+      "meterUnitsOpen": "{units} {label}",
+      "counted": "{amount} counted and signed off",
+      "pending": "{amount} waiting to be counted",
+      "noCampaign": "No campaign is running at the moment.",
+      "perSet": "One child's winter set costs about {amount} (to be confirmed by Natrok Athar).",
+      "transparencyTitle": "Every dinar",
+      "transparencyLede": "Every dinar is counted twice and reported.",
+      "policy": "Charity money is held separately, never used for costs, and handed over in full at a witnessed handover with a receipt.",
+      "policySource": "Policy Manual, SAL-POL-01, 7.5",
+      "countedNote": "The Warmth Meter shows only money that two people have counted and a second officer has signed off.",
+      "receiptsTitle": "Receipts",
+      "noReceipts": "No receipts published yet.",
+      "openReceipt": "View receipt",
+      "impactTitle": "Impact"
+    },
+    "news": {
+      "title": "News",
+      "lede": "News from the Society.",
+      "none": "No news yet.",
+      "all": "All news"
+    },
+    "contact": {
+      "title": "Contact",
+      "lede": "Find us on Instagram and in The Common Room, or talk to us at any event.",
+      "instagram": "Instagram",
+      "telegram": "Telegram",
+      "telegramName": "The Common Room",
+      "email": "Email",
+      "emailPending": "The Society's email address will be listed here.",
+      "concernTitle": "Raising a concern",
+      "concern": "If something is wrong, tell any officer, our Faculty Advisor or the Office of Student Life, in person or with the concern form. Harassment, safety and anything involving a child go straight to Student Life.",
+      "concernSource": "Member Handbook, SAL-MEM-01",
+      "photoTitle": "A photo or video of you",
+      "photo": "Ask and it comes down within 24 hours.",
+      "photoLink": "Ask for a removal"
+    },
+    "mediaKit": {
+      "title": "Media kit",
+      "lede": "The Society's name, logos and colours, for partners and the press.",
+      "nameTitle": "Our name",
+      "name": "\"AUIB Society of Arts and Letters\" in full on first use in formal documents; then \"the Society\" or \"SAL\". Never \"the club\".",
+      "nameAr": "In Arabic: جمعية الفنون والآداب.",
+      "programmeLine": "Endorsed programmes carry the line \"a Society of Arts and Letters programme\".",
+      "aboutTitle": "About the Society",
+      "about": "The AUIB Society of Arts and Letters is a student society at the American University of Iraq – Baghdad. Its mission is to cultivate a culture of literature and creative expression across AUIB.",
+      "logosTitle": "Logos",
+      "logosNote": "Use the files exactly as supplied. Never stretch, recolour, rotate, re-break the wordmark lines, add effects or shadows, or put the crimson symbol on ink. Where the AUIB logo appears it leads, and the SAL lockup follows at equal or smaller height.",
+      "download": "Download SVG",
+      "logos": {
+        "horizontal": "Horizontal lockup",
+        "horizontalReversed": "Horizontal lockup, reversed",
+        "stacked": "Stacked lockup",
+        "stackedReversed": "Stacked lockup, reversed",
+        "bilingual": "Bilingual lockup",
+        "bilingualReversed": "Bilingual lockup, reversed",
+        "symbol": "Symbol",
+        "symbolWhite": "Symbol, white",
+        "avatar": "Avatar"
+      },
+      "coloursTitle": "Colours",
+      "contactPress": "For anything else, contact the Media Director through any of our channels."
+    },
+    "privacy": {
+      "title": "Privacy and photo policy",
+      "lede": "How the Society treats your data and your image, from the Policy Manual, and how this website and the Nexus handle your information.",
+      "photoTitle": "Consent, photography and media",
+      "dataTitle": "Privacy and member data",
+      "source": "Policy Manual, SAL-POL-01",
+      "p": {
+        "5_1": "Anyone clearly featured in Society video or photography, or in an interview, signs a release (Form F-17) before publication. Guests see their episode or feature before it is released.",
+        "5_2": "At every event, a notice says that photography is taking place. Anyone may wear a camera-shy sticker or ask not to be photographed; photographers respect this without question.",
+        "5_3": "Anyone may ask for a photo or video of themselves to be removed. The Society takes it down within 24 hours, no reasons needed.",
+        "5_4": "Crowd photographs are fine; close-ups of individuals who have not agreed are not published.",
+        "5_5": "Photographs of people praying, in distress or in private moments are not taken.",
+        "6_1": "The Society collects only what it needs: name, AUIB email, college, year, phone (optional), and attendance. It never collects ID numbers or bank details.",
+        "6_2": "Member data lives in the restricted Members folder, seen only by the officers, the Director of Membership and the Records Lead.",
+        "6_3": "Member data is never shared outside the Society or used for anything other than Society business, including campaigning in Society elections.",
+        "6_4": "Members may ask to see or delete their data at any time. Data of members who leave is deleted one year after they leave, except their name and roles in the archive.",
+        "6_5": "Submissions, ballots and conduct records follow their own retention rules: Waraq's guidelines, B6.11 and B10.8."
+      },
+      "platformTitle": "This website and the Nexus",
+      "platform": {
+        "signIn": "You sign in to the Nexus with your email address. The sign-in cookie is shared across auibsal.org and its subdomains, and is used only to keep you signed in.",
+        "storage": "Member records are stored with Supabase in the European Union (Frankfurt). Who can see each record is enforced in the database itself, by role.",
+        "email": "Email from the platform is sent by Resend from the European Union (Ireland). Links in it are not tracked.",
+        "hosting": "The website, the Nexus and the API are hosted on Vercel.",
+        "analytics": "This website uses no analytics or advertising cookies.",
+        "delete": "You can delete your account in the Nexus, under Profile and privacy.",
+        "analyticsOn": "This website uses Google Analytics 4 to count visits; it sets analytics cookies."
+      }
+    },
+    "care": {
+      "title": "Side Quest care",
+      "lede": "Side Quest is our campus video series (working title). Here is how we look after the people in it.",
+      "promiseTitle": "Our promise",
+      "source": "Policy Manual, SAL-POL-01, P5",
+      "formTitle": "Ask for a removal",
+      "formLede": "Tell us what to take down. No reasons needed, and no sign-in.",
+      "name": "Your name",
+      "email": "Your email",
+      "emailHint": "We write back here when it is done.",
+      "url": "Link to the video or photo (optional)",
+      "details": "What should come down",
+      "detailsHint": "For example: the episode, and roughly when you appear.",
+      "send": "Send the request",
+      "sending": "Sending…",
+      "sent": "Received. It comes down within 24 hours, by {date}, and we'll write to you.",
+      "failed": "That didn't send. Try again, or tell any officer.",
+      "rateLimited": "You've sent several requests in the last hour. Try again later, or tell any officer."
+    },
+    "search": {
+      "title": "Search",
+      "lede": "Search events, news, Waraq and the founding documents.",
+      "label": "Search the site",
+      "placeholder": "A title, a name, a word",
+      "submit": "Search",
+      "results": "Results for \"{query}\"",
+      "none": "Nothing matches \"{query}\".",
+      "short": "Type at least two letters.",
+      "kinds": {
+        "event": "Event",
+        "news": "News",
+        "piece": "Waraq",
+        "document": "Document"
+      }
     }
   }
 }

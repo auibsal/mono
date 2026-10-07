@@ -7,9 +7,20 @@ export interface LocaleParams {
   readonly params: Promise<{ locale: Locale }>;
 }
 
+type SectionNamespace =
+  | "web.about"
+  | "web.care"
+  | "web.contact"
+  | "web.give"
+  | "web.join"
+  | "web.mediaKit"
+  | "web.news"
+  | "web.privacy"
+  | "web.programmes";
+
 /** Metadata for a simple section page: its `title` and `lede` messages. */
 export const sectionMetadata =
-  (namespace: "web.about" | "web.join" | "web.programmes", path: string) =>
+  (namespace: SectionNamespace, path: string) =>
   async ({ params }: LocaleParams): Promise<Metadata> => {
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace });

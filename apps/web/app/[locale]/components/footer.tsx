@@ -1,4 +1,5 @@
 import { project } from "@repo/config";
+import { Link } from "@repo/internationalization/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 
 export const Footer = async () => {
@@ -18,14 +19,21 @@ export const Footer = async () => {
           </p>
         </div>
         <ul className="grid content-start gap-1 text-sm sm:justify-items-end">
-          <li>
-            <a
-              className="underline-offset-4 hover:underline"
-              href={`mailto:${project.supportEmail}`}
-            >
-              {t("contact")}
-            </a>
-          </li>
+          {(
+            [
+              ["/contact", t("contact")],
+              ["/media-kit", t("mediaKit")],
+              ["/privacy", t("privacy")],
+              ["/side-quest/care", t("sideQuestCare")],
+              ["/search", t("search")],
+            ] as const
+          ).map(([href, label]) => (
+            <li key={href}>
+              <Link className="underline-offset-4 hover:underline" href={href}>
+                {label}
+              </Link>
+            </li>
+          ))}
           <li>
             <a
               className="underline-offset-4 hover:underline"

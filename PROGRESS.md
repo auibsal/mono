@@ -116,7 +116,7 @@ These stop parts of the work. Everything else continues around them.
 - [x] Ubuntu Arabic via next/font/local (byte-checked against brand/fonts)
 - [x] Type styles from the brand (Display 1.02, Lede 300/1.3, Body 1.5, Caption 1.4, Kicker 0.06em); `:lang(ar)` one step larger, 1.8–2.0 leading, 1.4 at display
 - [x] Logos in web/app public/brand (byte-checked), favicon = sal-avatar.svg
-- [ ] Open Graph images from SocialPost (apps/web)
+- [x] Open Graph images (apps/web `/[locale]/og`; Arabic laid out word by word, since Satori has no bidi)
 - [x] Storybook: light/ink themes and an LTR/RTL toolbar; SAL stories
 - [ ] Re-theme pass over every shadcn story in both directions (visual check)
 - [x] FormHeader, DocumentHeader, DocumentFooter, SocialPost ported from brand/components; SalCard
@@ -170,7 +170,8 @@ These stop parts of the work. Everything else continues around them.
 - [x] Events: upcoming and past lists, detail (cancelled notice, sanitised body, image, RSVP in the Nexus, add-to-calendar .ics), calendar subscription (webcal)
 - [x] Waraq: hub (open calls → submit in the Nexus, issues, latest), issue, piece and contributor pages; members-only text stays in the Nexus (`/waraq/piece?slug=`)
 - [x] About (Constitution preamble, motto, mission and "At a Glance", marked as quoted from the draft; Handbook pillars), Programmes (Handbook summaries, migration `20261006000000`), Join (Handbook steps and membership table; the Arabic is the Handbook's own welcome page where it exists)
-- [ ] Give + transparency, Join, News, Contact, Media kit, Privacy, Side Quest care + removal form, Search, structured data, OG images
+- [x] Give + transparency (Warmth Meter from signed-off money only, public receipts, impact, P7.5), News (list, post), Contact (channels, concerns), Media kit (name rules, logos as supplied, palette), Privacy (P5 and P6 verbatim, platform facts), Side Quest care + removal form (`apps/api /removal-requests`, rate-limited, honeypot), Search (published rows + document registry), drawn share images (`/[locale]/og`, default for every page)
+- [ ] Structured data (JSON-LD)
 
 ### API (§11)
 - [x] Account deletion; keep-alive cron; iCal: member feed, per-event, public feed
@@ -218,6 +219,9 @@ Covered by automated tests so far:
   and P10.1 (no separate agreement exists in the documents); its last line,
   naming the purpose agreed (Waraq online and in print, and the archive), was
   written for the platform — confirm it.
+- The Society's email address and The Common Room's Telegram link (the
+  Member Handbook still has "[Society AUIB email]"); Contact shows a note
+  until then.
 - Founders' Roll names; the Faculty Advisor's name.
 - The care promise for Side Quest. (Programme descriptions now come from the Member Handbook.)
 - Traditions (Charter Night, the Ribbon, the Term Card) text.
