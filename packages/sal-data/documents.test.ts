@@ -18,11 +18,16 @@ describe("document registry", () => {
     expect(new Set(documents.map((d) => d.slug)).size).toBe(documents.length);
   });
 
-  test("nothing is marked adopted before Charter Day ratification", () => {
-    // Every source cover reads "Draft 1 · for ratification" (Oct 2026).
-    for (const doc of documents) {
+  test("a document whose cover says Draft is never marked adopted", () => {
+    // The governing documents read "Draft 1 · for ratification" until the
+    // Founding General Assembly ratifies them; the registry follows the cover.
+    for (const doc of documents.filter((d) => d.version?.startsWith("Draft"))) {
       expect(doc.status, doc.code).toBe("draft");
     }
+  });
+
+  test("the Member Handbook is in force", () => {
+    expect(documentBySlug("member-handbook")?.status).toBe("adopted");
   });
 
   test("lookups", () => {

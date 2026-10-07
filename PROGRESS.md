@@ -214,9 +214,10 @@ Covered by automated tests so far:
   Manual P10.1 (English verbatim) until one exists. The Member Pledge is now
   the SAL-POL-01 text verbatim (the manual itself flags its Arabic for a
   native check).
-- The Publication Agreement text that authors sign in the Nexus
-  (`TODO(content)` in `nexus.waraq.agreement.body`).
-- Confirm the Member Handbook's status: its cover has no "Draft" label, but the registry lists it as a draft with the other founding documents.
+- The Publication Agreement in the Nexus quotes Policy Manual P9.1, P9.2, P9.5
+  and P10.1 (no separate agreement exists in the documents); its last line,
+  naming the purpose agreed (Waraq online and in print, and the archive), was
+  written for the platform — confirm it.
 - Founders' Roll names; the Faculty Advisor's name.
 - The care promise for Side Quest. (Programme descriptions now come from the Member Handbook.)
 - Traditions (Charter Night, the Ribbon, the Term Card) text.

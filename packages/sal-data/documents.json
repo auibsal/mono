@@ -3,7 +3,10 @@
     "code": "SAL-GOV-01",
     "slug": "constitution",
     "source": "01 SAL - Constitution.pdf",
-    "title": { "en": "The Constitution", "ar": "الدستور" },
+    "title": {
+      "en": "The Constitution",
+      "ar": "الدستور"
+    },
     "summary": "The founding charter of the Society of Arts and Letters: who we are, how we decide, and how we carry on.",
     "status": "draft",
     "version": "Draft 1",
@@ -30,7 +33,8 @@
       "Article XVI. Amendments",
       "Article XVII. Dissolution",
       "Article XVIII. Interpretation and Adoption"
-    ]
+    ],
+    "adopted": null
   },
   {
     "code": "SAL-GOV-02",
@@ -59,13 +63,17 @@
       "Complaints and Discipline",
       "Handover and Continuity",
       "Records, Channels and Amendment"
-    ]
+    ],
+    "adopted": null
   },
   {
     "code": "SAL-GOV-03",
     "slug": "roles-and-staffing",
     "source": "03 SAL - Roles and Staffing.pdf",
-    "title": { "en": "Roles and Staffing", "ar": "الأدوار والملاك" },
+    "title": {
+      "en": "Roles and Staffing",
+      "ar": "الأدوار والملاك"
+    },
     "summary": "Who does what in the Society of Arts and Letters, how many people we need, and how we grow.",
     "status": "draft",
     "version": "Draft 1",
@@ -88,13 +96,17 @@
       "Succession and Backup",
       "Pathways",
       "The First Open Call"
-    ]
+    ],
+    "adopted": null
   },
   {
     "code": "SAL-POL-01",
     "slug": "policy-manual",
     "source": "04 SAL - Policy Manual.pdf",
-    "title": { "en": "Policy Manual", "ar": "دليل السياسات" },
+    "title": {
+      "en": "Policy Manual",
+      "ar": "دليل السياسات"
+    },
     "summary": "How we treat people, money, words, images and data, in eighteen short policies.",
     "status": "draft",
     "version": "Draft 1",
@@ -121,7 +133,8 @@
       "Complaints",
       "Speaking Up About Money",
       "The Member Pledge"
-    ]
+    ],
+    "adopted": null
   },
   {
     "code": "SAL-STR-01",
@@ -149,15 +162,19 @@
       "Resources",
       "Risks",
       "Keeping the Plan Alive"
-    ]
+    ],
+    "adopted": null
   },
   {
     "code": "SAL-MEM-01",
     "slug": "member-handbook",
     "source": "08 SAL - Member Handbook.pdf",
-    "title": { "en": "Member Handbook", "ar": "دليل العضو" },
+    "title": {
+      "en": "Member Handbook",
+      "ar": "دليل العضو"
+    },
     "summary": "Everything a new member needs to know, in eleven pages.",
-    "status": "draft",
+    "status": "adopted",
     "version": null,
     "dated": "2026-09-28",
     "ratification": null,
@@ -171,6 +188,7 @@
       "Getting Involved",
       "Our Promises",
       "Questions"
-    ]
+    ],
+    "adopted": null
   }
 ]
