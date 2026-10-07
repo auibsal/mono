@@ -102,38 +102,38 @@ const SearchPage = async ({ params, searchParams }: SearchProps) => {
           </form>
         </search>
       </PageHeader>
-      query && !long ? (<p className="type-body">{t("short")}</p>) : nulllong ?
-      (
-      <section aria-live="polite" className="grid gap-4">
-        <h2 className="type-heading">
-          {results.length ? t("results", { query }) : t("none", { query })}
-        </h2>
-        <ul className="grid gap-4">
-          {results.map((r) => (
-            <li
-              className="grid gap-1 border-rule border-b pb-4"
-              key={`${r.kind}-${r.id}`}
-            >
-              <p className="type-kicker">
-                {t(`kinds.${r.kind as Kind}`)}
-                {r.occurred_at
-                  ? ` · ${formatLongDate(r.occurred_at, locale)}`
-                  : ""}
-              </p>
-              <Link
-                className="type-subheading underline-offset-4 hover:underline"
-                href={hrefFor(r.kind as Kind, r.slug)}
+      {query && !long ? <p className="type-body">{t("short")}</p> : null}
+      {long ? (
+        <section aria-live="polite" className="grid gap-4">
+          <h2 className="type-heading">
+            {results.length ? t("results", { query }) : t("none", { query })}
+          </h2>
+          <ul className="grid gap-4">
+            {results.map((r) => (
+              <li
+                className="grid gap-1 border-rule border-b pb-4"
+                key={`${r.kind}-${r.id}`}
               >
-                {localized(r, "title", locale)}
-              </Link>
-              {r.snippet ? (
-                <p className="type-body text-text-secondary">{r.snippet}</p>
-              ) : null}
-            </li>
-          ))}
-        </ul>
-      </section>
-      ) : null;
+                <p className="type-kicker">
+                  {t(`kinds.${r.kind as Kind}`)}
+                  {r.occurred_at
+                    ? ` · ${formatLongDate(r.occurred_at, locale)}`
+                    : ""}
+                </p>
+                <Link
+                  className="type-subheading underline-offset-4 hover:underline"
+                  href={hrefFor(r.kind as Kind, r.slug)}
+                >
+                  {localized(r, "title", locale)}
+                </Link>
+                {r.snippet ? (
+                  <p className="type-body text-text-secondary">{r.snippet}</p>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
     </div>
   );
 };

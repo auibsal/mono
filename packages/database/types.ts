@@ -177,6 +177,12 @@ export type Database = {
           scope_type: string;
         }[];
       };
+      permission_holders: {
+        Args: { permission: string; scope_id?: string; scope_type?: string };
+        Returns: {
+          user_id: string;
+        }[];
+      };
     };
     Enums: {
       [_ in never]: never;
@@ -882,6 +888,45 @@ export type Database = {
             referencedColumns: ["id"];
           },
         ];
+      };
+      external_events: {
+        Row: {
+          all_day: boolean;
+          ends_at: string | null;
+          id: string;
+          location: string | null;
+          source: string;
+          starts_at: string;
+          synced_at: string;
+          title: string;
+          uid: string;
+          url: string | null;
+        };
+        Insert: {
+          all_day?: boolean;
+          ends_at?: string | null;
+          id?: string;
+          location?: string | null;
+          source: string;
+          starts_at: string;
+          synced_at?: string;
+          title: string;
+          uid: string;
+          url?: string | null;
+        };
+        Update: {
+          all_day?: boolean;
+          ends_at?: string | null;
+          id?: string;
+          location?: string | null;
+          source?: string;
+          starts_at?: string;
+          synced_at?: string;
+          title?: string;
+          uid?: string;
+          url?: string | null;
+        };
+        Relationships: [];
       };
       outbox: {
         Row: {
