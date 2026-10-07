@@ -19,18 +19,22 @@ type SectionKey =
   | "join"
   | "news"
   | "documents";
-const sections: { href: string; key: SectionKey }[] = [
+// The bar holds the five main sections; the menu (small screens) and the
+// footer carry the rest.
+const primary: { href: string; key: SectionKey }[] = [
   { href: "/about", key: "about" },
   { href: "/programmes", key: "programmes" },
   { href: "/waraq", key: "waraq" },
   { href: "/events", key: "events" },
   { href: "/give", key: "give" },
+];
+const secondary: { href: string; key: SectionKey }[] = [
   { href: "/news", key: "news" },
   { href: "/join", key: "join" },
   { href: "/documents", key: "documents" },
 ];
 
-/** Words-first header: horizontal lockup, sections, language, sign in. */
+/** Words-first header: horizontal lockup, main sections, language, sign in. */
 export const Header = () => {
   const t = useTranslations("web.nav");
   const tc = useTranslations("common");
@@ -40,16 +44,17 @@ export const Header = () => {
   const other = (locales.find((l) => l !== locale) ?? locale) as Locale;
   const nexus = `${project.hosts.app}/${locale}`;
 
-  const links = (
-    <ul className="flex flex-col gap-1 lg:flex-row lg:gap-5">
-      {sections.map((section) => (
+  const links = (items: typeof primary) => (
+    <ul className="flex flex-col lg:flex-row lg:gap-6">
+      {items.map((section) => (
         <li key={section.href}>
           <Link
             aria-current={
               pathname.startsWith(section.href) ? "page" : undefined
             }
-            className="block py-2 text-sm underline-offset-4 hover:underline lg:py-0"
+            className="block py-3 font-medium text-sm underline-offset-[6px] hover:underline aria-[current=page]:text-title aria-[current=page]:underline lg:py-0"
             href={section.href}
+            onClick={() => setOpen(false)}
           >
             {t(section.key)}
           </Link>
@@ -59,13 +64,13 @@ export const Header = () => {
   );
 
   return (
-    <header className="border-rule border-b bg-surface">
+    <header className="sticky top-0 z-40 border-rule border-b bg-surface">
       <div className="mx-auto flex w-full max-w-6xl items-center gap-2 px-4 py-4 sm:gap-4">
         <Link className="shrink-0" href="/">
-          <BrandLogo height={64} locale={locale} />
+          <BrandLogo height={52} locale={locale} />
         </Link>
         <nav aria-label={tc("society")} className="ms-auto hidden lg:block">
-          {links}
+          {links(primary)}
         </nav>
         <div className="ms-auto flex shrink-0 items-center gap-1 sm:gap-2 lg:ms-0">
           <Link
@@ -76,10 +81,10 @@ export const Header = () => {
           >
             {tc("otherLanguage")}
           </Link>
-          <Button asChild size="sm" variant="outline">
+          <Button asChild size="sm">
             <a href={`${nexus}/sign-in`}>{t("signIn")}</a>
           </Button>
-          {sections.length > 0 ? (
+          {primary.length > 0 ? (
             <Button
               aria-expanded={open}
               aria-label={open ? tc("closeMenu") : tc("openMenu")}
@@ -100,9 +105,10 @@ export const Header = () => {
       {open ? (
         <nav
           aria-label={tc("society")}
-          className="border-rule border-t px-4 py-2 lg:hidden"
+          className="grid gap-2 border-rule border-t px-4 py-2 lg:hidden"
         >
-          {links}
+          {links(primary)}
+          <div className="border-rule border-t">{links(secondary)}</div>
         </nav>
       ) : null}
     </header>

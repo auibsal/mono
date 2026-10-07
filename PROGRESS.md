@@ -261,3 +261,5 @@ Covered by automated tests so far:
 - Email Arabic: every Arabic string in `packages/email/copy.ts` and the
   Arabic halves of `packages/database/supabase/templates/*.html` and
   `subjects.txt`.
+- Homepage and footer (2026-10-07): «كل البرامج», and the footer headings
+  «الجمعية» and «معلومات».
