@@ -47,3 +47,29 @@ export const activeCampaigns = async (client: Client) =>
       .eq("status", "active")
       .order("starts_on", { ascending: false })
   );
+
+/** Receipts the campaign has made public (files through apps/api). */
+export const publicReceipts = async (client: Client, campaignId: string) =>
+  unwrap(
+    await client
+      .schema("charity")
+      .from("receipts")
+      .select("id, description_en, description_ar, amount_iqd, created_at")
+      .eq("campaign_id", campaignId)
+      .eq("is_public", true)
+      .order("created_at", { ascending: false })
+  ) ?? [];
+
+/** Published impact figures, in order. */
+export const impactMetrics = async (client: Client, campaignId: string) =>
+  unwrap(
+    await client
+      .schema("charity")
+      .from("impact_metrics")
+      .select(
+        "id, label_en, label_ar, value, unit_en, unit_ar, report_en, report_ar"
+      )
+      .eq("campaign_id", campaignId)
+      .not("published_at", "is", null)
+      .order("sort")
+  ) ?? [];

@@ -33,12 +33,19 @@ These stop parts of the work. Everything else continues around them.
       (nexus.auibsal.org), sal-api (api.auibsal.org), functions in fra1.
 - [x] Resend set up by the owner (2026-10-05); verify RESEND_* on sal-api and
       Supabase SMTP with a real sign-up.
-- [ ] **sal-web holds server secrets** copied by the Supabase integration
-      (`SUPABASE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`,
-      `SUPABASE_JWT_SECRET`, `POSTGRES_*`). Delete them from the project.
-- [ ] Fall 2026 and Spring 2027 semester dates; exam weeks. The owner points
-      to the AUIB feed for them; it holds events, not term dates, so the
-      dates still need entering in Settings → Semesters.
+- [x] sal-web holds only public values and `REVALIDATE_SECRET` (checked
+      2026-10-07); the server secrets the integration copied are gone.
+- [x] Semesters (owner, 2026-10-06): Fall 2026 Sep 6 – Dec 17, 2026; Spring
+      2027 Jan 24 – May 13, 2027, entered in production. Exam weeks: still
+      to come.
+- [ ] **Supabase Auth email (dashboard only):** Authentication → SMTP:
+      `smtp.resend.com`, port 465, user `resend`, password a Resend API key
+      (sending access, auibsal.org), sender `hello@auibsal.org`, name "AUIB
+      Society of Arts and Letters". Authentication → Email Templates: paste
+      the four files in `packages/database/supabase/templates` with the
+      subjects in `subjects.txt`. (Local stacks load them from `config.toml`.)
+- [ ] **Liveblocks secret** for co-editing (`LIVEBLOCKS_SECRET` on sal-api):
+      only the owner's Liveblocks account can issue it.
 - [x] AUIB calendar: `https://auib.edu.iq/events/list/?ical=1`. Cloudflare
       answers this sandbox with a bot challenge (403); test from the cron.
 - [x] Cost per winter set: not final; the UI uses the 40,000 IQD placeholder
@@ -91,7 +98,8 @@ These stop parts of the work. Everything else continues around them.
 - Members-only piece text lives in `journal.piece_bodies`, so piece metadata
   can be public (with a sign-in prompt) while the text stays members-only.
 - Side effects (emails, revalidation) are queued in `core.outbox` inside the
-  transaction; one database webhook hands them to apps/api.
+  transaction; an insert trigger hands each to apps/api (pg_net), and a
+  drain every ten minutes retries what failed.
 
 ## Checklist
 
@@ -106,7 +114,7 @@ These stop parts of the work. Everything else continues around them.
 - [x] `@repo/sal-data` (schemas tested against SQL constraints)
 - [x] AGENTS.md / README / ARCHITECTURE_AND_INTEGRATIONS.md rewritten for SAL
 - [x] check-placeholders clean
-- [ ] Supabase Auth email templates (bilingual, branded) in `supabase/templates`
+- [x] Supabase Auth email templates (bilingual, branded) in `supabase/templates` (production: dashboard, see Blocked)
 
 ### Design system (§4)
 - [x] Tokens → CSS variables, generated from `brand/tokens.json` (tests: palette, contrast, staleness)
@@ -116,7 +124,7 @@ These stop parts of the work. Everything else continues around them.
 - [x] Ubuntu Arabic via next/font/local (byte-checked against brand/fonts)
 - [x] Type styles from the brand (Display 1.02, Lede 300/1.3, Body 1.5, Caption 1.4, Kicker 0.06em); `:lang(ar)` one step larger, 1.8–2.0 leading, 1.4 at display
 - [x] Logos in web/app public/brand (byte-checked), favicon = sal-avatar.svg
-- [ ] Open Graph images from SocialPost (apps/web)
+- [x] Open Graph images (apps/web `/[locale]/og`; Arabic laid out word by word, since Satori has no bidi)
 - [x] Storybook: light/ink themes and an LTR/RTL toolbar; SAL stories
 - [ ] Re-theme pass over every shadcn story in both directions (visual check)
 - [x] FormHeader, DocumentHeader, DocumentFooter, SocialPost ported from brand/components; SalCard
@@ -170,18 +178,25 @@ These stop parts of the work. Everything else continues around them.
 - [x] Events: upcoming and past lists, detail (cancelled notice, sanitised body, image, RSVP in the Nexus, add-to-calendar .ics), calendar subscription (webcal)
 - [x] Waraq: hub (open calls → submit in the Nexus, issues, latest), issue, piece and contributor pages; members-only text stays in the Nexus (`/waraq/piece?slug=`)
 - [x] About (Constitution preamble, motto, mission and "At a Glance", marked as quoted from the draft; Handbook pillars), Programmes (Handbook summaries, migration `20261006000000`), Join (Handbook steps and membership table; the Arabic is the Handbook's own welcome page where it exists)
-- [ ] Give + transparency, Join, News, Contact, Media kit, Privacy, Side Quest care + removal form, Search, structured data, OG images
+- [x] Give + transparency (Warmth Meter from signed-off money only, public receipts, impact, P7.5), News (list, post), Contact (channels, concerns), Media kit (name rules, logos as supplied, palette), Privacy (P5 and P6 verbatim, platform facts), Side Quest care + removal form (`apps/api /removal-requests`, rate-limited, honeypot), Search (published rows + document registry), drawn share images (`/[locale]/og`, default for every page)
+- [ ] Structured data (JSON-LD)
 
 ### API (§11)
 - [x] Account deletion; keep-alive cron; iCal: member feed, per-event, public feed
-- [ ] `/hooks/outbox` (database webhook): emails + revalidation
-- [ ] Email templates (bilingual) and Resend sending
-- [ ] Cron: hourly AUIB calendar sync; daily reminders, agreement reminders, role-expiry notices, stale removal requests, scheduled publishing
+- [x] `/hooks/outbox`: emails + revalidation. An insert trigger calls it via
+      pg_net (bearer from Vault); a drain every 10 minutes retries, up to 5
+      attempts, recording `last_error`
+- [x] Email templates (bilingual, recipient's language first; `@repo/email`
+      `Notice` + `copy.ts`) and Resend sending
+- [x] Cron (pg_cron): hourly AUIB calendar sync → `core.external_events`;
+      daily 7:45 AM Baghdad reminders, agreement reminders, role-expiry
+      notices, overdue removal requests; scheduled publishing every 10 minutes
+      (a piece without a signed agreement no longer blocks the others)
 - [ ] Signed URLs (blind copies with metadata stripped, receipts), CSV exports, removal-request + contact endpoints with rate limits
 
 ### Infrastructure (§12)
 - [x] Supabase project, migrations, buckets, exposed schemas, Auth URLs, FK indexes
-- [ ] Supabase SMTP (Resend), outbox webhook; 52 "multiple permissive policies" advisor warnings (deferred)
+- [ ] Supabase SMTP (Resend, dashboard); [x] outbox trigger and Vault secrets; 52 "multiple permissive policies" advisor warnings (deferred)
 - [x] Vercel projects, env vars, domains, cron, previews
 - [x] CI: lint, typecheck, unit, repo checks, tokens check, pgTAP, type diff, integration, builds, client-bundle secret scan
 - [ ] CI: Playwright e2e against previews; migrations on merge to `main`
@@ -214,11 +229,15 @@ Covered by automated tests so far:
   Manual P10.1 (English verbatim) until one exists. The Member Pledge is now
   the SAL-POL-01 text verbatim (the manual itself flags its Arabic for a
   native check).
-- The Publication Agreement text that authors sign in the Nexus
-  (`TODO(content)` in `nexus.waraq.agreement.body`).
-- Confirm the Member Handbook's status: its cover has no "Draft" label, but the registry lists it as a draft with the other founding documents.
+- The Publication Agreement in the Nexus quotes Policy Manual P9.1, P9.2, P9.5
+  and P10.1 (no separate agreement exists in the documents); its last line,
+  naming the purpose agreed (Waraq online and in print, and the archive), was
+  written for the platform — confirm it.
+- The Society's email address and The Common Room's Telegram link (the
+  Member Handbook still has "[Society AUIB email]"); Contact shows a note
+  until then.
 - Founders' Roll names; the Faculty Advisor's name.
-- The care promise for Side Quest. (Programme descriptions now come from the Member Handbook.)
+- The care promise for Side Quest beyond Policy Manual 5.3. (Programme descriptions now come from the Member Handbook.)
 - Traditions (Charter Night, the Ribbon, the Term Card) text.
 - Natrok Athar's description (both languages) and confirmed cost per winter set.
 
@@ -239,3 +258,6 @@ Covered by automated tests so far:
 - The Arabic of Policy Manual P10.1 on the setup page (translated for the
   platform; the manual has no Arabic for it) and the Arabic programme names
   for "the Prizes" in it (the other programme names match the reference data).
+- Email Arabic: every Arabic string in `packages/email/copy.ts` and the
+  Arabic halves of `packages/database/supabase/templates/*.html` and
+  `subjects.txt`.

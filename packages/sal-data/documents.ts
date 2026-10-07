@@ -13,6 +13,8 @@ export type DocumentStatus = (typeof documentStatuses)[number];
 const isoDate = z.iso.date();
 
 export const documentSchema = z.object({
+  /** The date of adoption, once recorded (never inferred from the cover). */
+  adopted: isoDate.nullable(),
   code: z.string().regex(/^SAL-[A-Z]{3}-\d{2}$/),
   contents: z.array(z.string().min(1)).min(1),
   /** The date on the cover, if any. */

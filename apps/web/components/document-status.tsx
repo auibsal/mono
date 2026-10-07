@@ -20,8 +20,8 @@ export const DocumentStatus = async ({
         })
       : t("status.draft");
   } else if (doc.status === "adopted") {
-    body = doc.dated
-      ? t("status.adoptedOn", { date: formatLongDate(doc.dated, locale) })
+    body = doc.adopted
+      ? t("status.adoptedOn", { date: formatLongDate(doc.adopted, locale) })
       : t("status.adopted");
   }
   return (

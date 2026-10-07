@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@react-email/components": "1.0.8",
+    "@repo/internationalization": "workspace:*",
     "@t3-oss/env-nextjs": "^0.13.10",
     "react": "19.3.0",
     "react-dom": "19.3.0",
