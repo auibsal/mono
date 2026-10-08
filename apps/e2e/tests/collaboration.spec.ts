@@ -1,0 +1,46 @@
+import { expect, test } from "@playwright/test";
+import { editor } from "../fixtures";
+import { urls } from "../playwright.config";
+import { signInWithPassword } from "./helpers";
+
+/**
+ * Two editors on one news post (Liveblocks). Needs apps/api running with
+ * LIVEBLOCKS_SECRET and the Nexus built with NEXT_PUBLIC_LIVEBLOCKS_ENABLED;
+ * set E2E_LIVEBLOCKS=1 to run it (for example against a preview).
+ */
+test.skip(!process.env.E2E_LIVEBLOCKS, "Liveblocks is not configured here");
+
+test("two editors see each other and each other's typing", async ({
+  browser,
+}) => {
+  const first = await (await browser.newContext()).newPage();
+  const second = await (await browser.newContext()).newPage();
+  await signInWithPassword(first, editor.email);
+  await signInWithPassword(second, editor.email);
+
+  await first.goto(`${urls.app}/en/admin/content`);
+  await first
+    .getByRole("button", { name: "New post" })
+    .or(first.getByRole("link", { name: "New post" }))
+    .first()
+    .click();
+  const title = `Shared draft ${Date.now()}`;
+  await first.getByRole("textbox", { name: "English" }).first().fill(title);
+  await first
+    .getByRole("textbox", { name: "Arabic" })
+    .first()
+    .fill("مسودة مشتركة");
+  await first
+    .getByRole("textbox", { name: "Web address (slug)" })
+    .fill(`shared-${Date.now()}`);
+  await first.getByRole("button", { name: "Save" }).click();
+  const url = first.url();
+
+  await second.goto(url);
+  await expect(first.getByText(/Also here:/)).toBeVisible({ timeout: 20_000 });
+  await first.getByRole("textbox", { name: "Text in English" }).click();
+  await first.keyboard.type("Typed in the first window.");
+  await expect(
+    second.getByRole("textbox", { name: "Text in English" })
+  ).toContainText("Typed in the first window.", { timeout: 20_000 });
+});
