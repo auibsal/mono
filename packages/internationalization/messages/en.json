@@ -260,6 +260,23 @@
         "failed": "That didn't work. Try again in a moment."
       }
     },
+    "programs": {
+      "title": "Programs",
+      "lede": "Shifts on the Society's rotas, posted by program leads. Sign up for one, and give it back if your plans change.",
+      "empty": "No rotas have open shifts right now. Program leads post them here.",
+      "signUp": "Sign up",
+      "giveBack": "Give it back",
+      "full": "Full",
+      "yours": "You're on this shift. It's also on your home page.",
+      "left": "{count, plural, =0 {No places left} one {{places} place left} other {{places} places left}}",
+      "notice": {
+        "signedUp": "You're on the rota. Confirm the shift from your home page closer to the day.",
+        "gaveBack": "Done. The place is open for someone else.",
+        "full": "Someone took the last place first.",
+        "notVerified": "Shifts open once your membership is verified.",
+        "failed": "That didn't work. Try again in a moment."
+      }
+    },
     "waraq": {
       "status": {
         "received": "Received",
