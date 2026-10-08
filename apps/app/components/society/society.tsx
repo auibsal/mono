@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@repo/auth/provider";
+import { project } from "@repo/config";
 import { formatLongDate } from "@repo/internationalization/format";
 import { governance, localized, unwrap } from "@repo/sal-data";
 import { useQuery } from "@tanstack/react-query";
@@ -14,18 +15,54 @@ type Lang = "en" | "ar";
 
 const Council = () => {
   const t = useTranslations("nexus.society.council");
+  const ta = useTranslations("nexus.next");
   const locale = useLocale() as Lang;
   const { supabase } = useAuth();
   const roster = useQuery({
     queryFn: () => governance.councilRoster(supabase),
     queryKey: ["council-roster"],
   });
+  const advisor = useQuery({
+    queryFn: async () => {
+      const rows =
+        unwrap(
+          await supabase
+            .schema("core")
+            .from("settings")
+            .select("key, value")
+            .in("key", [
+              "society.faculty_advisor_en",
+              "society.faculty_advisor_ar",
+            ])
+        ) ?? [];
+      const get = (k: string) => {
+        const value = rows.find((r) => r.key === k)?.value;
+        return typeof value === "string" ? value : "";
+      };
+      return {
+        ar: get("society.faculty_advisor_ar"),
+        en: get("society.faculty_advisor_en"),
+      };
+    },
+    queryKey: ["faculty-advisor"],
+  });
+  const advisorName =
+    locale === "ar" ? advisor.data?.ar || advisor.data?.en : advisor.data?.en;
 
   return (
     <SocietySection id="council" lede={t("lede")} title={t("title")}>
       {roster.isPending ? <SectionSpinner /> : null}
       {roster.isError ? <ErrorState onRetry={() => roster.refetch()} /> : null}
-      {roster.data?.length === 0 ? <EmptyLine>{t("empty")}</EmptyLine> : null}
+      {roster.data?.length === 0 ? (
+        <EmptyLine
+          action={{
+            href: `${project.hosts.web}/${locale}/documents/roles-and-staffing`,
+            label: ta("readRoles"),
+          }}
+        >
+          {t("empty")}
+        </EmptyLine>
+      ) : null}
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {roster.data?.map((seat) => (
           <li
@@ -42,12 +79,19 @@ const Council = () => {
           </li>
         ))}
       </ul>
+      {advisorName ? (
+        <p className="type-body">
+          <span className="type-kicker me-2">{t("advisor")}</span>
+          {advisorName}
+        </p>
+      ) : null}
     </SocietySection>
   );
 };
 
 const Minutes = () => {
   const t = useTranslations("nexus.society.minutes");
+  const ta = useTranslations("nexus.next");
   const locale = useLocale() as Lang;
   const { supabase } = useAuth();
   const minutes = useQuery({
@@ -72,7 +116,16 @@ const Minutes = () => {
       {minutes.isError ? (
         <ErrorState onRetry={() => minutes.refetch()} />
       ) : null}
-      {minutes.data?.length === 0 ? <EmptyLine>{t("empty")}</EmptyLine> : null}
+      {minutes.data?.length === 0 ? (
+        <EmptyLine
+          action={{
+            href: `${project.hosts.web}/${locale}/documents`,
+            label: ta("readDocuments"),
+          }}
+        >
+          {t("empty")}
+        </EmptyLine>
+      ) : null}
       <ul className="grid">
         {minutes.data?.map((entry) => (
           <li className="border-rule border-b py-3" key={entry.id}>

@@ -4,7 +4,7 @@ The 1080 × 1350 Instagram post. It scales to any container width: every size is
 
 **Markup:** `<div class="sal-post sal-post--crimson|ink|white|tint">` wrapping `.sal-post__frame`, which contains:
 - `p.sal-post__name`: "Society of / Arts and Letters", at top left.
-- `img.sal-post__symbol`: at top right, as tall as the name block. Use `sal-symbol-white.svg` on crimson and ink, and `sal-symbol.svg` on white and tint. The name is set in the wordmark colour: Crimson 700 on light grounds, Crimson 100 on dark ones.
+- `img.sal-post__symbol`: at top right, as tall as the name block. Use `sal-symbol-white.svg` on crimson and ink, and `sal-symbol.svg` on white and tint. The name is set in the wordmark color: Crimson 700 on light grounds, Crimson 100 on dark ones.
 - `h2.sal-post__headline`: in `post-display` (132 px at full size), two or three words with a full stop.
 - `p.sal-post__meta`: the date line and `@auibsal`, at bottom left.
 - `p.sal-post__ar.sal-ar` with `lang="ar"`: one line of Arabic, at bottom right.

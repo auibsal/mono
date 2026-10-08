@@ -35,7 +35,7 @@ import { LanguageSwitcher } from "./language-switcher";
 const memberLinks = [
   { href: "/", key: "home" },
   { href: "/events", key: "events" },
-  { href: "/programmes", key: "programmes" },
+  { href: "/programs", key: "programs" },
   { href: "/journal", key: "journal" },
   { href: "/society", key: "society" },
 ] as const;

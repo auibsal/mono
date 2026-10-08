@@ -231,7 +231,7 @@ export const removalRequested = (
   overdue = false
 ) =>
   build(lang, (l) => ({
-    action: nexus(app, l, "/admin/programmes"),
+    action: nexus(app, l, "/admin/programs"),
     heading: removalHeading[overdue ? "overdue" : "new"][l],
     paragraphs: [
       l === "ar"

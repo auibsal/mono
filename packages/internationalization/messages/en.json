@@ -122,7 +122,7 @@
       "home": "Home",
       "events": "Events",
       "journal": "Journal",
-      "programmes": "Programs",
+      "programs": "Programs",
       "society": "Society",
       "account": "Account",
       "profile": "Profile and privacy",
@@ -132,6 +132,15 @@
     "errors": {
       "loadFailed": "We couldn't load this. Check your connection and try again.",
       "saveFailed": "We couldn't save your changes. Please try again."
+    },
+    "next": {
+      "browseEvents": "Browse events",
+      "openShifts": "See open shifts",
+      "readJournal": "Read the Journal",
+      "subscribeCalendar": "Add the Society calendar to your phone",
+      "readConstitution": "Read how elections work",
+      "readRoles": "Read how the Council is formed",
+      "readDocuments": "Read the founding documents"
     },
     "pending": {
       "title": "Your account is waiting for verification",
@@ -288,7 +297,8 @@
       "council": {
         "title": "The Council",
         "lede": "Four elected officers and six appointed directors.",
-        "empty": "The Council roster appears here once officers are assigned."
+        "empty": "The Council roster appears here once officers are assigned.",
+        "advisor": "Faculty Advisor"
       },
       "minutes": {
         "title": "Adopted minutes",
@@ -490,7 +500,7 @@
         "pipeline": "Journal: pipeline",
         "content": "Content",
         "charity": "Charity",
-        "programmes": "Programs",
+        "programs": "Programs",
         "governance": "Governance",
         "activity": "Activity log",
         "settings": "Settings"
@@ -1267,7 +1277,16 @@
         "turnOff": "Turn off",
         "flagConfirm": "Change this for everyone, at once?",
         "banner": "The site-wide banner is a public notice: Content → Notices.",
-        "emails": "Email templates are part of the code (apps/email), bilingual and on brand; ask the technical administrator to change them."
+        "emails": "Email templates are part of the code (apps/email), bilingual and on brand; ask the technical administrator to change them.",
+        "contacts": {
+          "title": "Contact and the Faculty Advisor",
+          "email": "Society email",
+          "telegram": "The Common Room on Telegram",
+          "telegramInvalid": "Use the full Telegram link, starting https://t.me/.",
+          "advisor": "Faculty Advisor",
+          "hint": "Shown on auibsal.org (Contact) and in the Nexus (Society). Leave a field empty to hide it.",
+          "telegramPlaceholder": "https://t.me/…"
+        }
       },
       "journal": {
         "title": "Journal: issues and pieces",
@@ -1531,7 +1550,7 @@
   "web": {
     "nav": {
       "about": "About",
-      "programmes": "Programs",
+      "programs": "Programs",
       "journal": "Journal",
       "events": "Events",
       "give": "Give",

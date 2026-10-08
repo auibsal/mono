@@ -8,13 +8,16 @@ import { Section } from "./section";
 
 export const Notices = () => {
   const t = useTranslations("nexus.home.notices");
+  const ta = useTranslations("nexus.next");
   const locale = useLocale();
   const announcements = useAnnouncements();
 
   return (
     <Section id="notices" title={t("title")}>
       {announcements.data?.length === 0 ? (
-        <EmptyLine>{t("empty")}</EmptyLine>
+        <EmptyLine action={{ href: "/events", label: ta("browseEvents") }}>
+          {t("empty")}
+        </EmptyLine>
       ) : null}
       <ul className="grid gap-3">
         {announcements.data?.map((notice) => (

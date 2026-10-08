@@ -75,6 +75,7 @@ const errorKey = (error: unknown): NoticeKey => {
 
 export const ProgrammesBrowser = () => {
   const t = useTranslations("nexus.programs");
+  const ta = useTranslations("nexus.next");
   const locale = useLocale() as "en" | "ar";
   const { supabase, user } = useAuth();
   const queryClient = useQueryClient();
@@ -140,7 +141,11 @@ export const ProgrammesBrowser = () => {
         <p className="type-lede max-w-2xl">{t("lede")}</p>
       </header>
 
-      {rotas.data.length === 0 ? <EmptyLine>{t("empty")}</EmptyLine> : null}
+      {rotas.data.length === 0 ? (
+        <EmptyLine action={{ href: "/events", label: ta("browseEvents") }}>
+          {t("empty")}
+        </EmptyLine>
+      ) : null}
 
       {rotas.data.map((rota) => (
         <section

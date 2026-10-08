@@ -64,10 +64,7 @@ const AboutPage = async ({ params }: LocaleParams) => {
         </h2>
         <ul className="grid gap-4 sm:grid-cols-2">
           {PILLARS.map((key) => (
-            <li
-              className="grid gap-1 rounded-card bg-surface-tint p-5"
-              key={key}
-            >
+            <li className="frame grid gap-1 bg-surface-tint p-5" key={key}>
               <h3 className="type-subheading">{t(`pillars.${key}.title`)}</h3>
               <p className="type-body">{t(`pillars.${key}.body`)}</p>
             </li>

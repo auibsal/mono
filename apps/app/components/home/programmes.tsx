@@ -12,6 +12,7 @@ import { Section } from "./section";
 
 export const MyProgrammes = () => {
   const t = useTranslations("nexus.home.programmes");
+  const ta = useTranslations("nexus.next");
   const locale = useLocale() as "en" | "ar";
   const { supabase, user } = useAuth();
   const queryClient = useQueryClient();
@@ -43,7 +44,11 @@ export const MyProgrammes = () => {
 
   return (
     <Section id="programmes" title={t("title")}>
-      {shifts.data?.length === 0 ? <EmptyLine>{t("empty")}</EmptyLine> : null}
+      {shifts.data?.length === 0 ? (
+        <EmptyLine action={{ href: "/programs", label: ta("openShifts") }}>
+          {t("empty")}
+        </EmptyLine>
+      ) : null}
       <ul className="grid gap-3">
         {shifts.data?.map((signup) =>
           signup.shift ? (

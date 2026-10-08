@@ -17,7 +17,7 @@ const LOGOS = [
 ] as const;
 
 // The palette from brand/tokens.json (SAL v4).
-const COLOURS = [
+const COLORS = [
   ["Crimson", "#9c213e"],
   ["Crimson 700", "#7e1a32"],
   ["Crimson 100", "#ebcbd3"],
@@ -50,10 +50,7 @@ const MediaKitPage = async ({ params }: LocaleParams) => {
         <p className="type-body">{t("logosNote")}</p>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {LOGOS.map(([key, file, reversed]) => (
-            <li
-              className="grid gap-3 rounded-card bg-surface-tint p-4"
-              key={key}
-            >
+            <li className="frame grid gap-3 bg-surface-tint p-4" key={key}>
               <div
                 className="flex h-32 items-center justify-center rounded-card p-4"
                 data-theme={reversed ? "dark" : "light"}
@@ -87,7 +84,7 @@ const MediaKitPage = async ({ params }: LocaleParams) => {
 
       <Section id="colours" title={t("coloursTitle")}>
         <ul className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-7">
-          {COLOURS.map(([name, hex]) => (
+          {COLORS.map(([name, hex]) => (
             <li className="grid gap-2" key={hex}>
               <span
                 aria-hidden="true"

@@ -20,7 +20,7 @@ These stop parts of the work. Everything else continues around them.
       public, so the restricted ones are **not** committed: the Founding
       Proposal (Council only), Operations Playbook, Templates & Forms,
       Printables and the Operations Tracker go to the private `library`
-      bucket through the Nexus library. **Still missing:** the Waraq
+      bucket through the Nexus library. **Still missing:** the Journal
       Submission Guidelines, Editorial Rubric, Masthead Handbook,
       Publication Agreement, Issue Playbook, the Charity (Second Chapter)
       Playbook and Operations Kit, and the Side Quest care rules — unless
@@ -47,8 +47,16 @@ These stop parts of the work. Everything else continues around them.
       Since 2026-10-08 the links go to `{{ .SiteURL }}/en/auth/confirm`, so
       the Site URL must be `https://nexus.auibsal.org`.
 - [x] **Liveblocks secret** set on sal-api by the owner (2026-10-08).
-- [ ] **Knock and Upstash removal:** waiting for the owner's go-ahead (the
-      case is in the Master Configuration Guide). Nothing calls either one.
+- [x] **Knock and Upstash removed** (owner, 2026-10-08): packages, env keys
+      and CSP hosts are gone. Delete the two accounts at will.
+- [x] **Migrations through CI:** the owner added `SUPABASE_ACCESS_TOKEN` and
+      `SUPABASE_DB_PASSWORD` to the GitHub `production` environment
+      (2026-10-08); `migrate.yml` applied 20261008000200–0700 the same day.
+      Council members, the Treasurer and the Elections Committee enroll an
+      authenticator app the next time they open Administration.
+- [ ] **HSTS preload:** the header now carries `preload`; submit
+      auibsal.org at hstspreload.org once the deploy is live.
+- [ ] **Supabase Auth → MFA:** confirm TOTP is enabled (on by default).
 - [ ] **Owner dashboard steps** listed in the Master Configuration Guide
       (claude.ai artifact TRFXS3611Y1PRNHy5yT7En): `SENTRY_AUTH_TOKEN` on the
       three Vercel projects, Cloudflare Email Routing for `hello@auibsal.org`
@@ -145,7 +153,7 @@ These stop parts of the work. Everything else continues around them.
 - [x] No shadows (theme-level), 8px card radius, hairline/band utilities (print; screens: v5 below)
 - [x] v5 Screens: `frame` and `offset` roles, `radius-screen` 0, `shadow-offset` (mirrors in RTL, `press` collapses it), `type-label`, Arabic never tracked; buttons and form controls restyled; light islands inside ink
 - [x] v5 Screens: public header (five sections, sticky), home, ink footer; Nexus shell on ink; auth on a light sheet
-- [ ] v5 Screens: remaining public pages (events list, Waraq, about, join) and admin screens get the framed cards
+- [ ] v5 Screens: remaining public pages (events list, the Journal, about, join) and admin screens get the framed cards
 - [x] Ubuntu / Ubuntu Mono / Amiri / Literata via next/font/google
 - [x] Ubuntu Arabic via next/font/local (byte-checked against brand/fonts)
 - [x] Type styles from the brand (Display 1.02, Lede 300/1.3, Body 1.5, Caption 1.4, Kicker 0.06em); `:lang(ar)` one step larger, 1.8–2.0 leading, 1.4 at display
@@ -168,7 +176,7 @@ These stop parts of the work. Everything else continues around them.
 - [x] `content` (pages, news, media, homepage slots, announcements, document index, published-only search)
 - [x] Activity-log triggers (never on ballots or receipts)
 - [x] Storage buckets + policies; revalidation and scheduled-publish functions
-- [x] Reference data: permissions, roles, bundles, programs, settings, Natrok Athar
+- [x] Reference data: permissions, roles, bundles, programs, settings
 - [x] pgTAP: 176 assertions in 8 files; CI fails on a table without RLS
 - [x] Generated types (CI diffs them)
 - [ ] pgTAP coverage for the remaining policies one by one (content admin writes, governance minutes, library)
@@ -178,11 +186,11 @@ These stop parts of the work. Everything else continues around them.
 - [x] Sign-in (password or magic link), sign-up (return URL), forgot/reset, callback
 - [x] Verification-pending screen for non-AUIB accounts
 - [x] `/setup`: both pledges (versioned, re-accept on change), language, notifications, camera-shy, personal email
-- [x] Home: membership card + QR, next events + ticket QR + cancel + .ics, voting eligibility, notices, Waraq call countdown + my submissions, programs, calendar feed (copy/reset), Six Words
+- [x] Home: membership card + QR, next events + ticket QR + cancel + .ics, voting eligibility, notices, the Journal call countdown + my submissions, programs, calendar feed (copy/reset), Six Words
 - [x] Profile and privacy, account deletion through apps/api
 - [x] Events page: browse, book with registration questions, places left, waitlist join/leave, give a place back (tickets stay on Home); the public RSVP button links to the event's card
 - [ ] Past attendance on the Events page
-- [x] Waraq: submit (rich text or files, translation fields, Human Authorship reconfirmed each time), my submissions, revise when returned, withdraw, sign the Publication Agreement (text is `TODO(content)`)
+- [x] Journal: submit (rich text or files, translation fields, Human Authorship reconfirmed each time), my submissions, revise when returned, withdraw, sign the Publication Agreement (text is `TODO(content)`)
 - [x] Programs: rotas with upcoming shifts, places left (`programmes.shift_places`), sign up, give back
 - [ ] Society (Book of Members, roster, minutes, elections)
 
@@ -193,18 +201,18 @@ These stop parts of the work. Everything else continues around them.
 - [x] Content (news, pages, announcements, homepage slots, media library; Liveblocks co-editing when enabled)
 - [x] Charity (campaigns, ledger with sign-off and reversals, receipts through signed URLs; winter-set cost is a placeholder setting)
 - [x] Programs, Governance (minutes co-edited, elections, spending, library uploads), Activity log, Settings
-- [x] Waraq issues, pieces, contributors; accepted work becomes a draft piece; publishing blocked until the agreement is signed
-- [x] Waraq pipeline (`/admin/pipeline`): per-issue tabs by role — my reading (rubric v2 scoring), intake (return for formatting, send to blind review, originals via `/files/submission`), reader assignment, drag-and-drop board with a keyboard Move menu, selection by average and band, decisions with author reveal, Advisory Board flagged view, calls
+- [x] Journal issues, pieces, contributors; accepted work becomes a draft piece; publishing blocked until the agreement is signed
+- [x] Journal pipeline (`/admin/pipeline`): per-issue tabs by role — my reading (rubric v2 scoring), intake (return for formatting, send to blind review, originals via `/files/submission`), reader assignment, drag-and-drop board with a keyboard Move menu, selection by average and band, decisions with author reveal, Advisory Board flagged view, calls
 - [x] Blind copies: `/files/blind` strips PDF info/XMP/annotation authors, image EXIF, DOCX properties and revision authors; never falls back to the original
 - [x] CSV exports through apps/api (members, attendance, ledger, spending)
 - [x] Migrations `20261005000000_admin`, `…0100_waraq_publishing` and `…0200_waraq_pipeline` applied to production (2026-10-06)
 
 ### Public site (§6)
-- [x] Layout (skip link, header, footer, language switch), home (events, Waraq, Warmth Meter, calls, join band), 404
+- [x] Layout (skip link, header, footer, language switch), home (events, the Journal, Warmth Meter, calls, join band), 404
 - [x] Revalidation route (cache tags), sitemap (existing pages only, hreflang), robots
 - [x] Documents: registry (`packages/sal-data/documents.json`, one entry per docs-source PDF, status shown on every page; all six are Draft 1 for ratification on Charter Day), index and per-document pages with contents, PDFs published at build (`apps/web/scripts/copy-documents.mjs`). The documents are English-only; `/ar` says so.
 - [x] Events: upcoming and past lists, detail (canceled notice, sanitized body, image, RSVP in the Nexus, add-to-calendar .ics), calendar subscription (webcal)
-- [x] Waraq: hub (open calls → submit in the Nexus, issues, latest), issue, piece and contributor pages; members-only text stays in the Nexus (`/waraq/piece?slug=`)
+- [x] Journal: hub (open calls → submit in the Nexus, issues, latest), issue, piece and contributor pages; members-only text stays in the Nexus (`/journal/piece?slug=`)
 - [x] About (Constitution preamble, motto, mission and "At a Glance", marked as quoted from the draft; Handbook pillars), Programs (Handbook summaries, migration `20261006000000`), Join (Handbook steps and membership table; the Arabic is the Handbook's own welcome page where it exists)
 - [x] Give + transparency (Warmth Meter from signed-off money only, public receipts, impact, P7.5), News (list, post), Contact (channels, concerns), Media kit (name rules, logos as supplied, palette), Privacy (P5 and P6 verbatim, platform facts), Side Quest care + removal form (`apps/api /removal-requests`, rate-limited, honeypot), Search (published rows + document registry), drawn share images (`/[locale]/og`, default for every page)
 - [ ] Structured data (JSON-LD)
@@ -252,31 +260,32 @@ Covered by automated tests so far:
 
 ## Content still needed
 
-- The Waraq, Second Chapter and Side Quest documents listed above.
+- The Journal, Second Chapter and Side Quest documents listed above.
 - A formal Human Authorship pledge wording: the setup page shows Policy
   Manual P10.1 (English verbatim) until one exists. The Member Pledge is now
   the SAL-POL-01 text verbatim (the manual itself flags its Arabic for a
   native check).
 - The Publication Agreement in the Nexus quotes Policy Manual P9.1, P9.2, P9.5
   and P10.1 (no separate agreement exists in the documents); its last line,
-  naming the purpose agreed (Waraq online and in print, and the archive), was
+  naming the purpose agreed (the Journal online and in print, and the archive), was
   written for the platform — confirm it.
-- The Society's email address and The Common Room's Telegram link (the
-  Member Handbook still has "[Society AUIB email]"); Contact shows a note
-  until then.
-- Founders' Roll names; the Faculty Advisor's name.
+- The Common Room's Telegram link and the Faculty Advisor's name (both
+  bilingual where relevant): Nexus → Administration → Settings → Society
+  contacts. The Society email is set to `hello@auibsal.org`.
+- Founders' Roll names: Content → pages → `about/founders`.
 - The care promise for Side Quest beyond Policy Manual 5.3. (Program descriptions now come from the Member Handbook.)
-- Traditions (Charter Night, the Ribbon, the Term Card) text.
-- Natrok Athar's description (both languages) and confirmed cost per winter set.
+- Traditions (Charter Night, the Ribbon, the Term Card) text: Content → pages → `about/traditions`.
+- The first Second Chapter campaign (`second-chapter-2026`, draft, November 1–11): target and cost per set.
+- Confirmed cost per winter set.
 
 ## needs-native-review (Arabic written for the platform)
 
 - `packages/internationalization/messages/ar.json` — every string (all of it
   was written for the platform; none came from a source document), except
-  the motto «والقرطاسُ والقلم», the Society's name «جمعية الفنون والآداب»,
-  «ورق» and «نترك اثر», which come from the brief.
+  the motto «والقرطاسُ والقلم» and the Society's name «جمعية الفنون والآداب»,
+  which come from the brief.
 - `access.roles.name_ar` (reference-data migration): all 24 role names.
-- `core.programmes.name_ar`: every name except «ورق».
+- `core.programmes.name_ar`: every name.
 - `charity.campaigns.unit_label_ar` default «أطفال كُسوا».
 - `core.semesters` names in pgTAP fixtures are test-only (no review needed).
 - The transliteration «النِّكسَس» for "the Nexus".
@@ -293,3 +302,7 @@ Covered by automated tests so far:
 - Auth email links (2026-10-08): `auth.confirm.*` and the new Arabic in
   `supabase/templates/magic_link.html` («رابط دخولك», «افتح النِّكسَس»).
 
+- AUIB Literary Journal (2026-10-08): «مجلة AUIB الأدبية» and every Arabic
+  string added that day (`nexus.society.*`, `nexus.next.*`, the two-step
+  panel, setup progress and pledge reasons, the reading timeline, overview
+  context sentences, Society contacts settings).

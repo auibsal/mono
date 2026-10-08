@@ -5,6 +5,7 @@ import { content, localized, sanitizeRichText } from "@repo/sal-data";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { articleLd, JsonLd } from "@/lib/json-ld";
 import { mediaUrl } from "@/lib/media";
 import { localizedMetadata } from "@/lib/metadata";
 import { readPublished } from "@/lib/supabase";
@@ -52,6 +53,14 @@ const NewsPost = async ({ params }: NewsProps) => {
 
   return (
     <article className="mx-auto grid w-full max-w-3xl gap-8 px-4 py-16">
+      <JsonLd
+        data={articleLd(locale, {
+          image: cover,
+          path: `/news/${post.slug}`,
+          publishedAt: post.published_at,
+          title: localized(post, "title", locale),
+        })}
+      />
       <Link className="type-caption underline underline-offset-4" href="/news">
         {t("all")}
       </Link>

@@ -51,7 +51,7 @@ const GivePage = async ({ params }: LocaleParams) => {
       <Section id="ways" title={t("waysTitle")}>
         <ul className="grid gap-4 sm:grid-cols-3">
           {WAYS.map((way) => (
-            <li className="rounded-card bg-surface-tint p-5" key={way}>
+            <li className="frame bg-surface-tint p-5" key={way}>
               <h3 className="type-subheading">{t(`ways.${way}`)}</h3>
             </li>
           ))}
@@ -129,7 +129,7 @@ const GivePage = async ({ params }: LocaleParams) => {
             <h3 className="type-subheading">{t("impactTitle")}</h3>
             <dl className="grid gap-4 sm:grid-cols-3">
               {impact.map((m) => (
-                <div className="rounded-card bg-surface-tint p-5" key={m.id}>
+                <div className="frame bg-surface-tint p-5" key={m.id}>
                   <dt className="type-caption">
                     {localized(m, "label", locale)}
                   </dt>

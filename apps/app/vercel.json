@@ -47,6 +47,16 @@
       "source": "/:locale(en|ar)/waraq",
       "destination": "/:locale/journal",
       "permanent": true
+    },
+    {
+      "source": "/:locale(en|ar)/programmes",
+      "destination": "/:locale/programs",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(en|ar)/admin/programmes",
+      "destination": "/:locale/admin/programs",
+      "permanent": true
     }
   ]
 }

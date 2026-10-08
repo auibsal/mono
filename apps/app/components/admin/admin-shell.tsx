@@ -1,14 +1,18 @@
 "use client";
 
 import { cn } from "@repo/design-system/lib/utils";
-import { Link, usePathname } from "@repo/internationalization/navigation";
+import {
+  Link,
+  usePathname,
+  useRouter,
+} from "@repo/internationalization/navigation";
 import {
   type AdminModule,
   adminModules,
   hasPermissionAnywhere,
 } from "@repo/rbac";
 import { useTranslations } from "next-intl";
-import type { ReactNode } from "react";
+import { type ReactNode, useEffect } from "react";
 import { useGrants } from "@/lib/queries";
 import { TwoStepPanel, useTwoStep } from "../auth/two-step";
 import { SectionSpinner } from "../states";
@@ -93,7 +97,21 @@ export const RequireModule = ({
     return <SectionSpinner />;
   }
   if (!visible.some((m) => m.key === module)) {
+    // The Overview is only for some roles: open the first section this
+    // member can use instead of a dead end.
+    const [first] = visible;
+    if (module === "overview" && first) {
+      return <OpenFirst href={hrefFor(first.key)} />;
+    }
     return <p className="type-body text-text-secondary">{t("noAccess")}</p>;
   }
   return children;
+};
+
+const OpenFirst = ({ href }: { href: string }) => {
+  const router = useRouter();
+  useEffect(() => {
+    router.replace(href);
+  }, [href, router]);
+  return <SectionSpinner />;
 };

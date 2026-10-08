@@ -12,6 +12,7 @@ import { Section } from "./section";
 
 export const VotingEligibility = () => {
   const t = useTranslations("nexus.home.voting");
+  const ta = useTranslations("nexus.next");
   const locale = useLocale() as "en" | "ar";
   const status = useMemberStatus();
   const activity = useActivity();
@@ -51,7 +52,9 @@ export const VotingEligibility = () => {
             </tbody>
           </table>
         ) : (
-          <EmptyLine>{t("noHistory")}</EmptyLine>
+          <EmptyLine action={{ href: "/events", label: ta("browseEvents") }}>
+            {t("noHistory")}
+          </EmptyLine>
         )}
       </details>
     </Section>

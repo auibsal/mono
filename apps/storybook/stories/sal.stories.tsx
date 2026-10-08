@@ -7,9 +7,9 @@ import { SocialPost } from "@repo/design-system/components/sal/social-post";
 import type { Meta, StoryObj } from "@storybook/react";
 
 /**
- * SAL brand components. INTERIM layouts until brand/components (the HTML
- * sources of Document Cover, Document Footer and Form Header) is supplied.
- * Check each story in both directions with the Direction toolbar.
+ * SAL brand components, ported from brand/components (Document Cover,
+ * Document Footer, Form Header, Social Post). Print keeps the 8px radius;
+ * screen components are in "SAL/Screens (v5)".
  */
 const meta = {
   title: "SAL/Brand",

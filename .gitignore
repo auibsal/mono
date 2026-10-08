@@ -277,3 +277,6 @@ packages/database/generated
 .contentlayer
 .content-collections
 .source
+# Playwright
+apps/e2e/test-results
+apps/e2e/playwright-report

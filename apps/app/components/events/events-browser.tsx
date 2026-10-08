@@ -34,7 +34,7 @@ interface Question {
 
 /**
  * Upcoming events the member can see (RLS adds members-only ones), with
- * places left, booking, the waitlist and cancelling. Booking and the
+ * places left, booking, the waitlist and canceling. Booking and the
  * waitlist are one RPC (events.rsvp), so a full event can't be overfilled.
  */
 const useUpcomingEvents = () => {
@@ -114,6 +114,7 @@ const errorKey = (error: unknown): NoticeKey => {
 
 export const EventsBrowser = () => {
   const t = useTranslations("nexus.events");
+  const ta = useTranslations("nexus.next");
   const locale = useLocale() as "en" | "ar";
   const { supabase, user } = useAuth();
   const queryClient = useQueryClient();
@@ -204,7 +205,13 @@ export const EventsBrowser = () => {
         <p className="type-lede max-w-2xl">{t("lede")}</p>
       </header>
 
-      {upcoming.data.length === 0 ? <EmptyLine>{t("empty")}</EmptyLine> : null}
+      {upcoming.data.length === 0 ? (
+        <EmptyLine
+          action={{ href: "/#calendar", label: ta("subscribeCalendar") }}
+        >
+          {t("empty")}
+        </EmptyLine>
+      ) : null}
 
       <ul className="grid gap-6 md:grid-cols-2">
         {upcoming.data.map((event) => (

@@ -16,7 +16,7 @@ interface EventRow {
   readonly [key: string]: unknown;
 }
 
-/** A plain list of events: date and time, title, venue, summary. */
+/** Events as framed cards (v5): date and time, title, venue, summary. */
 export const EventList = ({
   events,
   locale,
@@ -24,29 +24,29 @@ export const EventList = ({
   events: readonly EventRow[];
   locale: Locale;
 }) => (
-  <ul className="grid gap-4">
+  <ul className="grid gap-6 md:grid-cols-2">
     {events.map((event) => (
-      <li className="grid gap-1 border-rule border-b pb-4" key={event.id}>
-        <p className="type-kicker">
-          {formatLongDate(event.starts_at, locale)} ·{" "}
-          {formatClock(event.starts_at, locale)}
-        </p>
-        <h3 className="type-subheading">
-          <Link
-            className="underline-offset-4 hover:underline"
-            href={`/events/${event.slug}`}
-          >
-            {localized(event, "title", locale)}
-          </Link>
-        </h3>
-        {localized(event, "venue", locale) ? (
-          <p className="type-caption">{localized(event, "venue", locale)}</p>
-        ) : null}
-        {localized(event, "summary", locale) ? (
-          <p className="type-body text-text-secondary">
-            {localized(event, "summary", locale)}
+      <li key={event.id}>
+        <Link
+          className="frame press grid h-full content-start gap-2 bg-surface p-card-padding shadow-offset hover:bg-surface-tint"
+          href={`/events/${event.slug}`}
+        >
+          <p className="type-kicker">
+            {formatLongDate(event.starts_at, locale)} ·{" "}
+            {formatClock(event.starts_at, locale)}
           </p>
-        ) : null}
+          <h3 className="type-subheading">
+            {localized(event, "title", locale)}
+          </h3>
+          {localized(event, "venue", locale) ? (
+            <p className="type-caption">{localized(event, "venue", locale)}</p>
+          ) : null}
+          {localized(event, "summary", locale) ? (
+            <p className="type-body text-text-secondary">
+              {localized(event, "summary", locale)}
+            </p>
+          ) : null}
+        </Link>
       </li>
     ))}
   </ul>

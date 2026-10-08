@@ -4,6 +4,7 @@ import { useAuth } from "@repo/auth/provider";
 import type { Json } from "@repo/database";
 import { SalCard } from "@repo/design-system/components/sal/card";
 import { Input } from "@repo/design-system/components/ui/input";
+import { Label } from "@repo/design-system/components/ui/label";
 import type { Locale } from "@repo/internationalization";
 import {
   formatDateTime,
@@ -430,6 +431,79 @@ const JournalName = ({ settings }: { settings: Record<string, Json> }) => {
   );
 };
 
+const SocietyContacts = ({ settings }: { settings: Record<string, Json> }) => {
+  const t = useTranslations("nexus.admin.settings.contacts");
+  const save = useSaveSetting();
+  const [email, setEmail] = useState("");
+  const [telegram, setTelegram] = useState("");
+  const [advisor, setAdvisor] = useState({ ar: "", en: "" });
+  useEffect(() => {
+    setEmail(asText(settings["contact.email"]));
+    setTelegram(asText(settings["contact.telegram_url"]));
+    setAdvisor({
+      ar: asText(settings["society.faculty_advisor_ar"]),
+      en: asText(settings["society.faculty_advisor_en"]),
+    });
+  }, [settings]);
+  const telegramOk = telegram === "" || telegram.startsWith("https://t.me/");
+  return (
+    <Section title={t("title")}>
+      <form
+        className="grid gap-4"
+        onSubmit={(event) => {
+          event.preventDefault();
+          if (!telegramOk) {
+            return;
+          }
+          save.mutate({
+            "contact.email": email.trim(),
+            "contact.telegram_url": telegram.trim(),
+            "society.faculty_advisor_ar": advisor.ar.trim(),
+            "society.faculty_advisor_en": advisor.en.trim(),
+          });
+        }}
+      >
+        <div className="grid gap-2">
+          <Label htmlFor="contact-email">{t("email")}</Label>
+          <Input
+            dir="ltr"
+            id="contact-email"
+            onChange={(event) => setEmail(event.target.value)}
+            type="email"
+            value={email}
+          />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="contact-telegram">{t("telegram")}</Label>
+          <Input
+            aria-invalid={!telegramOk}
+            dir="ltr"
+            id="contact-telegram"
+            onChange={(event) => setTelegram(event.target.value)}
+            placeholder={t("telegramPlaceholder")}
+            type="url"
+            value={telegram}
+          />
+          {telegramOk ? null : (
+            <p className="text-sm text-title" role="alert">
+              {t("telegramInvalid")}
+            </p>
+          )}
+        </div>
+        <BilingualField
+          label={t("advisor")}
+          maxLength={120}
+          onChange={setAdvisor}
+          value={advisor}
+        />
+        <p className="type-caption">{t("hint")}</p>
+        <SaveButton pending={save.isPending} success={save.isSuccess} />
+        <ErrorLine error={save.error} />
+      </form>
+    </Section>
+  );
+};
+
 const CampusCalendar = ({ settings }: { settings: Record<string, Json> }) => {
   const t = useTranslations("nexus.admin.settings");
   const locale = useLocale() as Locale;
@@ -626,6 +700,7 @@ export const SettingsAdmin = () => {
       <AdminHeading title={t("title")}>{t("lede")}</AdminHeading>
       <Semesters />
       <JournalName settings={values} />
+      <SocietyContacts settings={values} />
       <CampusCalendar settings={values} />
       <WinterSetCost settings={values} />
       <Versions settings={values} />

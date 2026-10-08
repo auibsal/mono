@@ -6,6 +6,7 @@ import { journal, localized, sanitizeRichText } from "@repo/sal-data";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { articleLd, JsonLd } from "@/lib/json-ld";
 import { mediaUrl } from "@/lib/media";
 import { localizedMetadata } from "@/lib/metadata";
 import { readPublished } from "@/lib/supabase";
@@ -69,6 +70,17 @@ const PiecePage = async ({ params }: PieceProps) => {
 
   return (
     <article className="mx-auto grid w-full max-w-3xl gap-8 px-4 py-16">
+      <JsonLd
+        data={articleLd(locale, {
+          author: piece.contributor
+            ? localized(piece.contributor, "name", locale)
+            : null,
+          image,
+          path: `/journal/pieces/${piece.slug}`,
+          publishedAt: piece.published_at,
+          title: localized(piece, "title", locale),
+        })}
+      />
       {piece.issue ? (
         <Link
           className="type-caption underline underline-offset-4"
@@ -119,7 +131,7 @@ const PiecePage = async ({ params }: PieceProps) => {
         />
       ))}
       {piece.members_only && texts.length === 0 ? (
-        <div className="grid gap-3 rounded-card bg-surface-tint p-6">
+        <div className="frame grid gap-3 bg-surface-tint p-6">
           <p className="type-body">{t("membersOnlyBody")}</p>
           <a
             className="inline-flex h-10 items-center justify-self-start rounded-md bg-primary px-4 text-primary-foreground text-sm"

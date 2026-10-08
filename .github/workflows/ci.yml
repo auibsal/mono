@@ -92,3 +92,36 @@ jobs:
         run: |
           eval "$(cd packages/database && bunx supabase status -o env | grep -E '^(API_URL|PUBLISHABLE_KEY|SECRET_KEY)=' | sed 's/^/export /')"
           SUPABASE_INTEGRATION=1 bunx turbo test --force --filter=@repo/auth --filter=@repo/storage --filter=@repo/sal-data
+
+  e2e:
+    name: End-to-end (Playwright + axe)
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - run: bun install --frozen-lockfile
+      - name: Start Supabase (with Mailpit for confirmation emails)
+        working-directory: packages/database
+        run: bunx supabase start -x studio,imgproxy,logflare,vector,supavisor,edge-runtime,realtime,postgres-meta
+      - name: Browsers
+        working-directory: apps/e2e
+        run: bunx playwright install --with-deps chromium
+      - name: Journeys (sign up, sign in, book, submit, publish) and axe checks
+        run: |
+          eval "$(cd packages/database && bunx supabase status -o env | grep -E '^(API_URL|PUBLISHABLE_KEY|SECRET_KEY|MAILPIT_URL|INBUCKET_URL)=' | sed 's/^/export /')"
+          export SUPABASE_URL="$API_URL" SUPABASE_SECRET_KEY="$SECRET_KEY"
+          export MAILPIT_URL="${MAILPIT_URL:-$INBUCKET_URL}"
+          export NEXT_PUBLIC_SUPABASE_URL="$API_URL" NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="$PUBLISHABLE_KEY"
+          bun run --cwd apps/e2e e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-traces
+          path: apps/e2e/test-results
+          retention-days: 7
