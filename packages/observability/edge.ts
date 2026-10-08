@@ -10,19 +10,10 @@ import { keys } from "./keys";
 
 export const initializeSentry = (): ReturnType<typeof Sentry.init> =>
   Sentry.init({
-    // Setting this option to true will print useful information to the console while you're setting up Sentry.
-    debug: false,
     dsn: keys().NEXT_PUBLIC_SENTRY_DSN,
-
-    // Enable logging
     enableLogs: true,
-
-    // Integrations for console logging
     integrations: [
-      // Send console.log, console.error, and console.warn calls as logs to Sentry
-      Sentry.consoleLoggingIntegration({ levels: ["log", "error", "warn"] }),
+      Sentry.consoleLoggingIntegration({ levels: ["error", "warn"] }),
     ],
-
-    // Adjust this value in production, or use tracesSampler for greater control
-    tracesSampleRate: 1,
+    tracesSampleRate: 0.1,
   });

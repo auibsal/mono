@@ -2,6 +2,7 @@ import { createAdminClient } from "@repo/database/admin";
 import { parseError } from "@repo/observability/error";
 import { log } from "@repo/observability/log";
 import { programmes } from "@repo/sal-data";
+import { protectForm } from "@repo/security/form";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { corsHeaders, preflight } from "@/lib/cors";
@@ -38,6 +39,17 @@ export const POST = async (request: Request) => {
   if (website) {
     // Pretend success so the bot learns nothing.
     return json({ ok: true });
+  }
+
+  const verdict = await protectForm(request, fields.requester_email);
+  if (verdict === "rate_limited") {
+    return json({ error: "rate_limited" }, 429);
+  }
+  if (verdict === "invalid_email") {
+    return json({ error: "invalid_email" }, 400);
+  }
+  if (verdict === "bot") {
+    return json({ error: "forbidden" }, 403);
   }
 
   const admin = createAdminClient();

@@ -10,12 +10,10 @@ export const sentryConfig: Parameters<typeof withSentryConfig>[1] = {
   silent: !process.env.CI,
 
   /*
-   * Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
-   * This can increase your server load as well as your hosting bill.
-   * Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
-   * side errors will fail.
+   * No tunnelRoute: the Nexus is a static export and cannot serve the
+   * rewrite. Browsers send events straight to ingest.de.sentry.io, which
+   * every CSP allows (https://*.sentry.io).
    */
-  tunnelRoute: "/monitoring",
 
   webpack: {
     /*

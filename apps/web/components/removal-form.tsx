@@ -11,7 +11,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { type FormEvent, useId, useState } from "react";
 
 type State =
-  | { kind: "idle" | "sending" | "failed" | "rate_limited" }
+  | { kind: "idle" | "sending" | "failed" | "rate_limited" | "invalid_email" }
   | { dueAt: string; kind: "sent" };
 
 /** Posts to apps/api /removal-requests; no sign-in needed. */
@@ -38,8 +38,13 @@ export const RemovalForm = () => {
         headers: { "content-type": "application/json" },
         method: "POST",
       });
-      const result = (await response.json()) as { dueAt?: string };
-      if (response.status === 429) {
+      const result = (await response.json()) as {
+        dueAt?: string;
+        error?: string;
+      };
+      if (result.error === "invalid_email") {
+        setState({ kind: "invalid_email" });
+      } else if (response.status === 429) {
         setState({ kind: "rate_limited" });
       } else if (response.ok) {
         setState({
@@ -125,9 +130,19 @@ export const RemovalForm = () => {
       >
         {state.kind === "sending" ? t("sending") : t("send")}
       </Button>
-      {state.kind === "failed" || state.kind === "rate_limited" ? (
+      {state.kind === "failed" ? (
         <p className="text-sm text-title" role="alert">
-          {state.kind === "failed" ? t("failed") : t("rateLimited")}
+          {t("failed")}
+        </p>
+      ) : null}
+      {state.kind === "rate_limited" ? (
+        <p className="text-sm text-title" role="alert">
+          {t("rateLimited")}
+        </p>
+      ) : null}
+      {state.kind === "invalid_email" ? (
+        <p className="text-sm text-title" role="alert">
+          {t("invalidEmail")}
         </p>
       ) : null}
     </form>

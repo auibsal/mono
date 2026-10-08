@@ -1713,6 +1713,7 @@
       "sending": "Sending…",
       "sent": "Received. It comes down within 24 hours, by {date}, and we'll write to you.",
       "failed": "That didn't send. Try again, or tell any officer.",
+      "invalidEmail": "That email address can't receive mail. Check it, or use another.",
       "rateLimited": "You've sent several requests in the last hour. Try again later, or tell any officer."
     },
     "search": {
