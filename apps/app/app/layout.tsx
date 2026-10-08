@@ -6,11 +6,15 @@ import {
   getDirection,
   localeDefinitions,
 } from "@repo/internationalization";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
+  // Installable, so phones can show notifications (iPhone needs it).
+  appleWebApp: { capable: true, title: "Nexus" },
+  icons: { apple: "/icons/sal-avatar-180.png" },
+  manifest: "/manifest.webmanifest",
   // The Nexus is for members: keep it out of search engines.
   robots: { follow: false, index: false },
   title: {
@@ -18,6 +22,8 @@ export const metadata: Metadata = {
     template: "%s · The Nexus",
   },
 };
+
+export const viewport: Viewport = { themeColor: "#273236" };
 
 const directions = Object.fromEntries(
   Object.entries(localeDefinitions).map(([locale, { dir }]) => [locale, dir])

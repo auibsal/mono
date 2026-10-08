@@ -1,0 +1,29 @@
+{
+  "name": "The Nexus · AUIB Society of Arts and Letters",
+  "short_name": "Nexus",
+  "description": "The member portal of the AUIB Society of Arts and Letters.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#273236",
+  "theme_color": "#273236",
+  "icons": [
+    {
+      "src": "/icons/sal-avatar-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/sal-avatar-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/sal-avatar-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

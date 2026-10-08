@@ -9,6 +9,45 @@ export type Json =
 export type Database = {
   access: {
     Tables: {
+      oauth_clients: {
+        Row: {
+          areas: string[];
+          client_id: string;
+          contact_email: string;
+          created_at: string;
+          created_by: string | null;
+          enabled: boolean;
+          name_ar: string | null;
+          name_en: string;
+          note: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          areas?: string[];
+          client_id: string;
+          contact_email: string;
+          created_at?: string;
+          created_by?: string | null;
+          enabled?: boolean;
+          name_ar?: string | null;
+          name_en: string;
+          note?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          areas?: string[];
+          client_id?: string;
+          contact_email?: string;
+          created_at?: string;
+          created_by?: string | null;
+          enabled?: boolean;
+          name_ar?: string | null;
+          name_en?: string;
+          note?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       permissions: {
         Row: {
           description: string;
@@ -181,6 +220,15 @@ export type Database = {
         }[];
       };
       needs_two_step: { Args: Record<PropertyKey, never>; Returns: boolean };
+      oauth_client_info: {
+        Args: { client_id: string };
+        Returns: {
+          areas: string[];
+          enabled: boolean;
+          name_ar: string;
+          name_en: string;
+        }[];
+      };
       permission_holders: {
         Args: { permission: string; scope_id?: string; scope_type?: string };
         Returns: {
@@ -1052,6 +1100,36 @@ export type Database = {
         };
         Relationships: [];
       };
+      push_subscriptions: {
+        Row: {
+          auth: string;
+          created_at: string;
+          endpoint: string;
+          id: string;
+          label: string | null;
+          p256dh: string;
+          user_id: string;
+        };
+        Insert: {
+          auth: string;
+          created_at?: string;
+          endpoint: string;
+          id?: string;
+          label?: string | null;
+          p256dh: string;
+          user_id?: string;
+        };
+        Update: {
+          auth?: string;
+          created_at?: string;
+          endpoint?: string;
+          id?: string;
+          label?: string | null;
+          p256dh?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
       semesters: {
         Row: {
           code: string;
@@ -1157,6 +1235,15 @@ export type Database = {
           isOneToOne: true;
           isSetofReturn: false;
         };
+      };
+      save_push_subscription: {
+        Args: {
+          auth: string;
+          endpoint: string;
+          label?: string;
+          p256dh: string;
+        };
+        Returns: string;
       };
     };
     Enums: {

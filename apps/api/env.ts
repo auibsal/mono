@@ -21,14 +21,19 @@ const presets = envPresets(
 
 export const env = withPresets(
   createEnv({
-    client: {},
+    client: {
+      // Web Push: the public half of the VAPID pair (also set on the Nexus).
+      NEXT_PUBLIC_VAPID_PUBLIC_KEY: z.string().min(80).optional(),
+    },
     // Treat KEY="" (as in .env.example) as unset.
     emptyStringAsUndefined: true,
     extends: presets,
     runtimeEnv: {
       CRON_SECRET: process.env.CRON_SECRET,
       DATABASE_WEBHOOK_SECRET: process.env.DATABASE_WEBHOOK_SECRET,
+      NEXT_PUBLIC_VAPID_PUBLIC_KEY: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
       REVALIDATE_SECRET: process.env.REVALIDATE_SECRET,
+      VAPID_PRIVATE_KEY: process.env.VAPID_PRIVATE_KEY,
     },
     server: {
       // Shared secret Vercel Cron sends as a Bearer token. Generate with
@@ -38,6 +43,9 @@ export const env = withPresets(
       DATABASE_WEBHOOK_SECRET: z.string().min(32).optional(),
       // Shared with apps/web's revalidation route.
       REVALIDATE_SECRET: z.string().min(32).optional(),
+      // Web Push signing key. Without it (or the public key) notices go by
+      // email only.
+      VAPID_PRIVATE_KEY: z.string().min(40).optional(),
     },
     skipValidation: process.env.SKIP_ENV_VALIDATION === "true",
   }),

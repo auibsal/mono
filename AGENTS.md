@@ -73,6 +73,12 @@ any schema change. Integration tests run against a local stack with
 - **Migrations ship through CI.** Add a file to `supabase/migrations`; after
   merge, `.github/workflows/migrate.yml` runs `supabase db push` against
   production once CI passes. Never paste SQL into the production database.
+- **Third-party apps.** Tokens from apps (Sign in with SAL) carry a
+  `client_id` and reach only the areas granted in `access.oauth_clients`.
+  Every new table needs the restrictive policy "Third-party apps reach only
+  their areas" (see migration `20261008001500`; `99_oauth_clients.test.sql`
+  fails without it). apps/api routes refuse app tokens unless they pass
+  `authenticateRequest(request, { apps: true })`, which only `/v1` does.
 - **Two-step sign-in for sensitive roles.** Roles with `requires_mfa`
   (Council officers, directors, Elections Committee) count only on an `aal2`
   session; `access.has_permission` enforces it. Don't add bypasses.

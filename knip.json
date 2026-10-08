@@ -18,7 +18,7 @@
       "entry": ["scripts/*.{js,mjs,ts}"]
     },
     "apps/app": {
-      "entry": ["scripts/*.{js,mjs,ts}"]
+      "entry": ["scripts/*.{js,mjs,ts}", "public/sw.js"]
     },
     "apps/storybook": {
       "entry": ["scripts/*.{js,mjs,ts}"]

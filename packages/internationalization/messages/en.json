@@ -492,6 +492,29 @@
         "submit": "Delete my account",
         "deleting": "Deleting…",
         "failed": "We couldn't delete your account. Please try again."
+      },
+      "push": {
+        "title": "Phone notifications",
+        "description": "Event reminders, Journal news and decisions on this phone or computer, as well as by email. Turn them on on each device you use.",
+        "on": "On for this device.",
+        "off": "Off for this device.",
+        "turnOn": "Turn on for this device",
+        "turningOn": "Turning on…",
+        "turnOff": "Turn off for this device",
+        "test": "Send a test",
+        "testSent": "Sent. It should arrive in a few seconds.",
+        "testNone": "Nothing arrived at this device. Turn notifications off and on again.",
+        "needsInstall": "On iPhone and iPad, add the Nexus to your Home Screen first: tap Share, then Add to Home Screen, and open it from there.",
+        "denied": "Notifications are blocked for the Nexus in this browser. Allow them in the browser's site settings, then try again.",
+        "unsupported": "This browser can't show notifications. You'll still get every notice by email.",
+        "failed": "We couldn't change notifications. Please try again."
+      },
+      "apps": {
+        "title": "Connected apps",
+        "description": "Apps you've allowed to sign you in with your Society account.",
+        "since": "Connected {date}",
+        "disconnect": "Disconnect",
+        "failed": "We couldn't disconnect the app. Please try again."
       }
     },
     "admin": {
@@ -1295,6 +1318,30 @@
           "advisor": "Faculty Advisor",
           "hint": "Shown on auibsal.org (Contact) and in the Nexus (Society). Leave a field empty to hide it.",
           "telegramPlaceholder": "https://t.me/…"
+        },
+        "apps": {
+          "title": "Third-party apps (Sign in with SAL)",
+          "hint": "Apps outside the Nexus that members can sign in to with their Society account, such as a Journal team's own tool. Register the app in Supabase first (Authentication → OAuth Apps), then list it here with what it may reach. An app that isn't listed, or is switched off, sees nothing.",
+          "name": "App name",
+          "contact": "Contact email",
+          "clientId": "Client ID",
+          "clientIdHint": "From Supabase → Authentication → OAuth Apps.",
+          "areasLabel": "May reach",
+          "areas": {
+            "profile": "Name and language",
+            "journal": "AUIB Literary Journal",
+            "events": "Events",
+            "programmes": "Programs",
+            "content": "Pages and news"
+          },
+          "never": "Membership records, elections, the charity ledger and roles are never available to apps.",
+          "status": "Status",
+          "switchOn": "Switch on",
+          "switchOff": "Switch off",
+          "switchOnConfirm": "The app can act for members who allow it, within the areas listed.",
+          "switchOffConfirm": "The app loses access straight away, for every member.",
+          "none": "No apps yet.",
+          "add": "Add an app"
         }
       },
       "journal": {
@@ -1554,6 +1601,28 @@
       "alsoEditing": "Also here: {names}",
       "liveNote": "Changes appear for everyone editing; Save writes them to the record.",
       "offline": "Co-editing is off; you are editing alone."
+    },
+    "oauth": {
+      "title": "Sign in with SAL",
+      "intro": "{app} wants to sign you in with your Society account.",
+      "account": "You're signed in as {email}.",
+      "canTitle": "If you allow it, {app} can:",
+      "always": "See your email address and what you're allowed to do in the Society",
+      "areas": {
+        "profile": "See your name and language",
+        "journal": "Act for you in the AUIB Literary Journal: submit work, read the entries assigned to you, score them and, if you're an editor, record decisions. Readers never see who wrote a piece.",
+        "events": "See events and book or cancel places for you",
+        "programmes": "See program rotas and sign you up for shifts",
+        "content": "See and, if you're allowed, edit the Society's pages and news"
+      },
+      "never": "It can never see or do anything with your membership record, elections, ballots or the charity ledger.",
+      "notApproved": "The Society hasn't approved {app}, so it can't be used with your account. If you think it should be, write to {email}.",
+      "disconnectLater": "You can disconnect it at any time in Profile and privacy.",
+      "allow": "Allow",
+      "deny": "Don't allow",
+      "working": "One moment…",
+      "invalid": "This sign-in link has expired or is incomplete. Go back to the app and start again.",
+      "failed": "We couldn't finish signing you in. Go back to the app and try again."
     }
   },
   "web": {

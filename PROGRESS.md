@@ -20,8 +20,11 @@ Branch: `claude/new-session-qosn60`.
       Account Settings → Tokens → create one; GitHub → Settings → Secrets and
       variables → Actions: secret `TURBO_TOKEN`, variable `TURBO_TEAM` =
       `theideaiq`.
-- [ ] **Vercel spend alert:** Vercel → Settings → Billing → Spend Management:
-      a monthly amount with an email alert.
+- [ ] **Zero-cost plans (owner, 2026-10-08):** nothing paid. Vercel moves
+      back to Hobby when the owner chooses (Settings → Billing → Downgrade);
+      everything else is already on a free plan. Resend Free sends 100 emails
+      a day: the outbox now holds anything over the limit until it resets
+      instead of dropping it.
 - [ ] **Backups:** add `BACKUP_PASSPHRASE` (a long random passphrase kept in
       your password manager) to the GitHub `production` environment. Then
       `.github/workflows/backup.yml` stores an encrypted dump every night
@@ -38,8 +41,8 @@ Branch: `claude/new-session-qosn60`.
       variables → Actions → Variables) so CI's dependency review runs.
 - [ ] **Internal previews:** Vercel project sal-storybook is the one
       preview site (components, Screens and every email; Vercel login
-      required). sal-emails is paused: delete it in Vercel (Settings →
-      Advanced → Delete Project). Optional domain: storybook.auibsal.org.
+      required). sal-emails has no app since PR #64: delete it in Vercel
+      (Settings → Advanced → Delete Project). Optional domain: storybook.auibsal.org.
 - [ ] **Founding voters in the Constitution:** the first-100 rule departs
       from Constitution 3.3(b) and Bylaws B3.3. Add a transitional provision
       (for example "For the founding year, ending May 13, 2027, the first one
@@ -94,8 +97,22 @@ These stop parts of the work. Everything else continues around them.
 - [ ] **HSTS preload:** the header now carries `preload`; submit
       auibsal.org at hstspreload.org once the deploy is live.
 - [ ] **Supabase Auth → MFA:** confirm TOTP is enabled (on by default).
-- [ ] **Owner dashboard steps** listed in the Master Configuration Guide
-      (claude.ai artifact TRFXS3611Y1PRNHy5yT7En): `SENTRY_AUTH_TOKEN` on the
+- [ ] **Sign in with SAL (for the Journal team's app):** Supabase →
+      Authentication → OAuth Server: on, path `/oauth/consent`, dynamic
+      registration off; URL Configuration → Site URL
+      `https://nexus.auibsal.org`; for OpenID Connect ID tokens, Settings →
+      JWT Keys → asymmetric keys. Then register the team's app (OAuth Apps →
+      Add), send them the client id privately, and approve it in Nexus →
+      Settings → Third-party apps with "Name and language" and "AUIB
+      Literary Journal". Steps: docs.auibsal.org/platform/api.
+- [ ] **Phone notifications (Web Push) keys:** run
+      `bunx web-push generate-vapid-keys` once. Put the public key in
+      `NEXT_PUBLIC_VAPID_PUBLIC_KEY` on sal-nexus and sal-api, the private
+      key in `VAPID_PRIVATE_KEY` on sal-api only, then redeploy both. Until
+      then the Profile section says the browser can't show notifications and
+      everything still goes by email.
+- [ ] **Owner dashboard steps** listed in the SAL Platform Master Guide
+      (claude.ai/code/artifact/4f305659-631a-4244-adbd-18b93a8e10a1): `SENTRY_AUTH_TOKEN` on the
       three Vercel projects, Cloudflare Email Routing for `hello@auibsal.org`
       (no MX record today, so replies bounce), Vercel Bot Protection on
       sal-web in Log mode.
@@ -112,6 +129,21 @@ These stop parts of the work. Everything else continues around them.
       the secret key in apps/api only (decision below).
 
 ## Decisions
+
+- **Third-party apps and the API** (owner, 2026-10-08): a Journal team at
+  AUIB wants to sign members in with their SAL account and run the
+  editorial flow from its own tool. Sign-in is the Supabase OAuth 2.1
+  server (free), the consent page is in the Nexus, and `/v1` on apps/api is
+  the public API. Because an OAuth token can do anything the member can,
+  the database limits each app to the areas the Society granted it
+  (`access.oauth_clients`, a restrictive policy on every table, a
+  pre-request check for functions); membership, elections, charity and
+  roles are never available to apps, and apps/api's own endpoints refuse
+  app tokens (migration `20261008001500`).
+- **Phone notifications** (owner, 2026-10-08): Web Push, not Knock or a
+  native app; free and vendor-free. Email stays the record.
+- **Site-wide Arcjet check removed** (owner, 2026-10-08): the public site
+  serves published pages only; Arcjet stays on the public form in apps/api.
 
 - **Online ballots** (owner, 2026-10-08): every election is voted online in
   the Nexus under Bylaws B6: the voter list freezes when notice is given
@@ -245,6 +277,16 @@ These stop parts of the work. Everything else continues around them.
 - [x] `/setup`: both pledges (versioned, re-accept on change), language, notifications, camera-shy, personal email
 - [x] Home: membership card + QR, next events + ticket QR + cancel + .ics, voting eligibility, notices, the Journal call countdown + my submissions, programs, calendar feed (copy/reset), Six Words
 - [x] Profile and privacy, account deletion through apps/api
+- [x] Phone notifications (Web Push, free, no vendor): the Nexus is
+      installable (manifest, `public/sw.js`); Profile and privacy turns them
+      on per device (`core.push_subscriptions`, RLS, `core.save_push_subscription`),
+      with a test notice; sign-out removes the device; every outbox notice
+      to a member also goes to their devices after the email (`apps/api/lib/push.ts`).
+      iPhone needs the Nexus on the Home Screen (iOS 16.4+).
+- [x] Sign in with SAL: consent page (`/oauth/consent`), Connected apps in
+      Profile and privacy (disconnect), Settings → Third-party apps
+- [ ] Sign in with SAL next: file submissions and publishing through `/v1`,
+      signed webhooks to apps, an OpenAPI description (docs.auibsal.org/platform/api)
 - [x] Events page: browse, book with registration questions, places left, waitlist join/leave, give a place back (tickets stay on Home); the public RSVP button links to the event's card
 - [ ] Past attendance on the Events page
 - [x] Journal: submit (rich text or files, translation fields, Human Authorship reconfirmed each time), my submissions, revise when returned, withdraw, sign the Publication Agreement (text is `TODO(content)`)
@@ -286,6 +328,10 @@ These stop parts of the work. Everything else continues around them.
       notices, overdue removal requests; scheduled publishing every 10 minutes
       (a piece without a signed agreement no longer blocks the others)
 - [ ] Signed URLs (blind copies with metadata stripped, receipts), CSV exports, removal-request + contact endpoints with rate limits
+- [x] Public API `/v1` (me, Journal calls, issues, submissions, reviews and
+      scores, entries and decisions), run as the member with RLS; app tokens
+      accepted only there
+- [x] Web Push sender (`lib/push.ts`) and `/push/test`
 
 ### Infrastructure (§12)
 - [x] Supabase project, migrations, buckets, exposed schemas, Auth URLs, FK indexes
@@ -371,3 +417,7 @@ Covered by automated tests so far:
   «العدد الأول: دعوة للمشاركة».
 - Founding voters (2026-10-08): `nexus.home.voting.founding` and the added
   sentence in `web.join.steps.twoThings.body`.
+- Phone notifications (2026-10-08): `nexus.profile.push.*` and `pushTest`
+  in `packages/email/copy.ts`.
+- Sign in with SAL (2026-10-08): `nexus.oauth.*`, `nexus.profile.apps.*`
+  and `nexus.admin.settings.apps.*`.
