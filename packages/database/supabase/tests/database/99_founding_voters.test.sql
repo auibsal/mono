@@ -1,5 +1,5 @@
--- Member functions answer only about the caller, or about anyone for member
--- managers (migration 20261008000000).
+-- Founding voters: the first N verified Members vote without two activities
+-- until the founding year ends; Honorary and Alumni Members never do.
 begin;
 -- <preamble>
 -- Shared pgTAP preamble. Each test file includes a copy (pg_prove runs files
@@ -75,48 +75,36 @@ insert into core.semesters (code, name_en, name_ar, starts_on, ends_on) values
 update core.settings set value = '0' where key = 'membership.founding_voters';
 -- </preamble>
 
-select plan(11);
+select plan(6);
 
-select pg_temp.make_user('00000000-0000-0000-0000-0000000000f1', 'founder@auib.edu.iq', 'Founder');
-select access.bootstrap_founder('founder@auib.edu.iq');
-select pg_temp.make_user('00000000-0000-0000-0000-0000000000a1', 'student@auib.edu.iq', 'Student');
-select pg_temp.make_user('00000000-0000-0000-0000-0000000000a2', 'other@auib.edu.iq', 'Other');
+update core.settings set value = '2' where key = 'membership.founding_voters';
 
-select pg_temp.login_anon();
-select ok(not membership.is_member('00000000-0000-0000-0000-0000000000a1'),
-  'Anonymous callers learn nothing about a user id');
-select ok(not membership.has_current_pledges('00000000-0000-0000-0000-0000000000a1'),
-  'Anonymous callers learn nothing about pledges');
-select ok(not membership.is_member(), 'An anonymous caller is not a member');
+select pg_temp.make_user('00000000-0000-0000-0000-0000000000c1', 'one@auib.edu.iq', 'One');
+select pg_temp.make_user('00000000-0000-0000-0000-0000000000c2', 'two@auib.edu.iq', 'Two');
+select pg_temp.make_user('00000000-0000-0000-0000-0000000000c3', 'three@auib.edu.iq', 'Three');
+select pg_temp.make_user('00000000-0000-0000-0000-0000000000c0', 'zero@auib.edu.iq', 'Honorary');
+-- Same join date in this transaction: the tie falls to the id, so c0 would
+-- come first if Honorary Members counted.
+update membership.memberships set tier = 'honorary' where user_id = '00000000-0000-0000-0000-0000000000c0';
 
-select pg_temp.login_as('00000000-0000-0000-0000-0000000000a2');
-select ok(membership.is_member(), 'A member asking about themselves gets the answer');
-select ok(not membership.is_member('00000000-0000-0000-0000-0000000000a1'),
-  'A member cannot ask about someone else');
+select ok(private.is_voting_member('00000000-0000-0000-0000-0000000000c1'),
+  'The first Member votes without activities');
+select ok(private.is_voting_member('00000000-0000-0000-0000-0000000000c2'),
+  'So does the second');
+select ok(not private.is_voting_member('00000000-0000-0000-0000-0000000000c3'),
+  'The third needs two activities');
+select ok(not private.is_voting_member('00000000-0000-0000-0000-0000000000c0'),
+  'An Honorary Member neither votes nor takes a founding place');
 
-select throws_ok(
-  $$ select personal_email from core.profiles where id = '00000000-0000-0000-0000-0000000000a1' $$,
-  '42501', null,
-  'Members cannot read another member''s personal email'
-);
-select lives_ok(
-  $$ select full_name_en, bio from core.profiles $$,
-  'They can still read names and bios'
-);
-select lives_ok($$ select * from core.my_private_profile() $$,
-  'and their own private columns through the function');
-
-select pg_temp.login_as('00000000-0000-0000-0000-0000000000f1');
-select ok(membership.is_member('00000000-0000-0000-0000-0000000000a1'),
-  'A member manager can ask about anyone');
+select pg_temp.login_as('00000000-0000-0000-0000-0000000000c1');
+select ok((select founding_voter from membership.my_status()),
+  'The Home status says why a founding Member votes');
 
 select pg_temp.logout();
-select set_config('request.jwt.claims', '{"role":"service_role"}', true);
-select ok(membership.is_member('00000000-0000-0000-0000-0000000000a1'),
-  'The service role (apps/api) can ask about anyone');
-select pg_temp.logout();
-select ok(private.is_member('00000000-0000-0000-0000-0000000000a1'),
-  'Internal code uses the unrestricted check');
+update core.settings set value = to_jsonb((current_date - 1)::text)
+where key = 'membership.founding_voters_until';
+select ok(not private.is_voting_member('00000000-0000-0000-0000-0000000000c1'),
+  'After the founding year, the two-activity rule applies to everyone');
 
 select * from finish();
 rollback;

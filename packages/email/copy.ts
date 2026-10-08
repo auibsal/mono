@@ -147,7 +147,7 @@ export const decision = (
         paragraphs:
           l === "ar"
             ? [
-                "لم يختر المحررون هذا العمل لمجلة AUIB الأدبية هذه المرة.",
+                "لم يختر المحررون هذا العمل لمجلة الجامعة الأمريكية الأدبية هذه المرة.",
                 "نأمل أن نقرأ لك مجدداً في الدعوة القادمة.",
               ]
             : [
@@ -160,7 +160,7 @@ export const decision = (
       action: nexus(app, l, "/journal"),
       heading:
         l === "ar"
-          ? `قُبل عملك في مجلة AUIB الأدبية: ${work}`
+          ? `قُبل عملك في مجلة الجامعة الأمريكية الأدبية: ${work}`
           : `${work} is accepted for the AUIB Literary Journal`,
       paragraphs: [
         ...(outcome === "accept_with_edits"
@@ -186,7 +186,7 @@ export const agreementReminder = (lang: Lang, work: string, app: string) =>
         : `Waiting for your signature: ${work}`,
     paragraphs: [
       l === "ar"
-        ? "قُبل عملك في مجلة AUIB الأدبية، ولا يمكن نشره قبل أن توقّع اتفاقية النشر في النِّكسَس."
+        ? "قُبل عملك في مجلة الجامعة الأمريكية الأدبية، ولا يمكن نشره قبل أن توقّع اتفاقية النشر في النِّكسَس."
         : "Your work is accepted for the AUIB Literary Journal, and it cannot be published until you sign the Publication Agreement in the Nexus.",
     ],
   }));

@@ -3028,6 +3028,8 @@ export type Database = {
         Args: Record<PropertyKey, never>;
         Returns: {
           activities: number;
+          founding_until: string;
+          founding_voter: boolean;
           is_member: boolean;
           member_since: string;
           pending_pledges: Database["membership"]["Enums"]["pledge_type"][];

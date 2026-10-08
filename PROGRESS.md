@@ -9,6 +9,12 @@ Branch: `claude/new-session-qosn60`.
 
 ## Blocked — needed from the user
 
+- [ ] **Founding voters in the Constitution:** the first-100 rule departs
+      from Constitution 3.3(b) and Bylaws B3.3. Add a transitional provision
+      (for example "For the founding year, ending May 13, 2027, the first one
+      hundred Members are Voting Members from the day they join") before the
+      Constitution is adopted on Charter Day (October 13), or by amendment
+      after it.
 These stop parts of the work. Everything else continues around them.
 
 - [x] **`brand/`** (2026-10-05): the v4 design-system export (BRAND-BOOK.md
@@ -86,9 +92,16 @@ These stop parts of the work. Everything else continues around them.
   two recorded activities this or last semester; Council and team meetings
   count (B3.2) when their attendance is recorded. University faculty and
   staff are Honorary Members and do not vote (3.3(d)).
-- **Journal Issue 1 call** (owner, 2026-10-08): published with the Strategic
-  Plan's dates (SAL-STR-01, a draft): opens October 18, closes November 26,
-  2026, at most two pieces each, open theme (migration `20261008001000`).
+- **Journal Issue 1 call** (owner, 2026-10-08): open now, from October 8 to
+  November 26, 2026 (the close date from the Strategic Plan, SAL-STR-01, a
+  draft), at most two pieces each, open theme (migration `20261008001000`).
+  The Arabic name is «مجلة الجامعة الأمريكية الأدبية» (owner's choice).
+- **Founding voters** (owner, 2026-10-08): until May 13, 2027 (end of Spring
+  2027), the first 100 verified Members (not Honorary or Alumni) are Voting
+  Members from the day they join; everyone else, and everyone after that
+  date, needs two recorded activities. Both values are settings
+  (`membership.founding_voters`, `membership.founding_voters_until`;
+  migration `20261008001100`).
 - **American English** (owner, 2026-10-08) for all copy, comments, commits
   and docs; verbatim quotes from the Society's documents keep their spelling.
 - **v5 Screens** (owner, 2026-10-08, Option B of the audit): square corners,
@@ -317,7 +330,7 @@ Covered by automated tests so far:
 - Auth email links (2026-10-08): `auth.confirm.*` and the new Arabic in
   `supabase/templates/magic_link.html` («رابط دخولك», «افتح النِّكسَس»).
 
-- AUIB Literary Journal (2026-10-08): «مجلة AUIB الأدبية» and every Arabic
+- AUIB Literary Journal (2026-10-08): «مجلة الجامعة الأمريكية الأدبية» and every Arabic
   string added that day (`nexus.society.*`, `nexus.next.*`, the two-step
   panel, setup progress and pledge reasons, the reading timeline, overview
   context sentences, Society contacts settings).
@@ -325,3 +338,5 @@ Covered by automated tests so far:
   `nexus.admin.governance.elections.{giveNotice,giveNoticeConfirm,noticeGiven,openVotingConfirm,flagOff,statuses.notice}`,
   `web.journal.opensCloses`, and the Issue 1 names «العدد الأول» and
   «العدد الأول: دعوة للمشاركة».
+- Founding voters (2026-10-08): `nexus.home.voting.founding` and the added
+  sentence in `web.join.steps.twoThings.body`.

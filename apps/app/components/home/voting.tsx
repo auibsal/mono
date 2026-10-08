@@ -29,6 +29,13 @@ export const VotingEligibility = () => {
         max={membership.VOTING_ACTIVITIES}
         value={Math.min(count, membership.VOTING_ACTIVITIES)}
       />
+      {status.data?.founding_voter && status.data.founding_until ? (
+        <p className="type-body">
+          {t("founding", {
+            date: formatLongDate(status.data.founding_until, locale),
+          })}
+        </p>
+      ) : null}
       <p className="type-caption">{t("rule")}</p>
       <details>
         <summary className="cursor-pointer text-sm underline underline-offset-4">

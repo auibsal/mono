@@ -69,6 +69,10 @@ insert into core.semesters (code, name_en, name_ar, starts_on, ends_on) values
   ('fall-2024', 'Older', 'أقدم', current_date - 420, current_date - 300),
   ('spring-2025', 'Previous', 'السابق', current_date - 200, current_date - 60),
   ('fall-2025', 'Current', 'الحالي', current_date - 30, current_date + 60);
+
+-- Tests check the two-activity rule; the founding-voter tests turn the
+-- first-100 rule back on themselves.
+update core.settings set value = '0' where key = 'membership.founding_voters';
 -- </preamble>
 
 select plan(20);
