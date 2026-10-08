@@ -392,7 +392,6 @@ const Agreement = ({ submissionId }: { submissionId: string }) => {
 export const MySubmission = () => {
   const t = useTranslations("nexus.journal");
   const tj = useTranslations("nexus.admin.journal");
-  const locale = useLocale() as Locale;
   const id = useQueryParam("id");
   const { supabase } = useAuth();
   const invalidate = useInvalidate();
@@ -518,18 +517,7 @@ export const MySubmission = () => {
 
       {row.status === "accepted" ? <Agreement submissionId={row.id} /> : null}
 
-      <section className="grid gap-2">
-        <h2 className="type-subheading">{t("progress")}</h2>
-        <ol className="grid gap-1 text-sm">
-          {data.data?.history.map((h) => (
-            <li key={h.id}>
-              {formatLongDate(h.changed_at, locale, true)}:{" "}
-              {t(`status.${h.to_status}`)}
-            </li>
-          ))}
-        </ol>
-        <p className="type-caption">{t("blindNote")}</p>
-      </section>
+      <ReadingTimeline history={data.data?.history ?? []} status={row.status} />
 
       <section className="grid gap-3">
         <h2 className="type-subheading">{t("files.title")}</h2>
@@ -609,5 +597,100 @@ export const MySubmission = () => {
         </section>
       )}
     </div>
+  );
+};
+
+const STAGES = [
+  "received",
+  "intake_check",
+  "in_review",
+  "selection",
+  "decision",
+] as const;
+
+const stageOf = (status: string): (typeof STAGES)[number] => {
+  if (status === "third_read") {
+    return "in_review";
+  }
+  if (
+    status === "accepted" ||
+    status === "declined" ||
+    status === "withdrawn"
+  ) {
+    return "decision";
+  }
+  return (STAGES as readonly string[]).includes(status)
+    ? (status as (typeof STAGES)[number])
+    : "received";
+};
+
+/**
+ * Where a submission stands in the reading, stage by stage, with what each
+ * stage means. Names never appear: readers work from blind ids.
+ */
+const ReadingTimeline = ({
+  history,
+  status,
+}: {
+  readonly history: { changed_at: string; id: number; to_status: string }[];
+  readonly status: string;
+}) => {
+  const t = useTranslations("nexus.journal");
+  const locale = useLocale() as Locale;
+  const current = STAGES.indexOf(stageOf(status));
+  const reachedAt = (stage: (typeof STAGES)[number]) =>
+    history.find((h) => stageOf(h.to_status) === stage)?.changed_at;
+
+  return (
+    <section aria-labelledby="timeline" className="grid gap-3">
+      <h2 className="type-subheading" id="timeline">
+        {t("progress")}
+      </h2>
+      <ol className="grid">
+        {STAGES.map((stage, index) => {
+          let state: "done" | "current" | "next" = "next";
+          if (index < current) {
+            state = "done";
+          } else if (index === current) {
+            state = "current";
+          }
+          const at = reachedAt(stage);
+          return (
+            <li
+              aria-current={state === "current" ? "step" : undefined}
+              className="grid grid-cols-[1.5rem_1fr] gap-3 border-rule border-b py-3"
+              key={stage}
+            >
+              <span
+                aria-hidden="true"
+                className={
+                  state === "next"
+                    ? "frame mt-1 size-4"
+                    : "frame mt-1 size-4 bg-band"
+                }
+              />
+              <div className="grid gap-1">
+                <p
+                  className={
+                    state === "next" ? "text-text-secondary" : "font-bold"
+                  }
+                >
+                  {stage === "decision" && index <= current
+                    ? t(`status.${status as "accepted"}`)
+                    : t(`timeline.${stage}.title`)}
+                  {at ? (
+                    <span className="type-caption ms-2 font-normal">
+                      {formatLongDate(at, locale)}
+                    </span>
+                  ) : null}
+                </p>
+                <p className="type-caption">{t(`timeline.${stage}.body`)}</p>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+      <p className="type-caption">{t("blindNote")}</p>
+    </section>
   );
 };

@@ -71,7 +71,7 @@ insert into core.semesters (code, name_en, name_ar, starts_on, ends_on) values
   ('fall-2025', 'Current', 'الحالي', current_date - 30, current_date + 60);
 -- </preamble>
 
-select plan(8);
+select plan(11);
 
 select pg_temp.make_user('00000000-0000-0000-0000-0000000000f1', 'founder@auib.edu.iq', 'Founder');
 select access.bootstrap_founder('founder@auib.edu.iq');
@@ -89,6 +89,18 @@ select pg_temp.login_as('00000000-0000-0000-0000-0000000000a2');
 select ok(membership.is_member(), 'A member asking about themselves gets the answer');
 select ok(not membership.is_member('00000000-0000-0000-0000-0000000000a1'),
   'A member cannot ask about someone else');
+
+select throws_ok(
+  $$ select personal_email from core.profiles where id = '00000000-0000-0000-0000-0000000000a1' $$,
+  '42501', null,
+  'Members cannot read another member''s personal email'
+);
+select lives_ok(
+  $$ select full_name_en, bio from core.profiles $$,
+  'They can still read names and bios'
+);
+select lives_ok($$ select * from core.my_private_profile() $$,
+  'and their own private columns through the function');
 
 select pg_temp.login_as('00000000-0000-0000-0000-0000000000f1');
 select ok(membership.is_member('00000000-0000-0000-0000-0000000000a1'),

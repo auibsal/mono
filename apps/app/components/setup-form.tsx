@@ -117,6 +117,10 @@ export const SetupForm = () => {
   }
 
   const ready = pending.every((kind) => accepted[kind]);
+  // One step per pending pledge, then the choices (always ready).
+  const total = pending.length + 1;
+  const done =
+    pending.filter((kind) => accepted[kind]).length + (ready ? 1 : 0);
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -130,6 +134,17 @@ export const SetupForm = () => {
       <FormHeader code={t("kicker")} title={t("title")}>
         {isRenewal ? t("renewed") : t("description")}
       </FormHeader>
+      <div className="grid gap-2" role="status">
+        <p className="type-kicker">
+          {t("progress", { done: String(done), total: String(total) })}
+        </p>
+        <div aria-hidden="true" className="frame h-3 w-full bg-surface">
+          <div
+            className="h-full bg-band transition-[width]"
+            style={{ width: `${(done / total) * 100}%` }}
+          />
+        </div>
+      </div>
       <form className="grid gap-6" onSubmit={submit}>
         {pending.length > 0 ? (
           <fieldset className="grid gap-4">
@@ -140,6 +155,9 @@ export const SetupForm = () => {
               return (
                 <SalCard key={kind}>
                   <h2 className="type-subheading">{t(`${key}.title`)}</h2>
+                  <p className="type-body text-text-secondary">
+                    {t(`${key}.why`)}
+                  </p>
                   <p className="type-body">{t(`${key}.body`)}</p>
                   <p className="type-caption type-code">
                     v{versions.data?.[kind]}

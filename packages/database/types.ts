@@ -1133,6 +1133,13 @@ export type Database = {
           isSetofReturn: false;
         };
       };
+      my_private_profile: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          notify_email: boolean;
+          personal_email: string;
+        }[];
+      };
       previous_semester: {
         Args: Record<PropertyKey, never>;
         Returns: {

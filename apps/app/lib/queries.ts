@@ -47,16 +47,31 @@ export const useMemberStatus = () => {
 
 export const useProfile = () => {
   const { supabase } = useAuth();
-  return useUserQuery(queryKeys.profile, async (userId) =>
-    unwrap(
-      await supabase
+  return useUserQuery(queryKeys.profile, async (userId) => {
+    // Private columns (personal email, email preference) are not readable
+    // from the table, even for the owner: they come from a function.
+    const [profile, extra] = await Promise.all([
+      supabase
         .schema("core")
         .from("profiles")
-        .select("*")
+        .select(
+          "id, full_name_en, full_name_ar, bio, avatar_path, locale, camera_shy, setup_completed_at, verified_at, created_at, updated_at"
+        )
         .eq("id", userId)
-        .single()
-    )
-  );
+        .single(),
+      supabase.schema("core").rpc("my_private_profile"),
+    ]);
+    const row = unwrap(profile);
+    if (!row) {
+      throw new Error("profile_missing");
+    }
+    const own = unwrap(extra)?.[0];
+    return {
+      ...row,
+      notify_email: own?.notify_email ?? true,
+      personal_email: own?.personal_email ?? null,
+    };
+  });
 };
 
 /** The member's active grants (for showing admin modules; RLS still decides). */
