@@ -1,4 +1,5 @@
 import { createAdminClient } from "@repo/database/admin";
+import { EmailQuotaError } from "@repo/email";
 import { z } from "zod";
 import { env } from "@/env";
 import { hasBearer } from "@/lib/bearer";
@@ -28,6 +29,14 @@ export const POST = async (request: Request) => {
   if ("drain" in parsed.data) {
     return Response.json(await drain(admin));
   }
-  const done = await processRow(admin, parsed.data.id);
-  return Response.json({ done }, { status: done ? 200 : 500 });
+  try {
+    const done = await processRow(admin, parsed.data.id);
+    return Response.json({ done }, { status: done ? 200 : 500 });
+  } catch (error) {
+    if (error instanceof EmailQuotaError) {
+      // Held for the next drain once the daily sending limit resets.
+      return Response.json({ done: false, quotaReached: true });
+    }
+    throw error;
+  }
 };

@@ -1,7 +1,8 @@
 import "server-only";
 
+import { AsyncLocalStorage } from "node:async_hooks";
 import type { AdminClient } from "@repo/database/admin";
-import { sendEmail } from "@repo/email";
+import { EmailQuotaError, sendEmail } from "@repo/email";
 import {
   agreementReminder,
   type Built,
@@ -25,7 +26,10 @@ import { env } from "@/env";
  * database triggers and the daily notices. Each row is claimed (attempts
  * is incremented) before work starts and marked processed when it is done;
  * a failure records the error and leaves the row for the next drain, up to
- * MAX_ATTEMPTS.
+ * MAX_ATTEMPTS. When the email plan's daily limit is spent, the claim is
+ * given back and the row waits for the limit to reset: it is delayed, not
+ * lost. Each email carries an idempotency key, so a retried row never sends
+ * the same email twice.
  */
 export const MAX_ATTEMPTS = 5;
 
@@ -69,8 +73,13 @@ const recipient = async (
   return { email, lang: profile?.locale === "ar" ? "ar" : "en" };
 };
 
+/** The outbox row being processed, for idempotency keys. */
+const currentRow = new AsyncLocalStorage<number>();
+
 const send = async (to: Recipient, built: Built) => {
+  const row = currentRow.getStore();
   await sendEmail({
+    idempotencyKey: row === undefined ? undefined : `outbox-${row}-${to.email}`,
     react: Notice({ blocks: built.blocks, preview: built.preview }),
     subject: built.subject,
     to: to.email,
@@ -288,6 +297,7 @@ export const processRow = async (admin: AdminClient, id: number) => {
   if (!row) {
     return true;
   }
+  const previousAttempts = row.attempts;
   const claimed = await admin
     .schema("core")
     .from("outbox")
@@ -305,7 +315,9 @@ export const processRow = async (admin: AdminClient, id: number) => {
     : undefined;
   try {
     if (handler) {
-      await handler(admin, (row as OutboxRow).payload);
+      await currentRow.run(id, () =>
+        handler(admin, (row as OutboxRow).payload)
+      );
     }
     await admin
       .schema("core")
@@ -317,15 +329,21 @@ export const processRow = async (admin: AdminClient, id: number) => {
       .eq("id", id);
     return true;
   } catch (error) {
+    const quota = error instanceof EmailQuotaError;
     await admin
       .schema("core")
       .from("outbox")
       .update({
+        // A spent sending limit is not the row's fault: give the try back.
+        ...(quota ? { attempts: previousAttempts } : {}),
         last_error: String(
           error instanceof Error ? error.message : error
         ).slice(0, 1000),
       })
       .eq("id", id);
+    if (quota) {
+      throw error;
+    }
     return false;
   }
 };
@@ -343,11 +361,19 @@ export const drain = async (admin: AdminClient, limit = 50) => {
     .limit(limit);
   let done = 0;
   for (const row of rows ?? []) {
-    // One at a time: Resend's rate limit is per second.
-    // biome-ignore lint/performance/noAwaitInLoops: sequential on purpose
-    if (await processRow(admin, row.id)) {
-      done += 1;
+    try {
+      // One at a time: Resend's rate limit is per second.
+      // biome-ignore lint/performance/noAwaitInLoops: sequential on purpose
+      if (await processRow(admin, row.id)) {
+        done += 1;
+      }
+    } catch (error) {
+      if (error instanceof EmailQuotaError) {
+        // The rest would fail the same way; they wait for the next drain.
+        return { done, quotaReached: true, seen: rows?.length ?? 0 };
+      }
+      throw error;
     }
   }
-  return { done, seen: rows?.length ?? 0 };
+  return { done, quotaReached: false, seen: rows?.length ?? 0 };
 };

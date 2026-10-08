@@ -20,8 +20,11 @@ Branch: `claude/new-session-qosn60`.
       Account Settings → Tokens → create one; GitHub → Settings → Secrets and
       variables → Actions: secret `TURBO_TOKEN`, variable `TURBO_TEAM` =
       `theideaiq`.
-- [ ] **Vercel spend alert:** Vercel → Settings → Billing → Spend Management:
-      a monthly amount with an email alert.
+- [ ] **Zero-cost plans (owner, 2026-10-08):** nothing paid. Vercel moves
+      back to Hobby when the owner chooses (Settings → Billing → Downgrade);
+      everything else is already on a free plan. Resend Free sends 100 emails
+      a day: the outbox now holds anything over the limit until it resets
+      instead of dropping it.
 - [ ] **Backups:** add `BACKUP_PASSPHRASE` (a long random passphrase kept in
       your password manager) to the GitHub `production` environment. Then
       `.github/workflows/backup.yml` stores an encrypted dump every night
@@ -38,8 +41,8 @@ Branch: `claude/new-session-qosn60`.
       variables → Actions → Variables) so CI's dependency review runs.
 - [ ] **Internal previews:** Vercel project sal-storybook is the one
       preview site (components, Screens and every email; Vercel login
-      required). sal-emails is paused: delete it in Vercel (Settings →
-      Advanced → Delete Project). Optional domain: storybook.auibsal.org.
+      required). sal-emails has no app since PR #64: delete it in Vercel
+      (Settings → Advanced → Delete Project). Optional domain: storybook.auibsal.org.
 - [ ] **Founding voters in the Constitution:** the first-100 rule departs
       from Constitution 3.3(b) and Bylaws B3.3. Add a transitional provision
       (for example "For the founding year, ending May 13, 2027, the first one
