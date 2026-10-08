@@ -22,7 +22,6 @@
     "@repo/feature-flags": "workspace:*",
     "@repo/internationalization": "workspace:*",
     "@repo/next-config": "workspace:*",
-    "@repo/notifications": "workspace:*",
     "@repo/observability": "workspace:*",
     "@repo/rbac": "workspace:*",
     "@repo/sal-data": "workspace:*",

@@ -30,8 +30,6 @@ export const defaultCspSources: CspSources = {
     "https://*.analytics.google.com",
     "https://*.googletagmanager.com",
     "https://*.sentry.io",
-    "https://api.knock.app",
-    "wss://api.knock.app",
   ],
   // Side Quest episodes: YouTube's privacy-enhanced (no-cookie) player only.
   frame: ["https://www.youtube-nocookie.com"],
