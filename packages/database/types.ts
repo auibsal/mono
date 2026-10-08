@@ -9,6 +9,45 @@ export type Json =
 export type Database = {
   access: {
     Tables: {
+      oauth_clients: {
+        Row: {
+          areas: string[];
+          client_id: string;
+          contact_email: string;
+          created_at: string;
+          created_by: string | null;
+          enabled: boolean;
+          name_ar: string | null;
+          name_en: string;
+          note: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          areas?: string[];
+          client_id: string;
+          contact_email: string;
+          created_at?: string;
+          created_by?: string | null;
+          enabled?: boolean;
+          name_ar?: string | null;
+          name_en: string;
+          note?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          areas?: string[];
+          client_id?: string;
+          contact_email?: string;
+          created_at?: string;
+          created_by?: string | null;
+          enabled?: boolean;
+          name_ar?: string | null;
+          name_en?: string;
+          note?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       permissions: {
         Row: {
           description: string;
@@ -171,6 +210,15 @@ export type Database = {
       has_permission_anywhere: {
         Args: { permission: string };
         Returns: boolean;
+      };
+      oauth_client_info: {
+        Args: { client_id: string };
+        Returns: {
+          areas: string[];
+          enabled: boolean;
+          name_ar: string;
+          name_en: string;
+        }[];
       };
       my_permissions: {
         Args: Record<PropertyKey, never>;

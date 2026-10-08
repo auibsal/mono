@@ -79,7 +79,12 @@
         "groups": [
           {
             "group": "The platform",
-            "pages": ["platform/overview", "platform/accounts"]
+            "pages": [
+              "platform/overview",
+              "platform/accounts",
+              "platform/api",
+              "platform/notifications"
+            ]
           },
           {
             "group": "Operations",

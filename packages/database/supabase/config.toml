@@ -387,8 +387,9 @@ enabled = false
 
 # OAuth server configuration
 [auth.oauth_server]
-# Enable OAuth server functionality
-enabled = false
+# "Sign in with SAL" for third-party apps (the OAuth 2.1 server). Production:
+# Dashboard → Authentication → OAuth Server. Consent page: the Nexus.
+enabled = true
 # Path for OAuth consent flow UI
 authorization_url_path = "/oauth/consent"
 # Allow dynamic client registration

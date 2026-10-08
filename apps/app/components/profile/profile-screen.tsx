@@ -15,6 +15,7 @@ import { useTranslations } from "next-intl";
 import { type FormEvent, useEffect, useId, useState } from "react";
 import { queryKeys, useProfile } from "@/lib/queries";
 import { ErrorState, SectionSpinner } from "../states";
+import { ConnectedApps } from "./connected-apps";
 import { DeleteAccount } from "./delete-account";
 import { PhoneNotifications } from "./phone-notifications";
 
@@ -196,6 +197,7 @@ export const ProfileScreen = () => {
       <SalCard>
         <PhoneNotifications />
       </SalCard>
+      <ConnectedApps />
       <SalCard>
         <DeleteAccount />
       </SalCard>
