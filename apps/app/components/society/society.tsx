@@ -22,6 +22,32 @@ const Council = () => {
     queryFn: () => governance.councilRoster(supabase),
     queryKey: ["council-roster"],
   });
+  const advisor = useQuery({
+    queryFn: async () => {
+      const rows =
+        unwrap(
+          await supabase
+            .schema("core")
+            .from("settings")
+            .select("key, value")
+            .in("key", [
+              "society.faculty_advisor_en",
+              "society.faculty_advisor_ar",
+            ])
+        ) ?? [];
+      const get = (k: string) => {
+        const value = rows.find((r) => r.key === k)?.value;
+        return typeof value === "string" ? value : "";
+      };
+      return {
+        ar: get("society.faculty_advisor_ar"),
+        en: get("society.faculty_advisor_en"),
+      };
+    },
+    queryKey: ["faculty-advisor"],
+  });
+  const advisorName =
+    locale === "ar" ? advisor.data?.ar || advisor.data?.en : advisor.data?.en;
 
   return (
     <SocietySection id="council" lede={t("lede")} title={t("title")}>
@@ -53,6 +79,12 @@ const Council = () => {
           </li>
         ))}
       </ul>
+      {advisorName ? (
+        <p className="type-body">
+          <span className="type-kicker me-2">{t("advisor")}</span>
+          {advisorName}
+        </p>
+      ) : null}
     </SocietySection>
   );
 };
