@@ -18,7 +18,7 @@ const ProgrammesPage = async ({ params }: LocaleParams) => {
 
   const card = (p: (typeof rows)[number]) => (
     <li
-      className="grid content-start gap-2 rounded-card bg-surface-tint p-5"
+      className="frame grid content-start gap-2 bg-surface-tint p-5"
       key={p.id}
     >
       <h3 className="type-subheading">{localized(p, "name", locale)}</h3>

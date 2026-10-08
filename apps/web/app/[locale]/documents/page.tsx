@@ -37,7 +37,7 @@ const DocumentsPage = async ({ params }: DocumentsProps) => {
       <ul className="grid gap-6 md:grid-cols-2">
         {documents.documents.map((doc) => (
           <li
-            className="grid content-start gap-2 rounded-card bg-surface-tint p-6"
+            className="frame grid content-start gap-2 bg-surface-tint p-6"
             key={doc.code}
           >
             <p className="type-code text-sm text-text-meta">{doc.code}</p>

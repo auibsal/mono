@@ -35,7 +35,7 @@ const JoinPage = async ({ params }: LocaleParams) => {
       <ol className="grid gap-4 md:grid-cols-3">
         {STEPS.map((key, index) => (
           <li
-            className="grid content-start gap-2 rounded-card bg-surface-tint p-5"
+            className="frame grid content-start gap-2 bg-surface-tint p-5"
             key={key}
           >
             <p className="type-kicker">{index + 1}</p>

@@ -50,10 +50,7 @@ const MediaKitPage = async ({ params }: LocaleParams) => {
         <p className="type-body">{t("logosNote")}</p>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {LOGOS.map(([key, file, reversed]) => (
-            <li
-              className="grid gap-3 rounded-card bg-surface-tint p-4"
-              key={key}
-            >
+            <li className="frame grid gap-3 bg-surface-tint p-4" key={key}>
               <div
                 className="flex h-32 items-center justify-center rounded-card p-4"
                 data-theme={reversed ? "dark" : "light"}

@@ -53,10 +53,7 @@ const JournalHomePage = async ({ params }: JournalProps) => {
           <p className="type-body text-text-secondary">{t("noCalls")}</p>
         ) : null}
         {(calls ?? []).map((call) => (
-          <div
-            className="grid gap-2 rounded-card bg-surface-tint p-6"
-            key={call.id}
-          >
+          <div className="frame grid gap-2 bg-surface-tint p-6" key={call.id}>
             <h3 className="type-subheading">
               {localized(call, "title", locale)}
             </h3>

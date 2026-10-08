@@ -131,7 +131,7 @@ const PiecePage = async ({ params }: PieceProps) => {
         />
       ))}
       {piece.members_only && texts.length === 0 ? (
-        <div className="grid gap-3 rounded-card bg-surface-tint p-6">
+        <div className="frame grid gap-3 bg-surface-tint p-6">
           <p className="type-body">{t("membersOnlyBody")}</p>
           <a
             className="inline-flex h-10 items-center justify-self-start rounded-md bg-primary px-4 text-primary-foreground text-sm"

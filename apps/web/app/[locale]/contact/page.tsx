@@ -16,7 +16,7 @@ const ContactPage = async ({ params }: LocaleParams) => {
     <div className="mx-auto grid w-full max-w-4xl gap-12 px-4 py-16">
       <PageHeader lede={t("lede")} title={t("title")} />
       <dl className="grid gap-4 sm:grid-cols-3">
-        <div className="grid gap-1 rounded-card bg-surface-tint p-5">
+        <div className="frame grid gap-1 bg-surface-tint p-5">
           <dt className="type-caption">{t("instagram")}</dt>
           <dd>
             <a
@@ -30,13 +30,13 @@ const ContactPage = async ({ params }: LocaleParams) => {
             </a>
           </dd>
         </div>
-        <div className="grid gap-1 rounded-card bg-surface-tint p-5">
+        <div className="frame grid gap-1 bg-surface-tint p-5">
           <dt className="type-caption">{t("telegram")}</dt>
           <dd className="type-subheading" dir="ltr" lang="en">
             {t("telegramName")}
           </dd>
         </div>
-        <div className="grid gap-1 rounded-card bg-surface-tint p-5">
+        <div className="frame grid gap-1 bg-surface-tint p-5">
           <dt className="type-caption">{t("email")}</dt>
           <dd className="type-body">{t("emailPending")}</dd>
         </div>
