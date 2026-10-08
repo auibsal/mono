@@ -9,8 +9,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@react-email/components": "1.0.8",
-    "@react-email/preview-server": "5.2.9",
+    "@react-email/components": "1.0.12",
+    "@react-email/preview-server": "5.2.10",
     "@repo/email": "workspace:*",
     "react": "19.3.0",
     "react-email": "5.2.9"
