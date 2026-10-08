@@ -83,6 +83,7 @@ language sql
 as $$
   select set_config('request.path', path, true), set_config('request.headers', headers, true);
 $$;
+grant execute on function pg_temp.calling(text, text) to authenticated;
 
 select plan(16);
 
