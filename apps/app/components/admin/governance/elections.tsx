@@ -34,6 +34,7 @@ const EXECUTIVE_ROLES = [
 
 type ElectionStatus =
   | "draft"
+  | "notice"
   | "nominations"
   | "review"
   | "voting"
@@ -100,6 +101,8 @@ const ElectionCard = ({
     status: string;
     title_ar: string;
     title_en: string;
+    eligible_count: number | null;
+    notice_given_at: string | null;
     voting_closes_at: string;
     voting_opens_at: string;
     nominations_open_at: string;
@@ -136,6 +139,15 @@ const ElectionCard = ({
           .from("elections")
           .update({ status: next })
           .eq("id", election.id)
+      ),
+    onSuccess: invalidate,
+  });
+  const giveNotice = useMutation({
+    mutationFn: async () =>
+      unwrap(
+        await supabase
+          .schema("governance")
+          .rpc("give_notice", { election_id: election.id })
       ),
     onSuccess: invalidate,
   });
@@ -211,6 +223,15 @@ const ElectionCard = ({
         {t("votingOpens")}: {formatDateTime(election.voting_opens_at, locale)} ·{" "}
         {t("votingCloses")}: {formatDateTime(election.voting_closes_at, locale)}
       </p>
+      {election.notice_given_at ? (
+        <p className="type-caption">
+          {t("noticeGiven", {
+            count: election.eligible_count ?? 0,
+            date: formatDateTime(election.notice_given_at, locale),
+            n: formatNumber(election.eligible_count ?? 0),
+          })}
+        </p>
+      ) : null}
       {data.data?.turnout ? (
         <p className="font-medium">
           {t("turnout", {
@@ -330,6 +351,17 @@ const ElectionCard = ({
 
       <div className="flex flex-wrap gap-3">
         {status === "draft" ? (
+          <ConfirmAction
+            confirmLabel={t("giveNotice")}
+            description={t("giveNoticeConfirm")}
+            disabled={giveNotice.isPending}
+            onConfirm={() => giveNotice.mutate()}
+            variant="default"
+          >
+            {t("giveNotice")}
+          </ConfirmAction>
+        ) : null}
+        {status === "notice" ? (
           <Button
             disabled={setStatus.isPending}
             onClick={() => setStatus.mutate("nominations")}
@@ -385,6 +417,7 @@ const ElectionCard = ({
       <ErrorLine
         error={
           setStatus.error ??
+          giveNotice.error ??
           openVoting.error ??
           count.error ??
           decide.error ??

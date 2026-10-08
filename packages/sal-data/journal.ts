@@ -216,6 +216,16 @@ export const openCalls = async (client: Client, now = new Date()) =>
       .order("closes_at")
   );
 
+/** Published calls that have not opened yet: announced ahead of time. */
+export const upcomingCalls = async (client: Client, now = new Date()) =>
+  unwrap(
+    await journal(client)
+      .from("calls")
+      .select("*")
+      .gt("opens_at", now.toISOString())
+      .order("opens_at")
+  );
+
 export const publishedIssues = async (client: Client) =>
   unwrap(
     await journal(client)

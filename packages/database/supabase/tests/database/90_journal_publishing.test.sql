@@ -69,6 +69,9 @@ insert into core.semesters (code, name_en, name_ar, starts_on, ends_on) values
   ('fall-2025', 'Current', 'الحالي', current_date - 30, current_date + 60);
 -- </preamble>
 
+-- Start from an empty journal: migrations seed the real Issue 1 call.
+delete from journal.issues;
+
 select plan(10);
 
 select pg_temp.make_user('00000000-0000-0000-0000-0000000000f1', 'founder@auib.edu.iq', 'Founder');

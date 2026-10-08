@@ -31,10 +31,11 @@ const JournalHomePage = async ({ params }: JournalProps) => {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "web.journal" });
-  const [issues, pieces, calls] = await Promise.all([
+  const [issues, pieces, calls, upcoming] = await Promise.all([
     readPublished(["journal"], (c) => journal.publishedIssues(c), []),
     readPublished(["journal"], (c) => journal.latestPieces(c, 8), []),
     readPublished(["journal"], (c) => journal.openCalls(c), []),
+    readPublished(["journal"], (c) => journal.upcomingCalls(c), []),
   ]);
   const heading = "type-heading border-accent-line border-b pb-2";
 
@@ -49,7 +50,7 @@ const JournalHomePage = async ({ params }: JournalProps) => {
         <h2 className={heading} id="calls">
           {t("calls")}
         </h2>
-        {(calls ?? []).length === 0 ? (
+        {(calls ?? []).length === 0 && (upcoming ?? []).length === 0 ? (
           <p className="type-body text-text-secondary">{t("noCalls")}</p>
         ) : null}
         {(calls ?? []).map((call) => (
@@ -69,6 +70,22 @@ const JournalHomePage = async ({ params }: JournalProps) => {
             >
               {t("submit")}
             </a>
+          </div>
+        ))}
+        {(upcoming ?? []).map((call) => (
+          <div className="frame grid gap-2 bg-surface-tint p-6" key={call.id}>
+            <h3 className="type-subheading">
+              {localized(call, "title", locale)}
+            </h3>
+            {localized(call, "theme", locale) ? (
+              <p className="type-body">{localized(call, "theme", locale)}</p>
+            ) : null}
+            <p className="type-caption">
+              {t("opensCloses", {
+                closes: formatLongDate(call.closes_at, locale),
+                opens: formatLongDate(call.opens_at, locale),
+              })}
+            </p>
           </div>
         ))}
       </section>

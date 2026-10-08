@@ -1,5 +1,6 @@
 "use client";
 
+import { isAuibEmail } from "@repo/auth/email";
 import { useAuth } from "@repo/auth/provider";
 import { project } from "@repo/config";
 import { Button } from "@repo/design-system/components/ui/button";
@@ -311,10 +312,12 @@ const ElectionCard = ({
 }) => {
   const t = useTranslations("nexus.society.elections");
   const locale = useLocale() as Lang;
-  const nominating = between(
-    election.nominations_open_at,
-    election.nominations_close_at
-  );
+  const { user } = useAuth();
+  // B6.7: online ballots are for AUIB accounts; cast_ballot enforces it.
+  const auib = isAuibEmail(user?.email ?? "");
+  const nominating =
+    election.status === "nominations" &&
+    between(election.nominations_open_at, election.nominations_close_at);
   const voting =
     election.status === "voting" &&
     between(election.voting_opens_at, election.voting_closes_at);
@@ -322,6 +325,8 @@ const ElectionCard = ({
     const person = data.names.get(userId);
     return person ? localized(person, "full_name", locale) : "";
   };
+  const canVote =
+    voting && !data.voted.has(election.id) && data.voter.has(election.id);
   const when = (iso: string) =>
     `${formatLongDate(iso, locale)} · ${formatClock(iso, locale)}`;
 
@@ -343,11 +348,18 @@ const ElectionCard = ({
       {voting && data.voted.has(election.id) ? (
         <p className="type-body font-bold">{t("youVoted")}</p>
       ) : null}
-      {voting && !data.voted.has(election.id) && data.voter.has(election.id) ? (
-        <Ballot data={data} election={election} />
-      ) : null}
+      {canVote && auib ? <Ballot data={data} election={election} /> : null}
+      {canVote && !auib ? <p className="type-body">{t("auibOnly")}</p> : null}
       {voting && !data.voter.has(election.id) ? (
         <p className="type-body">{t("notEligible")}</p>
+      ) : null}
+
+      {election.status === "notice" ||
+      election.status === "nominations" ||
+      election.status === "review" ? (
+        <p className="type-caption">
+          {t(data.voter.has(election.id) ? "onList" : "notOnList")}
+        </p>
       ) : null}
 
       {election.status !== "voting" && election.status !== "published"
