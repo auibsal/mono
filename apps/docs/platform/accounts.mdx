@@ -1,0 +1,50 @@
+---
+title: Accounts and access
+description: Every service the platform runs on, what it does, and who must hold it.
+---
+
+Policy P15 and Bylaws B11.3 apply to the platform too: **every account has at least two administrators on the Council, with two-step verification on, and access moves within seven days of a handover.** Passwords live in the Society's password manager, never in chats or documents.
+
+| Service | What it does for SAL | Plan |
+| --- | --- | --- |
+| GitHub (`auibsal/mono`) | The code, CI, nightly backups, Dependabot | Free, public repository |
+| Vercel (team `theideaiq`) | Hosts sal-web, sal-nexus, sal-api and sal-storybook; daily keep-alive cron | Pro |
+| Supabase (project `auibsal.org`, Frankfurt) | Postgres, sign-in, file storage, scheduled jobs | Free |
+| Cloudflare | DNS for auibsal.org | — |
+| Resend | Every email the platform sends, from hello@auibsal.org | — |
+| Sentry (EU) | Errors and server logs from all three apps | — |
+| BetterStack | Uptime monitors for the site, the Nexus sign-in and the API health check | — |
+| Liveblocks | Live co-editing of minutes and Journal pieces | — |
+| Arcjet | Protects the public removal-request form | — |
+| Mintlify | This site | Hobby |
+| Google Analytics 4 | Visitor counts on the public site only | Free |
+
+A dash means the plan was not recorded when this page was written; check the service's billing page and fill it in.
+
+## Where secrets live
+
+| Secret | Held by |
+| --- | --- |
+| Supabase secret key, Resend token, cron and webhook secrets, Liveblocks secret, Arcjet key | The sal-api project in Vercel |
+| Revalidation secret | sal-api and sal-web |
+| Supabase access token and database password | GitHub → Settings → Environments → production (used by the migration workflow) |
+| Backup passphrase | GitHub production environment; also kept in the password manager, since a backup is useless without it |
+
+The Nexus and the public site hold no secrets; their keys are public by design and the database enforces the rules.
+
+## Handing the platform over
+
+<Steps>
+  <Step title="Add the incoming administrator">
+    Invite them to the GitHub organization, the Vercel team, the Supabase organization, Cloudflare, Resend, Sentry, BetterStack, Liveblocks, Arcjet and Mintlify, with admin rights.
+  </Step>
+  <Step title="Walk through a release">
+    Merge one small pull request together and watch CI, the migration workflow and the Vercel deployments go green. See [Releases and migrations](/platform/releases).
+  </Step>
+  <Step title="Restore a backup together">
+    Practice the [restore](/platform/backups) into a scratch project once, so it is not new on the day it matters.
+  </Step>
+  <Step title="Remove the outgoing administrator">
+    Within seven days of the handover (B11.3), unless they stay on as one of the two required administrators.
+  </Step>
+</Steps>

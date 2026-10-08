@@ -1,0 +1,46 @@
+---
+title: Backups and restore
+description: What is backed up, where, for how long, and how to bring it back.
+---
+
+The Supabase project is on the Free plan, which keeps no downloadable backups. The Society's own backup is a GitHub Actions workflow.
+
+| What | When | Kept | Where |
+| --- | --- | --- | --- |
+| Roles, schema and data of the production database | Nightly at 23:20 UTC (2:20 AM Baghdad) | 30 days | GitHub → Actions → **Back up production database** → the run's artifact |
+
+Each backup is encrypted (GPG, AES-256) with `BACKUP_PASSPHRASE` before it leaves the runner, because the repository is public. Without the passphrase the file is useless, so keep it in the password manager as well as in GitHub.
+
+<Warning>
+  The workflow fails until `BACKUP_PASSPHRASE` is added to the GitHub production environment. Add `BACKUP_HEARTBEAT_URL` (a BetterStack heartbeat) too, so a missed night raises an alert.
+</Warning>
+
+## Restore
+
+Practice this on a scratch Supabase project first. Restoring over production replaces live data; decide it with the President and record it in the minutes.
+
+<Steps>
+  <Step title="Download and decrypt">
+    Download the artifact `sal-backup-YYYY-MM-DD`, then:
+
+    ```sh
+    gpg --decrypt sal-YYYY-MM-DD.tar.gz.gpg > sal.tar.gz
+    tar -xzf sal.tar.gz   # roles.sql, schema.sql, data.sql
+    ```
+  </Step>
+  <Step title="Restore into the target database">
+    Use the target project's connection string (Project Settings → Database):
+
+    ```sh
+    psql "$TARGET_DB_URL" -v ON_ERROR_STOP=1 \
+      -f roles.sql -f schema.sql \
+      -c "SET session_replication_role = replica" \
+      -f data.sql
+    ```
+  </Step>
+  <Step title="Check">
+    Sign in to a Nexus pointed at the target, open a member, an event and the ledger, and compare row counts with the source.
+  </Step>
+</Steps>
+
+Files in Storage (submissions, receipts, the library) are not in this backup; they stay in Supabase Storage.

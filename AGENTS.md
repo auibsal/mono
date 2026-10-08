@@ -20,8 +20,10 @@ items and decisions) and continue from the first unticked item.
   exports, signed URLs, account deletion. The only app with the secret key.
 - `apps/storybook` — SAL components, v5 Screens and every platform email in
   both languages (Vercel project sal-storybook, behind Vercel login).
-- `apps/docs` — the officer handbook on Mintlify (`bun run --cwd apps/docs
-  validate`; docs.auibsal.org).
+- `apps/docs` — SAL Docs on Mintlify, docs.auibsal.org: the registry
+  documents as pages (`documents/`, quoted verbatim, status banner from
+  `documents.json`), the officer handbook and platform runbooks
+  (`platform/`). Check with `bun run --cwd apps/docs validate` and `links`.
 - `packages/*` — shared code, imported as `@repo/<name>`. `@repo` is a fixed
   internal scope; never rename it.
   - `@repo/database` — SQL migrations (`supabase/migrations`), pgTAP tests
@@ -87,8 +89,8 @@ any schema change. Integration tests run against a local stack with
   entries); only signed-off entries count. No online payments of any kind.
 - **Documents.** Never present a draft document as adopted. Every document
   page shows its status from the registry.
-- **Names.** The journal is the **AUIB Literary Journal** (Arabic «مجلة AUIB
-  الأدبية»); "Waraq" was its working title and is not used. The Society has
+- **Names.** The journal is the **AUIB Literary Journal** (Arabic «مجلة الجامعة
+  الأمريكية الأدبية»); "Waraq" was its working title and is not used. The Society has
   no charity partner on record (Natrok Athar was removed on Oct 8, 2026).
 - **Navigation.** At most five sections per app header; the rest go in the
   footer (web) or the Account menu (Nexus). Every Nexus empty state offers one
