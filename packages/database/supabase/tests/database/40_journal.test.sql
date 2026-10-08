@@ -71,6 +71,9 @@ insert into core.semesters (code, name_en, name_ar, starts_on, ends_on) values
   ('fall-2025', 'Current', 'الحالي', current_date - 30, current_date + 60);
 -- </preamble>
 
+-- Start from an empty journal: migrations seed the real Issue 1 call.
+delete from journal.issues;
+
 select plan(39);
 
 -- People: founder, Submissions Manager, EIC, three readers, authors.

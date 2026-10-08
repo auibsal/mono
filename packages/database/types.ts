@@ -1662,6 +1662,7 @@ export type Database = {
           id: string;
           nominations_close_at: string;
           nominations_open_at: string;
+          notice_given_at: string | null;
           status: string;
           title_ar: string;
           title_en: string;
@@ -1676,6 +1677,7 @@ export type Database = {
           id?: string;
           nominations_close_at: string;
           nominations_open_at: string;
+          notice_given_at?: string | null;
           status?: string;
           title_ar: string;
           title_en: string;
@@ -1690,6 +1692,7 @@ export type Database = {
           id?: string;
           nominations_close_at?: string;
           nominations_open_at?: string;
+          notice_given_at?: string | null;
           status?: string;
           title_ar?: string;
           title_en?: string;
@@ -1999,6 +2002,7 @@ export type Database = {
         Args: { approve: boolean; candidate_id: string };
         Returns: undefined;
       };
+      give_notice: { Args: { election_id: string }; Returns: number };
       nominate: {
         Args: {
           position_id: string;

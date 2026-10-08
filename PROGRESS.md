@@ -76,6 +76,19 @@ These stop parts of the work. Everything else continues around them.
 
 ## Decisions
 
+- **Online ballots** (owner, 2026-10-08): every election is voted online in
+  the Nexus under Bylaws B6: the voter list freezes when notice is given
+  (B6.2), only AUIB accounts vote (B6.7), one ballot each, ballots and voter
+  lists deleted a year after voting closes (B6.11). The elections flag is on
+  (migration `20261008000900`).
+- **Staff and voting** (owner asked, 2026-10-08): roles do not make anyone a
+  Voting Member. The Constitution (3.3(b)) and Bylaws (B3.3) tie voting to
+  two recorded activities this or last semester; Council and team meetings
+  count (B3.2) when their attendance is recorded. University faculty and
+  staff are Honorary Members and do not vote (3.3(d)).
+- **Journal Issue 1 call** (owner, 2026-10-08): published with the Strategic
+  Plan's dates (SAL-STR-01, a draft): opens October 18, closes November 26,
+  2026, at most two pieces each, open theme (migration `20261008001000`).
 - **American English** (owner, 2026-10-08) for all copy, comments, commits
   and docs; verbatim quotes from the Society's documents keep their spelling.
 - **v5 Screens** (owner, 2026-10-08, Option B of the audit): square corners,
@@ -277,6 +290,8 @@ Covered by automated tests so far:
 - Traditions (Charter Night, the Ribbon, the Term Card) text: Content → pages → `about/traditions`.
 - The first Second Chapter campaign (`second-chapter-2026`, draft, November 1–11): target and cost per set.
 - Confirmed cost per winter set.
+- The Issue 1 call's theme and eligibility text, if any (open theme until
+  then), and the Journal Submission Guidelines it should link to.
 
 ## needs-native-review (Arabic written for the platform)
 
@@ -306,3 +321,7 @@ Covered by automated tests so far:
   string added that day (`nexus.society.*`, `nexus.next.*`, the two-step
   panel, setup progress and pledge reasons, the reading timeline, overview
   context sentences, Society contacts settings).
+- Online ballots (2026-10-08): `nexus.society.elections.{onList,notOnList,auibOnly,notEligible,status.notice}`,
+  `nexus.admin.governance.elections.{giveNotice,giveNoticeConfirm,noticeGiven,openVotingConfirm,flagOff,statuses.notice}`,
+  `web.journal.opensCloses`, and the Issue 1 names «العدد الأول» and
+  «العدد الأول: دعوة للمشاركة».
