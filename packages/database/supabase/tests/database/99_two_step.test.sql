@@ -1,3 +1,5 @@
+-- Two-step sign-in: Council and Elections roles count only at aal2
+-- (migration 20261008000400).
 begin;
 -- <preamble>
 -- Shared pgTAP preamble. Each test file includes a copy (pg_prove runs files
@@ -69,56 +71,26 @@ insert into core.semesters (code, name_en, name_ar, starts_on, ends_on) values
   ('fall-2025', 'Current', 'الحالي', current_date - 30, current_date + 60);
 -- </preamble>
 
-select plan(11);
+select plan(6);
 
-select is(private.call_api('/hooks/outbox', '{}'::jsonb, 'outbox_webhook_secret'), null,
-  'Without platform.api_url nothing is called');
+select pg_temp.make_user('00000000-0000-0000-0000-0000000000f1', 'founder@auib.edu.iq', 'Founder');
+select access.bootstrap_founder('founder@auib.edu.iq');
+select pg_temp.make_user('00000000-0000-0000-0000-0000000000a1', 'student@auib.edu.iq', 'Student');
 
-select lives_ok(
-  $$ select private.enqueue('test.kind', '{"a": 1}'::jsonb) $$,
-  'Queuing still works when dispatch is not configured'
-);
+select pg_temp.login_as('00000000-0000-0000-0000-0000000000f1', '{"aal":"aal1"}');
+select ok(access.needs_two_step(), 'The President needs two-step sign-in');
+select ok(not access.has_permission('members.manage'),
+  'Without a second factor the President''s permissions do not count');
+select is((select count(*) from access.my_permissions())::integer, 0,
+  'and none reach the Nexus');
 
-select is((select count(*)::integer from cron.job where jobname like 'sal-%'), 4,
-  'The four scheduled jobs exist');
+select pg_temp.login_as('00000000-0000-0000-0000-0000000000f1', '{"aal":"aal2"}');
+select ok(access.has_permission('members.manage'),
+  'After the second factor they do');
 
--- Scheduled publishing.
-insert into content.news_posts (slug, title_en, title_ar, status, publish_at) values
-  ('due', 'Due', 'حان', 'scheduled', now() - interval '1 minute'),
-  ('later', 'Later', 'لاحقاً', 'scheduled', now() + interval '1 day');
-select is(private.publish_scheduled(), 1, 'Only what is due is published');
-select is((select status from content.news_posts where slug = 'later'), 'scheduled',
-  'Future posts wait');
-
--- Daily notices are not queued twice.
-select is(private.enqueue_once('test.once', '{"x": 1}'::jsonb, interval '1 day'), true,
-  'A new notice is queued');
-select is(private.enqueue_once('test.once', '{"x": 1}'::jsonb, interval '1 day'), false,
-  'The same notice is not queued again');
-
-select pg_temp.make_user('00000000-0000-0000-0000-0000000000b1', 'member@auib.edu.iq');
-select pg_temp.login_as('00000000-0000-0000-0000-0000000000b1');
-select throws_ok(
-  $$ select private.vault_secret('cron_secret') $$,
-  '42501', null, 'Members cannot read Vault secrets'
-);
-select throws_ok(
-  $$ select private.call_api('/x', '{}'::jsonb, 'cron_secret') $$,
-  '42501', null, 'Members cannot call the API through the database'
-);
-
-select pg_temp.logout();
-insert into core.external_events (source, uid, title, starts_at)
-values ('auib', 'evt-1@auib.edu.iq', 'Fall break', now() + interval '3 days');
-
-select pg_temp.login_anon();
-select is((select count(*)::integer from core.external_events), 1,
-  'Anyone reads the AUIB calendar');
-select throws_ok(
-  $$ insert into core.external_events (source, uid, title, starts_at)
-     values ('auib', 'x', 'Fake', now()) $$,
-  '42501', null, 'Nobody writes it but the sync'
-);
+select pg_temp.login_as('00000000-0000-0000-0000-0000000000a1', '{"aal":"aal1"}');
+select ok(not access.needs_two_step(), 'A member without such a role does not need it');
+select ok(membership.is_member(), 'and keeps every member right at aal1');
 
 select * from finish();
 rollback;

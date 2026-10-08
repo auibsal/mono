@@ -34,7 +34,7 @@ export const buckets = {
     mimeTypes: ["application/pdf", "image/jpeg", "image/png"],
     public: false,
   },
-  /** Private: Waraq submissions, <submission id>/<random>.<ext>; blind copies under blind/. */
+  /** Private: Journal submissions, <submission id>/<random>.<ext>; blind copies under blind/. */
   submissions: {
     id: "submissions",
     maxBytes: 25 * 1024 * 1024,

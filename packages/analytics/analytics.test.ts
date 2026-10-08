@@ -13,8 +13,8 @@ test("track is a no-op without GA4", () => {
 test("track sends the event to gtag", () => {
   const gtag = vi.fn();
   vi.stubGlobal("window", { gtag });
-  track("search", { search_term: "waraq" });
+  track("search", { search_term: "journal" });
   expect(gtag).toHaveBeenCalledWith("event", "search", {
-    search_term: "waraq",
+    search_term: "journal",
   });
 });

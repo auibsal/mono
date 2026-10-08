@@ -15,7 +15,8 @@ begin
   perform set_config('role', 'postgres', true);
   perform set_config(
     'request.jwt.claims',
-    (jsonb_build_object('sub', uid, 'role', 'authenticated') || extra)::text,
+    -- aal2 by default (two-step sign-in done); pass '{"aal":"aal1"}' to test without it.
+    (jsonb_build_object('sub', uid, 'role', 'authenticated', 'aal', 'aal2') || extra)::text,
     true
   );
   perform set_config('role', 'authenticated', true);
@@ -159,7 +160,7 @@ select ok(
   'A programme-scoped grant covers that programme'
 );
 select ok(
-  not access.has_permission('events.manage', 'programme', (select id from core.programmes where slug = 'waraq')),
+  not access.has_permission('events.manage', 'programme', (select id from core.programmes where slug = 'journal')),
   'A programme-scoped grant does not cover another programme'
 );
 select ok(not access.has_permission('events.manage'), 'A programme-scoped grant is not global');

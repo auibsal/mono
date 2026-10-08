@@ -41,7 +41,7 @@ flowchart LR
    action it calls `apps/api`, which verifies the JWT (`authenticateRequest`)
    and re-checks the permission (`hasPermission`) before using the admin client.
 3. **Multi-step rules are Postgres functions.** RSVPs and waitlist promotion,
-   check-ins, Waraq transitions and decisions, ledger sign-off, spending
+   check-ins, Journal transitions and decisions, ledger sign-off, spending
    approvals, ballots and the ranked-choice count are `SECURITY DEFINER`
    functions with `search_path = ''`, called by RPC.
 4. **Side effects go through an outbox.** Functions and triggers write to

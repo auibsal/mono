@@ -79,7 +79,7 @@ export const FilePicker = ({
   kinds: FileKind[];
   onAdd: (files: PendingFile[]) => void;
 }) => {
-  const t = useTranslations("nexus.waraq.files");
+  const t = useTranslations("nexus.journal.files");
   const id = useId();
   return (
     <div className="grid gap-3">
@@ -121,7 +121,7 @@ export const PendingList = ({
   files: PendingFile[];
   onRemove: (index: number) => void;
 }) => {
-  const t = useTranslations("nexus.waraq.files");
+  const t = useTranslations("nexus.journal.files");
   return files.length ? (
     <ul className="grid gap-1">
       {files.map((f, index) => (

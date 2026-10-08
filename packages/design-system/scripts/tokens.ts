@@ -90,7 +90,7 @@ export const renderTokens = (tokens: BrandTokens) => {
     ...sizes.map((token) => `  --sal-${token.name}: ${token.value};`),
     "}",
     "",
-    "/* Light pages, and light islands inside ink (Waraq reading, covers). */",
+    "/* Light pages, and light islands inside ink (Journal reading, covers). */",
     ":root,",
     '[data-theme="light"] {',
     ...Object.entries(roles).map(

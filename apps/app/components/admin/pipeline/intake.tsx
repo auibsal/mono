@@ -53,7 +53,7 @@ const useIntakeQueue = (issueId: string | null) => {
 export const IntakeQueue = ({ issueId }: { issueId: string }) => {
   const t = useTranslations("nexus.admin.pipeline");
   const tj = useTranslations("nexus.admin.journal");
-  const ts = useTranslations("nexus.waraq.status");
+  const ts = useTranslations("nexus.journal.status");
   const locale = useLocale() as Locale;
   const queue = useIntakeQueue(issueId);
   const [scope, setScope] = useState<"intake" | "all">("intake");
@@ -239,7 +239,7 @@ const AssignSlot = ({
 /** Submissions Manager: two blind reads per entry, a third when flagged. */
 export const Readers = ({ issueId }: { issueId: string }) => {
   const t = useTranslations("nexus.admin.pipeline");
-  const ts = useTranslations("nexus.waraq.status");
+  const ts = useTranslations("nexus.journal.status");
   const { supabase } = useAuth();
   const entries = useBlindEntries(issueId);
   const team = useQuery({
@@ -313,7 +313,7 @@ export const Readers = ({ issueId }: { issueId: string }) => {
 export const SubmissionView = () => {
   const t = useTranslations("nexus.admin.pipeline");
   const tj = useTranslations("nexus.admin.journal");
-  const ts = useTranslations("nexus.waraq.status");
+  const ts = useTranslations("nexus.journal.status");
   const tk = useTranslations("nexus.admin.kit");
   const locale = useLocale() as Locale;
   const id = useQueryParam("id");

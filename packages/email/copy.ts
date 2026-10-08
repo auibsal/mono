@@ -97,7 +97,7 @@ export const eventReminder = (lang: Lang, e: EventInfo, app: string) =>
 
 export const submissionReceived = (lang: Lang, work: string, app: string) =>
   build(lang, (l) => ({
-    action: nexus(app, l, "/waraq"),
+    action: nexus(app, l, "/journal"),
     heading: l === "ar" ? `وصلنا عملك: ${work}` : `We received ${work}`,
     paragraphs:
       l === "ar"
@@ -118,7 +118,7 @@ export const returnedForFormatting = (
   app: string
 ) =>
   build(lang, (l) => ({
-    action: nexus(app, l, "/waraq"),
+    action: nexus(app, l, "/journal"),
     heading:
       l === "ar"
         ? `يحتاج عملك إلى إصلاح في التنسيق: ${work}`
@@ -147,19 +147,21 @@ export const decision = (
         paragraphs:
           l === "ar"
             ? [
-                "لم يختر المحررون هذا العمل لورق هذه المرة.",
+                "لم يختر المحررون هذا العمل لمجلة AUIB الأدبية هذه المرة.",
                 "نأمل أن نقرأ لك مجدداً في الدعوة القادمة.",
               ]
             : [
-                "This time the editors have not selected it for Waraq.",
+                "This time the editors have not selected it for the AUIB Literary Journal.",
                 "We hope to read more of your work in the next call.",
               ],
       };
     }
     return {
-      action: nexus(app, l, "/waraq"),
+      action: nexus(app, l, "/journal"),
       heading:
-        l === "ar" ? `قُبل عملك لورق: ${work}` : `${work} is accepted for Waraq`,
+        l === "ar"
+          ? `قُبل عملك في مجلة AUIB الأدبية: ${work}`
+          : `${work} is accepted for the AUIB Literary Journal`,
       paragraphs: [
         ...(outcome === "accept_with_edits"
           ? [
@@ -177,15 +179,15 @@ export const decision = (
 
 export const agreementReminder = (lang: Lang, work: string, app: string) =>
   build(lang, (l) => ({
-    action: nexus(app, l, "/waraq"),
+    action: nexus(app, l, "/journal"),
     heading:
       l === "ar"
         ? `بانتظار توقيعك: اتفاقية نشر ${work}`
         : `Waiting for your signature: ${work}`,
     paragraphs: [
       l === "ar"
-        ? "قُبل عملك لورق، ولا يمكن نشره قبل أن توقّع اتفاقية النشر في النِّكسَس."
-        : "Your work is accepted for Waraq, and it cannot be published until you sign the Publication Agreement in the Nexus.",
+        ? "قُبل عملك في مجلة AUIB الأدبية، ولا يمكن نشره قبل أن توقّع اتفاقية النشر في النِّكسَس."
+        : "Your work is accepted for the AUIB Literary Journal, and it cannot be published until you sign the Publication Agreement in the Nexus.",
     ],
   }));
 

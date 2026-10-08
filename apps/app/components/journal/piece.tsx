@@ -10,7 +10,7 @@ import { SectionSpinner } from "../states";
 
 /** A published piece, members-only ones included (RLS checks membership). */
 export const PieceReader = () => {
-  const t = useTranslations("nexus.waraq");
+  const t = useTranslations("nexus.journal");
   const tj = useTranslations("nexus.admin.journal");
   const locale = useLocale();
   const slug = useQueryParam("slug");
@@ -25,7 +25,7 @@ export const PieceReader = () => {
     return <SectionSpinner />;
   }
   const back = (
-    <Link className="type-caption underline underline-offset-4" href="/waraq">
+    <Link className="type-caption underline underline-offset-4" href="/journal">
       {t("back")}
     </Link>
   );

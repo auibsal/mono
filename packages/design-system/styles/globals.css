@@ -70,7 +70,7 @@
     var(--font-ubuntu), var(--font-ubuntu-arabic), ui-sans-serif, system-ui,
     sans-serif;
   --font-mono: var(--font-ubuntu-mono), ui-monospace, monospace;
-  /* Waraq reading pages only: literary text. */
+  /* Journal reading pages only: literary text. */
   --font-literary-en: var(--font-literata), Georgia, serif;
   --font-literary-ar: var(--font-amiri), serif;
 
@@ -391,7 +391,7 @@
   color: var(--on-band);
   background-color: var(--band);
 }
-/* Waraq reading pages: paper ground, literary faces for the text only. */
+/* Journal reading pages: paper ground, literary faces for the text only. */
 @utility reading {
   --text-meta: var(--text-secondary);
   font-family: var(--font-literary-en);

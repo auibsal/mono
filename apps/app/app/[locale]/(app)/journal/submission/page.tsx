@@ -1,10 +1,10 @@
 import { Suspense } from "react";
+import { MySubmission } from "@/components/journal/pages";
 import { SectionSpinner } from "@/components/states";
-import { MySubmission } from "@/components/waraq/pages";
 import { titleFrom } from "@/lib/metadata";
 
 export const generateMetadata = titleFrom((t) =>
-  t("nexus.waraq.submissionTitle")
+  t("nexus.journal.submissionTitle")
 );
 
 const Page = () => (

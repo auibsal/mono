@@ -32,7 +32,7 @@ export const generateMetadata = async ({
   if (!issue) {
     return {};
   }
-  return localizedMetadata(locale, `/waraq/${issue.slug}`, {
+  return localizedMetadata(locale, `/journal/${issue.slug}`, {
     description: localized(issue, "theme", locale),
     image: mediaUrl(issue.cover_path) ?? undefined,
     title: localized(issue, "title", locale),
@@ -46,7 +46,7 @@ const IssuePage = async ({ params }: IssueProps) => {
   if (!issue) {
     notFound();
   }
-  const t = await getTranslations({ locale, namespace: "web.waraq" });
+  const t = await getTranslations({ locale, namespace: "web.journal" });
   const pieces = await readPublished(
     ["journal"],
     (c) => journal.piecesInIssue(c, issue.id),
@@ -58,7 +58,10 @@ const IssuePage = async ({ params }: IssueProps) => {
 
   return (
     <article className="mx-auto grid w-full max-w-4xl gap-10 px-4 py-16">
-      <Link className="type-caption underline underline-offset-4" href="/waraq">
+      <Link
+        className="type-caption underline underline-offset-4"
+        href="/journal"
+      >
         {t("title")}
       </Link>
       <header className="grid gap-3">

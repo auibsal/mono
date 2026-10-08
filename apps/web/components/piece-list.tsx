@@ -24,7 +24,7 @@ export const PieceList = async ({
   pieces: readonly PieceRow[];
   showContributor?: boolean;
 }) => {
-  const t = await getTranslations({ locale, namespace: "web.waraq" });
+  const t = await getTranslations({ locale, namespace: "web.journal" });
   return (
     <ul className="grid gap-4">
       {pieces.map((piece) => (
@@ -36,7 +36,7 @@ export const PieceList = async ({
           <h3 className="type-subheading">
             <Link
               className="underline-offset-4 hover:underline"
-              href={`/waraq/pieces/${piece.slug}`}
+              href={`/journal/pieces/${piece.slug}`}
             >
               {localized(piece, "title", locale)}
             </Link>
@@ -45,7 +45,7 @@ export const PieceList = async ({
             <p className="type-caption">
               <Link
                 className="underline-offset-4 hover:underline"
-                href={`/waraq/contributors/${piece.contributor.slug}`}
+                href={`/journal/contributors/${piece.contributor.slug}`}
               >
                 {localized(piece.contributor, "name", locale)}
               </Link>

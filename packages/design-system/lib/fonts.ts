@@ -4,7 +4,7 @@ import localFont from "next/font/local";
 
 /**
  * SAL type: Ubuntu (300/400/700) and Ubuntu Mono for the interface; Amiri
- * (Arabic) and Literata (English) for literary text on Waraq reading pages.
+ * (Arabic) and Literata (English) for literary text on Journal reading pages.
  *
  * Ubuntu Arabic (400/700) is self-hosted with next/font/local from
  * ../fonts, byte-for-byte copies of brand/fonts (tokens.test.ts checks).

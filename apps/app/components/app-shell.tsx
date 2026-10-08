@@ -28,7 +28,7 @@ const memberLinks = [
   { href: "/", key: "home" },
   { href: "/events", key: "events" },
   { href: "/programmes", key: "programmes" },
-  { href: "/waraq", key: "waraq" },
+  { href: "/journal", key: "journal" },
   { href: "/profile", key: "profile" },
 ] as const;
 

@@ -57,7 +57,7 @@ export const WorkFields = ({
   onChange: (value: WorkValue) => void;
   value: WorkValue;
 }) => {
-  const t = useTranslations("nexus.waraq.form");
+  const t = useTranslations("nexus.journal.form");
   const tj = useTranslations("nexus.admin.journal");
   const set = <K extends keyof WorkValue>(key: K, v: WorkValue[K]) =>
     onChange({ ...value, [key]: v });

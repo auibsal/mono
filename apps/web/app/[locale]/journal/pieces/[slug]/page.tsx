@@ -32,7 +32,7 @@ export const generateMetadata = async ({
   if (!piece) {
     return {};
   }
-  return localizedMetadata(locale, `/waraq/pieces/${piece.slug}`, {
+  return localizedMetadata(locale, `/journal/pieces/${piece.slug}`, {
     description: piece.contributor
       ? localized(piece.contributor, "name", locale)
       : "",
@@ -62,7 +62,7 @@ const PiecePage = async ({ params }: PieceProps) => {
   if (!piece) {
     notFound();
   }
-  const t = await getTranslations({ locale, namespace: "web.waraq" });
+  const t = await getTranslations({ locale, namespace: "web.journal" });
   const image = mediaUrl(piece.image_path);
   const credit = localized(piece, "credit", locale);
   const texts = bodies(piece);
@@ -72,7 +72,7 @@ const PiecePage = async ({ params }: PieceProps) => {
       {piece.issue ? (
         <Link
           className="type-caption underline underline-offset-4"
-          href={`/waraq/${piece.issue.slug}`}
+          href={`/journal/${piece.issue.slug}`}
         >
           {t("volumeNumber", {
             number: formatNumber(piece.issue.number, locale),
@@ -90,7 +90,7 @@ const PiecePage = async ({ params }: PieceProps) => {
           <p className="type-lede">
             <Link
               className="underline-offset-4 hover:underline"
-              href={`/waraq/contributors/${piece.contributor.slug}`}
+              href={`/journal/contributors/${piece.contributor.slug}`}
             >
               {localized(piece.contributor, "name", locale)}
             </Link>
@@ -123,7 +123,7 @@ const PiecePage = async ({ params }: PieceProps) => {
           <p className="type-body">{t("membersOnlyBody")}</p>
           <a
             className="inline-flex h-10 items-center justify-self-start rounded-md bg-primary px-4 text-primary-foreground text-sm"
-            href={`${project.hosts.app}/${locale}/waraq/piece?slug=${piece.slug}`}
+            href={`${project.hosts.app}/${locale}/journal/piece?slug=${piece.slug}`}
           >
             {t("readInNexus")}
           </a>

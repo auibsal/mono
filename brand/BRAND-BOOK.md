@@ -8,12 +8,12 @@ Use this system for anything carrying the Society's name: documents, posts, prin
 - Be playful about ideas, never people: "The worst poem at AUIB wins."
 - Write Arabic for Arabic readers, then have a native speaker check it. Never ship a translation as an afterthought.
 - Names: "AUIB Society of Arts and Letters" in full on first use in formal documents; then "the Society" or "SAL". Never "the club", never "Art and Letter".
-- Endorsed programs carry the line "a Society of Arts and Letters programme" (Arabic: «من برامج جمعية الفنون والآداب»). Flag working titles until chosen: Waraq, Side Quest.
+- Endorsed programs carry the line "a Society of Arts and Letters programme" (Arabic: «من برامج جمعية الفنون والآداب»). The journal is the AUIB Literary Journal (in Arabic «مجلة AUIB الأدبية»), formerly the working title Waraq. Flag the remaining working title until chosen: Side Quest.
 - Short titles: "Charter Day", "Every Dinar", "The Ribbon".
 - Dates as "Tuesday, October 13"; times as "6:00 PM"; money as "50,000 IQD".
 - Numerals in tables; words in prose for numbers under ten.
 - American English everywhere (owner's decision, October 8, 2026): organization, program, color. Text quoted from an adopted document keeps its own spelling, as does the endorsement line "a Society of Arts and Letters programme".
-- Partners with Arabic names are named in their own language first: Natrok Athar (نترك اثر).
+- Partners with Arabic names are named in their own language first.
 - No emoji, no exclamation marks in headlines. Tag @auibsal on every post, and always give the date.
 
 ## Color
@@ -24,7 +24,7 @@ Use this system for anything carrying the Society's name: documents, posts, prin
 - Set `data-theme="dark"` for the ink "why" pages (mission, preamble, the case for the Society), the Open Call, and the Nexus (see Screens). On ink, titles and text are `white` and lines and kickers are `crimson-100`.
 - Never set crimson text or the crimson symbol on `ink` (1.7:1).
 - Keep `ink-50` / `text-meta` for captions and meta on `white`, at 8 pt and up. On `crimson-50` or `paper`, use `ink-70` instead.
-- `paper` belongs to Waraq. Elsewhere the page is `white`.
+- `paper` belongs to the AUIB Literary Journal. Elsewhere the page is `white`.
 
 ## Type
 
@@ -33,7 +33,7 @@ Use this system for anything carrying the Society's name: documents, posts, prin
 - Display (700) is for one- or two-word titles in `title`. A Lede (300) is one sentence. Body is 400 with 1.5 leading, short lines and plain words. Captions are 400 in `text-meta`.
 - `print-kicker` is set in uppercase, tracked, in `accent-line`.
 - Set document codes, form numbers, clause and article numbers in `code` (Ubuntu Mono): `SAL-GOV-01`, `F-14`.
-- Waraq's interior uses Amiri and Literata, as set out in its own guide; Side Quest may add Ubuntu Mono for "typewriter" lines.
+- The Journal's interior uses Amiri and Literata, as set out in its own guide; Side Quest may add Ubuntu Mono for "typewriter" lines.
 - Set all Arabic in Ubuntu Arabic using the `ar-*` styles: `ar-display`, `ar-heading`, `ar-body`, `ar-caption` and `ar-post`. Arabic sits one step larger than the English beside it, with 1.8–2.0 leading (1.4 at display size). Set `dir="rtl"` and `lang="ar"` on Arabic text.
 
 ## Space and shape
@@ -58,7 +58,7 @@ Use this system for anything carrying the Society's name: documents, posts, prin
 
 The v5 amendment (October 8, 2026) gives screens the character of set type and stamped cards. It adds platform tokens and changes nothing in print.
 
-- **Grounds.** The public site is white, with ink and crimson sections; its footer is ink. The Nexus, the members' portal, is on ink. Forms and Waraq reading pages stay light: inside ink they are white sheets (`data-theme="light"`).
+- **Grounds.** The public site is white, with ink and crimson sections; its footer is ink. The Nexus, the members' portal, is on ink. Forms and Journal reading pages stay light: inside ink they are white sheets (`data-theme="light"`).
 - **Shape.** Corners are square on screen (`radius-screen`, 0). The 8 px card radius stays for print.
 - **Frame.** Controls, cards and the header carry a 2 px rule in the `frame` role: ink on light, white on ink. Row and section hairlines stay `rule`.
 - **One elevation.** A solid offset block in the `offset` role (ink on light, crimson on ink), 4 px for controls and cards and 8 px for feature blocks. It never blurs, falls toward the end of the line (right in English, left in Arabic), and collapses when pressed. A feature block on a light page may use the crimson offset.

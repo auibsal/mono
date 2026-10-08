@@ -10,6 +10,7 @@ import {
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { useGrants } from "@/lib/queries";
+import { TwoStepPanel, useTwoStep } from "../auth/two-step";
 import { SectionSpinner } from "../states";
 
 const hrefFor = (module: AdminModule) =>
@@ -31,9 +32,14 @@ export const AdminShell = ({ children }: { children: ReactNode }) => {
   const t = useTranslations("nexus.admin");
   const pathname = usePathname();
   const { grants, visible } = useVisibleModules();
+  const twoStep = useTwoStep();
 
-  if (grants.isPending) {
+  if (grants.isPending || twoStep.isPending) {
     return <SectionSpinner />;
+  }
+  // Council and Elections permissions wait for the second factor.
+  if (twoStep.data?.needs && !twoStep.data.done) {
+    return <TwoStepPanel />;
   }
 
   return (

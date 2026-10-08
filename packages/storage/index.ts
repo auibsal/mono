@@ -54,7 +54,7 @@ const assertAllowed = (bucket: keyof typeof buckets, file: File) => {
 };
 
 /**
- * Uploads a Waraq submission file under a random name. The bucket policy
+ * Uploads a Journal submission file under a random name. The bucket policy
  * only lets the author write into their own submission while it is in intake.
  */
 export const uploadSubmissionFile = (

@@ -12,25 +12,25 @@ import { PieceList } from "@/components/piece-list";
 import { localizedMetadata } from "@/lib/metadata";
 import { readPublished } from "@/lib/supabase";
 
-interface WaraqProps {
+interface JournalProps {
   readonly params: Promise<{ locale: Locale }>;
 }
 
 export const generateMetadata = async ({
   params,
-}: WaraqProps): Promise<Metadata> => {
+}: JournalProps): Promise<Metadata> => {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "web.waraq" });
-  return localizedMetadata(locale, "/waraq", {
+  const t = await getTranslations({ locale, namespace: "web.journal" });
+  return localizedMetadata(locale, "/journal", {
     description: t("lede"),
     title: t("title"),
   });
 };
 
-const WaraqPage = async ({ params }: WaraqProps) => {
+const JournalHomePage = async ({ params }: JournalProps) => {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations({ locale, namespace: "web.waraq" });
+  const t = await getTranslations({ locale, namespace: "web.journal" });
   const [issues, pieces, calls] = await Promise.all([
     readPublished(["journal"], (c) => journal.publishedIssues(c), []),
     readPublished(["journal"], (c) => journal.latestPieces(c, 8), []),
@@ -68,7 +68,7 @@ const WaraqPage = async ({ params }: WaraqProps) => {
             </p>
             <a
               className="inline-flex h-10 items-center justify-self-start rounded-md bg-primary px-4 text-primary-foreground text-sm"
-              href={`${project.hosts.app}/${locale}/waraq/submit?call=${call.id}`}
+              href={`${project.hosts.app}/${locale}/journal/submit?call=${call.id}`}
             >
               {t("submit")}
             </a>
@@ -86,7 +86,7 @@ const WaraqPage = async ({ params }: WaraqProps) => {
               <li key={issue.id}>
                 <Link
                   className="type-subheading underline-offset-4 hover:underline"
-                  href={`/waraq/${issue.slug}`}
+                  href={`/journal/${issue.slug}`}
                 >
                   {t("volumeNumber", {
                     number: formatNumber(issue.number, locale),
@@ -114,4 +114,4 @@ const WaraqPage = async ({ params }: WaraqProps) => {
   );
 };
 
-export default WaraqPage;
+export default JournalHomePage;

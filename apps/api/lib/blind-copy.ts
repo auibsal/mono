@@ -4,7 +4,7 @@ import { PDFDict, PDFDocument, PDFName, PDFRef } from "pdf-lib";
 import sharp from "sharp";
 
 /**
- * Readers' copies of Waraq submissions carry no author metadata. What a
+ * Readers' copies of Journal submissions carry no author metadata. What a
  * writer typed into the work itself (a name in the header) is the intake
  * check's job; this removes what the file carries without anyone seeing it.
  *

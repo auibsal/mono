@@ -57,7 +57,7 @@ const Card = ({
 }) => {
   const t = useTranslations("nexus.admin.pipeline");
   const tj = useTranslations("nexus.admin.journal");
-  const ts = useTranslations("nexus.waraq.status");
+  const ts = useTranslations("nexus.journal.status");
   const scoreText = useScoreText();
   const moves = journal.editorMoves[entry.status] ?? [];
   return (
@@ -109,7 +109,7 @@ const Card = ({
 /** Editors: drag a card (or use its Move menu) to move it on. */
 export const Board = ({ issueId }: { issueId: string }) => {
   const t = useTranslations("nexus.admin.pipeline");
-  const ts = useTranslations("nexus.waraq.status");
+  const ts = useTranslations("nexus.journal.status");
   const { supabase } = useAuth();
   const queryClient = useQueryClient();
   const entries = useBlindEntries(issueId);

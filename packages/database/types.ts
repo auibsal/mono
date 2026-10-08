@@ -114,6 +114,7 @@ export type Database = {
           key: string;
           name_ar: string;
           name_en: string;
+          requires_mfa: boolean;
           sort: number;
           spending_limit_iqd: number | null;
         };
@@ -123,6 +124,7 @@ export type Database = {
           key: string;
           name_ar: string;
           name_en: string;
+          requires_mfa?: boolean;
           sort?: number;
           spending_limit_iqd?: number | null;
         };
@@ -132,6 +134,7 @@ export type Database = {
           key?: string;
           name_ar?: string;
           name_en?: string;
+          requires_mfa?: boolean;
           sort?: number;
           spending_limit_iqd?: number | null;
         };
@@ -177,6 +180,7 @@ export type Database = {
           scope_type: string;
         }[];
       };
+      needs_two_step: { Args: Record<PropertyKey, never>; Returns: boolean };
       permission_holders: {
         Args: { permission: string; scope_id?: string; scope_type?: string };
         Returns: {

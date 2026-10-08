@@ -34,10 +34,14 @@ export const generateMetadata = async ({
   if (!contributor) {
     return {};
   }
-  return localizedMetadata(locale, `/waraq/contributors/${contributor.slug}`, {
-    description: localized(contributor, "bio", locale),
-    title: localized(contributor, "name", locale),
-  });
+  return localizedMetadata(
+    locale,
+    `/journal/contributors/${contributor.slug}`,
+    {
+      description: localized(contributor, "bio", locale),
+      title: localized(contributor, "name", locale),
+    }
+  );
 };
 
 const ContributorPage = async ({ params }: ContributorProps) => {
@@ -47,12 +51,15 @@ const ContributorPage = async ({ params }: ContributorProps) => {
   if (!contributor || contributor.pieces.length === 0) {
     notFound();
   }
-  const t = await getTranslations({ locale, namespace: "web.waraq" });
+  const t = await getTranslations({ locale, namespace: "web.journal" });
   const bio = localized(contributor, "bio", locale);
 
   return (
     <article className="mx-auto grid w-full max-w-3xl gap-8 px-4 py-16">
-      <Link className="type-caption underline underline-offset-4" href="/waraq">
+      <Link
+        className="type-caption underline underline-offset-4"
+        href="/journal"
+      >
         {t("title")}
       </Link>
       <header className="grid gap-3">

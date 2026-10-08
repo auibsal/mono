@@ -36,5 +36,17 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/:locale(en|ar)/waraq/:path*",
+      "destination": "/:locale/journal/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(en|ar)/waraq",
+      "destination": "/:locale/journal",
+      "permanent": true
+    }
   ]
 }

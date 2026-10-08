@@ -1,13 +1,13 @@
 import { Suspense } from "react";
+import { PieceReader } from "@/components/journal/piece";
 import { SectionSpinner } from "@/components/states";
-import { SubmitWork } from "@/components/waraq/pages";
 import { titleFrom } from "@/lib/metadata";
 
-export const generateMetadata = titleFrom((t) => t("nexus.waraq.submitTitle"));
+export const generateMetadata = titleFrom((t) => t("nexus.journal.title"));
 
 const Page = () => (
   <Suspense fallback={<SectionSpinner />}>
-    <SubmitWork />
+    <PieceReader />
   </Suspense>
 );
 

@@ -56,11 +56,11 @@ const useInvalidate = () => {
     });
 };
 
-// ── Waraq home ──────────────────────────────────────────────────────────────
+// ── Journal home ──────────────────────────────────────────────────────────────
 
-export const WaraqHome = () => {
-  const t = useTranslations("nexus.waraq");
-  const tw = useTranslations("nexus.home.waraq");
+export const JournalHome = () => {
+  const t = useTranslations("nexus.journal");
+  const tw = useTranslations("nexus.home.journal");
   const tj = useTranslations("nexus.admin.journal");
   const locale = useLocale() as Locale;
   const calls = useOpenCalls();
@@ -71,7 +71,7 @@ export const WaraqHome = () => {
       cell: (s) => (
         <Link
           className="font-medium underline underline-offset-4"
-          href={{ pathname: "/waraq/submission", query: { id: s.id } }}
+          href={{ pathname: "/journal/submission", query: { id: s.id } }}
         >
           {s.title}
         </Link>
@@ -132,7 +132,7 @@ export const WaraqHome = () => {
               </p>
               <Link
                 className={buttonLink}
-                href={{ pathname: "/waraq/submit", query: { call: call.id } }}
+                href={{ pathname: "/journal/submit", query: { call: call.id } }}
               >
                 {tw("submit")}
               </Link>
@@ -160,7 +160,7 @@ export const WaraqHome = () => {
 // ── Submit ──────────────────────────────────────────────────────────────────
 
 export const SubmitWork = () => {
-  const t = useTranslations("nexus.waraq");
+  const t = useTranslations("nexus.journal");
   const locale = useLocale() as Locale;
   const router = useRouter();
   const { supabase } = useAuth();
@@ -206,7 +206,7 @@ export const SubmitWork = () => {
     onSuccess: async (id) => {
       await invalidate();
       if (id) {
-        router.push({ pathname: "/waraq/submission", query: { id } });
+        router.push({ pathname: "/journal/submission", query: { id } });
       }
     },
   });
@@ -227,7 +227,10 @@ export const SubmitWork = () => {
     <div className="grid gap-8">
       <AdminHeading
         actions={
-          <Link className="text-sm underline underline-offset-4" href="/waraq">
+          <Link
+            className="text-sm underline underline-offset-4"
+            href="/journal"
+          >
             {t("back")}
           </Link>
         }
@@ -292,7 +295,10 @@ export const SubmitWork = () => {
               {t("filesFailed")}{" "}
               <Link
                 className="underline underline-offset-4"
-                href={{ pathname: "/waraq/submission", query: { id: partial } }}
+                href={{
+                  pathname: "/journal/submission",
+                  query: { id: partial },
+                }}
               >
                 {t("openSubmission")}
               </Link>
@@ -307,7 +313,7 @@ export const SubmitWork = () => {
 // ── One submission ──────────────────────────────────────────────────────────
 
 const Agreement = ({ submissionId }: { submissionId: string }) => {
-  const t = useTranslations("nexus.waraq.agreement");
+  const t = useTranslations("nexus.journal.agreement");
   const locale = useLocale() as Locale;
   const { supabase } = useAuth();
   const queryClient = useQueryClient();
@@ -384,7 +390,7 @@ const Agreement = ({ submissionId }: { submissionId: string }) => {
 };
 
 export const MySubmission = () => {
-  const t = useTranslations("nexus.waraq");
+  const t = useTranslations("nexus.journal");
   const tj = useTranslations("nexus.admin.journal");
   const locale = useLocale() as Locale;
   const id = useQueryParam("id");
@@ -472,7 +478,7 @@ export const MySubmission = () => {
   });
 
   const back = (
-    <Link className="text-sm underline underline-offset-4" href="/waraq">
+    <Link className="text-sm underline underline-offset-4" href="/journal">
       {t("back")}
     </Link>
   );

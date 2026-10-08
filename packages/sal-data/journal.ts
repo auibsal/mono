@@ -3,7 +3,7 @@ import { z } from "zod";
 import { type Client, unwrap } from "./client";
 import { sanitizeRichText } from "./sanitize";
 
-/** The seven Waraq categories: one list for the form and the database enum. */
+/** The seven Journal categories: one list for the form and the database enum. */
 export const categories = Constants.journal.Enums.category;
 export type Category = Enums<{ schema: "journal" }, "category">;
 
@@ -268,7 +268,7 @@ export const submitScore = async (
   );
 };
 
-// ── Published Waraq (public site) ───────────────────────────────────────────
+// ── Published Journal (public site) ───────────────────────────────────────────
 // Each query also filters to published rows, so a signed-in editor's client
 // would not show drafts either; RLS is still the boundary.
 

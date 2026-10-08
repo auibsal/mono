@@ -13,15 +13,15 @@ import { Section } from "./section";
 
 const DAY = 86_400_000;
 
-export const WaraqSection = () => {
-  const t = useTranslations("nexus.home.waraq");
-  const tw = useTranslations("nexus.waraq");
+export const JournalSection = () => {
+  const t = useTranslations("nexus.home.journal");
+  const tw = useTranslations("nexus.journal");
   const locale = useLocale() as "en" | "ar";
   const calls = useOpenCalls();
   const submissions = useMySubmissions();
 
   return (
-    <Section id="waraq" title={t("title")}>
+    <Section id="journal" title={t("title")}>
       {calls.data?.length === 0 ? <EmptyLine>{t("none")}</EmptyLine> : null}
       {calls.data?.map((call) => {
         const days = Math.max(
@@ -41,7 +41,7 @@ export const WaraqSection = () => {
             </p>
             <Link
               className="text-sm underline underline-offset-4"
-              href={{ pathname: "/waraq/submit", query: { call: call.id } }}
+              href={{ pathname: "/journal/submit", query: { call: call.id } }}
             >
               {t("submit")}
             </Link>
@@ -60,7 +60,7 @@ export const WaraqSection = () => {
                 <Link
                   className="underline underline-offset-4"
                   href={{
-                    pathname: "/waraq/submission",
+                    pathname: "/journal/submission",
                     query: { id: submission.id },
                   }}
                 >
