@@ -1,5 +1,5 @@
 /**
- * The one event catalogue, sent to GA4 as-is. No personal data in
+ * The one event catalog, sent to GA4 as-is. No personal data in
  * parameters: ids and slugs only.
  */
 export interface AnalyticsEvents {

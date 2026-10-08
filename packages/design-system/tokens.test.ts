@@ -53,7 +53,7 @@ const textPairs: Record<"light" | "dark", [string, string][]> = {
 };
 
 describe("SAL tokens (brand/tokens.json)", () => {
-  test("the palette is the brand's ten colours and nothing else", () => {
+  test("the palette is the brand's ten colors and nothing else", () => {
     expect(Object.keys(palette).sort()).toEqual(
       [
         "crimson",
@@ -70,7 +70,7 @@ describe("SAL tokens (brand/tokens.json)", () => {
     );
   });
 
-  test("every role references a palette colour in both themes", () => {
+  test("every role references a palette color in both themes", () => {
     for (const [role, value] of Object.entries(roles)) {
       for (const theme of ["light", "dark"] as const) {
         expect(palette, `${theme}.${role}`).toHaveProperty(

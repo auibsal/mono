@@ -13,7 +13,7 @@ describe("email helpers", () => {
     expect(isAuibEmail("someone@gmail.com")).toBe(false);
   });
 
-  test("validates and normalises addresses", () => {
+  test("validates and normalizes addresses", () => {
     expect(normalizeEmail("  A@B.Co ")).toBe("a@b.co");
     expect(isValidEmail("no-at-sign")).toBe(false);
     expect(isValidEmail("a@b.co")).toBe(true);

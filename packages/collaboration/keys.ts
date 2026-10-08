@@ -5,7 +5,7 @@ export const keys = () =>
   createEnv({
     client: {
       // Turns on live presence and co-editing in the Nexus. The secret key
-      // lives only in apps/api, which authorises each room.
+      // lives only in apps/api, which authorizes each room.
       NEXT_PUBLIC_LIVEBLOCKS_ENABLED: z.enum(["true", "false"]).optional(),
     },
     // Treat KEY="" (as in .env.example) as unset.

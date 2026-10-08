@@ -9,6 +9,7 @@ import {
   formatLongDate,
   formatNumber,
 } from "@repo/internationalization/format";
+import { Link } from "@repo/internationalization/navigation";
 import { charity, events, journal, localized } from "@repo/sal-data";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -47,46 +48,57 @@ const Home = async ({ params }: HomeProps) => {
     ? progress.find((p) => p.campaign_id === campaign.id)
     : undefined;
 
+  const heading = "type-heading frame-b pb-2";
+
   return (
     <>
-      <section className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-16">
-        <BrandLogo height={96} locale={locale} variant="bilingual" />
-        <h1 className="type-display">{t("title")}</h1>
-        <p className="type-lede max-w-2xl">{t("lede")}</p>
+      <section className="frame-b">
+        <div className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-16 sm:py-24">
+          <BrandLogo height={96} locale={locale} variant="bilingual" />
+          <h1 className="type-display max-w-4xl">{t("title")}</h1>
+          <p className="type-lede max-w-2xl">{t("lede")}</p>
+          <div className="flex flex-wrap gap-4 pt-2">
+            <Button asChild size="lg">
+              <a href={`${project.hosts.app}/${locale}/sign-up`}>{t("join")}</a>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <Link href="/events">{t("allEvents")}</Link>
+            </Button>
+          </div>
+        </div>
       </section>
 
-      <div className="mx-auto grid w-full max-w-6xl gap-12 px-4 pb-16 lg:grid-cols-2">
+      <div className="mx-auto grid w-full max-w-6xl gap-16 px-4 py-16 lg:grid-cols-2">
         <section
           aria-labelledby="next-events"
-          className="grid content-start gap-4"
+          className="grid content-start gap-6 lg:col-span-2"
         >
-          <h2
-            className="type-heading border-accent-line border-b pb-2"
-            id="next-events"
-          >
+          <h2 className={heading} id="next-events">
             {t("nextEvents")}
           </h2>
           {(nextEvents ?? []).length === 0 ? (
             <p className="type-body text-text-secondary">{t("noEvents")}</p>
           ) : null}
-          <ul className="grid gap-4">
+          <ul className="grid gap-6 md:grid-cols-3">
             {(nextEvents ?? []).map((event) => (
-              <li
-                className="grid gap-1 border-rule border-b pb-4"
-                key={event.id}
-              >
-                <p className="type-kicker">
-                  {formatLongDate(event.starts_at, locale)} ·{" "}
-                  {formatClock(event.starts_at, locale)}
-                </p>
-                <h3 className="type-subheading">
-                  {localized(event, "title", locale)}
-                </h3>
-                {localized(event, "summary", locale) ? (
-                  <p className="type-body text-text-secondary">
-                    {localized(event, "summary", locale)}
+              <li key={event.id}>
+                <Link
+                  className="frame press grid h-full content-start gap-2 bg-surface p-card-padding shadow-offset hover:bg-surface-tint"
+                  href={`/events/${event.slug}`}
+                >
+                  <p className="type-kicker">
+                    {formatLongDate(event.starts_at, locale)} ·{" "}
+                    {formatClock(event.starts_at, locale)}
                   </p>
-                ) : null}
+                  <h3 className="type-subheading">
+                    {localized(event, "title", locale)}
+                  </h3>
+                  {localized(event, "summary", locale) ? (
+                    <p className="type-body text-text-secondary">
+                      {localized(event, "summary", locale)}
+                    </p>
+                  ) : null}
+                </Link>
               </li>
             ))}
           </ul>
@@ -97,29 +109,28 @@ const Home = async ({ params }: HomeProps) => {
             aria-labelledby="latest-waraq"
             className="grid content-start gap-4"
           >
-            <h2
-              className="type-heading border-accent-line border-b pb-2"
-              id="latest-waraq"
-            >
+            <h2 className={heading} id="latest-waraq">
               {t("latestWaraq")}
             </h2>
-            <ul className="grid gap-4">
+            <ul className="grid">
               {(pieces ?? []).map((piece) => (
-                <li
-                  className="grid gap-1 border-rule border-b pb-4"
-                  key={piece.id}
-                >
-                  <h3
-                    className="type-subheading"
-                    lang={piece.language === "ar" ? "ar" : undefined}
+                <li className="border-rule border-b py-4" key={piece.id}>
+                  <Link
+                    className="grid gap-1 hover:underline"
+                    href={`/waraq/pieces/${piece.slug}`}
                   >
-                    {localized(piece, "title", locale)}
-                  </h3>
-                  {piece.contributor ? (
-                    <p className="type-caption">
-                      {localized(piece.contributor, "name", locale)}
-                    </p>
-                  ) : null}
+                    <h3
+                      className="type-subheading"
+                      lang={piece.language === "ar" ? "ar" : undefined}
+                    >
+                      {localized(piece, "title", locale)}
+                    </h3>
+                    {piece.contributor ? (
+                      <p className="type-caption">
+                        {localized(piece.contributor, "name", locale)}
+                      </p>
+                    ) : null}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -131,13 +142,10 @@ const Home = async ({ params }: HomeProps) => {
             aria-labelledby="warmth"
             className="grid content-start gap-4"
           >
-            <h2
-              className="type-heading border-accent-line border-b pb-2"
-              id="warmth"
-            >
+            <h2 className={heading} id="warmth">
               {t("warmth")}
             </h2>
-            <SalCard>
+            <SalCard className="shadow-offset">
               <p className="type-subheading">
                 {localized(campaign, "title", locale)}
               </p>
@@ -148,7 +156,7 @@ const Home = async ({ params }: HomeProps) => {
               {meter.target_units ? (
                 <progress
                   aria-label={t("warmth")}
-                  className="h-2 w-full accent-[var(--title)]"
+                  className="h-3 w-full accent-[var(--title)]"
                   max={meter.target_units}
                   value={Math.min(meter.units, meter.target_units)}
                 />
@@ -165,15 +173,12 @@ const Home = async ({ params }: HomeProps) => {
             aria-labelledby="open-calls"
             className="grid content-start gap-4"
           >
-            <h2
-              className="type-heading border-accent-line border-b pb-2"
-              id="open-calls"
-            >
+            <h2 className={heading} id="open-calls">
               {t("openCalls")}
             </h2>
-            <ul className="grid gap-3">
+            <ul className="grid">
               {(calls ?? []).map((call) => (
-                <li key={call.id}>
+                <li className="border-rule border-b py-4" key={call.id}>
                   <p className="type-subheading">
                     {localized(call, "title", locale)}
                   </p>
@@ -187,15 +192,16 @@ const Home = async ({ params }: HomeProps) => {
         ) : null}
       </div>
 
-      <section aria-labelledby="join" className="band">
-        <div className="mx-auto grid w-full max-w-6xl gap-4 px-4 py-12">
-          <h2 className="font-bold text-2xl" id="join">
+      <section aria-labelledby="join" className="band frame-t">
+        <div className="mx-auto grid w-full max-w-6xl gap-4 px-4 py-16">
+          <h2 className="font-bold text-3xl sm:text-4xl" id="join">
             {t("join")}
           </h2>
-          <p>{t("joinBody")}</p>
+          <p className="max-w-2xl text-lg">{t("joinBody")}</p>
           <Button
             asChild
             className="justify-self-start bg-on-band text-band hover:bg-on-band/90"
+            size="lg"
           >
             <a href={`${project.hosts.app}/${locale}/sign-up`}>{t("join")}</a>
           </Button>

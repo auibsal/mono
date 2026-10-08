@@ -144,7 +144,7 @@ These stop parts of the work. Everything else continues around them.
 - [x] `content` (pages, news, media, homepage slots, announcements, document index, published-only search)
 - [x] Activity-log triggers (never on ballots or receipts)
 - [x] Storage buckets + policies; revalidation and scheduled-publish functions
-- [x] Reference data: permissions, roles, bundles, programmes, settings, Natrok Athar
+- [x] Reference data: permissions, roles, bundles, programs, settings, Natrok Athar
 - [x] pgTAP: 176 assertions in 8 files; CI fails on a table without RLS
 - [x] Generated types (CI diffs them)
 - [ ] pgTAP coverage for the remaining policies one by one (content admin writes, governance minutes, library)
@@ -154,11 +154,11 @@ These stop parts of the work. Everything else continues around them.
 - [x] Sign-in (password or magic link), sign-up (return URL), forgot/reset, callback
 - [x] Verification-pending screen for non-AUIB accounts
 - [x] `/setup`: both pledges (versioned, re-accept on change), language, notifications, camera-shy, personal email
-- [x] Home: membership card + QR, next events + ticket QR + cancel + .ics, voting eligibility, notices, Waraq call countdown + my submissions, programmes, calendar feed (copy/reset), Six Words
+- [x] Home: membership card + QR, next events + ticket QR + cancel + .ics, voting eligibility, notices, Waraq call countdown + my submissions, programs, calendar feed (copy/reset), Six Words
 - [x] Profile and privacy, account deletion through apps/api
 - [ ] Events pages (browse, RSVP with questions, tickets, past attendance)
 - [x] Waraq: submit (rich text or files, translation fields, Human Authorship reconfirmed each time), my submissions, revise when returned, withdraw, sign the Publication Agreement (text is `TODO(content)`)
-- [ ] Programmes (rotas, sign-ups); Society (Book of Members, roster, minutes, elections)
+- [ ] Programs (rotas, sign-ups); Society (Book of Members, roster, minutes, elections)
 
 ### Nexus — admin (§8)
 - [x] Shell and module gating by permission (UX only; RLS and RPCs enforce)
@@ -166,7 +166,7 @@ These stop parts of the work. Everything else continues around them.
 - [x] Events (editor, questions, attendance, camera QR check-in)
 - [x] Content (news, pages, announcements, homepage slots, media library; Liveblocks co-editing when enabled)
 - [x] Charity (campaigns, ledger with sign-off and reversals, receipts through signed URLs; winter-set cost is a placeholder setting)
-- [x] Programmes, Governance (minutes co-edited, elections, spending, library uploads), Activity log, Settings
+- [x] Programs, Governance (minutes co-edited, elections, spending, library uploads), Activity log, Settings
 - [x] Waraq issues, pieces, contributors; accepted work becomes a draft piece; publishing blocked until the agreement is signed
 - [x] Waraq pipeline (`/admin/pipeline`): per-issue tabs by role — my reading (rubric v2 scoring), intake (return for formatting, send to blind review, originals via `/files/submission`), reader assignment, drag-and-drop board with a keyboard Move menu, selection by average and band, decisions with author reveal, Advisory Board flagged view, calls
 - [x] Blind copies: `/files/blind` strips PDF info/XMP/annotation authors, image EXIF, DOCX properties and revision authors; never falls back to the original
@@ -177,9 +177,9 @@ These stop parts of the work. Everything else continues around them.
 - [x] Layout (skip link, header, footer, language switch), home (events, Waraq, Warmth Meter, calls, join band), 404
 - [x] Revalidation route (cache tags), sitemap (existing pages only, hreflang), robots
 - [x] Documents: registry (`packages/sal-data/documents.json`, one entry per docs-source PDF, status shown on every page; all six are Draft 1 for ratification on Charter Day), index and per-document pages with contents, PDFs published at build (`apps/web/scripts/copy-documents.mjs`). The documents are English-only; `/ar` says so.
-- [x] Events: upcoming and past lists, detail (cancelled notice, sanitised body, image, RSVP in the Nexus, add-to-calendar .ics), calendar subscription (webcal)
+- [x] Events: upcoming and past lists, detail (canceled notice, sanitized body, image, RSVP in the Nexus, add-to-calendar .ics), calendar subscription (webcal)
 - [x] Waraq: hub (open calls → submit in the Nexus, issues, latest), issue, piece and contributor pages; members-only text stays in the Nexus (`/waraq/piece?slug=`)
-- [x] About (Constitution preamble, motto, mission and "At a Glance", marked as quoted from the draft; Handbook pillars), Programmes (Handbook summaries, migration `20261006000000`), Join (Handbook steps and membership table; the Arabic is the Handbook's own welcome page where it exists)
+- [x] About (Constitution preamble, motto, mission and "At a Glance", marked as quoted from the draft; Handbook pillars), Programs (Handbook summaries, migration `20261006000000`), Join (Handbook steps and membership table; the Arabic is the Handbook's own welcome page where it exists)
 - [x] Give + transparency (Warmth Meter from signed-off money only, public receipts, impact, P7.5), News (list, post), Contact (channels, concerns), Media kit (name rules, logos as supplied, palette), Privacy (P5 and P6 verbatim, platform facts), Side Quest care + removal form (`apps/api /removal-requests`, rate-limited, honeypot), Search (published rows + document registry), drawn share images (`/[locale]/og`, default for every page)
 - [ ] Structured data (JSON-LD)
 
@@ -239,7 +239,7 @@ Covered by automated tests so far:
   Member Handbook still has "[Society AUIB email]"); Contact shows a note
   until then.
 - Founders' Roll names; the Faculty Advisor's name.
-- The care promise for Side Quest beyond Policy Manual 5.3. (Programme descriptions now come from the Member Handbook.)
+- The care promise for Side Quest beyond Policy Manual 5.3. (Program descriptions now come from the Member Handbook.)
 - Traditions (Charter Night, the Ribbon, the Term Card) text.
 - Natrok Athar's description (both languages) and confirmed cost per winter set.
 
@@ -258,8 +258,8 @@ Covered by automated tests so far:
 - `core.programmes.summary_ar` (migration `20261006000000`) and «ليلة المناظرة» for Motion Night (was «ليلة الصورة المتحركة», which meant a moving-image night).
 - `web.about` Arabic (translated from the Constitution and Handbook) and the parts of `web.join` that are not on the Handbook's Arabic welcome page.
 - The Arabic of Policy Manual P10.1 on the setup page (translated for the
-  platform; the manual has no Arabic for it) and the Arabic programme names
-  for "the Prizes" in it (the other programme names match the reference data).
+  platform; the manual has no Arabic for it) and the Arabic program names
+  for "the Prizes" in it (the other program names match the reference data).
 - Email Arabic: every Arabic string in `packages/email/copy.ts` and the
   Arabic halves of `packages/database/supabase/templates/*.html` and
   `subjects.txt`.

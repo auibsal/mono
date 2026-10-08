@@ -61,7 +61,7 @@ export const PieceReader = () => {
       {texts.map((text) => (
         <div
           className="prose max-w-none"
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: sanitised with the one rich-text policy
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: sanitized with the one rich-text policy
           dangerouslySetInnerHTML={{ __html: sanitizeRichText(text.html) }}
           dir={text.lang === "ar" ? "rtl" : "ltr"}
           key={text.lang}

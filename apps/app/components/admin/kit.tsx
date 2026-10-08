@@ -70,7 +70,7 @@ interface DataTableProps<T> {
 }
 
 /**
- * Brand tables: a crimson hairline under the head and grey hairlines
+ * Brand tables: a crimson hairline under the head and gray hairlines
  * between rows, never full grids. Scrolls sideways on small screens.
  */
 export const DataTable = <T,>({
@@ -147,7 +147,7 @@ interface FieldProps {
   readonly label: string;
 }
 
-/** A labelled field; the render prop receives the control's id. */
+/** A labeled field; the render prop receives the control's id. */
 export const Field = ({ children, className, hint, label }: FieldProps) => {
   const id = useId();
   return (

@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 // The brand's share card on the tint ground (brand/components/SocialPost),
-// at the Open Graph size. Colours from brand/tokens.json; logo as supplied.
+// at the Open Graph size. Colors from brand/tokens.json; logo as supplied.
 // assets-og/ holds Ubuntu Arabic with its Extension lookups rewritten as
 // direct ones (Satori cannot read type 7), and the symbol byte for byte.
 const TINT = "#f7ecef";

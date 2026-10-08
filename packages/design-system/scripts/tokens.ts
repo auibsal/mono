@@ -4,7 +4,8 @@ import { join } from "node:path";
 /**
  * Generates styles/tokens.css from the brand's own token file,
  * brand/tokens.json (SAL v4, binding): the palette, the nine role tokens for
- * light pages and ink pages, space, radii and the hairline.
+ * light pages and ink pages, space, radii and the hairline. The v5 Screens
+ * amendment (brand/BRAND-BOOK.md, "Screens") adds the platform tokens below.
  *
  *   bun scripts/tokens.ts          # write
  *   bun scripts/tokens.ts --check  # fail if tokens.css is stale
@@ -24,11 +25,26 @@ export interface BrandTokens {
 /**
  * `rule` is a palette value in the brand (row hairlines on light pages); the
  * platform also needs it as a role so hairlines stay quiet on ink pages. Its
- * ink-page value is an existing tone: no colour is added.
+ * ink-page value is an existing tone: no color is added.
  */
 export const platformRoles: Record<string, Themed> = {
+  /** v5 Screens: the 2px rule around controls, cards and the header. */
+  frame: { dark: "{white}", light: "{ink}" },
+  /** v5 Screens: the one elevation, a solid offset block with no blur. */
+  offset: { dark: "{crimson}", light: "{ink}" },
   rule: { dark: "{ink-70}", light: "{rule}" },
 };
+
+/**
+ * v5 Screens sizes. Print keeps the brand's 8px card radius; screens use
+ * square corners, a 2px frame and a 4px (8px for feature blocks) offset.
+ */
+export const platformSizes: { name: string; value: string }[] = [
+  { name: "radius-screen", value: "0px" },
+  { name: "frame-width", value: "2px" },
+  { name: "offset", value: "4px" },
+  { name: "offset-lg", value: "8px" },
+];
 
 /** radius-key belongs to the retired round Key and is never emitted. */
 const retired = new Set(["radius-key"]);
@@ -38,7 +54,7 @@ const REFERENCE = /^\{([a-z0-9-]+)\}$/;
 const reference = (value: string) => {
   const match = REFERENCE.exec(value);
   if (!match) {
-    throw new Error(`Role values must reference a palette colour: ${value}`);
+    throw new Error(`Role values must reference a palette color: ${value}`);
   }
   return `var(--sal-${match[1]})`;
 };
@@ -62,6 +78,7 @@ export const renderTokens = (tokens: BrandTokens) => {
     ...tokens.spacing.tokens,
     ...tokens.radius.tokens,
     ...tokens.stroke.tokens,
+    ...platformSizes,
   ].filter((token) => !retired.has(token.name));
 
   const lines = [
@@ -71,12 +88,17 @@ export const renderTokens = (tokens: BrandTokens) => {
       ([name, value]) => `  --sal-${name}: ${value};`
     ),
     ...sizes.map((token) => `  --sal-${token.name}: ${token.value};`),
+    "}",
+    "",
+    "/* Light pages, and light islands inside ink (Waraq reading, covers). */",
+    ":root,",
+    '[data-theme="light"] {',
     ...Object.entries(roles).map(
       ([role, value]) => `  --${role}: ${reference(value.light)};`
     ),
     "}",
     "",
-    '/* The ink theme: only the "why" pages and the Open Call page. */',
+    '/* The ink theme: the Nexus, the "why" pages and the Open Call page. */',
     '[data-theme="dark"] {',
     ...Object.entries(roles).map(
       ([role, value]) => `  --${role}: ${reference(value.dark)};`

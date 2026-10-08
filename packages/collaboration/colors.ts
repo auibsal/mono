@@ -1,5 +1,5 @@
 /**
- * Presence colours, from the brand palette only (never add a colour). Each
+ * Presence colors, from the brand palette only (never add a color). Each
  * is legible as a label ground with white text.
  */
 const COLORS = [
@@ -9,7 +9,7 @@ const COLORS = [
   "var(--sal-ink-70)",
 ] as const;
 
-/** A stable presence colour per user, the same in every client. */
+/** A stable presence color per user, the same in every client. */
 export const presenceColor = (userId: string) => {
   let hash = 0;
   for (const char of userId) {

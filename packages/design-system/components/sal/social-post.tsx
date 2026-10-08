@@ -11,7 +11,7 @@ interface SocialPostProps {
   readonly date: string;
   /**
    * Choose by purpose: crimson for calls and moments, ink for recruiting,
-   * white for membership, tint for regular programmes.
+   * white for membership, tint for regular programs.
    */
   readonly ground: SocialPostGround;
   /** The account handle; the brand puts @auibsal on every post. */

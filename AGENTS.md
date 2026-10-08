@@ -60,7 +60,7 @@ any schema change. Integration tests run against a local stack with
   RLS (`00_structure.test.sql`).
 - **Permissions, never role names.** Policies and code ask
   `access.has_permission(permission, scope_type, scope_id)` ("can this user
-  `events.manage` for programme X?"). Roles live only in
+  `events.manage` for program X?"). Roles live only in
   `access.role_assignments`, written only through `access.assign_role()`.
   Never read roles from `user_metadata` or `app_metadata`.
 - **Atomic multi-step operations are Postgres functions** called by RPC
@@ -81,15 +81,20 @@ any schema change. Integration tests run against a local stack with
   this platform (not taken from a source) is listed as `needs-native-review`.
 - **Brand book (binding, SAL v4).** Components use only the role tokens
   (`surface`, `surface-tint`, `text`, `text-secondary`, `text-meta`, `title`,
-  `accent-line`, `band`, `on-band`, plus `rule`). Never add a colour. No
+  `accent-line`, `band`, `on-band`, plus `rule`). Never add a color. No
   shadows. Cards on `surface-tint` with the 8px card radius. At most one
   crimson band per page; crimson never on ink. Light everywhere; the ink
   theme (`data-theme="dark"`) only on the "why" pages and the Open Call page.
   Logos are used exactly as supplied in `brand/logos`, never redrawn.
   Functional icons only (menu, close, back, chevron, search, external link,
   check), each with an accessible label; no decorative icons, no emoji.
-  British spelling; no exclamation marks in headings; "AUIB Society of Arts
-  and Letters" on first formal use, then "the Society" or "SAL", never "the club".
+  No exclamation marks in headings; "AUIB Society of Arts and Letters" on
+  first formal use, then "the Society" or "SAL", never "the club".
+- **American English** (owner's decision, Oct 8 2026) in UI copy, emails,
+  comments, commits and docs: program, color, canceled, judgment. Text quoted
+  verbatim from the Society's documents keeps its spelling ("a Society of
+  Arts and Letters programme", the Policy Manual clauses). Code identifiers
+  stay (the `programmes` schema, `cancelled` status values).
 - **Copy formats.** Dates as "Tuesday, October 13", times as "6:00 PM", money
   as "50,000 IQD": use `formatLongDate`, `formatClock` and `formatIqd` from
   `@repo/internationalization/format` (Latin digits, Baghdad time).
