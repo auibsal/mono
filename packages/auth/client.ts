@@ -7,6 +7,11 @@ import { keys } from "./keys";
  * Browser client. Sessions live in cookies on the shared parent domain, so
  * the public site, the Nexus and the API see the same sign-in.
  * (`createBrowserClient` reuses one instance per page.)
+ *
+ * `detectSessionInUrl` is off: the Nexus callback page exchanges the code
+ * itself. With it on, the client spent the one-time code on load and the
+ * callback's own exchange then failed ("expired or already used") even
+ * though the member was signed in.
  */
 export const createClient = () => {
   const { NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY } =
@@ -21,7 +26,10 @@ export const createClient = () => {
   return createBrowserClient<Database>(
     NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
-    { cookieOptions: authCookieOptions() }
+    {
+      auth: { detectSessionInUrl: false },
+      cookieOptions: authCookieOptions(),
+    }
   );
 };
 
