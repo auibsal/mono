@@ -33,11 +33,15 @@ export const AuthCallback = () => {
     }
 
     exchange.current ??= supabase.auth.exchangeCodeForSession(code);
-    exchange.current.then(({ error }) => {
-      if (error) {
-        setFailed(true);
-      } else {
+    exchange.current.then(async ({ error }) => {
+      // A link opened twice (or in a tab that is already signed in) has
+      // a spent code but a live session: carry on rather than alarm.
+      const signedIn =
+        !error || Boolean((await supabase.auth.getSession()).data.session);
+      if (signedIn) {
         router.replace(next ? stripLocale(next) : "/");
+      } else {
+        setFailed(true);
       }
     });
   }, [code, next, router, supabase]);
