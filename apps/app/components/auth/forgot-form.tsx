@@ -7,7 +7,7 @@ import { Button } from "@repo/design-system/components/ui/button";
 import { Input } from "@repo/design-system/components/ui/input";
 import { Label } from "@repo/design-system/components/ui/label";
 import { useLocale, useTranslations } from "next-intl";
-import { type FormEvent, useId, useState } from "react";
+import { type FormEvent, useId, useRef, useState } from "react";
 import { useAuthError } from "@/lib/auth-messages";
 
 export const ForgotForm = () => {
@@ -19,14 +19,28 @@ export const ForgotForm = () => {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string>();
+  const [pending, setPending] = useState(false);
+  // Each request replaces the link before it and the PKCE verifier in this
+  // browser, so a second click while the first is sending would leave the
+  // emailed link unusable. The ref blocks it before React re-renders.
+  const inFlight = useRef<boolean>(false);
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    // biome-ignore lint/suspicious/noUnnecessaryConditions: set by an earlier submit still awaiting
+    if (inFlight.current) {
+      return;
+    }
+    inFlight.current = true;
+    setPending(true);
+    setError(undefined);
     const result = await sendPasswordReset(
       supabase,
       email,
       `${window.location.origin}/${locale}/auth/callback?next=/${locale}/auth/reset`
     );
+    inFlight.current = false;
+    setPending(false);
     if (result.ok) {
       setSent(true);
     } else {
@@ -60,7 +74,9 @@ export const ForgotForm = () => {
               {error}
             </p>
           ) : null}
-          <Button type="submit">{t("forgot.submit")}</Button>
+          <Button disabled={pending} type="submit">
+            {pending ? t("forgot.sending") : t("forgot.submit")}
+          </Button>
         </form>
       )}
     </>

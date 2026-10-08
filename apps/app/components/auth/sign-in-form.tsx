@@ -9,7 +9,7 @@ import { Label } from "@repo/design-system/components/ui/label";
 import { Link } from "@repo/internationalization/navigation";
 import { useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { type FormEvent, useId, useState } from "react";
+import { type FormEvent, useId, useRef, useState } from "react";
 import { useAuthError } from "@/lib/auth-messages";
 import { callbackUrl, safeNextPath } from "@/lib/navigation";
 
@@ -28,19 +28,29 @@ export const SignInForm = () => {
   const [error, setError] = useState<string>();
   const [linkSent, setLinkSent] = useState(false);
 
-  let submitLabel = t("signIn.sendLink");
+  // One request at a time: a second magic-link request replaces the first
+  // link and this browser's PKCE verifier (see ForgotForm).
+  const inFlight = useRef<boolean>(false);
+
+  let submitLabel = pending ? t("forgot.sending") : t("signIn.sendLink");
   if (mode === "password") {
     submitLabel = pending ? t("signIn.submitting") : t("signIn.submit");
   }
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    // biome-ignore lint/suspicious/noUnnecessaryConditions: set by an earlier submit still awaiting
+    if (inFlight.current) {
+      return;
+    }
+    inFlight.current = true;
     setPending(true);
     setError(undefined);
     const result =
       mode === "password"
         ? await signInWithPassword(supabase, email, password)
         : await sendMagicLink(supabase, email, callbackUrl(locale, next));
+    inFlight.current = false;
     setPending(false);
     if (!result.ok) {
       setError(errorText(result.code));

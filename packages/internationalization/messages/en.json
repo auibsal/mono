@@ -93,7 +93,8 @@
       "title": "Reset your password",
       "description": "We'll email you a link to choose a new password.",
       "submit": "Send reset link",
-      "sent": "If an account exists for {email}, a reset link is on its way."
+      "sent": "If an account exists for {email}, a reset link is on its way.",
+      "sending": "Sending…"
     },
     "reset": {
       "title": "Choose a new password",
@@ -102,7 +103,7 @@
     },
     "callback": {
       "title": "Signing you in",
-      "failed": "This link has expired or was already used.",
+      "failed": "This link has expired, was already used, or was opened in a different browser from the one you asked from. Ask for a new link and open it here.",
       "retry": "Back to sign in"
     }
   },
