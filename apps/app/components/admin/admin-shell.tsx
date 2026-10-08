@@ -99,7 +99,7 @@ export const RequireModule = ({
   if (!visible.some((m) => m.key === module)) {
     // The Overview is only for some roles: open the first section this
     // member can use instead of a dead end.
-    const first = visible[0];
+    const [first] = visible;
     if (module === "overview" && first) {
       return <OpenFirst href={hrefFor(first.key)} />;
     }
