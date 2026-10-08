@@ -9,6 +9,17 @@ Branch: `claude/new-session-qosn60`.
 
 ## Blocked — needed from the user
 
+- [ ] **Backups:** add `BACKUP_PASSPHRASE` (a long random passphrase kept in
+      your password manager) to the GitHub `production` environment. Then
+      `.github/workflows/backup.yml` stores an encrypted dump every night
+      for 30 days. Run it once from Actions to check it.
+- [ ] **Officer handbook on Mintlify:** sign in at dashboard.mintlify.com with
+      GitHub, connect `auibsal/mono` with the docs path `apps/docs`, then add
+      the custom domain docs.auibsal.org (Mintlify shows the CNAME to add in
+      Cloudflare).
+- [ ] **Internal previews:** Vercel projects sal-storybook and sal-emails are
+      created and connected (Vercel login required to view). Optional custom
+      domains: storybook.auibsal.org, emails.auibsal.org.
 - [ ] **Founding voters in the Constitution:** the first-100 rule departs
       from Constitution 3.3(b) and Bylaws B3.3. Add a transitional provision
       (for example "For the founding year, ending May 13, 2027, the first one

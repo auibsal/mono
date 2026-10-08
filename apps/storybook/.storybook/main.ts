@@ -12,11 +12,7 @@ const getAbsolutePath = (value: string) =>
   dirname(require.resolve(join(value, "package.json")));
 
 const config: StorybookConfig = {
-  addons: [
-    getAbsolutePath("@chromatic-com/storybook"),
-    getAbsolutePath("@storybook/addon-onboarding"),
-    getAbsolutePath("@storybook/addon-themes"),
-  ],
+  addons: [getAbsolutePath("@storybook/addon-themes")],
   framework: {
     name: getAbsolutePath("@storybook/nextjs"),
     options: {},

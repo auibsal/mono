@@ -10,7 +10,7 @@
     "@axe-core/playwright": "4.10.2",
     "@playwright/test": "1.56.1",
     "@repo/typescript-config": "workspace:*",
-    "@supabase/supabase-js": "^2.115.0",
+    "@supabase/supabase-js": "^2.117.3",
     "@types/node": "25.3.5",
     "typescript": "^7.0.2"
   }

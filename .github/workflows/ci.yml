@@ -53,7 +53,9 @@ jobs:
         with:
           node-version-file: .nvmrc
       - run: bun install --frozen-lockfile
-      - run: bunx turbo build --filter=api --filter=app --filter=web
+      - run: bunx turbo build --filter=api --filter=app --filter=web --filter=email --filter=@repo/storybook
+      - name: Officer handbook builds (Mintlify)
+        run: bun run --cwd apps/docs validate
       # No secret may reach a client bundle: the Nexus export and the public
       # site must not contain the secret-key prefix or server-only names.
       - name: No secrets in client bundles

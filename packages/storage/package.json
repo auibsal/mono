@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@repo/database": "workspace:*",
-    "@supabase/supabase-js": "^2.115.0"
+    "@supabase/supabase-js": "^2.117.3"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
