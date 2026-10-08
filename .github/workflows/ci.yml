@@ -125,7 +125,7 @@ jobs:
           export MAILPIT_URL="${MAILPIT_URL:-$INBUCKET_URL}"
           export NEXT_PUBLIC_SUPABASE_URL="$API_URL" NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="$PUBLISHABLE_KEY"
           bun run --cwd apps/e2e e2e
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: failure()
         with:
           name: playwright-traces
