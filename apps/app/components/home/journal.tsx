@@ -15,6 +15,7 @@ const DAY = 86_400_000;
 
 export const JournalSection = () => {
   const t = useTranslations("nexus.home.journal");
+  const ta = useTranslations("nexus.next");
   const tw = useTranslations("nexus.journal");
   const locale = useLocale() as "en" | "ar";
   const calls = useOpenCalls();
@@ -22,7 +23,11 @@ export const JournalSection = () => {
 
   return (
     <Section id="journal" title={t("title")}>
-      {calls.data?.length === 0 ? <EmptyLine>{t("none")}</EmptyLine> : null}
+      {calls.data?.length === 0 ? (
+        <EmptyLine action={{ href: "/journal", label: ta("readJournal") }}>
+          {t("none")}
+        </EmptyLine>
+      ) : null}
       {calls.data?.map((call) => {
         const days = Math.max(
           0,

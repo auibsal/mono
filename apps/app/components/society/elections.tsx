@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@repo/auth/provider";
+import { project } from "@repo/config";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Label } from "@repo/design-system/components/ui/label";
 import { Textarea } from "@repo/design-system/components/ui/textarea";
@@ -420,6 +421,8 @@ const ElectionCard = ({
 
 export const Elections = () => {
   const t = useTranslations("nexus.society.elections");
+  const ta = useTranslations("nexus.next");
+  const locale = useLocale();
   const elections = useElections();
 
   return (
@@ -429,7 +432,14 @@ export const Elections = () => {
         <ErrorState onRetry={() => elections.refetch()} />
       ) : null}
       {elections.data?.elections.length === 0 ? (
-        <EmptyLine>{t("empty")}</EmptyLine>
+        <EmptyLine
+          action={{
+            href: `${project.hosts.web}/${locale}/documents/constitution`,
+            label: ta("readConstitution"),
+          }}
+        >
+          {t("empty")}
+        </EmptyLine>
       ) : null}
       {elections.data?.elections.map((election) => (
         <ElectionCard

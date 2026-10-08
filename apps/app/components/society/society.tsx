@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@repo/auth/provider";
+import { project } from "@repo/config";
 import { formatLongDate } from "@repo/internationalization/format";
 import { governance, localized, unwrap } from "@repo/sal-data";
 import { useQuery } from "@tanstack/react-query";
@@ -14,6 +15,7 @@ type Lang = "en" | "ar";
 
 const Council = () => {
   const t = useTranslations("nexus.society.council");
+  const ta = useTranslations("nexus.next");
   const locale = useLocale() as Lang;
   const { supabase } = useAuth();
   const roster = useQuery({
@@ -25,7 +27,16 @@ const Council = () => {
     <SocietySection id="council" lede={t("lede")} title={t("title")}>
       {roster.isPending ? <SectionSpinner /> : null}
       {roster.isError ? <ErrorState onRetry={() => roster.refetch()} /> : null}
-      {roster.data?.length === 0 ? <EmptyLine>{t("empty")}</EmptyLine> : null}
+      {roster.data?.length === 0 ? (
+        <EmptyLine
+          action={{
+            href: `${project.hosts.web}/${locale}/documents/roles-and-staffing`,
+            label: ta("readRoles"),
+          }}
+        >
+          {t("empty")}
+        </EmptyLine>
+      ) : null}
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {roster.data?.map((seat) => (
           <li
@@ -48,6 +59,7 @@ const Council = () => {
 
 const Minutes = () => {
   const t = useTranslations("nexus.society.minutes");
+  const ta = useTranslations("nexus.next");
   const locale = useLocale() as Lang;
   const { supabase } = useAuth();
   const minutes = useQuery({
@@ -72,7 +84,16 @@ const Minutes = () => {
       {minutes.isError ? (
         <ErrorState onRetry={() => minutes.refetch()} />
       ) : null}
-      {minutes.data?.length === 0 ? <EmptyLine>{t("empty")}</EmptyLine> : null}
+      {minutes.data?.length === 0 ? (
+        <EmptyLine
+          action={{
+            href: `${project.hosts.web}/${locale}/documents`,
+            label: ta("readDocuments"),
+          }}
+        >
+          {t("empty")}
+        </EmptyLine>
+      ) : null}
       <ul className="grid">
         {minutes.data?.map((entry) => (
           <li className="border-rule border-b py-3" key={entry.id}>

@@ -3,6 +3,7 @@
 import { Button } from "@repo/design-system/components/ui/button";
 import { Spinner } from "@repo/design-system/components/ui/spinner";
 import { cn } from "@repo/design-system/lib/utils";
+import { Link } from "@repo/internationalization/navigation";
 import { useTranslations } from "next-intl";
 
 export const FullPageSpinner = () => (
@@ -45,7 +46,33 @@ export const ErrorState = ({ className, onRetry }: ErrorStateProps) => {
   );
 };
 
-/** One muted line for an empty section. */
-export const EmptyLine = ({ children }: { children: string }) => (
-  <p className="type-body text-text-secondary">{children}</p>
+const actionClass = "type-label text-xs underline underline-offset-4";
+const EXTERNAL = /^(https?|webcal):/;
+
+const ActionLink = ({ href, label }: { href: string; label: string }) =>
+  EXTERNAL.test(href) ? (
+    <a className={actionClass} href={href}>
+      {label}
+    </a>
+  ) : (
+    <Link className={actionClass} href={href}>
+      {label}
+    </Link>
+  );
+
+/**
+ * One muted line for an empty section, with the next thing to do: every
+ * empty state in the Nexus offers one (an internal path or a full URL).
+ */
+export const EmptyLine = ({
+  action,
+  children,
+}: {
+  readonly action?: { href: string; label: string };
+  readonly children: string;
+}) => (
+  <div className="grid justify-items-start gap-2">
+    <p className="type-body text-text-secondary">{children}</p>
+    {action ? <ActionLink {...action} /> : null}
+  </div>
 );

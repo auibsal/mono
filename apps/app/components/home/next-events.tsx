@@ -29,6 +29,7 @@ import { Section } from "./section";
 
 export const NextEvents = () => {
   const t = useTranslations("nexus.home.events");
+  const ta = useTranslations("nexus.next");
   const tc = useTranslations("common");
   const locale = useLocale() as "en" | "ar";
   const { supabase, user } = useAuth();
@@ -73,7 +74,9 @@ export const NextEvents = () => {
       {rsvps.data &&
       upcoming.length === 0 &&
       (waitlist.data ?? []).length === 0 ? (
-        <EmptyLine>{t("empty")}</EmptyLine>
+        <EmptyLine action={{ href: "/events", label: ta("browseEvents") }}>
+          {t("empty")}
+        </EmptyLine>
       ) : null}
       <ul className="grid gap-3">
         {upcoming.map((rsvp) =>

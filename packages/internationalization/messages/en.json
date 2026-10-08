@@ -133,6 +133,15 @@
       "loadFailed": "We couldn't load this. Check your connection and try again.",
       "saveFailed": "We couldn't save your changes. Please try again."
     },
+    "next": {
+      "browseEvents": "Browse events",
+      "openShifts": "See open shifts",
+      "readJournal": "Read the Journal",
+      "subscribeCalendar": "Add the Society calendar to your phone",
+      "readConstitution": "Read how elections work",
+      "readRoles": "Read how the Council is formed",
+      "readDocuments": "Read the founding documents"
+    },
     "pending": {
       "title": "Your account is waiting for verification",
       "body": "Accounts on addresses outside AUIB are checked by the Council. We'll email you as soon as yours is approved.",

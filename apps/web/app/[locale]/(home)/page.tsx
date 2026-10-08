@@ -69,40 +69,39 @@ const Home = async ({ params }: HomeProps) => {
       </section>
 
       <div className="mx-auto grid w-full max-w-6xl gap-16 px-4 py-16 lg:grid-cols-2">
-        <section
-          aria-labelledby="next-events"
-          className="grid content-start gap-6 lg:col-span-2"
-        >
-          <h2 className={heading} id="next-events">
-            {t("nextEvents")}
-          </h2>
-          {(nextEvents ?? []).length === 0 ? (
-            <p className="type-body text-text-secondary">{t("noEvents")}</p>
-          ) : null}
-          <ul className="grid gap-6 md:grid-cols-3">
-            {(nextEvents ?? []).map((event) => (
-              <li key={event.id}>
-                <Link
-                  className="frame press grid h-full content-start gap-2 bg-surface p-card-padding shadow-offset hover:bg-surface-tint"
-                  href={`/events/${event.slug}`}
-                >
-                  <p className="type-kicker">
-                    {formatLongDate(event.starts_at, locale)} ·{" "}
-                    {formatClock(event.starts_at, locale)}
-                  </p>
-                  <h3 className="type-subheading">
-                    {localized(event, "title", locale)}
-                  </h3>
-                  {localized(event, "summary", locale) ? (
-                    <p className="type-body text-text-secondary">
-                      {localized(event, "summary", locale)}
+        {(nextEvents ?? []).length > 0 ? (
+          <section
+            aria-labelledby="next-events"
+            className="grid content-start gap-6 lg:col-span-2"
+          >
+            <h2 className={heading} id="next-events">
+              {t("nextEvents")}
+            </h2>
+            <ul className="grid gap-6 md:grid-cols-3">
+              {(nextEvents ?? []).map((event) => (
+                <li key={event.id}>
+                  <Link
+                    className="frame press grid h-full content-start gap-2 bg-surface p-card-padding shadow-offset hover:bg-surface-tint"
+                    href={`/events/${event.slug}`}
+                  >
+                    <p className="type-kicker">
+                      {formatLongDate(event.starts_at, locale)} ·{" "}
+                      {formatClock(event.starts_at, locale)}
                     </p>
-                  ) : null}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
+                    <h3 className="type-subheading">
+                      {localized(event, "title", locale)}
+                    </h3>
+                    {localized(event, "summary", locale) ? (
+                      <p className="type-body text-text-secondary">
+                        {localized(event, "summary", locale)}
+                      </p>
+                    ) : null}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
 
         {(pieces ?? []).length > 0 ? (
           <section
