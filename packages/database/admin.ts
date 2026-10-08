@@ -8,7 +8,8 @@ import type { Database } from "./types";
  * Privileged Supabase client for trusted server code only (webhooks, cron
  * jobs, background work). It uses the secret key and therefore BYPASSES Row
  * Level Security. Never use it to serve data for a user request — use the
- * session-bound client from `@repo/auth/server` instead so RLS applies.
+ * member's own client (`useAuth().supabase` in the Nexus, or a client
+ * built from the caller's token in apps/api) so RLS applies.
  *
  * A new client is created per call; there is no shared module-level client.
  */

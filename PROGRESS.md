@@ -30,9 +30,14 @@ Branch: `claude/new-session-qosn60`.
       GitHub, connect `auibsal/mono` with the docs path `apps/docs`, then add
       the custom domain docs.auibsal.org (Mintlify shows the CNAME to add in
       Cloudflare).
-- [ ] **Internal previews:** Vercel projects sal-storybook and sal-emails are
-      created and connected (Vercel login required to view). Optional custom
-      domains: storybook.auibsal.org, emails.auibsal.org.
+- [ ] **Code security:** in GitHub Settings → Code security, turn on the
+      dependency graph, secret scanning and push protection; then add the
+      repository variable `DEPENDENCY_REVIEW` = `on` (Settings → Secrets and
+      variables → Actions → Variables) so CI's dependency review runs.
+- [ ] **Internal previews:** Vercel project sal-storybook is the one
+      preview site (components, Screens and every email; Vercel login
+      required). sal-emails is paused: delete it in Vercel (Settings →
+      Advanced → Delete Project). Optional domain: storybook.auibsal.org.
 - [ ] **Founding voters in the Constitution:** the first-100 rule departs
       from Constitution 3.3(b) and Bylaws B3.3. Add a transitional provision
       (for example "For the founding year, ending May 13, 2027, the first one

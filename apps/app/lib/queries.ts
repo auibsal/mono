@@ -1,9 +1,9 @@
 "use client";
 
 import { useAuth } from "@repo/auth/provider";
-import { readFlags } from "@repo/feature-flags";
 import type { Grant } from "@repo/rbac";
 import { journal, membership, unwrap } from "@repo/sal-data";
+import { readFlags } from "@repo/sal-data/flags";
 import { useQuery } from "@tanstack/react-query";
 
 /**

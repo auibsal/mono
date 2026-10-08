@@ -25,6 +25,20 @@ env:
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
 jobs:
+  # New or updated packages with known vulnerabilities fail the PR. Needs
+  # the repository's dependency graph (Settings → Code security); runs once
+  # the DEPENDENCY_REVIEW variable is "on".
+  dependency-review:
+    name: Dependency review
+    if: github.event_name == 'pull_request' && vars.DEPENDENCY_REVIEW == 'on'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+
   checks:
     name: Lint, typecheck, test
     runs-on: ubuntu-latest
@@ -41,6 +55,7 @@ jobs:
       - run: bun run check:placeholders
       - run: bun run check:rtl
       - run: bun run check:i18n
+      - run: bun run check:unused
       - run: bun run --cwd packages/design-system tokens --check
 
   build:
@@ -57,7 +72,7 @@ jobs:
         with:
           node-version-file: .nvmrc
       - run: bun install --frozen-lockfile
-      - run: bunx turbo build --filter=api --filter=app --filter=web --filter=email --filter=@repo/storybook
+      - run: bunx turbo build --filter=api --filter=app --filter=web --filter=@repo/storybook
       - name: Officer handbook builds (Mintlify)
         run: bun run --cwd apps/docs validate
       # No secret may reach a client bundle: the Nexus export and the public

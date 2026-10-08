@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test } from "vitest";
-import { flagKeys, readFlags, settingKey } from "./index";
+import { flagKeys, readFlags, settingKey } from "./flags";
 
 test("every flag is seeded as a setting, off by default", () => {
   const migrations = join(

@@ -1,7 +1,7 @@
 import type { Locale } from "@repo/internationalization";
 import { locales } from "@repo/internationalization";
-import { createMetadata } from "@repo/seo/metadata";
 import type { Metadata } from "next";
+import { createMetadata } from "./create-metadata";
 
 interface PageMetadata {
   description: string;

@@ -1286,7 +1286,7 @@
         "turnOff": "Turn off",
         "flagConfirm": "Change this for everyone, at once?",
         "banner": "The site-wide banner is a public notice: Content → Notices.",
-        "emails": "Email templates are part of the code (apps/email), bilingual and on brand; ask the technical administrator to change them.",
+        "emails": "Email templates are part of the code (packages/email), bilingual and on brand; ask the technical administrator to change them.",
         "contacts": {
           "title": "Contact and the Faculty Advisor",
           "email": "Society email",

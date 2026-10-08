@@ -10,6 +10,7 @@
     "./content": "./content.ts",
     "./documents": "./documents.ts",
     "./events": "./events.ts",
+    "./flags": "./flags.ts",
     "./governance": "./governance.ts",
     "./journal": "./journal.ts",
     "./membership": "./membership.ts",

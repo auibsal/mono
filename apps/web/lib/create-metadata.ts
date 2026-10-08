@@ -1,5 +1,4 @@
 import { project, type SupportedLocale } from "@repo/config";
-import merge from "lodash.merge";
 import type { Metadata } from "next";
 
 type MetadataGenerator = Omit<Metadata, "description" | "title"> & {
@@ -23,6 +22,28 @@ const author: Metadata["authors"] = {
 const publisher = project.orgName;
 const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
 const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+
+type Plain = Record<string, unknown>;
+
+const isPlain = (value: unknown): value is Plain =>
+  typeof value === "object" &&
+  value !== null &&
+  !Array.isArray(value) &&
+  !(value instanceof URL);
+
+/** Deep-merges plain objects; arrays and other values from `extra` replace. */
+const deepMerge = <T extends object>(base: T, extra: object): T => {
+  const out = { ...base } as Plain;
+  for (const [key, value] of Object.entries(extra)) {
+    if (value === undefined) {
+      continue;
+    }
+    const current = out[key];
+    out[key] =
+      isPlain(current) && isPlain(value) ? deepMerge(current, value) : value;
+  }
+  return out as T;
+};
 
 const getMetadataBase = () => {
   if (productionUrl) {
@@ -68,7 +89,7 @@ export const createMetadata = ({
     },
   };
 
-  const metadata: Metadata = merge(defaultMetadata, properties);
+  const metadata: Metadata = deepMerge(defaultMetadata, properties);
 
   if (image && metadata.openGraph) {
     metadata.openGraph.images = [
