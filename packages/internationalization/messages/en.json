@@ -206,6 +206,7 @@
       "voting": {
         "title": "Voting eligibility",
         "progress": "{count} of 2 activities this semester and last",
+        "founding": "You're one of the Society's first 100 members, so you're a Voting Member until {date}. After that, two recorded activities keep your vote.",
         "rule": "A Voting Member has two recorded activities in the current or previous semester (Constitution, SAL-GOV-01).",
         "history": "Activity history",
         "noHistory": "No activities recorded yet. Checking in at an event counts."
@@ -1736,7 +1737,7 @@
         },
         "twoThings": {
           "title": "Come to two things",
-          "body": "Any two Society activities in a semester make you a Voting Member: you can vote in elections and stand for office."
+          "body": "Any two Society activities in a semester make you a Voting Member: you can vote in elections and stand for office. For the founding year, the first 100 members vote from the day they join."
         }
       },
       "tiersTitle": "Kinds of membership",

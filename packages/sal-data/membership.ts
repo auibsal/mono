@@ -30,6 +30,9 @@ const membership = (client: Client) => client.schema("membership");
 
 export interface MemberStatus {
   activities: number;
+  founding_until: string | null;
+  /** One of the first Members, voting without activities in the founding year. */
+  founding_voter: boolean;
   is_member: boolean;
   member_since: string | null;
   pending_pledges: ("human_authorship" | "member")[];

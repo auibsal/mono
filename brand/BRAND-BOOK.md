@@ -8,7 +8,7 @@ Use this system for anything carrying the Society's name: documents, posts, prin
 - Be playful about ideas, never people: "The worst poem at AUIB wins."
 - Write Arabic for Arabic readers, then have a native speaker check it. Never ship a translation as an afterthought.
 - Names: "AUIB Society of Arts and Letters" in full on first use in formal documents; then "the Society" or "SAL". Never "the club", never "Art and Letter".
-- Endorsed programs carry the line "a Society of Arts and Letters programme" (Arabic: «من برامج جمعية الفنون والآداب»). The journal is the AUIB Literary Journal (in Arabic «مجلة AUIB الأدبية»), formerly the working title Waraq. Flag the remaining working title until chosen: Side Quest.
+- Endorsed programs carry the line "a Society of Arts and Letters programme" (Arabic: «من برامج جمعية الفنون والآداب»). The journal is the AUIB Literary Journal (in Arabic «مجلة الجامعة الأمريكية الأدبية»), formerly the working title Waraq. Flag the remaining working title until chosen: Side Quest.
 - Short titles: "Charter Day", "Every Dinar", "The Ribbon".
 - Dates as "Tuesday, October 13"; times as "6:00 PM"; money as "50,000 IQD".
 - Numerals in tables; words in prose for numbers under ten.
