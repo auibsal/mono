@@ -3343,6 +3343,13 @@ export type Database = {
         Args: { approve: boolean; entry_id: string };
         Returns: undefined;
       };
+      shift_places: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          shift_id: string;
+          taken: number;
+        }[];
+      };
       sign_up_for_shift: { Args: { shift_id: string }; Returns: undefined };
       six_words_wall: {
         Args: { max_results?: number };

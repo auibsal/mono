@@ -46,8 +46,17 @@ These stop parts of the work. Everything else continues around them.
       subjects in `subjects.txt`. (Local stacks load them from `config.toml`.)
       Since 2026-10-08 the links go to `{{ .SiteURL }}/en/auth/confirm`, so
       the Site URL must be `https://nexus.auibsal.org`.
-- [ ] **Liveblocks secret** for co-editing (`LIVEBLOCKS_SECRET` on sal-api):
-      only the owner's Liveblocks account can issue it.
+- [x] **Liveblocks secret** set on sal-api by the owner (2026-10-08).
+- [ ] **Knock and Upstash removal:** waiting for the owner's go-ahead (the
+      case is in the Master Configuration Guide). Nothing calls either one.
+- [ ] **Owner dashboard steps** listed in the Master Configuration Guide
+      (claude.ai artifact TRFXS3611Y1PRNHy5yT7En): `SENTRY_AUTH_TOKEN` on the
+      three Vercel projects, Cloudflare Email Routing for `hello@auibsal.org`
+      (no MX record today, so replies bounce), Vercel Bot Protection on
+      sal-web in Log mode.
+- [x] Cancelled by the owner (2026-10-08): leaked-password protection (a
+      paid Supabase feature; everything stays on free plans) and the AUIB IT
+      allowlist (mail already reaches AUIB inboxes).
 - [x] AUIB calendar: `https://auib.edu.iq/events/list/?ical=1`. Cloudflare
       answers this sandbox with a bot challenge (403); test from the cron.
 - [x] Cost per winter set: not final; the UI uses the 40,000 IQD placeholder
@@ -58,6 +67,18 @@ These stop parts of the work. Everything else continues around them.
       the secret key in apps/api only (decision below).
 
 ## Decisions
+
+- **American English** (owner, 2026-10-08) for all copy, comments, commits
+  and docs; verbatim quotes from the Society's documents keep their spelling.
+- **v5 Screens** (owner, 2026-10-08, Option B of the audit): square corners,
+  a 2px frame, one solid offset elevation, tracked capitals only for
+  kickers, navigation and buttons (never Arabic), the Nexus on ink. Print is
+  unchanged. Recorded in `brand/BRAND-BOOK.md` ("Screens") and the Design
+  System artifact.
+- **Monitoring and protection on free plans** (2026-10-08): Sentry (projects
+  sal-web, sal-nexus, sal-api; 10% traces, no replays), BetterStack uptime
+  (three monitors), Arcjet on apps/api's public form endpoints only (fails
+  open; not on page views).
 
 - **Public repository:** auibsal/mono is public, so `docs-source/` holds
   only documents the brief lists as public. Restricted documents live in the
@@ -121,7 +142,10 @@ These stop parts of the work. Everything else continues around them.
 ### Design system (§4)
 - [x] Tokens → CSS variables, generated from `brand/tokens.json` (tests: palette, contrast, staleness)
 - [x] shadcn variables aliased to role tokens; ink theme via `data-theme="dark"`
-- [x] No shadows (theme-level), 8px card radius, hairline/band utilities
+- [x] No shadows (theme-level), 8px card radius, hairline/band utilities (print; screens: v5 below)
+- [x] v5 Screens: `frame` and `offset` roles, `radius-screen` 0, `shadow-offset` (mirrors in RTL, `press` collapses it), `type-label`, Arabic never tracked; buttons and form controls restyled; light islands inside ink
+- [x] v5 Screens: public header (five sections, sticky), home, ink footer; Nexus shell on ink; auth on a light sheet
+- [ ] v5 Screens: remaining public pages (events list, Waraq, about, join) and admin screens get the framed cards
 - [x] Ubuntu / Ubuntu Mono / Amiri / Literata via next/font/google
 - [x] Ubuntu Arabic via next/font/local (byte-checked against brand/fonts)
 - [x] Type styles from the brand (Display 1.02, Lede 300/1.3, Body 1.5, Caption 1.4, Kicker 0.06em); `:lang(ar)` one step larger, 1.8–2.0 leading, 1.4 at display
@@ -156,9 +180,11 @@ These stop parts of the work. Everything else continues around them.
 - [x] `/setup`: both pledges (versioned, re-accept on change), language, notifications, camera-shy, personal email
 - [x] Home: membership card + QR, next events + ticket QR + cancel + .ics, voting eligibility, notices, Waraq call countdown + my submissions, programs, calendar feed (copy/reset), Six Words
 - [x] Profile and privacy, account deletion through apps/api
-- [ ] Events pages (browse, RSVP with questions, tickets, past attendance)
+- [x] Events page: browse, book with registration questions, places left, waitlist join/leave, give a place back (tickets stay on Home); the public RSVP button links to the event's card
+- [ ] Past attendance on the Events page
 - [x] Waraq: submit (rich text or files, translation fields, Human Authorship reconfirmed each time), my submissions, revise when returned, withdraw, sign the Publication Agreement (text is `TODO(content)`)
-- [ ] Programs (rotas, sign-ups); Society (Book of Members, roster, minutes, elections)
+- [x] Programs: rotas with upcoming shifts, places left (`programmes.shift_places`), sign up, give back
+- [ ] Society (Book of Members, roster, minutes, elections)
 
 ### Nexus — admin (§8)
 - [x] Shell and module gating by permission (UX only; RLS and RPCs enforce)
