@@ -1,5 +1,5 @@
 import { config, withAnalyzer, withStaticExport } from "@repo/next-config";
-import { withLogging, withSentry } from "@repo/observability/next-config";
+import { withSentry } from "@repo/observability/next-config";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 import { env } from "@/env";
@@ -11,7 +11,7 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
  * read and write goes to Supabase with the member's token (RLS decides) or
  * to apps/api. Security headers are set in vercel.json.
  */
-let nextConfig: NextConfig = withStaticExport(withLogging(config));
+let nextConfig: NextConfig = withStaticExport(config);
 
 if (env.VERCEL) {
   nextConfig = withSentry(nextConfig);

@@ -137,5 +137,5 @@ Environment variables per project are listed in each app's `.env.example`.
 ## Email (Resend)
 
 Add `auibsal.org` in Resend, then add its DKIM, SPF and return-path records in
-Vercel DNS. `apps/api` sends every email with the `apps/email` templates, in
+Vercel DNS. `apps/api` sends every email with the `@repo/email` templates (previewed in Storybook, "SAL/Emails"), in
 the member's language (both when unknown).

@@ -18,11 +18,8 @@ items and decisions) and continue from the first unticked item.
   `apps/api`, called with the member's token (`callApi` in `apps/app/lib/api.ts`).
 - `apps/api` — api.auibsal.org: email, cron, calendar feeds, revalidation,
   exports, signed URLs, account deletion. The only app with the secret key.
-- `apps/email` — static previews of every platform email in both languages
-  (`bun run build` renders `@repo/email/copy` to `out/`; Vercel project
-  sal-emails, behind Vercel login).
-- `apps/storybook` — SAL components and v5 Screens (Vercel project
-  sal-storybook, behind Vercel login).
+- `apps/storybook` — SAL components, v5 Screens and every platform email in
+  both languages (Vercel project sal-storybook, behind Vercel login).
 - `apps/docs` — the officer handbook on Mintlify (`bun run --cwd apps/docs
   validate`; docs.auibsal.org).
 - `packages/*` — shared code, imported as `@repo/<name>`. `@repo` is a fixed
@@ -48,6 +45,7 @@ bun run test                # Vitest in every workspace
 bun run check:placeholders
 bun run check:rtl           # physical Tailwind utilities (--fix rewrites them)
 bun run check:i18n          # UI text that isn't in the messages files
+bun run check:unused        # unused files and dependencies (Knip)
 bun run db:start | db:reset | db:test | db:types
 bun run --cwd apps/e2e e2e   # Playwright journeys + axe (local stack running)
 bun run --cwd packages/database db:test:sync     # copy the pgTAP preamble

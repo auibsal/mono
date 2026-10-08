@@ -1,0 +1,36 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "include": ["files", "dependencies", "unlisted"],
+  "ignoreDependencies": [
+    "import-in-the-middle",
+    "require-in-the-middle",
+    "sharp",
+    "tailwindcss",
+    "@tailwindcss/postcss",
+    "postcss-load-config"
+  ],
+  "workspaces": {
+    ".": {
+      "entry": ["scripts/*.ts"],
+      "ignoreDependencies": ["@repo/typescript-config", "vitest"]
+    },
+    "apps/api": {
+      "entry": ["scripts/*.{js,mjs,ts}"]
+    },
+    "apps/app": {
+      "entry": ["scripts/*.{js,mjs,ts}"]
+    },
+    "apps/storybook": {
+      "entry": ["scripts/*.{js,mjs,ts}"]
+    },
+    "apps/web": {
+      "entry": ["scripts/*.{js,mjs,ts}"]
+    },
+    "packages/design-system": {
+      "ignoreDependencies": ["next"]
+    },
+    "packages/email": {
+      "ignoreDependencies": ["react-dom", "@types/react-dom"]
+    }
+  }
+}

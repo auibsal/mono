@@ -1,12 +1,12 @@
 import { config, withAnalyzer } from "@repo/next-config";
-import { withLogging, withSentry } from "@repo/observability/next-config";
+import { withSentry } from "@repo/observability/next-config";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 import { env } from "@/env";
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
-let nextConfig: NextConfig = withLogging(config);
+let nextConfig: NextConfig = config;
 
 // www.auibsal.org → auibsal.org is configured as a redirect domain in Vercel.
 
