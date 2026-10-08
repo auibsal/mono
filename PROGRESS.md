@@ -9,6 +9,19 @@ Branch: `claude/new-session-qosn60`.
 
 ## Blocked — needed from the user
 
+- [ ] **Protect `main` (GitHub → Settings → Rules → New branch ruleset):** target
+      `main`; require a pull request; require the checks "Lint, typecheck,
+      test", "Build apps", "Database (migrations, RLS, integration)" and
+      "End-to-end (Playwright + axe)"; block force pushes and deletion.
+- [ ] **Email to hello@auibsal.org bounces (no MX record):** Cloudflare →
+      auibsal.org → Email → Email Routing → enable, then route
+      `hello@auibsal.org` to the inbox that should read it.
+- [ ] **Turborepo remote cache for CI (optional, faster CI):** Vercel →
+      Account Settings → Tokens → create one; GitHub → Settings → Secrets and
+      variables → Actions: secret `TURBO_TOKEN`, variable `TURBO_TEAM` =
+      `theideaiq`.
+- [ ] **Vercel spend alert:** Vercel → Settings → Billing → Spend Management:
+      a monthly amount with an email alert.
 - [ ] **Backups:** add `BACKUP_PASSPHRASE` (a long random passphrase kept in
       your password manager) to the GitHub `production` environment. Then
       `.github/workflows/backup.yml` stores an encrypted dump every night

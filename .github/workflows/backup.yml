@@ -28,6 +28,8 @@ jobs:
       SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
       SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
       BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+      # Optional BetterStack heartbeat: alerts when a nightly backup is missed.
+      BACKUP_HEARTBEAT_URL: ${{ secrets.BACKUP_HEARTBEAT_URL }}
       PROJECT_REF: fghzahtzgelqnpwdhwjo
     steps:
       - uses: actions/checkout@v7
@@ -65,3 +67,6 @@ jobs:
           path: ${{ runner.temp }}/sal-${{ env.STAMP }}.tar.gz.gpg
           retention-days: 30
           if-no-files-found: error
+      - name: Report the backup to BetterStack
+        if: env.BACKUP_HEARTBEAT_URL != ''
+        run: curl -fsS --retry 3 "$BACKUP_HEARTBEAT_URL" > /dev/null

@@ -18,6 +18,10 @@ updates:
     schedule:
       interval: monthly
     open-pull-requests-limit: 10
+    ignore:
+      # Types follow the Node.js runtime (24 LTS, .nvmrc), not the newest Node.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     groups:
       next:
         patterns: ["next", "@next/*", "eslint-config-next"]
@@ -26,7 +30,7 @@ updates:
       supabase:
         patterns: ["@supabase/*", "supabase"]
       storybook:
-        patterns: ["storybook", "@storybook/*", "@chromatic-com/*", "chromatic"]
+        patterns: ["storybook", "@storybook/*"]
       sentry:
         patterns: ["@sentry/*"]
       tooling:
