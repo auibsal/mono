@@ -1,4 +1,4 @@
-magic_link: Sign in to the Nexus · تسجيل الدخول إلى النِّكسَس
+magic_link: Your Nexus sign-in link · رابط دخولك إلى النِّكسَس
 confirmation: Confirm your email · أكّد بريدك الإلكتروني
 recovery: Set a new password · تعيين كلمة مرور جديدة
 email_change: Confirm your new email · أكّد بريدك الجديد

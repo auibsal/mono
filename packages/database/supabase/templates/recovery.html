@@ -14,14 +14,14 @@
             <div lang="en" dir="ltr" style="text-align:left;">
               <h1 style="margin:0 0 16px;color:#9c213e;font-size:22px;line-height:1.3;">Set a new password</h1>
               <p style="margin:0 0 16px;font-size:16px;line-height:1.6;">Someone asked to reset the password for this account in the Nexus. Use the button below to choose a new one.</p>
-              <p style="margin:0 0 16px;"><a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#9c213e;color:#ffffff;border-radius:6px;padding:12px 20px;font-size:15px;text-decoration:none;">Set a new password</a></p>
+              <p style="margin:0 0 16px;"><a href="{{ .SiteURL }}/en/auth/confirm?token_hash={{ .TokenHash }}&amp;type=recovery&amp;next={{ .RedirectTo }}" style="display:inline-block;background:#9c213e;color:#ffffff;border-radius:6px;padding:12px 20px;font-size:15px;text-decoration:none;">Set a new password</a></p>
               <p style="margin:0;color:#4a5559;font-size:13px;line-height:1.6;">If you didn't ask for this, ignore this email; nothing changes. Your password stays as it is.</p>
             </div>
             <hr style="border:none;border-top:1px solid #e3dedf;margin:24px 0;" />
             <div lang="ar" dir="rtl" style="text-align:right;">
               <h1 style="margin:0 0 16px;color:#9c213e;font-size:23px;line-height:1.4;">تعيين كلمة مرور جديدة</h1>
               <p style="margin:0 0 16px;font-size:17px;line-height:1.9;">طلب أحدهم إعادة تعيين كلمة مرور هذا الحساب في النِّكسَس. استخدم الزر أدناه لاختيار كلمة جديدة.</p>
-              <p style="margin:0 0 16px;"><a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#9c213e;color:#ffffff;border-radius:6px;padding:12px 20px;font-size:15px;text-decoration:none;">تعيين كلمة مرور جديدة</a></p>
+              <p style="margin:0 0 16px;"><a href="{{ .SiteURL }}/en/auth/confirm?token_hash={{ .TokenHash }}&amp;type=recovery&amp;next={{ .RedirectTo }}" style="display:inline-block;background:#9c213e;color:#ffffff;border-radius:6px;padding:12px 20px;font-size:15px;text-decoration:none;">تعيين كلمة مرور جديدة</a></p>
               <p style="margin:0;color:#4a5559;font-size:13px;line-height:1.9;">إن لم تطلب ذلك، فتجاهل هذه الرسالة؛ لن يتغير شيء. تبقى كلمة مرورك كما هي.</p>
             </div>
             <hr style="border:none;border-top:1px solid #e3dedf;margin:24px 0 16px;" />

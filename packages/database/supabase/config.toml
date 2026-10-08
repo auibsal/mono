@@ -270,7 +270,7 @@ otp_expiry = 3600
 # SAL's bilingual auth emails (the same files are pasted into the hosted
 # project's Auth templates).
 [auth.email.template.magic_link]
-subject = "Sign in to the Nexus · تسجيل الدخول إلى النِّكسَس"
+subject = "Your Nexus sign-in link · رابط دخولك إلى النِّكسَس"
 content_path = "./supabase/templates/magic_link.html"
 
 [auth.email.template.confirmation]
