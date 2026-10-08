@@ -480,7 +480,7 @@ const SocietyContacts = ({ settings }: { settings: Record<string, Json> }) => {
             dir="ltr"
             id="contact-telegram"
             onChange={(event) => setTelegram(event.target.value)}
-            placeholder="https://t.me/…"
+            placeholder={t("telegramPlaceholder")}
             type="url"
             value={telegram}
           />

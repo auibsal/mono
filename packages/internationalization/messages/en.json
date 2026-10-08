@@ -1284,7 +1284,8 @@
           "telegram": "The Common Room on Telegram",
           "telegramInvalid": "Use the full Telegram link, starting https://t.me/.",
           "advisor": "Faculty Advisor",
-          "hint": "Shown on auibsal.org (Contact) and in the Nexus (Society). Leave a field empty to hide it."
+          "hint": "Shown on auibsal.org (Contact) and in the Nexus (Society). Leave a field empty to hide it.",
+          "telegramPlaceholder": "https://t.me/…"
         }
       },
       "journal": {
