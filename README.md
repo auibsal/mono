@@ -9,16 +9,17 @@ at the American University of Iraq – Baghdad. *The paper and the pen.*
 | `apps/web` | Public site, `/en` and `/ar` | auibsal.org |
 | `apps/app` | **The Nexus**: member portal and role-gated admin (static export) | nexus.auibsal.org |
 | `apps/api` | Email, cron, calendar feeds, revalidation, exports, deletion | api.auibsal.org |
-| `apps/email` | React Email templates (bilingual) | used by `api` |
-| `apps/docs` | Developer handbook and admin guide | docs.auibsal.org |
-| `apps/storybook` | Design-system workbench | not public |
+| `apps/email` | Static previews of every platform email (bilingual) | sal-emails (Vercel login) |
+| `apps/docs` | Officer handbook (Mintlify) | docs.auibsal.org |
+| `apps/storybook` | SAL components and v5 Screens | sal-storybook (Vercel login) |
+| `apps/e2e` | Playwright + axe journeys | CI |
 
 Data lives in Supabase (Postgres with Row Level Security on every table,
 Auth, Storage). Hosting is Vercel.
 
 ## Getting started
 
-Prerequisites: Node.js 22+, [Bun](https://bun.sh), Docker (for the local
+Prerequisites: Node.js 24 (`.nvmrc`), [Bun](https://bun.sh), Docker (for the local
 Supabase stack).
 
 ```sh

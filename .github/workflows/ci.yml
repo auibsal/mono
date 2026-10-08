@@ -19,6 +19,10 @@ env:
   NEXT_PUBLIC_WEB_URL: http://localhost:3001
   NEXT_PUBLIC_API_URL: http://localhost:3002
   TURBO_TELEMETRY_DISABLED: "1"
+  # Vercel Remote Cache: unchanged packages are not rebuilt or re-tested.
+  # Inactive until TURBO_TOKEN (secret) and TURBO_TEAM (variable) are set.
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
 jobs:
   checks:
