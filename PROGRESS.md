@@ -30,6 +30,10 @@ Branch: `claude/new-session-qosn60`.
       GitHub, connect `auibsal/mono` with the docs path `apps/docs`, then add
       the custom domain docs.auibsal.org (Mintlify shows the CNAME to add in
       Cloudflare).
+- [ ] **Code security:** in GitHub Settings → Code security, turn on the
+      dependency graph, secret scanning and push protection; then add the
+      repository variable `DEPENDENCY_REVIEW` = `on` (Settings → Secrets and
+      variables → Actions → Variables) so CI's dependency review runs.
 - [ ] **Internal previews:** Vercel project sal-storybook is the one
       preview site (components, Screens and every email; Vercel login
       required). sal-emails is paused: delete it in Vercel (Settings →
