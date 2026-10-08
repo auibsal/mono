@@ -5,9 +5,9 @@ import type { Preview } from "@storybook/react";
 import "@repo/design-system/styles/globals.css";
 
 /**
- * SAL v4: light everywhere, the ink theme (data-theme="dark") only on the
- * "why" pages and the Open Call page. Every component is checked in both
- * directions with the Direction toolbar (LTR English, RTL Arabic).
+ * SAL v4 with v5 Screens: the public site is light and the Nexus is on ink
+ * (data-theme="dark"). Stories cover SAL components only; every one is
+ * checked on both grounds (Theme) and in both directions (Direction).
  */
 const preview: Preview = {
   decorators: [
