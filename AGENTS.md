@@ -43,6 +43,7 @@ bun run check:placeholders
 bun run check:rtl           # physical Tailwind utilities (--fix rewrites them)
 bun run check:i18n          # UI text that isn't in the messages files
 bun run db:start | db:reset | db:test | db:types
+bun run --cwd apps/e2e e2e   # Playwright journeys + axe (local stack running)
 bun run --cwd packages/database db:test:sync     # copy the pgTAP preamble
 bun run --cwd packages/design-system tokens      # regenerate tokens.css
 bun run gen:package         # scaffold packages/<name>
