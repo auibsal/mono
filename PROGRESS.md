@@ -44,6 +44,8 @@ These stop parts of the work. Everything else continues around them.
       Society of Arts and Letters". Authentication → Email Templates: paste
       the four files in `packages/database/supabase/templates` with the
       subjects in `subjects.txt`. (Local stacks load them from `config.toml`.)
+      Since 2026-10-08 the links go to `{{ .SiteURL }}/en/auth/confirm`, so
+      the Site URL must be `https://nexus.auibsal.org`.
 - [ ] **Liveblocks secret** for co-editing (`LIVEBLOCKS_SECRET` on sal-api):
       only the owner's Liveblocks account can issue it.
 - [x] AUIB calendar: `https://auib.edu.iq/events/list/?ical=1`. Cloudflare
@@ -262,3 +264,6 @@ Covered by automated tests so far:
   Arabic halves of `packages/database/supabase/templates/*.html` and
   `subjects.txt`.
 - Sign-in links (2026-10-08): «جارٍ الإرسال…» and the new `auth.callback.failed` text.
+- Auth email links (2026-10-08): `auth.confirm.*` and the new Arabic in
+  `supabase/templates/magic_link.html` («رابط دخولك», «افتح النِّكسَس»).
+

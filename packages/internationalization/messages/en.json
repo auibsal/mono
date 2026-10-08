@@ -105,6 +105,13 @@
       "title": "Signing you in",
       "failed": "This link has expired, was already used, or was opened in a different browser from the one you asked from. Ask for a new link and open it here.",
       "retry": "Back to sign in"
+    },
+    "confirm": {
+      "title": "Continue to the Nexus",
+      "body": "Press Continue to finish signing in.",
+      "recovery": "Press Continue, then choose a new password.",
+      "continue": "Continue",
+      "pending": "Signing you in…"
     }
   },
   "nexus": {
