@@ -20,6 +20,7 @@ import {
 } from "@repo/email/copy";
 import { Notice } from "@repo/email/templates/notice";
 import { env } from "@/env";
+import { pushToUser } from "./push";
 
 /**
  * Processes core.outbox rows: the emails and site revalidation queued by
@@ -29,7 +30,8 @@ import { env } from "@/env";
  * MAX_ATTEMPTS. When the email plan's daily limit is spent, the claim is
  * given back and the row waits for the limit to reset: it is delayed, not
  * lost. Each email carries an idempotency key, so a retried row never sends
- * the same email twice.
+ * the same email twice. Members who turned on phone notifications also get
+ * the notice on their devices, after the email has gone.
  */
 export const MAX_ATTEMPTS = 5;
 
@@ -48,6 +50,8 @@ const appUrl = () => env.NEXT_PUBLIC_APP_URL.replace(TRAILING_SLASH, "");
 interface Recipient {
   email: string;
   lang: Lang;
+  /** Set for members (push goes to their devices); unset for guests. */
+  userId?: string;
 }
 
 const recipient = async (
@@ -70,20 +74,37 @@ const recipient = async (
   if (!email) {
     return null;
   }
-  return { email, lang: profile?.locale === "ar" ? "ar" : "en" };
+  return { email, lang: profile?.locale === "ar" ? "ar" : "en", userId };
 };
 
-/** The outbox row being processed, for idempotency keys. */
-const currentRow = new AsyncLocalStorage<number>();
+/** The outbox row being processed: for idempotency keys and push. */
+const current = new AsyncLocalStorage<{ admin: AdminClient; row: number }>();
+
+/** The push version of a notice: its heading and first line, in their language. */
+const pushNotice = (built: Built, lang: Lang, row: number | undefined) => {
+  const block = built.blocks.find((b) => b.lang === lang) ?? built.blocks[0];
+  return {
+    body: block?.paragraphs[0] ?? "",
+    lang,
+    tag: row === undefined ? undefined : `outbox-${row}`,
+    title: block?.heading ?? built.subject,
+    url: block?.action?.href ?? `${appUrl()}/${lang}`,
+  };
+};
 
 const send = async (to: Recipient, built: Built) => {
-  const row = currentRow.getStore();
+  const run = current.getStore();
+  const row = run?.row;
   await sendEmail({
     idempotencyKey: row === undefined ? undefined : `outbox-${row}-${to.email}`,
     react: Notice({ blocks: built.blocks, preview: built.preview }),
     subject: built.subject,
     to: to.email,
   });
+  if (run && to.userId) {
+    // Never throws: email is the record.
+    await pushToUser(run.admin, to.userId, pushNotice(built, to.lang, row));
+  }
 };
 
 const eventInfo = async (admin: AdminClient, eventId: unknown) => {
@@ -315,7 +336,7 @@ export const processRow = async (admin: AdminClient, id: number) => {
     : undefined;
   try {
     if (handler) {
-      await currentRow.run(id, () =>
+      await current.run({ admin, row: id }, () =>
         handler(admin, (row as OutboxRow).payload)
       );
     }

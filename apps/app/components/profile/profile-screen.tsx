@@ -16,6 +16,7 @@ import { type FormEvent, useEffect, useId, useState } from "react";
 import { queryKeys, useProfile } from "@/lib/queries";
 import { ErrorState, SectionSpinner } from "../states";
 import { DeleteAccount } from "./delete-account";
+import { PhoneNotifications } from "./phone-notifications";
 
 export const ProfileScreen = () => {
   const t = useTranslations("nexus");
@@ -192,6 +193,9 @@ export const ProfileScreen = () => {
           {saveLabel}
         </Button>
       </form>
+      <SalCard>
+        <PhoneNotifications />
+      </SalCard>
       <SalCard>
         <DeleteAccount />
       </SalCard>

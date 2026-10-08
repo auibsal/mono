@@ -27,6 +27,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { MenuIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { type ReactNode, useState } from "react";
+import { disablePush } from "@/lib/push";
 import { useVisibleModules } from "./admin/admin-shell";
 import { useTwoStep } from "./auth/two-step";
 import { LanguageSwitcher } from "./language-switcher";
@@ -92,6 +93,8 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
   const account = useAccountLinks();
 
   const signOut = async () => {
+    // A shared computer must not show the last member's notices.
+    await disablePush(supabase).catch(() => undefined);
     await supabase.auth.signOut();
     queryClient.clear();
     router.replace("/sign-in");

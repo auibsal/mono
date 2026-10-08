@@ -252,3 +252,15 @@ export const removalReceived = (lang: Lang, dueAt: string) =>
         : `It comes down within 24 hours, by ${when(dueAt, l)}, and we'll write to you when it's done.`,
     ],
   }));
+
+/** The test notice sent from Profile and privacy (push only, no email). */
+export const pushTest = (lang: Lang) =>
+  lang === "ar"
+    ? {
+        body: "ستصلك هنا تذكيرات الفعاليات وأخبار المجلة وقرارات النشر.",
+        title: "الإشعارات تعمل",
+      }
+    : {
+        body: "Event reminders, Journal news and decisions will arrive here.",
+        title: "Notifications are on",
+      };

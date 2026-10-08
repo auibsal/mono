@@ -97,6 +97,12 @@ These stop parts of the work. Everything else continues around them.
 - [ ] **HSTS preload:** the header now carries `preload`; submit
       auibsal.org at hstspreload.org once the deploy is live.
 - [ ] **Supabase Auth → MFA:** confirm TOTP is enabled (on by default).
+- [ ] **Phone notifications (Web Push) keys:** run
+      `bunx web-push generate-vapid-keys` once. Put the public key in
+      `NEXT_PUBLIC_VAPID_PUBLIC_KEY` on sal-nexus and sal-api, the private
+      key in `VAPID_PRIVATE_KEY` on sal-api only, then redeploy both. Until
+      then the Profile section says the browser can't show notifications and
+      everything still goes by email.
 - [ ] **Owner dashboard steps** listed in the SAL Platform Master Guide
       (claude.ai/code/artifact/4f305659-631a-4244-adbd-18b93a8e10a1): `SENTRY_AUTH_TOKEN` on the
       three Vercel projects, Cloudflare Email Routing for `hello@auibsal.org`
@@ -248,6 +254,12 @@ These stop parts of the work. Everything else continues around them.
 - [x] `/setup`: both pledges (versioned, re-accept on change), language, notifications, camera-shy, personal email
 - [x] Home: membership card + QR, next events + ticket QR + cancel + .ics, voting eligibility, notices, the Journal call countdown + my submissions, programs, calendar feed (copy/reset), Six Words
 - [x] Profile and privacy, account deletion through apps/api
+- [x] Phone notifications (Web Push, free, no vendor): the Nexus is
+      installable (manifest, `public/sw.js`); Profile and privacy turns them
+      on per device (`core.push_subscriptions`, RLS, `core.save_push_subscription`),
+      with a test notice; sign-out removes the device; every outbox notice
+      to a member also goes to their devices after the email (`apps/api/lib/push.ts`).
+      iPhone needs the Nexus on the Home Screen (iOS 16.4+).
 - [x] Events page: browse, book with registration questions, places left, waitlist join/leave, give a place back (tickets stay on Home); the public RSVP button links to the event's card
 - [ ] Past attendance on the Events page
 - [x] Journal: submit (rich text or files, translation fields, Human Authorship reconfirmed each time), my submissions, revise when returned, withdraw, sign the Publication Agreement (text is `TODO(content)`)
@@ -374,3 +386,5 @@ Covered by automated tests so far:
   «العدد الأول: دعوة للمشاركة».
 - Founding voters (2026-10-08): `nexus.home.voting.founding` and the added
   sentence in `web.join.steps.twoThings.body`.
+- Phone notifications (2026-10-08): `nexus.profile.push.*` and `pushTest`
+  in `packages/email/copy.ts`.

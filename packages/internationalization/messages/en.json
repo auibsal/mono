@@ -492,6 +492,22 @@
         "submit": "Delete my account",
         "deleting": "Deleting…",
         "failed": "We couldn't delete your account. Please try again."
+      },
+      "push": {
+        "title": "Phone notifications",
+        "description": "Event reminders, Journal news and decisions on this phone or computer, as well as by email. Turn them on on each device you use.",
+        "on": "On for this device.",
+        "off": "Off for this device.",
+        "turnOn": "Turn on for this device",
+        "turningOn": "Turning on…",
+        "turnOff": "Turn off for this device",
+        "test": "Send a test",
+        "testSent": "Sent. It should arrive in a few seconds.",
+        "testNone": "Nothing arrived at this device. Turn notifications off and on again.",
+        "needsInstall": "On iPhone and iPad, add the Nexus to your Home Screen first: tap Share, then Add to Home Screen, and open it from there.",
+        "denied": "Notifications are blocked for the Nexus in this browser. Allow them in the browser's site settings, then try again.",
+        "unsupported": "This browser can't show notifications. You'll still get every notice by email.",
+        "failed": "We couldn't change notifications. Please try again."
       }
     },
     "admin": {
