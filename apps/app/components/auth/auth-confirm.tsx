@@ -59,7 +59,6 @@ export const AuthConfirm = () => {
   }, [locale, params, router]);
 
   const confirm = async () => {
-    // biome-ignore lint/suspicious/noUnnecessaryConditions: set by an earlier press still awaiting
     if (inFlight.current || !(tokenHash && type)) {
       return;
     }

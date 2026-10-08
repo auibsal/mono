@@ -94,7 +94,7 @@ export const stripDocx = (bytes: Uint8Array) => {
   } catch (error) {
     throw new BlindCopyError("Unreadable document", { cause: error });
   }
-  if (!files["word/document.xml"]) {
+  if (!("word/document.xml" in files)) {
     throw new BlindCopyError("Not a Word document");
   }
   for (const name of Object.keys(files)) {

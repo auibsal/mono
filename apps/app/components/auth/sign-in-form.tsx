@@ -46,7 +46,6 @@ export const SignInForm = () => {
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // biome-ignore lint/suspicious/noUnnecessaryConditions: set by an earlier submit still awaiting
     if (inFlight.current) {
       return;
     }

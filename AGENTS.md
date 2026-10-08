@@ -18,7 +18,13 @@ items and decisions) and continue from the first unticked item.
   `apps/api`, called with the member's token (`callApi` in `apps/app/lib/api.ts`).
 - `apps/api` — api.auibsal.org: email, cron, calendar feeds, revalidation,
   exports, signed URLs, account deletion. The only app with the secret key.
-- `apps/email`, `apps/docs`, `apps/storybook` — email templates, docs, UI workbench.
+- `apps/email` — static previews of every platform email in both languages
+  (`bun run build` renders `@repo/email/copy` to `out/`; Vercel project
+  sal-emails, behind Vercel login).
+- `apps/storybook` — SAL components and v5 Screens (Vercel project
+  sal-storybook, behind Vercel login).
+- `apps/docs` — the officer handbook on Mintlify (`bun run --cwd apps/docs
+  validate`; docs.auibsal.org).
 - `packages/*` — shared code, imported as `@repo/<name>`. `@repo` is a fixed
   internal scope; never rename it.
   - `@repo/database` — SQL migrations (`supabase/migrations`), pgTAP tests

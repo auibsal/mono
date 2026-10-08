@@ -73,7 +73,7 @@ insert into core.semesters (code, name_en, name_ar, starts_on, ends_on) values
 update core.settings set value = '0' where key = 'membership.founding_voters';
 -- </preamble>
 
-select plan(11);
+select plan(14);
 
 select is(private.call_api('/hooks/outbox', '{}'::jsonb, 'outbox_webhook_secret'), null,
   'Without platform.api_url nothing is called');
@@ -83,8 +83,8 @@ select lives_ok(
   'Queuing still works when dispatch is not configured'
 );
 
-select is((select count(*)::integer from cron.job where jobname like 'sal-%'), 5,
-  'The five scheduled jobs exist');
+select is((select count(*)::integer from cron.job where jobname like 'sal-%'), 6,
+  'The six scheduled jobs exist');
 
 -- Scheduled publishing.
 insert into content.news_posts (slug, title_en, title_ar, status, publish_at) values
@@ -93,6 +93,16 @@ insert into content.news_posts (slug, title_en, title_ar, status, publish_at) va
 select is(private.publish_scheduled(), 1, 'Only what is due is published');
 select is((select status from content.news_posts where slug = 'later'), 'scheduled',
   'Future posts wait');
+
+-- Revalidation: nothing due queues nothing; a pending one is not doubled.
+update core.outbox set processed_at = now() where processed_at is null;
+select is(private.publish_scheduled(), 0, 'Nothing more is due');
+select is((select count(*)::integer from core.outbox where kind = 'revalidate' and processed_at is null), 0,
+  'A publish run with nothing due queues no revalidation');
+update content.news_posts set title_en = 'Due (edited)' where slug = 'due';
+update content.news_posts set title_en = 'Due (edited again)' where slug = 'due';
+select is((select count(*)::integer from core.outbox where kind = 'revalidate' and processed_at is null), 1,
+  'Two edits before dispatch queue one revalidation');
 
 -- Daily notices are not queued twice.
 select is(private.enqueue_once('test.once', '{"x": 1}'::jsonb, interval '1 day'), true,

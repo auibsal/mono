@@ -19,7 +19,7 @@ export const PendingVerification = () => {
   const request = useVerificationRequest();
   const queryClient = useQueryClient();
   const id = useId();
-  const [statement, setStatement] = useState<string>();
+  const [statement, setStatement] = useState<string | undefined>(undefined);
 
   const save = useMutation({
     mutationFn: async () => {

@@ -1,0 +1,67 @@
+name: Back up production database
+
+# Nightly logical backup of production (roles, schema, data), encrypted
+# before it leaves the runner: the repository is public, so the artifact is
+# useless without BACKUP_PASSPHRASE. Kept for 30 days. Restore steps are in
+# the Master Configuration Guide ("Restore a backup").
+
+on:
+  schedule:
+    # 23:20 UTC is 2:20 AM in Baghdad.
+    - cron: "20 23 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: backup-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  dump:
+    name: supabase db dump
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: production
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+      PROJECT_REF: fghzahtzgelqnpwdhwjo
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - name: Secrets are set
+        run: |
+          for name in SUPABASE_ACCESS_TOKEN SUPABASE_DB_PASSWORD BACKUP_PASSPHRASE; do
+            if [ -z "${!name}" ]; then
+              echo "Add $name to the production environment."
+              exit 1
+            fi
+          done
+      - name: Link the project
+        working-directory: packages/database
+        run: bunx supabase link --project-ref "$PROJECT_REF" --password "$SUPABASE_DB_PASSWORD"
+      - name: Dump and encrypt
+        working-directory: packages/database
+        run: |
+          stamp="$(date -u +%Y-%m-%d)"
+          mkdir -p "$RUNNER_TEMP/backup"
+          bunx supabase db dump --linked --role-only -f "$RUNNER_TEMP/backup/roles.sql" --password "$SUPABASE_DB_PASSWORD"
+          bunx supabase db dump --linked -f "$RUNNER_TEMP/backup/schema.sql" --password "$SUPABASE_DB_PASSWORD"
+          bunx supabase db dump --linked --data-only --use-copy -f "$RUNNER_TEMP/backup/data.sql" --password "$SUPABASE_DB_PASSWORD"
+          tar -C "$RUNNER_TEMP/backup" -czf "$RUNNER_TEMP/sal-$stamp.tar.gz" .
+          gpg --batch --yes --pinentry-mode loopback --passphrase "$BACKUP_PASSPHRASE" \
+            --symmetric --cipher-algo AES256 -o "$RUNNER_TEMP/sal-$stamp.tar.gz.gpg" "$RUNNER_TEMP/sal-$stamp.tar.gz"
+          rm -rf "$RUNNER_TEMP/backup" "$RUNNER_TEMP/sal-$stamp.tar.gz"
+          echo "STAMP=$stamp" >> "$GITHUB_ENV"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sal-backup-${{ env.STAMP }}
+          path: ${{ runner.temp }}/sal-${{ env.STAMP }}.tar.gz.gpg
+          retention-days: 30
+          if-no-files-found: error
