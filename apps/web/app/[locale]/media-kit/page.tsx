@@ -17,7 +17,7 @@ const LOGOS = [
 ] as const;
 
 // The palette from brand/tokens.json (SAL v4).
-const COLOURS = [
+const COLORS = [
   ["Crimson", "#9c213e"],
   ["Crimson 700", "#7e1a32"],
   ["Crimson 100", "#ebcbd3"],
@@ -84,7 +84,7 @@ const MediaKitPage = async ({ params }: LocaleParams) => {
 
       <Section id="colours" title={t("coloursTitle")}>
         <ul className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-7">
-          {COLOURS.map(([name, hex]) => (
+          {COLORS.map(([name, hex]) => (
             <li className="grid gap-2" key={hex}>
               <span
                 aria-hidden="true"

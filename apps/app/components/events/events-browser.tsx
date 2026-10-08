@@ -34,7 +34,7 @@ interface Question {
 
 /**
  * Upcoming events the member can see (RLS adds members-only ones), with
- * places left, booking, the waitlist and cancelling. Booking and the
+ * places left, booking, the waitlist and canceling. Booking and the
  * waitlist are one RPC (events.rsvp), so a full event can't be overfilled.
  */
 const useUpcomingEvents = () => {

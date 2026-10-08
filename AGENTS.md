@@ -64,6 +64,12 @@ any schema change. Integration tests run against a local stack with
   `events.manage` for program X?"). Roles live only in
   `access.role_assignments`, written only through `access.assign_role()`.
   Never read roles from `user_metadata` or `app_metadata`.
+- **Migrations ship through CI.** Add a file to `supabase/migrations`; after
+  merge, `.github/workflows/migrate.yml` runs `supabase db push` against
+  production once CI passes. Never paste SQL into the production database.
+- **Two-step sign-in for sensitive roles.** Roles with `requires_mfa`
+  (Council officers, directors, Elections Committee) count only on an `aal2`
+  session; `access.has_permission` enforces it. Don't add bypasses.
 - **Atomic multi-step operations are Postgres functions** called by RPC
   (ledger sign-off, ballots, blind ids, waitlist promotion, transitions).
 - **No secrets in `app` or `web`.** The service-role key lives only in
@@ -77,6 +83,12 @@ any schema change. Integration tests run against a local stack with
   entries); only signed-off entries count. No online payments of any kind.
 - **Documents.** Never present a draft document as adopted. Every document
   page shows its status from the registry.
+- **Names.** The journal is the **AUIB Literary Journal** (Arabic «مجلة AUIB
+  الأدبية»); "Waraq" was its working title and is not used. The Society has
+  no charity partner on record (Natrok Athar was removed on Oct 8, 2026).
+- **Navigation.** At most five sections per app header; the rest go in the
+  footer (web) or the Account menu (Nexus). Every Nexus empty state offers one
+  next action (`EmptyLine action`).
 - **Content.** Don't invent names, dates, figures or quotes. Missing text is a
   `TODO(content): …` placeholder listed in `PROGRESS.md`. Arabic written for
   this platform (not taken from a source) is listed as `needs-native-review`.
