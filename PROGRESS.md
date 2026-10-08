@@ -97,8 +97,8 @@ These stop parts of the work. Everything else continues around them.
 - [ ] **HSTS preload:** the header now carries `preload`; submit
       auibsal.org at hstspreload.org once the deploy is live.
 - [ ] **Supabase Auth → MFA:** confirm TOTP is enabled (on by default).
-- [ ] **Owner dashboard steps** listed in the Master Configuration Guide
-      (claude.ai artifact TRFXS3611Y1PRNHy5yT7En): `SENTRY_AUTH_TOKEN` on the
+- [ ] **Owner dashboard steps** listed in the SAL Platform Master Guide
+      (claude.ai/code/artifact/4f305659-631a-4244-adbd-18b93a8e10a1): `SENTRY_AUTH_TOKEN` on the
       three Vercel projects, Cloudflare Email Routing for `hello@auibsal.org`
       (no MX record today, so replies bounce), Vercel Bot Protection on
       sal-web in Log mode.
