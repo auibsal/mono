@@ -4,10 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { type LocaleParams, sectionMetadata } from "@/lib/page";
 import { readPublished } from "@/lib/supabase";
 
-export const generateMetadata = sectionMetadata(
-  "web.programmes",
-  "/programmes"
-);
+export const generateMetadata = sectionMetadata("web.programmes", "/programs");
 
 const ProgrammesPage = async ({ params }: LocaleParams) => {
   const { locale } = await params;

@@ -10,7 +10,7 @@ import type { MetadataRoute } from "next";
 const staticPaths = [
   "",
   "/about",
-  "/programmes",
+  "/programs",
   "/journal",
   "/join",
   "/give",

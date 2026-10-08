@@ -122,7 +122,7 @@
       "home": "الرئيسية",
       "events": "الفعاليات",
       "journal": "المجلة",
-      "programmes": "البرامج",
+      "programs": "البرامج",
       "society": "الجمعية",
       "account": "الحساب",
       "profile": "الملف الشخصي والخصوصية",
@@ -490,7 +490,7 @@
         "pipeline": "المجلة: مسار التحرير",
         "content": "المحتوى",
         "charity": "العمل الخيري",
-        "programmes": "البرامج",
+        "programs": "البرامج",
         "governance": "الحوكمة",
         "activity": "سجل النشاط",
         "settings": "الإعدادات"
@@ -1531,7 +1531,7 @@
   "web": {
     "nav": {
       "about": "عن الجمعية",
-      "programmes": "البرامج",
+      "programs": "البرامج",
       "journal": "المجلة",
       "events": "الفعاليات",
       "give": "تبرّع",

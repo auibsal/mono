@@ -12,6 +12,7 @@ import {
   setRequestLocale,
 } from "next-intl/server";
 import type { ReactNode } from "react";
+import { JsonLd, organization } from "@/lib/json-ld";
 import { Footer } from "./components/footer";
 import { Header } from "./components/header";
 
@@ -47,6 +48,7 @@ const RootLayout = async ({ children, params }: RootLayoutProperties) => {
         >
           {t("skipToContent")}
         </a>
+        <JsonLd data={organization()} />
         <NextIntlClientProvider messages={{ common, web }}>
           <AnalyticsProvider>
             <DesignSystemProvider dir={dir} labels={common.ui}>

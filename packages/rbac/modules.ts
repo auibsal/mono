@@ -39,7 +39,7 @@ export const adminModules = [
       "charity.ledger.signoff",
     ],
   },
-  { key: "programmes", permissions: ["programmes.manage"] },
+  { key: "programs", permissions: ["programmes.manage"] },
   {
     key: "governance",
     permissions: [

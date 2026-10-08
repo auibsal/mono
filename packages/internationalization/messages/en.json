@@ -122,7 +122,7 @@
       "home": "Home",
       "events": "Events",
       "journal": "Journal",
-      "programmes": "Programs",
+      "programs": "Programs",
       "society": "Society",
       "account": "Account",
       "profile": "Profile and privacy",
@@ -490,7 +490,7 @@
         "pipeline": "Journal: pipeline",
         "content": "Content",
         "charity": "Charity",
-        "programmes": "Programs",
+        "programs": "Programs",
         "governance": "Governance",
         "activity": "Activity log",
         "settings": "Settings"
@@ -1531,7 +1531,7 @@
   "web": {
     "nav": {
       "about": "About",
-      "programmes": "Programs",
+      "programs": "Programs",
       "journal": "Journal",
       "events": "Events",
       "give": "Give",

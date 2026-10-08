@@ -7,7 +7,7 @@ export const generateMetadata = titleFrom((t) =>
 );
 
 const ProgrammesPage = () => (
-  <RequireModule module="programmes">
+  <RequireModule module="programs">
     <ProgrammesAdmin />
   </RequireModule>
 );

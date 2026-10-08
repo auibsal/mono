@@ -10,10 +10,10 @@ import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
 // Five sections in the header (v5); Give, News and Documents are in the footer.
-type SectionKey = "about" | "programmes" | "journal" | "events" | "join";
+type SectionKey = "about" | "programs" | "journal" | "events" | "join";
 const sections: { href: string; key: SectionKey }[] = [
   { href: "/about", key: "about" },
-  { href: "/programmes", key: "programmes" },
+  { href: "/programs", key: "programs" },
   { href: "/journal", key: "journal" },
   { href: "/events", key: "events" },
   { href: "/join", key: "join" },

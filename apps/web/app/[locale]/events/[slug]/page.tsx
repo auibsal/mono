@@ -7,6 +7,7 @@ import { events, localized, sanitizeRichText } from "@repo/sal-data";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { eventLd, JsonLd } from "@/lib/json-ld";
 import { mediaUrl } from "@/lib/media";
 import { localizedMetadata } from "@/lib/metadata";
 import { readPublished } from "@/lib/supabase";
@@ -57,6 +58,18 @@ const EventPage = async ({ params }: EventProps) => {
 
   return (
     <article className="mx-auto grid w-full max-w-3xl gap-8 px-4 py-16">
+      <JsonLd
+        data={eventLd(locale, {
+          ends_at: event.ends_at,
+          image,
+          name: localized(event, "title", locale),
+          slug: event.slug,
+          starts_at: event.starts_at,
+          status: event.status,
+          summary: localized(event, "summary", locale),
+          venue: localized(event, "venue", locale),
+        })}
+      />
       <Link
         className="type-caption underline underline-offset-4"
         href="/events"
