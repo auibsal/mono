@@ -24,7 +24,7 @@ export interface BrandTokens {
 /**
  * `rule` is a palette value in the brand (row hairlines on light pages); the
  * platform also needs it as a role so hairlines stay quiet on ink pages. Its
- * ink-page value is an existing tone: no colour is added.
+ * ink-page value is an existing tone: no color is added.
  */
 export const platformRoles: Record<string, Themed> = {
   rule: { dark: "{ink-70}", light: "{rule}" },

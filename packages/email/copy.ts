@@ -127,7 +127,7 @@ export const returnedForFormatting = (
       ...(note ? [note] : []),
       l === "ar"
         ? "الأمر يتعلق بالتنسيق، لا بالحكم على العمل. عدّله في النِّكسَس ثم احفظ."
-        : "This is about formatting, not a judgement of the work. Revise it in the Nexus and save.",
+        : "This is about formatting, not a judgment of the work. Revise it in the Nexus and save.",
     ],
   }));
 

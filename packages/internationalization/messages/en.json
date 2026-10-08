@@ -121,7 +121,7 @@
       "home": "Home",
       "events": "Events",
       "waraq": "Waraq",
-      "programmes": "Programmes",
+      "programmes": "Programs",
       "society": "Society",
       "profile": "Profile and privacy",
       "admin": "Administration",
@@ -210,7 +210,7 @@
         "none": "No open call at the moment."
       },
       "programmes": {
-        "title": "My programmes",
+        "title": "My programs",
         "empty": "You're not on any rota yet.",
         "confirm": "Confirm",
         "swap": "Ask to swap"
@@ -266,7 +266,7 @@
       "submissionTitle": "Submission",
       "notFound": "No submission with this link.",
       "returnedTitle": "Returned for formatting",
-      "returnedHint": "Fix what's noted below, then save. This is about formatting, not a judgement of the work.",
+      "returnedHint": "Fix what's noted below, then save. This is about formatting, not a judgment of the work.",
       "progress": "Progress",
       "blindNote": "Readers' scores and notes stay with the editors. You hear the decision when it's made.",
       "revise": "Revise",
@@ -341,7 +341,7 @@
         "pipeline": "Waraq: pipeline",
         "content": "Content",
         "charity": "Charity",
-        "programmes": "Programmes",
+        "programmes": "Programs",
         "governance": "Governance",
         "activity": "Activity log",
         "settings": "Settings"
@@ -388,13 +388,13 @@
         "noImageNote": "Use our own photos, taken with consent. No identifiable children, no stock images.",
         "slug": "Web address (slug)",
         "slugHint": "Lowercase letters, numbers and hyphens, e.g. charter-night.",
-        "programme": "Programme",
-        "noProgramme": "Society-wide (no programme)",
+        "programme": "Program",
+        "noProgramme": "Society-wide (no program)",
         "status": "Status",
         "statuses": {
           "draft": "Draft",
           "published": "Published",
-          "cancelled": "Cancelled",
+          "cancelled": "Canceled",
           "scheduled": "Scheduled",
           "archived": "Archived"
         }
@@ -461,7 +461,7 @@
         "upcoming": "Starts later",
         "scopes": {
           "global": "Society-wide",
-          "programme": "Programme",
+          "programme": "Program",
           "issue": "Waraq issue",
           "campaign": "Campaign"
         },
@@ -503,7 +503,7 @@
         "columns": {
           "title": "Event",
           "when": "When",
-          "programme": "Programme",
+          "programme": "Program",
           "access": "Who",
           "rsvps": "RSVPs",
           "status": "Status"
@@ -517,7 +517,7 @@
       "event": {
         "newTitle": "New event",
         "editTitle": "Edit event",
-        "notFound": "No event with this link, or your roles don't cover its programme.",
+        "notFound": "No event with this link, or your roles don't cover its program.",
         "eventTitle": "Title",
         "summary": "Summary (one or two sentences)",
         "body": "Description",
@@ -538,7 +538,7 @@
         "publish": "Publish",
         "publishConfirm": "Publish this event? It appears at once on the site (or to members, if members only) and in calendar feeds.",
         "cancelEvent": "Cancel event",
-        "cancelConfirm": "Cancel this event? It stays listed as cancelled; tell people who RSVPed.",
+        "cancelConfirm": "Cancel this event? It stays listed as canceled; tell people who RSVPed.",
         "deleteDraft": "Delete draft",
         "deleteConfirm": "Delete this draft for good?",
         "errors": {
@@ -585,7 +585,7 @@
       },
       "content": {
         "title": "Content",
-        "lede": "News, pages, notices, the homepage and the media library. Rich text is sanitised when saved and again when shown.",
+        "lede": "News, pages, notices, the homepage and the media library. Rich text is sanitized when saved and again when shown.",
         "tabs": {
           "news": "News",
           "pages": "Pages",
@@ -810,9 +810,9 @@
         "choose": "Choose"
       },
       "programmes": {
-        "title": "Programmes",
+        "title": "Programs",
         "lede": "Side Quest episodes and reels, Six Words moderation, rotas and shifts, and removal requests.",
-        "programme": "Programme",
+        "programme": "Program",
         "tabs": {
           "episodes": "Episodes",
           "reels": "Reels",
@@ -876,7 +876,7 @@
             "signed_up": "Signed up",
             "confirmed": "Confirmed",
             "swap_requested": "Asked to swap",
-            "cancelled": "Cancelled"
+            "cancelled": "Canceled"
           },
           "confirm": "Confirm",
           "release": "Release",
@@ -1276,7 +1276,7 @@
           "title": "Submission",
           "notFound": "No submission with this link, or your roles don't cover it.",
           "actions": "Intake",
-          "intakeNote": "A formatting check, not a judgement of the work.",
+          "intakeNote": "A formatting check, not a judgment of the work.",
           "startCheck": "Start the intake check",
           "toReview": "Send to blind review",
           "toReviewConfirm": "Send this piece to blind review? It gets a blind id and readers will see it without the author's name.",
@@ -1371,7 +1371,7 @@
   "web": {
     "nav": {
       "about": "About",
-      "programmes": "Programmes",
+      "programmes": "Programs",
       "waraq": "Waraq",
       "events": "Events",
       "give": "Give",
@@ -1391,7 +1391,7 @@
     },
     "home": {
       "title": "The paper and the pen",
-      "lede": "The AUIB Society of Arts and Letters is a bilingual student society for literature, theatre and the arts.",
+      "lede": "The AUIB Society of Arts and Letters is a bilingual student society for literature, theater and the arts.",
       "nextEvents": "Coming up",
       "noEvents": "No events announced yet.",
       "allEvents": "All events",
@@ -1433,7 +1433,7 @@
       "past": "Past events",
       "none": "No events announced yet.",
       "all": "All events",
-      "cancelled": "This event has been cancelled.",
+      "cancelled": "This event has been canceled.",
       "rsvp": "RSVP in the Nexus",
       "rsvpHint": "Sign in with your AUIB email to reserve a place.",
       "addToCalendar": "Add to calendar"
@@ -1508,7 +1508,7 @@
         },
         "council": {
           "title": "A Council runs the work",
-          "body": "Four elected officers and six appointed directors meet every two weeks, adopt the budget and greenlight programmes."
+          "body": "Four elected officers and six appointed directors meet every two weeks, adopt the budget and greenlight programs."
         },
         "elections": {
           "title": "Elections every April",
@@ -1516,7 +1516,7 @@
         },
         "editors": {
           "title": "Editors decide the art",
-          "body": "Programme editors and directors make creative calls. The Council overrules a selection only on grounds of law, safety or University policy, and in writing."
+          "body": "Program editors and directors make creative calls. The Council overrules a selection only on grounds of law, safety or University policy, and in writing."
         },
         "money": {
           "title": "Every dinar is logged",
@@ -1573,7 +1573,7 @@
         },
         "honorary": {
           "name": "Honorary Member",
-          "if": "are faculty, staff, an alumnus or a guest artist honoured by the Council",
+          "if": "are faculty, staff, an alumnus or a guest artist honored by the Council",
           "can": "join us as a friend and guest (no vote)"
         },
         "alumni": {
@@ -1588,8 +1588,8 @@
       "ctaHint": "Use your AUIB email address."
     },
     "programmes": {
-      "title": "Programmes",
-      "lede": "Four big programmes and a rhythm of small ones. The Term Card lists this semester's dates.",
+      "title": "Programs",
+      "lede": "Four big programs and a rhythm of small ones. The Term Card lists this semester's dates.",
       "journal": "Read Waraq",
       "events": "See the events"
     },
@@ -1643,15 +1643,15 @@
     },
     "mediaKit": {
       "title": "Media kit",
-      "lede": "The Society's name, logos and colours, for partners and the press.",
+      "lede": "The Society's name, logos and colors, for partners and the press.",
       "nameTitle": "Our name",
       "name": "\"AUIB Society of Arts and Letters\" in full on first use in formal documents; then \"the Society\" or \"SAL\". Never \"the club\".",
       "nameAr": "In Arabic: جمعية الفنون والآداب.",
-      "programmeLine": "Endorsed programmes carry the line \"a Society of Arts and Letters programme\".",
+      "programmeLine": "Endorsed programs carry the line \"a Society of Arts and Letters programme\".",
       "aboutTitle": "About the Society",
       "about": "The AUIB Society of Arts and Letters is a student society at the American University of Iraq – Baghdad. Its mission is to cultivate a culture of literature and creative expression across AUIB.",
       "logosTitle": "Logos",
-      "logosNote": "Use the files exactly as supplied. Never stretch, recolour, rotate, re-break the wordmark lines, add effects or shadows, or put the crimson symbol on ink. Where the AUIB logo appears it leads, and the SAL lockup follows at equal or smaller height.",
+      "logosNote": "Use the files exactly as supplied. Never stretch, recolor, rotate, re-break the wordmark lines, add effects or shadows, or put the crimson symbol on ink. Where the AUIB logo appears it leads, and the SAL lockup follows at equal or smaller height.",
       "download": "Download SVG",
       "logos": {
         "horizontal": "Horizontal lockup",
@@ -1664,7 +1664,7 @@
         "symbolWhite": "Symbol, white",
         "avatar": "Avatar"
       },
-      "coloursTitle": "Colours",
+      "coloursTitle": "Colors",
       "contactPress": "For anything else, contact the Media Director through any of our channels."
     },
     "privacy": {

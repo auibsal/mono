@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocale } from "next-intl";
 import { useGrants } from "@/lib/queries";
 
-/** Programmes, limited to the ones a permission covers (all for a global grant). */
+/** Programs, limited to the ones a permission covers (all for a global grant). */
 export const useProgrammeOptions = (
   permission: "events.manage" | "programmes.manage" | null = "events.manage"
 ) => {

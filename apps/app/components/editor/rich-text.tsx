@@ -19,7 +19,7 @@ interface RichTextProps {
   readonly label: string;
   readonly lang: "en" | "ar";
   readonly onChange: (html: string) => void;
-  /** Initial HTML (sanitised on save, and again when rendered). */
+  /** Initial HTML (sanitized on save, and again when rendered). */
   readonly value: string;
 }
 

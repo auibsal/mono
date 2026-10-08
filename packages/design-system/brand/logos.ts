@@ -1,7 +1,7 @@
 /**
  * The SAL v4 logo files, used exactly as supplied in brand/logos and copied
  * byte-for-byte to each app's public/brand (tokens.test.ts checks). Never
- * redrawn, recoloured or rebuilt in code. The light files are for white,
+ * redrawn, recolored or rebuilt in code. The light files are for white,
  * paper and crimson-50 grounds; the reversed files for crimson and ink.
  */
 interface LogoFile {

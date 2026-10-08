@@ -110,7 +110,7 @@ export const announcementSchema = z
     path: ["ends_at"],
   });
 
-/** A published news post with its text (sanitise again on render). */
+/** A published news post with its text (sanitize again on render). */
 export const newsBySlug = async (client: Client, slug: string) =>
   unwrap(
     await client

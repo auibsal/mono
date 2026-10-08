@@ -2,7 +2,7 @@ import type { Permission } from "./permissions";
 
 /**
  * Nexus admin modules and the permission (held in any scope) that shows
- * each one. Pages still scope their rows by programme, issue or campaign.
+ * each one. Pages still scope their rows by program, issue or campaign.
  */
 export const adminModules = [
   {

@@ -31,7 +31,7 @@ export const hasPermissionAnywhere = (
   permission: Permission
 ) => (grants ?? []).some((grant) => grant.permission === permission);
 
-/** The scopes (e.g. programme ids) in which a permission is held. */
+/** The scopes (e.g. program ids) in which a permission is held. */
 export const scopesFor = (
   grants: readonly Grant[] | undefined,
   permission: Permission,

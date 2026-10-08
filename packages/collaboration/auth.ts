@@ -15,7 +15,7 @@ interface AuthoriseRoomOptions {
 export const collaborationEnabled = () => Boolean(keys().LIVEBLOCKS_SECRET);
 
 /**
- * Issues a Liveblocks token for exactly one room, already authorised by
+ * Issues a Liveblocks token for exactly one room, already authorized by
  * apps/api (record readable under RLS and the permission re-checked).
  */
 export const authoriseRoom = async ({

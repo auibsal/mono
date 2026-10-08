@@ -1,7 +1,7 @@
 # AUIB Society of Arts and Letters — platform
 
 The web platform of the AUIB Society of Arts and Letters (SAL, «جمعية الفنون
-والآداب»), the bilingual student society for literature, theatre and the arts
+والآداب»), the bilingual student society for literature, theater and the arts
 at the American University of Iraq – Baghdad. *The paper and the pen.*
 
 | App | What it is | Deployed at |
@@ -36,7 +36,7 @@ Copy each app's `.env.example` to `.env.local` and fill in the local keys from
 bun run check         # Biome
 bun run typecheck
 bun run test
-bun run db:test       # pgTAP: RLS and RPC behaviour
+bun run db:test       # pgTAP: RLS and RPC behavior
 bun run check:placeholders && bun run check:rtl && bun run check:i18n
 ```
 

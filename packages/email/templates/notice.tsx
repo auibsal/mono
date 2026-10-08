@@ -10,7 +10,7 @@ import {
   Text,
 } from "@react-email/components";
 
-// Brand colours (brand/tokens.json). Email clients need inline styles.
+// Brand colors (brand/tokens.json). Email clients need inline styles.
 const CRIMSON = "#9c213e";
 const CRIMSON_700 = "#7e1a32";
 const INK = "#273236";

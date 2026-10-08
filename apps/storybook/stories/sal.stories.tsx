@@ -25,7 +25,7 @@ export const TypeStyles: Story = {
       <p className="type-kicker">Kicker</p>
       <h1 className="type-display">Display: The paper and the pen</h1>
       <p className="type-lede">
-        Lede: a bilingual student society for literature, theatre and the arts.
+        Lede: a bilingual student society for literature, theater and the arts.
       </p>
       <h2 className="type-heading">Heading</h2>
       <p className="type-body">Body text sits on the surface in ink.</p>

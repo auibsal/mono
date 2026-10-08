@@ -11,7 +11,7 @@
  * SAL v4. Components use only the role tokens (tokens.css); the shadcn
  * variables below are aliases of them. Light everywhere; the ink theme
  * ([data-theme="dark"]) only on the "why" pages and the Open Call page.
- * No user-facing dark-mode toggle. No shadows. Never add a colour.
+ * No user-facing dark-mode toggle. No shadows. Never add a color.
  */
 :root,
 [data-theme="dark"] {
@@ -64,7 +64,7 @@
   --font-literary-en: var(--font-literata), Georgia, serif;
   --font-literary-ar: var(--font-amiri), serif;
 
-  /* Role tokens as Tailwind colours: bg-surface, text-title, border-rule… */
+  /* Role tokens as Tailwind colors: bg-surface, text-title, border-rule… */
   --color-surface: var(--surface);
   --color-surface-tint: var(--surface-tint);
   --color-text: var(--text);
@@ -249,7 +249,7 @@
 
   /*
    * ink-50 (text-meta) fails on crimson-50 and paper (4.0 / 4.3:1): on those
-   * grounds captions and meta use the secondary text colour (ink-70).
+   * grounds captions and meta use the secondary text color (ink-70).
    */
   .bg-surface-tint,
   .bg-paper,

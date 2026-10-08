@@ -2,7 +2,7 @@ import type { Permission, ScopeType } from "@repo/rbac";
 
 /**
  * Collaboration rooms. A room id names one record that people co-edit:
- * `sal:<kind>:<uuid>`. apps/api authorises a room only after reading the
+ * `sal:<kind>:<uuid>`. apps/api authorizes a room only after reading the
  * record as the caller (RLS) and re-checking the permission below, so a room
  * never opens for someone who could not open the record itself.
  *

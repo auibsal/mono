@@ -32,7 +32,7 @@ describe("collaboration rooms", () => {
     expect(parseRoom(`sal:blind:${id}`)).toBeNull();
   });
 
-  test("presence colours come from the brand palette", () => {
+  test("presence colors come from the brand palette", () => {
     for (const user of ["a", "b", "c", id]) {
       expect(presenceColor(user)).toMatch(BRAND_COLOUR);
     }

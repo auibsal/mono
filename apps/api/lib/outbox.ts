@@ -97,7 +97,7 @@ const submissionTitle = async (admin: AdminClient, submissionId: unknown) => {
   return data?.title ?? null;
 };
 
-/** Holders of programmes.manage for the programme (or globally). */
+/** Holders of programmes.manage for the program (or globally). */
 const programmeManagers = async (
   admin: AdminClient,
   programmeId: unknown

@@ -1,6 +1,6 @@
 /**
  * CSV for spreadsheet apps: RFC 4180 quoting, a BOM so Excel reads UTF-8
- * (Arabic names), and formula injection neutralised: a cell that starts
+ * (Arabic names), and formula injection neutralized: a cell that starts
  * with = + - @ (or a tab/CR) is prefixed with an apostrophe.
  */
 const FORMULA_START = /^[=+\-@\t\r]/;

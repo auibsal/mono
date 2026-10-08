@@ -32,7 +32,7 @@ import {
 } from "../kit";
 import { memberName, useDirectory } from "./directory";
 
-// ── Scope options (programmes, Waraq issues, campaigns) ─────────────────────
+// ── Scope options (programs, Waraq issues, campaigns) ─────────────────────
 
 const useScopeOptions = () => {
   const { supabase } = useAuth();
