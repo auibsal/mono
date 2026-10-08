@@ -211,15 +211,6 @@ export type Database = {
         Args: { permission: string };
         Returns: boolean;
       };
-      oauth_client_info: {
-        Args: { client_id: string };
-        Returns: {
-          areas: string[];
-          enabled: boolean;
-          name_ar: string;
-          name_en: string;
-        }[];
-      };
       my_permissions: {
         Args: Record<PropertyKey, never>;
         Returns: {
@@ -229,6 +220,15 @@ export type Database = {
         }[];
       };
       needs_two_step: { Args: Record<PropertyKey, never>; Returns: boolean };
+      oauth_client_info: {
+        Args: { client_id: string };
+        Returns: {
+          areas: string[];
+          enabled: boolean;
+          name_ar: string;
+          name_en: string;
+        }[];
+      };
       permission_holders: {
         Args: { permission: string; scope_id?: string; scope_type?: string };
         Returns: {
