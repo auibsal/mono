@@ -19,7 +19,6 @@
     "@repo/internationalization": "workspace:*",
     "@repo/next-config": "workspace:*",
     "@repo/observability": "workspace:*",
-    "@repo/rate-limit": "workspace:*",
     "@repo/sal-data": "workspace:*",
     "@repo/security": "workspace:*",
     "@repo/seo": "workspace:*",

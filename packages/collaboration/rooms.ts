@@ -6,7 +6,7 @@ import type { Permission, ScopeType } from "@repo/rbac";
  * record as the caller (RLS) and re-checking the permission below, so a room
  * never opens for someone who could not open the record itself.
  *
- * Waraq submissions under blind review never get a room: identities must
+ * Journal submissions under blind review never get a room: identities must
  * not travel through presence. Only accepted pieces are co-edited.
  */
 export const roomKinds = {
@@ -28,7 +28,7 @@ export const roomKinds = {
     scope: "global",
     table: { name: "pages", schema: "content" },
   },
-  /** Accepted Waraq pieces, copy-edited by the issue's masthead. */
+  /** Accepted Journal pieces, copy-edited by the issue's masthead. */
   piece: {
     permission: "journal.publish",
     scope: "issue",

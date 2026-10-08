@@ -1,0 +1,61 @@
+name: Migrate production database
+
+# Applies new migrations to the production Supabase project once CI has
+# passed on main. Runs in the protected `production` environment, which holds
+# the two secrets (Settings → Environments → production):
+#   SUPABASE_ACCESS_TOKEN  a personal access token (supabase.com/dashboard/account/tokens)
+#   SUPABASE_DB_PASSWORD   the database password (Project Settings → Database)
+# `supabase db push` applies only migrations not yet recorded in
+# supabase_migrations.schema_migrations, in order, and stops at the first error.
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: migrate-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  push:
+    name: supabase db push
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event == 'push')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      PROJECT_REF: fghzahtzgelqnpwdhwjo
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - name: Secrets are set
+        run: |
+          if [ -z "$SUPABASE_ACCESS_TOKEN" ] || [ -z "$SUPABASE_DB_PASSWORD" ]; then
+            echo "Add SUPABASE_ACCESS_TOKEN and SUPABASE_DB_PASSWORD to the production environment."
+            exit 1
+          fi
+      - name: Link the project
+        working-directory: packages/database
+        run: bunx supabase link --project-ref "$PROJECT_REF" --password "$SUPABASE_DB_PASSWORD"
+      - name: Pending migrations
+        working-directory: packages/database
+        run: bunx supabase migration list --password "$SUPABASE_DB_PASSWORD"
+      - name: Apply
+        working-directory: packages/database
+        run: bunx supabase db push --password "$SUPABASE_DB_PASSWORD"

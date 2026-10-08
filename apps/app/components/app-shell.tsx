@@ -5,6 +5,13 @@ import { project } from "@repo/config";
 import { BrandLogo } from "@repo/design-system/components/brand-logo";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@repo/design-system/components/ui/dropdown-menu";
+import {
   Sheet,
   SheetContent,
   SheetTitle,
@@ -21,25 +28,33 @@ import { MenuIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { type ReactNode, useState } from "react";
 import { useVisibleModules } from "./admin/admin-shell";
+import { useTwoStep } from "./auth/two-step";
 import { LanguageSwitcher } from "./language-switcher";
 
-// Sections are added here as their pages land (see PROGRESS.md).
+// Five sections at most (v5); the account items live in their own menu.
 const memberLinks = [
   { href: "/", key: "home" },
   { href: "/events", key: "events" },
   { href: "/programmes", key: "programmes" },
-  { href: "/waraq", key: "waraq" },
-  { href: "/profile", key: "profile" },
+  { href: "/journal", key: "journal" },
+  { href: "/society", key: "society" },
 ] as const;
+
+/** Profile, and Administration for members whose roles open it. */
+const useAccountLinks = () => {
+  const { visible } = useVisibleModules();
+  const twoStep = useTwoStep();
+  const admin = visible.length > 0 || Boolean(twoStep.data?.needs);
+  return [
+    { href: "/profile", key: "profile" },
+    ...(admin ? [{ href: "/admin", key: "admin" } as const] : []),
+  ] as const;
+};
 
 const NavLinks = ({ onNavigate }: { onNavigate?: () => void }) => {
   const t = useTranslations("nexus.nav");
   const pathname = usePathname();
-  const { visible } = useVisibleModules();
-  const links = [
-    ...memberLinks,
-    ...(visible.length > 0 ? [{ href: "/admin", key: "admin" } as const] : []),
-  ];
+  const links = memberLinks;
 
   return (
     <ul className="flex flex-col lg:flex-row lg:items-center lg:gap-6">
@@ -74,6 +89,7 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
+  const account = useAccountLinks();
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -103,14 +119,28 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
           </nav>
           <div className="ms-auto flex items-center gap-2 lg:ms-6">
             <LanguageSwitcher />
-            <Button
-              className="hidden lg:inline-flex"
-              onClick={signOut}
-              size="sm"
-              variant="ghost"
-            >
-              {t("auth.signOut")}
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  className="hidden lg:inline-flex"
+                  size="sm"
+                  variant="outline"
+                >
+                  {t("nexus.nav.account")}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {account.map((link) => (
+                  <DropdownMenuItem asChild key={link.href}>
+                    <Link href={link.href}>{t(`nexus.nav.${link.key}`)}</Link>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onSelect={signOut}>
+                  {t("auth.signOut")}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Sheet onOpenChange={setOpen} open={open}>
               <SheetTrigger asChild>
                 <Button className="lg:hidden" size="icon" variant="outline">
@@ -128,6 +158,19 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
                 <nav aria-label={t("nexus.nav.label")} className="mt-4">
                   <NavLinks onNavigate={() => setOpen(false)} />
                 </nav>
+                <ul className="mt-6 grid gap-2">
+                  {account.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        className="underline underline-offset-4"
+                        href={link.href}
+                        onClick={() => setOpen(false)}
+                      >
+                        {t(`nexus.nav.${link.key}`)}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
                 <Button
                   className="mt-6 w-full"
                   onClick={signOut}

@@ -15,7 +15,8 @@ begin
   perform set_config('role', 'postgres', true);
   perform set_config(
     'request.jwt.claims',
-    (jsonb_build_object('sub', uid, 'role', 'authenticated') || extra)::text,
+    -- aal2 by default (two-step sign-in done); pass '{"aal":"aal1"}' to test without it.
+    (jsonb_build_object('sub', uid, 'role', 'authenticated', 'aal', 'aal2') || extra)::text,
     true
   );
   perform set_config('role', 'authenticated', true);
@@ -78,9 +79,10 @@ select pg_temp.make_user('00000000-0000-0000-0000-0000000000c2', 'helper@auib.ed
 select pg_temp.make_user('00000000-0000-0000-0000-0000000000d1', 'treasurer@auib.edu.iq', 'Treasurer');
 select pg_temp.make_user('00000000-0000-0000-0000-0000000000a1', 'member@auib.edu.iq', 'Member');
 
+insert into charity.partners (slug, name_en, name_ar) values ('test-partner', 'Test Partner', 'شريك تجريبي');
 insert into charity.campaigns (id, slug, title_en, title_ar, status, partner_id, target_units)
 values ('ca000000-0000-0000-0000-0000000000c1', 'winter-2026', 'Winter 2026', 'شتاء ٢٠٢٦', 'active',
-  (select id from charity.partners where slug = 'natrok-athar'), 50);
+  (select id from charity.partners where slug = 'test-partner'), 50);
 
 select pg_temp.grant_role('00000000-0000-0000-0000-0000000000c1', 'campaign_lead', 'campaign', 'ca000000-0000-0000-0000-0000000000c1');
 select pg_temp.grant_role('00000000-0000-0000-0000-0000000000d1', 'treasurer');

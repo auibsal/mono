@@ -2,5 +2,22 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "bunVersion": "1.x",
   "ignoreCommand": "node scripts/skip-ci.js",
-  "regions": ["fra1"]
+  "regions": ["fra1"],
+  "redirects": [
+    {
+      "source": "/:locale(en|ar)/waraq/:path*",
+      "destination": "/:locale/journal/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(en|ar)/waraq",
+      "destination": "/:locale/journal",
+      "permanent": true
+    },
+    {
+      "source": "/waraq",
+      "destination": "/journal",
+      "permanent": true
+    }
+  ]
 }

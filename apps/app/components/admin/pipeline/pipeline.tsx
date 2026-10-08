@@ -38,7 +38,7 @@ import { IntakeQueue, Readers } from "./intake";
 const MyReads = ({ issueId }: { issueId: string }) => {
   const t = useTranslations("nexus.admin.pipeline");
   const tj = useTranslations("nexus.admin.journal");
-  const ts = useTranslations("nexus.waraq.status");
+  const ts = useTranslations("nexus.journal.status");
   const { supabase, user } = useAuth();
   const reads = useQuery({
     enabled: Boolean(user),

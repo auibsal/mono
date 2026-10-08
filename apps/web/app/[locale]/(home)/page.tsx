@@ -106,18 +106,18 @@ const Home = async ({ params }: HomeProps) => {
 
         {(pieces ?? []).length > 0 ? (
           <section
-            aria-labelledby="latest-waraq"
+            aria-labelledby="latest-journal"
             className="grid content-start gap-4"
           >
-            <h2 className={heading} id="latest-waraq">
-              {t("latestWaraq")}
+            <h2 className={heading} id="latest-journal">
+              {t("latestJournal")}
             </h2>
             <ul className="grid">
               {(pieces ?? []).map((piece) => (
                 <li className="border-rule border-b py-4" key={piece.id}>
                   <Link
                     className="grid gap-1 hover:underline"
-                    href={`/waraq/pieces/${piece.slug}`}
+                    href={`/journal/pieces/${piece.slug}`}
                   >
                     <h3
                       className="type-subheading"

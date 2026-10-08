@@ -3,13 +3,13 @@
 import { useLocale, useTranslations } from "next-intl";
 import { useProfile } from "@/lib/queries";
 import { CalendarFeed } from "./calendar-feed";
+import { JournalSection } from "./journal";
 import { MembershipCard } from "./membership-card";
 import { NextEvents } from "./next-events";
 import { Notices } from "./notices";
 import { MyProgrammes } from "./programmes";
 import { SixWords } from "./six-words";
 import { VotingEligibility } from "./voting";
-import { WaraqSection } from "./waraq";
 
 /** Member home, mobile-first, in the order of the brief (§7). */
 export const MemberHome = () => {
@@ -29,7 +29,7 @@ export const MemberHome = () => {
         <NextEvents />
         <VotingEligibility />
         <Notices />
-        <WaraqSection />
+        <JournalSection />
         <MyProgrammes />
         <CalendarFeed />
         <SixWords />

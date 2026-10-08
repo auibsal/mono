@@ -11,7 +11,8 @@ begin
   perform set_config('role', 'postgres', true);
   perform set_config(
     'request.jwt.claims',
-    (jsonb_build_object('sub', uid, 'role', 'authenticated') || extra)::text,
+    -- aal2 by default (two-step sign-in done); pass '{"aal":"aal1"}' to test without it.
+    (jsonb_build_object('sub', uid, 'role', 'authenticated', 'aal', 'aal2') || extra)::text,
     true
   );
   perform set_config('role', 'authenticated', true);

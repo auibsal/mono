@@ -11,7 +11,7 @@ const staticPaths = [
   "",
   "/about",
   "/programmes",
-  "/waraq",
+  "/journal",
   "/join",
   "/give",
   "/news",

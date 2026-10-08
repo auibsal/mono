@@ -413,7 +413,7 @@ const DecisionPanel = ({ entryId }: { entryId: string }) => {
 export const EntryView = () => {
   const t = useTranslations("nexus.admin.pipeline");
   const tj = useTranslations("nexus.admin.journal");
-  const ts = useTranslations("nexus.waraq.status");
+  const ts = useTranslations("nexus.journal.status");
   const tk = useTranslations("nexus.admin.kit");
   const id = useQueryParam("id");
   const { user } = useAuth();

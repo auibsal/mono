@@ -23,7 +23,7 @@
   --sal-offset-lg: 8px;
 }
 
-/* Light pages, and light islands inside ink (Waraq reading, covers). */
+/* Light pages, and light islands inside ink (Journal reading, covers). */
 :root,
 [data-theme="light"] {
   --surface: var(--sal-white);
