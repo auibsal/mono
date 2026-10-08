@@ -70,7 +70,7 @@
       "usePassword": "Use my password instead",
       "sendLink": "Send the link",
       "linkSent": "If an account exists for {email}, a sign-in link is on its way.",
-      "forgot": "Forgotten your password?",
+      "forgot": "Forgot your password?",
       "noAccount": "New to the Society?",
       "createAccount": "Create an account",
       "deleted": "Your account has been deleted."
@@ -228,6 +228,36 @@
         "empty": "You haven't written your six words yet.",
         "write": "Write my six words",
         "pending": "Waiting for moderation"
+      }
+    },
+    "events": {
+      "title": "Events",
+      "lede": "Book a place, join a waitlist, or give your place back. Your tickets are on your home page.",
+      "empty": "No events are announced yet. They appear here as soon as they're published.",
+      "membersOnly": "Members only",
+      "book": "Book a place",
+      "joinWaitlist": "Join the waitlist",
+      "ticket": "Show my ticket",
+      "cancel": "Give my place back",
+      "leaveWaitlist": "Leave the waitlist",
+      "questions": "The organizers ask a few questions before booking.",
+      "state": {
+        "cancelled": "This event was canceled.",
+        "booked": "You have a place.",
+        "waiting": "You're on the waitlist. We'll email you if a place opens.",
+        "noBooking": "No booking needed: just come.",
+        "open": "Places available.",
+        "full": "Full. Join the waitlist and we'll email you if a place opens.",
+        "left": "{count, plural, one {{places} place left} other {{places} places left}}"
+      },
+      "notice": {
+        "booked": "Booked. Your ticket is on your home page, and a confirmation email is on its way.",
+        "waitlisted": "The event is full, so you're on the waitlist. We'll email you if a place opens.",
+        "cancelled": "Done. Your place has gone to the next person waiting, if there is one.",
+        "leftWaitlist": "Done. You're off the waitlist.",
+        "notVerified": "Booking opens once your membership is verified. An officer checks new members within a few days.",
+        "closed": "Booking for this event has closed.",
+        "failed": "That didn't work. Try again in a moment."
       }
     },
     "waraq": {

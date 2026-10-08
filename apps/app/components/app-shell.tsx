@@ -26,6 +26,7 @@ import { LanguageSwitcher } from "./language-switcher";
 // Sections are added here as their pages land (see PROGRESS.md).
 const memberLinks = [
   { href: "/", key: "home" },
+  { href: "/events", key: "events" },
   { href: "/waraq", key: "waraq" },
   { href: "/profile", key: "profile" },
 ] as const;
@@ -40,7 +41,7 @@ const NavLinks = ({ onNavigate }: { onNavigate?: () => void }) => {
   ];
 
   return (
-    <ul className="flex flex-col gap-1 lg:flex-row lg:gap-4">
+    <ul className="flex flex-col lg:flex-row lg:items-center lg:gap-6">
       {links.map((link) => {
         const active =
           link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
@@ -49,8 +50,8 @@ const NavLinks = ({ onNavigate }: { onNavigate?: () => void }) => {
             <Link
               aria-current={active ? "page" : undefined}
               className={cn(
-                "block rounded-sm px-2 py-2 text-sm underline-offset-4 hover:underline lg:py-1",
-                active && "font-bold text-title"
+                "lg:type-label block border-rule border-b py-4 font-bold text-xl lg:border-transparent lg:border-b-2 lg:py-1 lg:text-xs lg:hover:border-frame",
+                active && "text-title lg:border-accent-line"
               )}
               href={link.href}
               onClick={onNavigate}
@@ -87,10 +88,10 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
       >
         {t("common.skipToContent")}
       </a>
-      <header className="border-rule border-b">
+      <header className="frame-b sticky top-0 z-40 bg-surface">
         <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-4 py-3">
           <Link className="shrink-0" href="/">
-            <BrandLogo height={64} locale={locale} />
+            <BrandLogo ground="dark" height={56} locale={locale} />
             <span className="sr-only">{t("nexus.name")}</span>
           </Link>
           <nav
@@ -99,7 +100,7 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
           >
             <NavLinks />
           </nav>
-          <div className="ms-auto flex items-center gap-2 lg:ms-0">
+          <div className="ms-auto flex items-center gap-2 lg:ms-6">
             <LanguageSwitcher />
             <Button
               className="hidden lg:inline-flex"
@@ -111,7 +112,7 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
             </Button>
             <Sheet onOpenChange={setOpen} open={open}>
               <SheetTrigger asChild>
-                <Button className="lg:hidden" size="icon" variant="ghost">
+                <Button className="lg:hidden" size="icon" variant="outline">
                   <MenuIcon aria-hidden="true" />
                   <span className="sr-only">{t("common.openMenu")}</span>
                 </Button>
@@ -126,7 +127,11 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
                 <nav aria-label={t("nexus.nav.label")} className="mt-4">
                   <NavLinks onNavigate={() => setOpen(false)} />
                 </nav>
-                <Button className="mt-6" onClick={signOut} variant="outline">
+                <Button
+                  className="mt-6 w-full"
+                  onClick={signOut}
+                  variant="outline"
+                >
                   {t("auth.signOut")}
                 </Button>
               </SheetContent>
@@ -137,7 +142,7 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8" id="main">
         {children}
       </main>
-      <footer className="border-rule border-t">
+      <footer className="frame-t">
         <p className="type-caption mx-auto w-full max-w-6xl px-4 py-4">
           <a
             className="underline-offset-4 hover:underline"

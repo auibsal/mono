@@ -8,10 +8,13 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /*
- * SAL v4. Components use only the role tokens (tokens.css); the shadcn
- * variables below are aliases of them. Light everywhere; the ink theme
- * ([data-theme="dark"]) only on the "why" pages and the Open Call page.
- * No user-facing dark-mode toggle. No shadows. Never add a color.
+ * SAL v4 with the v5 Screens amendment (brand/BRAND-BOOK.md, "Screens").
+ * Components use only the role tokens (tokens.css); the shadcn variables
+ * below are aliases of them. The public site is light; the ink theme
+ * ([data-theme="dark"]) is the Nexus, the "why" pages and the Open Call.
+ * Square corners, a 2px frame, and one elevation: a solid offset block
+ * (shadow-offset), never a blur. No user-facing theme toggle. Never add a
+ * color.
  */
 :root,
 [data-theme="dark"] {
@@ -40,7 +43,7 @@
   --chart-3: var(--sal-ink-70);
   --chart-4: var(--sal-crimson-100);
   --chart-5: var(--sal-ink-50);
-  --radius: var(--sal-radius-card);
+  --radius: var(--sal-radius-screen);
   --sidebar: var(--surface-tint);
   --sidebar-foreground: var(--text);
   --sidebar-primary: var(--band);
@@ -51,6 +54,13 @@
   --sidebar-ring: var(--title);
 
   --font-weight-bold: 700;
+
+  /* The offset falls toward the end of the line: right in LTR, left in RTL. */
+  --sal-dir: 1;
+}
+
+[dir="rtl"] {
+  --sal-dir: -1;
 }
 
 @theme inline {
@@ -76,8 +86,10 @@
   --color-band: var(--band);
   --color-on-band: var(--on-band);
   --color-paper: var(--sal-paper);
+  --color-frame: var(--frame);
+  --color-offset: var(--offset);
 
-  /* No shadows anywhere. */
+  /* No blurred shadows anywhere; the one elevation is shadow-offset below. */
   --shadow-2xs: none;
   --shadow-xs: none;
   --shadow-sm: none;
@@ -125,12 +137,17 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --color-success: var(--success);
-  --radius-sm: 4px;
-  --radius-md: 6px;
+  /* Screens are square (v5); print keeps the brand's 8px card radius. */
+  --radius-xs: var(--radius);
+  --radius-sm: var(--radius);
+  --radius-md: var(--radius);
   --radius-lg: var(--radius);
   --radius-xl: var(--radius);
-  --radius-card: var(--sal-radius-card);
-  --radius-swatch: var(--sal-radius-swatch);
+  --radius-2xl: var(--radius);
+  --radius-3xl: var(--radius);
+  --radius-4xl: var(--radius);
+  --radius-card: var(--radius);
+  --radius-swatch: var(--radius);
   /* Space from the brand: gap-gap, p-card-padding, px-page-margin… */
   --spacing-gap: var(--sal-gap);
   --spacing-gap-tight: var(--sal-gap-tight);
@@ -336,6 +353,23 @@
   color: var(--accent-line);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  /* Arabic has no case, and tracking breaks its joined letters. */
+  &:lang(ar),
+  :lang(ar) & {
+    font-size: 0.875rem;
+    letter-spacing: 0;
+  }
+}
+/* Navigation and buttons (v5): short labels in tracked capitals, never Arabic. */
+@utility type-label {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  &:lang(ar),
+  :lang(ar) & {
+    text-transform: none;
+    letter-spacing: 0;
+  }
 }
 /* Document codes and clause numbers. */
 @utility type-code {
@@ -369,4 +403,88 @@
     font-family: var(--font-literary-ar);
     line-height: 2;
   }
+}
+/*
+ * v5 Screens: the one elevation. A solid block in the offset role (ink on
+ * light pages, crimson on ink), falling toward the end of the line.
+ */
+@utility shadow-offset {
+  box-shadow: calc(var(--sal-dir) * var(--sal-offset)) var(--sal-offset) 0 0
+    var(--offset);
+}
+@utility shadow-offset-lg {
+  box-shadow: calc(var(--sal-dir) * var(--sal-offset-lg)) var(--sal-offset-lg) 0
+    0 var(--offset);
+}
+/* Feature blocks on light pages: the crimson offset (never text on ink). */
+@utility shadow-offset-accent {
+  box-shadow: calc(var(--sal-dir) * var(--sal-offset-lg)) var(--sal-offset-lg) 0
+    0 var(--sal-crimson);
+}
+/* The 2px frame around controls, cards and the header. */
+@utility frame {
+  border: var(--sal-frame-width) solid var(--frame);
+}
+@utility frame-b {
+  border-bottom: var(--sal-frame-width) solid var(--frame);
+}
+@utility frame-t {
+  border-top: var(--sal-frame-width) solid var(--frame);
+}
+/* Pressed: the block moves onto its offset. */
+@utility press {
+  transition:
+    transform 80ms ease-out,
+    box-shadow 80ms ease-out;
+  &:active:not(:disabled) {
+    box-shadow: none;
+    transform: translate(
+      calc(var(--sal-dir) * var(--sal-offset)),
+      var(--sal-offset)
+    );
+  }
+}
+
+/*
+ * v5 Screens on the shadcn base (unlayered, so it wins over the generated
+ * classes): 2px frames on form controls and cards, transparent fields on
+ * ink, and the focus ring as a solid outline.
+ */
+[data-slot="input"],
+[data-slot="textarea"],
+[data-slot="select-trigger"],
+[data-slot="input-group"],
+[data-slot="checkbox"],
+[data-slot="radio-group-item"] {
+  border-color: var(--frame);
+  border-width: var(--sal-frame-width);
+  box-shadow: none;
+}
+[data-theme="dark"]
+  :is(
+    [data-slot="input"],
+    [data-slot="textarea"],
+    [data-slot="select-trigger"]
+  ) {
+  background-color: transparent;
+}
+[data-slot="card"],
+[data-slot="dialog-content"],
+[data-slot="alert-dialog-content"],
+[data-slot="popover-content"],
+[data-slot="dropdown-menu-content"],
+[data-slot="select-content"],
+[data-slot="sheet-content"] {
+  border: var(--sal-frame-width) solid var(--frame);
+  box-shadow: calc(var(--sal-dir) * var(--sal-offset)) var(--sal-offset) 0 0
+    var(--offset);
+}
+:is(
+  [data-slot="input"],
+  [data-slot="textarea"],
+  [data-slot="select-trigger"]
+):focus-visible {
+  outline: 2px solid var(--title);
+  outline-offset: 2px;
+  box-shadow: none;
 }

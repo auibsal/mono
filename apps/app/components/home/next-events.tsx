@@ -1,7 +1,6 @@
 "use client";
 
 import { useAuth } from "@repo/auth/provider";
-import { project } from "@repo/config";
 import { SalCard } from "@repo/design-system/components/sal/card";
 import { Button } from "@repo/design-system/components/ui/button";
 import {
@@ -18,6 +17,7 @@ import {
   formatLongDate,
   formatNumber,
 } from "@repo/internationalization/format";
+import { Link } from "@repo/internationalization/navigation";
 import { events, localized, unwrap } from "@repo/sal-data";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
@@ -61,12 +61,9 @@ export const NextEvents = () => {
   return (
     <Section
       action={
-        <a
-          className="text-sm underline underline-offset-4"
-          href={`${project.hosts.web}/${locale}/events`}
-        >
+        <Link className="text-sm underline underline-offset-4" href="/events">
           {t("browse")}
-        </a>
+        </Link>
       }
       id="next-events"
       title={t("title")}

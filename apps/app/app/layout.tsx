@@ -43,8 +43,11 @@ interface RootLayoutProperties {
  * root keeps every navigation client-side, which the static export needs.
  */
 const RootLayout = ({ children }: RootLayoutProperties) => (
+  // v5 Screens: the Nexus is on the ink ground. Light islands (Waraq reading)
+  // set data-theme="light".
   <html
     className={fonts}
+    data-theme="dark"
     dir={getDirection(defaultLocale)}
     lang={defaultLocale}
     suppressHydrationWarning

@@ -1,4 +1,5 @@
 import { project } from "@repo/config";
+import { Button } from "@repo/design-system/components/ui/button";
 import type { Locale } from "@repo/internationalization";
 import { formatClock, formatLongDate } from "@repo/internationalization/format";
 import { Link } from "@repo/internationalization/navigation";
@@ -104,19 +105,19 @@ const EventPage = async ({ params }: EventProps) => {
       {cancelled || !upcoming ? null : (
         <div className="flex flex-wrap gap-3">
           {event.rsvp_enabled ? (
-            <a
-              className="inline-flex h-10 items-center rounded-md bg-primary px-4 text-primary-foreground text-sm"
-              href={`${project.hosts.app}/${locale}`}
-            >
-              {t("rsvp")}
-            </a>
+            <Button asChild>
+              <a href={`${project.hosts.app}/${locale}/events#${event.slug}`}>
+                {t("rsvp")}
+              </a>
+            </Button>
           ) : null}
-          <a
-            className="inline-flex h-10 items-center rounded-md border border-rule px-4 text-sm"
-            href={`${project.hosts.api}/calendar/events/${event.slug}.ics?lang=${locale}`}
-          >
-            {t("addToCalendar")}
-          </a>
+          <Button asChild variant="outline">
+            <a
+              href={`${project.hosts.api}/calendar/events/${event.slug}.ics?lang=${locale}`}
+            >
+              {t("addToCalendar")}
+            </a>
+          </Button>
         </div>
       )}
       {event.rsvp_enabled && upcoming && !cancelled ? (

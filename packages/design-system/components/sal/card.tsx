@@ -1,13 +1,13 @@
 import type { ComponentProps } from "react";
 import { cn } from "../../lib/utils";
 
-/** SAL card: surface-tint ground, 8px radius, no shadow, no border. */
+/**
+ * SAL card (v5 Screens): surface-tint ground, square, a 2px frame. Add
+ * `shadow-offset` for a card that is a single action or feature.
+ */
 export const SalCard = ({ className, ...props }: ComponentProps<"section">) => (
   <section
-    className={cn(
-      "grid gap-3 rounded-card bg-surface-tint p-card-padding",
-      className
-    )}
+    className={cn("frame grid gap-3 bg-surface-tint p-card-padding", className)}
     {...props}
   />
 );

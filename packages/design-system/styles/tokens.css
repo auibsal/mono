@@ -17,6 +17,15 @@
   --sal-radius-swatch: 6px;
   --sal-radius-card: 8px;
   --sal-hairline: 1px;
+  --sal-radius-screen: 0px;
+  --sal-frame-width: 2px;
+  --sal-offset: 4px;
+  --sal-offset-lg: 8px;
+}
+
+/* Light pages, and light islands inside ink (Waraq reading, covers). */
+:root,
+[data-theme="light"] {
   --surface: var(--sal-white);
   --surface-tint: var(--sal-crimson-50);
   --text: var(--sal-ink);
@@ -26,10 +35,12 @@
   --accent-line: var(--sal-crimson);
   --band: var(--sal-crimson);
   --on-band: var(--sal-white);
+  --frame: var(--sal-ink);
+  --offset: var(--sal-ink);
   --rule: var(--sal-rule);
 }
 
-/* The ink theme: only the "why" pages and the Open Call page. */
+/* The ink theme: the Nexus, the "why" pages and the Open Call page. */
 [data-theme="dark"] {
   --surface: var(--sal-ink);
   --surface-tint: var(--sal-ink-70);
@@ -40,5 +51,7 @@
   --accent-line: var(--sal-crimson-100);
   --band: var(--sal-crimson);
   --on-band: var(--sal-white);
+  --frame: var(--sal-white);
+  --offset: var(--sal-crimson);
   --rule: var(--sal-ink-70);
 }
