@@ -9,7 +9,7 @@ at the American University of Iraq – Baghdad. *The paper and the pen.*
 | `apps/web` | Public site, `/en` and `/ar` | auibsal.org |
 | `apps/app` | **The Nexus**: member portal and role-gated admin (static export) | nexus.auibsal.org |
 | `apps/api` | Email, cron, calendar feeds, revalidation, exports, deletion | api.auibsal.org |
-| `apps/docs` | Officer handbook (Mintlify) | docs.auibsal.org |
+| `apps/docs` | SAL Docs: the Society's documents, the officer handbook, platform runbooks (Mintlify) | docs.auibsal.org |
 | `apps/storybook` | SAL components, v5 Screens and every platform email (bilingual) | sal-storybook (Vercel login) |
 | `apps/e2e` | Playwright + axe journeys | CI |
 

@@ -26,10 +26,12 @@ Branch: `claude/new-session-qosn60`.
       your password manager) to the GitHub `production` environment. Then
       `.github/workflows/backup.yml` stores an encrypted dump every night
       for 30 days. Run it once from Actions to check it.
-- [ ] **Officer handbook on Mintlify:** sign in at dashboard.mintlify.com with
-      GitHub, connect `auibsal/mono` with the docs path `apps/docs`, then add
-      the custom domain docs.auibsal.org (Mintlify shows the CNAME to add in
-      Cloudflare).
+- [x] **SAL Docs on Mintlify** (2026-10-08): deployment `theideaiq` builds
+      `apps/docs` from `main`; docs.auibsal.org is live with its certificate.
+      Three tabs: the six registry documents as web pages (with their
+      status), the officer handbook, and platform runbooks. Arabic summaries
+      and signature pages stay in the PDFs. Keep each page's status banner in
+      step with `packages/sal-data/documents.json`.
 - [ ] **Code security:** in GitHub Settings → Code security, turn on the
       dependency graph, secret scanning and push protection; then add the
       repository variable `DEPENDENCY_REVIEW` = `on` (Settings → Secrets and
