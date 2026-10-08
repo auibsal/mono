@@ -1379,9 +1379,7 @@
       "privacy": "Privacy and photo policy",
       "sideQuestCare": "Side Quest care",
       "search": "Search",
-      "university": "A student society at the American University of Iraq – Baghdad.",
-      "explore": "The Society",
-      "info": "Information"
+      "university": "A student society at the American University of Iraq – Baghdad."
     },
     "home": {
       "title": "The paper and the pen",
@@ -1393,10 +1391,7 @@
       "warmth": "Warmth Meter",
       "openCalls": "Open calls",
       "join": "Join the Society",
-      "joinBody": "Membership is free and open to every AUIB student.",
-      "about": "About the Society",
-      "programmes": "Programmes",
-      "allProgrammes": "All programmes"
+      "joinBody": "Membership is free and open to every AUIB student."
     },
     "documents": {
       "title": "Documents",
