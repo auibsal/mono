@@ -49,14 +49,11 @@ These stop parts of the work. Everything else continues around them.
 - [x] **Liveblocks secret** set on sal-api by the owner (2026-10-08).
 - [x] **Knock and Upstash removed** (owner, 2026-10-08): packages, env keys
       and CSP hosts are gone. Delete the two accounts at will.
-- [ ] **Migrations through CI:** add `SUPABASE_ACCESS_TOKEN` and
-      `SUPABASE_DB_PASSWORD` to the GitHub `production` environment so
-      `.github/workflows/migrate.yml` runs `supabase db push` after CI
-      passes on main. Until then migrations 20261008000200–0800 (test-row
-      purge, pg_net in `extensions`, two-step for Council, the Journal
-      rename, private profile columns, overview context, contact settings)
-      wait. Council members, the Treasurer and the Elections Committee
-      enroll an authenticator app once 0400 lands.
+- [x] **Migrations through CI:** the owner added `SUPABASE_ACCESS_TOKEN` and
+      `SUPABASE_DB_PASSWORD` to the GitHub `production` environment
+      (2026-10-08); `migrate.yml` applied 20261008000200–0700 the same day.
+      Council members, the Treasurer and the Elections Committee enroll an
+      authenticator app the next time they open Administration.
 - [ ] **HSTS preload:** the header now carries `preload`; submit
       auibsal.org at hstspreload.org once the deploy is live.
 - [ ] **Supabase Auth → MFA:** confirm TOTP is enabled (on by default).
