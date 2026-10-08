@@ -4,7 +4,6 @@ import { keys as email } from "@repo/email/keys";
 import { envPresets, withPresets } from "@repo/next-config/env";
 import { keys as core } from "@repo/next-config/keys";
 import { keys as observability } from "@repo/observability/keys";
-import { keys as security } from "@repo/security/keys";
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
@@ -13,8 +12,7 @@ const presets = envPresets(
   auth(),
   core(),
   email(),
-  observability(),
-  security()
+  observability()
 );
 
 export const env = withPresets(

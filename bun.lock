@@ -160,7 +160,6 @@
         "@repo/observability": "workspace:*",
         "@repo/sal-data": "workspace:*",
         "@repo/security": "workspace:*",
-        "@rescale/nemo": "^2.1.1",
         "@sentry/nextjs": "^10.76.2",
         "@supabase/supabase-js": "^2.117.3",
         "@t3-oss/env-nextjs": "^0.13.10",
@@ -1308,8 +1307,6 @@
     "@repo/storybook": ["@repo/storybook@workspace:apps/storybook"],
 
     "@repo/typescript-config": ["@repo/typescript-config@workspace:packages/typescript-config"],
-
-    "@rescale/nemo": ["@rescale/nemo@2.2.0", "", { "dependencies": { "path-to-regexp": "^6.1.0" }, "peerDependencies": { "next": ">=13.0.0" } }, "sha512-AetzvHmtJ8Q0U1SEpBmWgCZfQZgBfr++Ok0AUMHGJVdaU1w+OB1/x/PMoskulL5xrnFLRdUlmMBhYl+JTgZMjA=="],
 
     "@rolldown/binding-android-arm-eabi": ["@rolldown/binding-android-arm-eabi@1.2.12", "", { "os": "android", "cpu": "arm" }, "sha512-dB/a1214qKfHMXCpgqR4OZT+jS4kTyEXbQGJPqzobt5EwH5rX080pxE37alt3RzvR1bf1Yz/yGqRfrYAxuPw0A=="],
 
@@ -2572,8 +2569,6 @@
     "path-parse": ["path-parse@1.0.7", "", {}, "sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw=="],
 
     "path-scurry": ["path-scurry@2.0.2", "", { "dependencies": { "lru-cache": "^11.0.0", "minipass": "^7.1.2" } }, "sha512-3O/iVVsJAPsOnpwWIeD+d6z/7PmqApyQePUtCndjatj/9I5LylHvt5qluFaBT3I5h3r1ejfR056c+FCv+NnNXg=="],
-
-    "path-to-regexp": ["path-to-regexp@6.3.0", "", {}, "sha512-Yhpw4T9C6hPpgPeA28us07OJeqZ5EzQTkbfwuhsUg0c237RomFoETJgmp2sa3F/41gfLE6G5cqcYwznmeEeOlQ=="],
 
     "path-type": ["path-type@4.0.0", "", {}, "sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw=="],
 
