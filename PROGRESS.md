@@ -261,3 +261,4 @@ Covered by automated tests so far:
 - Email Arabic: every Arabic string in `packages/email/copy.ts` and the
   Arabic halves of `packages/database/supabase/templates/*.html` and
   `subjects.txt`.
+- Sign-in links (2026-10-08): «جارٍ الإرسال…» and the new `auth.callback.failed` text.
