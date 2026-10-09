@@ -12,7 +12,7 @@
   "workspaces": {
     ".": {
       "entry": ["scripts/*.ts"],
-      "ignoreDependencies": ["@repo/typescript-config", "vitest"]
+      "ignoreDependencies": ["@repo/typescript-config"]
     },
     "apps/api": {
       "entry": ["scripts/*.{js,mjs,ts}"]
