@@ -1,23 +1,19 @@
 "use client";
 
-import { useOthers } from "@liveblocks/react/suspense";
 import { useAuth } from "@repo/auth/provider";
-import { Room } from "@repo/collaboration/room";
+import { presenceColor } from "@repo/collaboration/colors";
+import { Room, useOthers } from "@repo/collaboration/room";
 import { type RoomKind, roomId } from "@repo/collaboration/rooms";
 import { useTranslations } from "next-intl";
-import type { ReactNode } from "react";
-import { env } from "@/env";
-import { callApi } from "@/lib/api";
+import { type ReactNode, useMemo } from "react";
+import { useProfile } from "@/lib/queries";
 import { SectionSpinner } from "../states";
-
-export const collaborationEnabled = () =>
-  env.NEXT_PUBLIC_LIVEBLOCKS_ENABLED === "true";
 
 /** Who else is in the room, in words. */
 const Presence = () => {
   const t = useTranslations("nexus.editor");
   const others = useOthers();
-  const names = [...new Set(others.map((o) => o.info?.name).filter(Boolean))];
+  const names = [...new Set(others.map((o) => o.name).filter(Boolean))];
   return (
     <p className="type-caption" role="status">
       {names.length > 0
@@ -28,17 +24,18 @@ const Presence = () => {
 };
 
 interface CollaborationProps {
-  /** Rendered when co-editing is on (inside the room). */
+  /** Rendered inside the room. */
   readonly children: ReactNode;
   readonly id: string;
   readonly kind: RoomKind;
-  /** Rendered when co-editing is off (no Liveblocks key). */
+  /** Rendered until the person is known (co-editing needs a name). */
   readonly solo: ReactNode;
 }
 
 /**
- * Opens the record's collaboration room when co-editing is enabled; apps/api
- * checks the member may edit the record before issuing a token.
+ * Opens the record's co-editing room (Supabase Realtime, packages/
+ * collaboration). The database lets in only people who may edit the
+ * record; anyone else's channel is refused and they keep the solo editor.
  */
 export const Collaboration = ({
   children,
@@ -47,19 +44,24 @@ export const Collaboration = ({
   solo,
 }: CollaborationProps) => {
   const t = useTranslations("nexus.editor");
-  const { supabase } = useAuth();
+  const { supabase, user } = useAuth();
+  const profile = useProfile();
+  const name = profile.data?.full_name_en;
 
-  if (!collaborationEnabled()) {
+  const self = useMemo(
+    () =>
+      user && name
+        ? { color: presenceColor(user.id), id: user.id, name }
+        : null,
+    [user, name]
+  );
+
+  if (!self) {
     return solo;
   }
 
   return (
     <Room
-      authEndpoint={(room) =>
-        callApi(supabase, "/collaboration/auth", {
-          room: room ?? roomId(kind, id),
-        })
-      }
       fallback={
         <div className="grid gap-2">
           <p className="type-caption">{t("connecting")}</p>
@@ -67,6 +69,8 @@ export const Collaboration = ({
         </div>
       }
       id={roomId(kind, id)}
+      self={self}
+      supabase={supabase}
     >
       <Presence />
       {children}

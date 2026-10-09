@@ -12,8 +12,6 @@ const presets = envPresets(auth(), core(), observability());
 export const env = withPresets(
   createEnv({
     client: {
-      // Live co-editing (Liveblocks). The secret key stays in apps/api.
-      NEXT_PUBLIC_LIVEBLOCKS_ENABLED: z.enum(["true", "false"]).optional(),
       // Web Push (phone notifications). Public half of the VAPID key pair;
       // the private half is in apps/api only.
       NEXT_PUBLIC_VAPID_PUBLIC_KEY: z.string().min(80).optional(),
@@ -22,8 +20,6 @@ export const env = withPresets(
     emptyStringAsUndefined: true,
     extends: presets,
     runtimeEnv: {
-      NEXT_PUBLIC_LIVEBLOCKS_ENABLED:
-        process.env.NEXT_PUBLIC_LIVEBLOCKS_ENABLED,
       NEXT_PUBLIC_VAPID_PUBLIC_KEY: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
     },
     server: {},
