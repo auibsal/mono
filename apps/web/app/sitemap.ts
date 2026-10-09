@@ -21,6 +21,7 @@ const staticPaths = [
   "/side-quest/care",
   "/events",
   "/documents",
+  "/partners",
   ...documents.documents.map((doc) => `/documents/${doc.slug}`),
 ];
 

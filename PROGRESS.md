@@ -30,6 +30,17 @@ Branch: `claude/new-session-qosn60`.
       origins `https://nexus.auibsal.org`; display name `AUIB Society of
       Arts and Letters`. The Nexus shows the passkey button and the Profile
       card already; see `docs/platform/accounts.md`.
+- [ ] **Partnerships (P11):** in Administration → Members, give the
+      Director of Partnerships & Outreach role to whoever holds it (the VP
+      covers it while vacant). For each partner already working with the
+      Society (antiq_typewriter's member discount first), add it to
+      Administration → Partners, draft its memorandum (F-26) and have the
+      President sign it with the signed PDF: an offer reaches members only
+      while a signed memorandum grants it. Role holders sign their
+      Conflict of Interest Declaration (F-18) under Account → Declarations;
+      the platform owner's own organizations (Baghdad College Foundation,
+      The IDEA IQ, which hosts the Vercel team) belong on it, and whoever
+      declares a conflict with a partner cannot sign its memorandum.
 - [ ] **Backups:** add `BACKUP_PASSPHRASE` (a long random passphrase kept in
       your password manager) to the GitHub `production` environment. Then
       `.github/workflows/backup.yml` stores an encrypted dump every night
@@ -241,6 +252,17 @@ These stop parts of the work. Everything else continues around them.
   `apps/app/vercel.json`. Routes with ids use query strings (static export).
 - Members-only piece text lives in `journal.piece_bodies`, so piece metadata
   can be public (with a sign-in prompt) while the text stays members-only.
+- Partnerships (Oct 9, 2026): one generic Partners module, no code per
+  partner. Tables live in the `governance` schema (a new schema would need
+  a dashboard change to expose it). What a partner may do on the platform
+  comes only from the grants of a signed memorandum in force; signing goes
+  through `governance.sign_partner_agreement`, which refuses anyone with a
+  declared conflict (P8.3). Partners are public only while active, listed
+  and under a signed memorandum. Member offers are display-only (no
+  payments). `charity.partners` stays for campaign pages.
+- Reference data after the first migration: later migrations may add
+  permissions, roles and grants with plain inserts; `@repo/rbac`'s mirror
+  test reads every migration in order.
 - Passkeys (Oct 9, 2026): Supabase Auth's own WebAuthn, no extra service.
   Relying Party ID `auibsal.org`; a passkey sign-in is a first factor, so
   roles with `requires_mfa` still ask for the authenticator code.
@@ -427,7 +449,8 @@ Covered by automated tests so far:
   was written for the platform; none came from a source document), except
   the motto «والقرطاسُ والقلم» and the Society's name «جمعية الفنون والآداب»,
   which come from the brief.
-- `access.roles.name_ar` (reference-data migration): all 24 role names.
+- `access.roles.name_ar` (reference-data migration): all 24 role names,
+  and «مدير الشراكات والتواصل» (`20261009000100_partners.sql`).
 - `core.programmes.name_ar`: every name.
 - `charity.campaigns.unit_label_ar` default «أطفال كُسوا».
 - `core.semesters` names in pgTAP fixtures are test-only (no review needed).

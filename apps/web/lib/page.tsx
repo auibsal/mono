@@ -15,6 +15,7 @@ type SectionNamespace =
   | "web.join"
   | "web.mediaKit"
   | "web.news"
+  | "web.partners"
   | "web.privacy"
   | "web.programmes";
 

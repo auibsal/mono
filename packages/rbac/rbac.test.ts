@@ -13,37 +13,39 @@ const migrations = join(
   "supabase",
   "migrations"
 );
-const referenceData = readFileSync(
-  join(
-    migrations,
-    readdirSync(migrations).find((f) => f.endsWith("_reference_data.sql")) ?? ""
-  ),
-  "utf8"
-);
+// Every migration, in the order they run: reference data comes first, and
+// later migrations may add permissions, roles and grants (never remove).
+const sql = readdirSync(migrations)
+  .filter((f) => f.endsWith(".sql"))
+  .sort()
+  .map((f) => readFileSync(join(migrations, f), "utf8"))
+  .join("\n");
 
-const section = (start: string, end: string) =>
-  referenceData.slice(referenceData.indexOf(start), referenceData.indexOf(end));
+/** The bodies of every `insert into <table> (...) values ...;` statement. */
+const inserts = (table: string) =>
+  [
+    ...sql.matchAll(
+      new RegExp(
+        `insert into ${table} \\([^)]*\\)\\s*(?:values|select)([\\s\\S]*?);\\n`,
+        "g"
+      )
+    ),
+  ].map((m) => m[1]);
 
-describe("mirror of the reference-data migration", () => {
+describe("mirror of the reference data in the migrations", () => {
   test("permission keys match", () => {
-    const sql = section(
-      "insert into access.permissions",
-      "insert into access.roles"
+    const keys = inserts("access.permissions").flatMap((body) =>
+      [...body.matchAll(/\('([a-z_.]+)', '/g)].map((m) => m[1])
     );
-    const keys = [...sql.matchAll(/\('([a-z_.]+)', '/g)].map((m) => m[1]);
     expect(keys.sort()).toEqual([...permissions].sort());
   });
 
   test("roles and spending limits match", () => {
-    const sql = section(
-      "insert into access.roles",
-      "insert into access.role_permissions"
-    );
-    const rows = [
-      ...sql.matchAll(
+    const rows = inserts("access.roles").flatMap((body) => [
+      ...body.matchAll(
         /\('([a-z_]+)', '[^']+', '[^']+', (true|false), (null|\d+), \d+\)/g
       ),
-    ];
+    ]);
     expect(rows.map((m) => m[1]).sort()).toEqual([...roleKeys].sort());
     for (const [, key, council, limit] of rows) {
       const role = roles[key as keyof typeof roles];
@@ -55,20 +57,29 @@ describe("mirror of the reference-data migration", () => {
   });
 
   test("role bundles match", () => {
-    const sql = section(
-      "insert into access.role_permissions",
-      "insert into core.programmes"
-    );
-    for (const [, key, list] of sql.matchAll(
-      /\('([a-z_]+)', array\[([^\]]+)\]\)/g
-    )) {
-      const fromSql = [...list.matchAll(/'([a-z_.]+)'/g)]
-        .map((m) => m[1])
-        .sort();
-      expect(
-        [...roles[key as keyof typeof roles].permissions].sort(),
-        key
-      ).toEqual(fromSql);
+    const fromSql = new Map<string, Set<string>>();
+    const grant = (role: string, permission: string) =>
+      fromSql.set(role, (fromSql.get(role) ?? new Set()).add(permission));
+    for (const body of inserts("access.role_permissions")) {
+      // Bundles: ('role', array['a', 'b']).
+      for (const [, role, list] of body.matchAll(
+        /\('([a-z_]+)', array\[([^\]]+)\]\)/g
+      )) {
+        for (const [, permission] of list.matchAll(/'([a-z_.]+)'/g)) {
+          grant(role, permission);
+        }
+      }
+      // Single grants: ('role', 'permission').
+      for (const [, role, permission] of body.matchAll(
+        /\('([a-z_]+)', '([a-z_.]+)'\)/g
+      )) {
+        grant(role, permission);
+      }
+    }
+    for (const key of roleKeys) {
+      expect([...roles[key].permissions].sort(), key).toEqual(
+        [...(fromSql.get(key) ?? [])].sort()
+      );
     }
   });
 

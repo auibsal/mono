@@ -40,6 +40,7 @@ export const adminModules = [
     ],
   },
   { key: "programs", permissions: ["programmes.manage"] },
+  { key: "partners", permissions: ["partners.manage", "partners.sign"] },
   {
     key: "governance",
     permissions: [

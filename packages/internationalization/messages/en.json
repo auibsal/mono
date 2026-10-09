@@ -140,7 +140,9 @@
       "profile": "Profile and privacy",
       "admin": "Administration",
       "publicSite": "auibsal.org",
-      "handbook": "Officer handbook"
+      "handbook": "Officer handbook",
+      "offers": "Member offers",
+      "declarations": "Declarations"
     },
     "errors": {
       "loadFailed": "We couldn't load this. Check your connection and try again.",
@@ -545,6 +547,22 @@
         "lastUsed": "Last used {date}",
         "remove": "Remove",
         "removeNamed": "Remove {name}"
+      },
+      "affiliations": {
+        "title": "Partner organizations",
+        "description": "If you belong to one of the Society's partners, tell us. Once we verify it with the partner, you can take part in what our agreement with them covers.",
+        "partner": "Partner",
+        "choose": "Choose a partner",
+        "note": "Your role or membership there (optional)",
+        "noteHint": "Helps us check with the partner. We never share member lists.",
+        "ask": "Ask to be verified",
+        "withdraw": "Withdraw",
+        "statuses": {
+          "pending": "Waiting for verification",
+          "verified": "Verified",
+          "declined": "Not verified",
+          "ended": "Ended"
+        }
       }
     },
     "admin": {
@@ -561,7 +579,8 @@
         "programs": "Programs",
         "governance": "Governance",
         "activity": "Activity log",
-        "settings": "Settings"
+        "settings": "Settings",
+        "partners": "Partners"
       },
       "noAccess": "Your roles don't include this section. Ask the President or the General Secretary if you need it.",
       "kit": {
@@ -1611,6 +1630,175 @@
           "edit": "Edit call",
           "cancelEdit": "Cancel"
         }
+      },
+      "partners": {
+        "title": "Partners",
+        "lede": "The partners register, memoranda (Form F-26), affiliations and member offers. Every partnership with money, shared branding or shared responsibility has a signed memorandum (P11.2).",
+        "tabs": {
+          "register": "Register",
+          "agreements": "Memoranda",
+          "affiliations": "Affiliations",
+          "offers": "Member offers",
+          "declarations": "Declarations"
+        },
+        "register": {
+          "lede": "Clubs, departments and organizations the Society works with or is talking to. Contacts and notes stay internal.",
+          "add": "Add a partner",
+          "edit": "Edit",
+          "cancel": "Cancel",
+          "empty": "No partners in the register yet.",
+          "name": "Name",
+          "slug": "Web address name",
+          "slugHint": "Lowercase letters, numbers and hyphens, e.g. poetry-hub.",
+          "url": "Website",
+          "kind": "Kind",
+          "reach": "Where",
+          "reachHint": "Tell Student Life of every partnership; check partners outside Iraq with Student Life first.",
+          "status": "Status",
+          "description": "Public description",
+          "logo": "Logo",
+          "listed": "List on auibsal.org/partners",
+          "listedShort": "Listed",
+          "listedHint": "A partner appears publicly only while it is active and has a signed memorandum in force.",
+          "contact": "Partner contact (internal)",
+          "contactName": "Name",
+          "contactRole": "Role",
+          "contactEmail": "Email",
+          "notes": "Notes",
+          "notesHint": "Internal only. Never shown on the site.",
+          "yes": "Yes",
+          "no": "No",
+          "kinds": {
+            "club": "AUIB club",
+            "department": "AUIB department or office",
+            "cultural": "Cultural organization",
+            "publisher": "Publisher or magazine",
+            "archive": "Archive or library",
+            "media": "Media",
+            "business": "Business",
+            "foundation": "Foundation",
+            "charity": "Charity",
+            "university": "Another university",
+            "other": "Other"
+          },
+          "reaches": {
+            "auib": "Inside AUIB",
+            "iraq": "In Iraq",
+            "international": "Outside Iraq"
+          },
+          "statuses": {
+            "prospect": "Talking",
+            "active": "Active",
+            "lapsed": "Lapsed",
+            "ended": "Ended"
+          }
+        },
+        "agreements": {
+          "lede": "Partnership memoranda (Form F-26). Drafts are written here; the President signs and uploads the signed copy. Someone who has declared a conflict with the partner cannot sign (P8.3).",
+          "draft": "Draft a memorandum",
+          "cancel": "Cancel",
+          "empty": "No memoranda yet.",
+          "formIntro": "This memorandum records what each side has agreed. It is made in good faith and is not a legal contract. Either side may end it with 14 days' written notice.",
+          "choosePartner": "Choose a partner",
+          "codeHint": "For example MOU-2026-01.",
+          "moneyHint": "Who pays what; how any money raised is handled, receipted and reported; charity money passed on in full.",
+          "brandingHint": "How each name and logo appears; both approve materials before release.",
+          "safetyHint": "Who leads on the day; safeguarding; consent for photos.",
+          "grantsHint": "What this memorandum allows on the platform once it is signed and in force.",
+          "dates": "Dates",
+          "status": "Status",
+          "noGrants": "Nothing on the platform",
+          "sign": "Sign",
+          "signIntro": "Sign for the Society (F-26: For SAL, President). Upload the copy signed by both sides as a PDF.",
+          "partnerSignatory": "Signed for the partner by (name, role)",
+          "signedCopy": "Signed copy (PDF)",
+          "openSigned": "Open signed copy",
+          "informedStudentLife": "Student Life told",
+          "end": "End",
+          "endConfirm": "End this memorandum today? Commitments already made to the public are honored.",
+          "renewalsDue": "Renewals due",
+          "renewBy": "renew by {date}",
+          "fields": {
+            "partner": "Partner",
+            "code": "Code",
+            "purpose": "Purpose: what we are doing together, and why",
+            "starts_on": "From",
+            "ends_on": "To",
+            "renew_by": "Review and renew by",
+            "sal_will": "SAL will",
+            "partner_will": "The partner will",
+            "money": "Money",
+            "branding": "Branding",
+            "people_safety": "People and safety",
+            "sal_contact": "SAL contact (name, role, email)",
+            "partner_contact": "Partner contact (name, role, email)",
+            "grants": "On the platform"
+          },
+          "grants": {
+            "journal_submissions": "Their members may send work to the Journal",
+            "guest_editing": "A guest editor for an issue",
+            "event_cohosting": "Co-hosted events",
+            "member_offer": "An offer for SAL members",
+            "shared_branding": "Shared branding",
+            "productions": "Productions together",
+            "volunteering": "Their members may volunteer on rotas"
+          },
+          "statuses": {
+            "draft": "Draft",
+            "signed": "Signed",
+            "ended": "Ended"
+          }
+        },
+        "affiliations": {
+          "lede": "People who say they belong to a partner. Check with the partner's contact before verifying. Lists are never shared with partners.",
+          "empty": "No affiliation requests.",
+          "person": "Person",
+          "partner": "Partner",
+          "note": "Their note",
+          "asked": "Asked",
+          "status": "Status",
+          "verify": "Verify",
+          "decline": "Decline",
+          "endAffiliation": "End",
+          "statuses": {
+            "pending": "Waiting",
+            "verified": "Verified",
+            "declined": "Declined",
+            "ended": "Ended"
+          }
+        },
+        "offers": {
+          "lede": "Offers from partners for verified members. Nothing is paid through the platform. An offer shows only while the partner's memorandum grants a member offer.",
+          "new": "New offer",
+          "partner": "Partner",
+          "choosePartner": "Choose a partner",
+          "title": "Offer",
+          "details": "How to redeem it",
+          "code": "Code (optional)",
+          "codeHint": "If the partner gave the Society a code.",
+          "starts_on": "From",
+          "ends_on": "Until",
+          "publishNow": "Publish now",
+          "grantHint": "Members see it only while the memorandum is in force and grants a member offer.",
+          "offer": "Offer",
+          "dates": "Dates",
+          "published": "Published",
+          "publish": "Publish",
+          "unpublish": "Unpublish",
+          "empty": "No offers yet."
+        },
+        "declarations": {
+          "lede": "Conflict of Interest Declarations (Form F-18) from role holders. The General Secretary records receipt.",
+          "empty": "No declarations yet.",
+          "person": "Person",
+          "declared": "Declared",
+          "signed": "Signed",
+          "received": "Received",
+          "nothing": "Nothing to declare",
+          "closed": "closed",
+          "receive": "Mark received",
+          "notReceived": "Not yet received"
+        }
       }
     },
     "editor": {
@@ -1680,6 +1868,48 @@
       "forOfficers": "The handbook is for Society officers. It opens when you hold a role.",
       "seeSociety": "See who runs the Society",
       "empty": "The handbook has no pages yet."
+    },
+    "declarations": {
+      "title": "Conflict of interest",
+      "lede": "Form F-18. Every role holder, every semester, and whenever something new arises (P8).",
+      "definition": "A conflict of interest is any situation where a personal interest, relationship or loyalty could affect, or seem to affect, a Society decision. Declaring one is normal and responsible; hiding one is not.",
+      "role": "Your role",
+      "semester": "Semester",
+      "chooseSemester": "Choose a semester",
+      "question": "Do any of these apply to you?",
+      "kinds": {
+        "close_person_applying": "A close friend, partner or relative is applying for a role or submitting work",
+        "supplier": "You or your family own or work for a supplier we might use",
+        "partner_role": "You hold a role in another club or organization we partner with",
+        "value_received": "You receive anything of value connected to your role",
+        "other": "Anything else someone might reasonably question"
+      },
+      "partner": "Which partner, if any",
+      "noPartner": "Not about a partner",
+      "fields": {
+        "what": "What",
+        "affects": "Which decisions it could affect",
+        "handling": "How it will be handled"
+      },
+      "nothing": "I have nothing to declare at this time",
+      "promise": "I will declare new conflicts at the start of the meeting concerned.",
+      "sign": "Sign the declaration",
+      "saved": "Declaration signed. The General Secretary will record receipt.",
+      "history": "Your declarations",
+      "noHistory": "You haven't signed a declaration yet.",
+      "nothingDeclared": "Nothing to declare.",
+      "close": "No longer applies",
+      "closedOn": "closed {date}",
+      "received": "Received {date}",
+      "notReceived": "Not yet received"
+    },
+    "offers": {
+      "title": "Member offers",
+      "lede": "Offers from the Society's partners for members. Nothing is paid through the Nexus: each offer says how to redeem it.",
+      "empty": "There are no offers right now.",
+      "membershipCard": "Show my membership card",
+      "code": "Code:",
+      "until": "Until {date}"
     }
   },
   "web": {
@@ -1701,7 +1931,8 @@
       "privacy": "Privacy and photo policy",
       "sideQuestCare": "Side Quest care",
       "search": "Search",
-      "university": "A student society at the American University of Iraq – Baghdad."
+      "university": "A student society at the American University of Iraq – Baghdad.",
+      "partners": "Partners"
     },
     "home": {
       "title": "The paper and the pen",
@@ -2046,6 +2277,19 @@
         "piece": "Journal",
         "document": "Document"
       }
+    },
+    "partners": {
+      "title": "Partners",
+      "lede": "The clubs, departments and organizations the AUIB Society of Arts and Letters works with. Every partnership listed here has a signed memorandum.",
+      "empty": "Our first partnerships are being agreed. They will appear here once signed.",
+      "reach": {
+        "auib": "At AUIB",
+        "iraq": "In Iraq",
+        "international": "Beyond Iraq"
+      },
+      "visit": "Visit {name}",
+      "workTitle": "Work with us",
+      "work": "The Society partners with clubs, departments, charities and cultural organizations whose aims fit its mission and who treat people fairly. Sponsors are acknowledged and never have editorial influence. Write to the Director of Partnerships through the contact page."
     }
   }
 }
