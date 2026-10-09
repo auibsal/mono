@@ -2,6 +2,24 @@ import Script from "next/script";
 import type { ReactNode } from "react";
 import { keys } from "./keys";
 
+const SCRIPT_UNSAFE_CHAR_MAP: Record<string, string> = {
+  "<": "\\u003C",
+  ">": "\\u003E",
+  "/": "\\u002F",
+  "\\": "\\\\",
+  "\b": "\\b",
+  "\f": "\\f",
+  "\n": "\\n",
+  "\r": "\\r",
+  "\t": "\\t",
+  "\0": "\\0",
+  "\u2028": "\\u2028",
+  "\u2029": "\\u2029",
+};
+
+const escapeUnsafeScriptChars = (value: string): string =>
+  value.replace(/[<>/\\\b\f\n\r\t\0\u2028\u2029]/g, (char) => SCRIPT_UNSAFE_CHAR_MAP[char] ?? char);
+
 interface AnalyticsProviderProps {
   readonly children: ReactNode;
 }
@@ -24,7 +42,7 @@ export const AnalyticsProvider = ({ children }: AnalyticsProviderProps) => {
             strategy="afterInteractive"
           />
           <Script id="ga4" strategy="afterInteractive">
-            {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config',${JSON.stringify(gaId)},{allow_google_signals:false,allow_ad_personalization_signals:false});`}
+            {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config',${escapeUnsafeScriptChars(JSON.stringify(gaId))},{allow_google_signals:false,allow_ad_personalization_signals:false});`}
           </Script>
         </>
       ) : null}
