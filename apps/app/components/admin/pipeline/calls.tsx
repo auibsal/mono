@@ -7,7 +7,7 @@ import { Input } from "@repo/design-system/components/ui/input";
 import { Label } from "@repo/design-system/components/ui/label";
 import type { Locale } from "@repo/internationalization";
 import { formatLongDate } from "@repo/internationalization/format";
-import { localized, unwrap } from "@repo/sal-data";
+import { journal, localized, unwrap } from "@repo/sal-data";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
 import { useId, useState } from "react";
@@ -30,6 +30,8 @@ const blank = {
   is_published: false,
   max_per_person: "2",
   opens_at: null as string | null,
+  // Partners whose verified members may also answer the call.
+  partners: [] as string[],
   theme: { ar: "", en: "" },
   title: { ar: "", en: "" },
 };
@@ -70,15 +72,24 @@ export const Calls = ({ issueId }: { issueId: string }) => {
       ) ?? [],
     queryKey: [...pipelineKey, "calls", issueId],
   });
+  const partnerOptions = useQuery({
+    queryFn: () => journal.submissionPartners(supabase),
+    queryKey: [...pipelineKey, "submission-partners"],
+  });
   const save = useMutation({
     mutationFn: async () => {
       const table = supabase.schema("journal").from("calls");
       const row = callRow(issueId, form);
-      unwrap(
-        form.id
-          ? await table.update(row).eq("id", form.id)
-          : await table.insert(row)
-      );
+      let callId = form.id;
+      if (callId) {
+        unwrap(await table.update(row).eq("id", callId));
+      } else {
+        callId =
+          unwrap(await table.insert(row).select("id").single())?.id ?? null;
+      }
+      if (callId) {
+        await journal.setCallPartners(supabase, callId, form.partners);
+      }
     },
     onSuccess: async () => {
       setForm(blank);
@@ -109,7 +120,8 @@ export const Calls = ({ issueId }: { issueId: string }) => {
     {
       cell: (c) => (
         <Button
-          onClick={() =>
+          onClick={async () => {
+            const partners = await journal.callPartnerIds(supabase, c.id);
             setForm({
               closes_at: c.closes_at,
               eligibility: {
@@ -120,10 +132,11 @@ export const Calls = ({ issueId }: { issueId: string }) => {
               is_published: c.is_published,
               max_per_person: String(c.max_per_person),
               opens_at: c.opens_at,
+              partners,
               theme: { ar: c.theme_ar ?? "", en: c.theme_en ?? "" },
               title: { ar: c.title_ar, en: c.title_en },
-            })
-          }
+            });
+          }}
           size="sm"
           variant="ghost"
         >
@@ -211,6 +224,32 @@ export const Calls = ({ issueId }: { issueId: string }) => {
             />
           )}
         </Field>
+        {(partnerOptions.data ?? []).length > 0 ? (
+          <fieldset className="grid gap-2">
+            <legend className="mb-1 font-medium">{t("partners")}</legend>
+            <p className="type-caption">{t("partnersHint")}</p>
+            {(partnerOptions.data ?? []).map((partner) => (
+              <div className="flex items-center gap-2" key={partner.id}>
+                <Checkbox
+                  checked={form.partners.includes(partner.id)}
+                  id={`${id}-partner-${partner.id}`}
+                  onCheckedChange={(v) =>
+                    setForm((f) => ({
+                      ...f,
+                      partners:
+                        v === true
+                          ? [...f.partners, partner.id]
+                          : f.partners.filter((p) => p !== partner.id),
+                    }))
+                  }
+                />
+                <Label htmlFor={`${id}-partner-${partner.id}`}>
+                  {localized(partner, "name", locale)}
+                </Label>
+              </div>
+            ))}
+          </fieldset>
+        ) : null}
         <div className="flex items-start gap-3">
           <Checkbox
             checked={form.is_published}

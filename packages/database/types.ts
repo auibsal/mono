@@ -2737,6 +2737,35 @@ export type Database = {
           },
         ];
       };
+      call_partners: {
+        Row: {
+          added_by: string | null;
+          call_id: string;
+          created_at: string;
+          partner_id: string;
+        };
+        Insert: {
+          added_by?: string | null;
+          call_id: string;
+          created_at?: string;
+          partner_id: string;
+        };
+        Update: {
+          added_by?: string | null;
+          call_id?: string;
+          created_at?: string;
+          partner_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "call_partners_call_id_fkey";
+            columns: ["call_id"];
+            isOneToOne: false;
+            referencedRelation: "calls";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       calls: {
         Row: {
           closes_at: string;
@@ -3190,6 +3219,7 @@ export type Database = {
           intake_note: string | null;
           intake_returned_at: string | null;
           language: Database["journal"]["Enums"]["language"];
+          partner_id: string | null;
           rights_note: string | null;
           source_author: string | null;
           source_text: string | null;
@@ -3209,6 +3239,7 @@ export type Database = {
           intake_note?: string | null;
           intake_returned_at?: string | null;
           language: Database["journal"]["Enums"]["language"];
+          partner_id?: string | null;
           rights_note?: string | null;
           source_author?: string | null;
           source_text?: string | null;
@@ -3228,6 +3259,7 @@ export type Database = {
           intake_note?: string | null;
           intake_returned_at?: string | null;
           language?: Database["journal"]["Enums"]["language"];
+          partner_id?: string | null;
           rights_note?: string | null;
           source_author?: string | null;
           source_text?: string | null;
@@ -3272,6 +3304,13 @@ export type Database = {
         };
         Returns: string;
       };
+      call_partner_names: {
+        Args: { call_id: string };
+        Returns: {
+          name_ar: string;
+          name_en: string;
+        }[];
+      };
       decide: {
         Args: { blind_entry_id: string; decision: string; notes?: string };
         Returns: string;
@@ -3299,6 +3338,15 @@ export type Database = {
           submission_id: string;
           title: string;
           updated_at: string;
+        }[];
+      };
+      my_call_pathways: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          call_id: string;
+          name_ar: string;
+          name_en: string;
+          partner_id: string;
         }[];
       };
       piece_from_entry: { Args: { blind_entry_id: string }; Returns: string };
@@ -3333,6 +3381,14 @@ export type Database = {
       sign_agreement: {
         Args: { signer_name: string; submission_id: string };
         Returns: string;
+      };
+      submission_partners: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          id: string;
+          name_ar: string;
+          name_en: string;
+        }[];
       };
       transition_submission: {
         Args: {

@@ -276,6 +276,15 @@ These stop parts of the work. Everything else continues around them.
   serial, and are checked at auibsal.org/verify. The PDF is the browser's
   print of the Nexus certificate page (Arabic shaping stays correct; no
   PDF library or cost).
+- Journal partner pathway (Oct 9, 2026): a call names partners
+  (`journal.call_partners`) whose verified members may submit, only while
+  the partner's signed memorandum grants `journal_submissions`; the same
+  pledges, limits and blind review apply. `journal.submissions.partner_id`
+  is identity-side (never on blind entries). `assign_reader` refuses a
+  reader with a declared conflict with that partner (P8.3). People
+  verified as a partner's members get a guest Nexus (Journal, profile,
+  service, certificates). The Guest Editor role (issue scope) goes only to
+  a partner's member whose memorandum grants `guest_editing`.
 - Reference data after the first migration: later migrations may add
   permissions, roles and grants with plain inserts; `@repo/rbac`'s mirror
   test reads every migration in order.
@@ -466,7 +475,8 @@ Covered by automated tests so far:
   the motto «والقرطاسُ والقلم» and the Society's name «جمعية الفنون والآداب»,
   which come from the brief.
 - `access.roles.name_ar` (reference-data migration): all 24 role names,
-  and «مدير الشراكات والتواصل» (`20261009000100_partners.sql`).
+  and «مدير الشراكات والتواصل» (`20261009000100_partners.sql`) and «محرر ضيف»
+  (`20261009000300_journal_partners.sql`).
 - `core.programmes.name_ar`: every name.
 - `charity.campaigns.unit_label_ar` default «أطفال كُسوا».
 - `core.semesters` names in pgTAP fixtures are test-only (no review needed).

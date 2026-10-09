@@ -493,7 +493,11 @@
         "sign": "Sign the agreement",
         "signed": "Signed by {name} on {date}."
       },
-      "pieceNotFound": "No published piece with this link."
+      "pieceNotFound": "No published piece with this link.",
+      "throughPartner": "Submitting through",
+      "throughPartnerHint": "You answer this call as a member of this partner.",
+      "throughPartnerOptional": "Optional: if this work comes through one of the Society's partners. It is never shown to readers.",
+      "asMember": "As a member of the Society"
     },
     "profile": {
       "title": "Profile and privacy",
@@ -1635,7 +1639,9 @@
           "empty": "No calls for this issue yet.",
           "new": "New call",
           "edit": "Edit call",
-          "cancelEdit": "Cancel"
+          "cancelEdit": "Cancel",
+          "partners": "Also open to partners' members",
+          "partnersHint": "Members of these partners may answer the call once the Society has verified them, under the same rules and blind review. Only partners whose signed memorandum allows Journal submissions are listed."
         }
       },
       "partners": {
@@ -2069,6 +2075,13 @@
         "production": "Recognition · B4",
         "partner": "Recognition · B4"
       }
+    },
+    "partnerGuest": {
+      "title": "Welcome, partner",
+      "body": "You are verified as a member of one of the Society's partners. In the Nexus you can answer the Journal calls opened to your partner, keep your profile, and see your service and certificates. The rest is for members of the Society.",
+      "journal": "The Journal",
+      "profile": "My profile",
+      "service": "My service"
     }
   },
   "web": {
@@ -2171,7 +2184,8 @@
         "art_photography": "Art & Photography",
         "translation": "Translation",
         "six_words": "Six Words"
-      }
+      },
+      "partnersMayAnswer": "Members of {partners} may also answer this call."
     },
     "about": {
       "title": "About the Society",

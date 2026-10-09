@@ -37,6 +37,22 @@ const JournalHomePage = async ({ params }: JournalProps) => {
     readPublished(["journal"], (c) => journal.openCalls(c), []),
     readPublished(["journal"], (c) => journal.upcomingCalls(c), []),
   ]);
+  // Partners whose members may also answer each open call (listed partners).
+  const callPartners = new Map(
+    await Promise.all(
+      (calls ?? []).map(
+        async (call) =>
+          [
+            call.id,
+            await readPublished(
+              ["journal", "partners"],
+              (c) => journal.callPartnerNames(c, call.id),
+              []
+            ),
+          ] as const
+      )
+    )
+  );
   const heading = "type-heading border-accent-line border-b pb-2";
 
   return (
@@ -64,6 +80,15 @@ const JournalHomePage = async ({ params }: JournalProps) => {
             <p className="type-caption">
               {t("closes", { date: formatLongDate(call.closes_at, locale) })}
             </p>
+            {(callPartners.get(call.id) ?? []).length > 0 ? (
+              <p className="type-body">
+                {t("partnersMayAnswer", {
+                  partners: (callPartners.get(call.id) ?? [])
+                    .map((p) => localized(p, "name", locale))
+                    .join(locale === "ar" ? "، " : ", "),
+                })}
+              </p>
+            ) : null}
             <a
               className="inline-flex h-10 items-center justify-self-start rounded-md bg-primary px-4 text-primary-foreground text-sm"
               href={`${project.hosts.app}/${locale}/journal/submit?call=${call.id}`}

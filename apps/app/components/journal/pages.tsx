@@ -13,7 +13,12 @@ import { journal, localized, unwrap } from "@repo/sal-data";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
 import { type FormEvent, useEffect, useState } from "react";
-import { queryKeys, useMySubmissions, useOpenCalls } from "@/lib/queries";
+import {
+  queryKeys,
+  useMemberStatus,
+  useMySubmissions,
+  useOpenCalls,
+} from "@/lib/queries";
 import { useQueryParam } from "@/lib/use-query-param";
 import {
   AdminHeading,
@@ -159,6 +164,86 @@ export const JournalHome = () => {
 
 // ── Submit ──────────────────────────────────────────────────────────────────
 
+type OpenCall = NonNullable<ReturnType<typeof useOpenCalls>["data"]>[number];
+type Pathway = Awaited<ReturnType<typeof journal.myCallPathways>>[number];
+
+/**
+ * The partner pathway: Society members answer any open call; people
+ * verified as a partner's members answer only the calls opened to that
+ * partner, and always through it.
+ */
+const useSubmitPathway = (
+  calls: OpenCall[] | null | undefined,
+  callId: string,
+  partnerId: string
+) => {
+  const { supabase } = useAuth();
+  const status = useMemberStatus();
+  const pathways = useQuery({
+    queryFn: () => journal.myCallPathways(supabase),
+    queryKey: ["journal", "pathways"],
+  });
+  const isMember = Boolean(status.data?.is_member);
+  const callable = (calls ?? []).filter(
+    (c) => isMember || pathways.data?.some((p) => p.call_id === c.id)
+  );
+  const call = callable.find((c) => c.id === callId) ?? callable[0];
+  const callPathways = (pathways.data ?? []).filter(
+    (p) => p.call_id === call?.id
+  );
+  const chosen = callPathways.find((p) => p.partner_id === partnerId);
+  const throughPartner = isMember
+    ? chosen?.partner_id
+    : (chosen ?? callPathways[0])?.partner_id;
+  return {
+    call,
+    callable,
+    callPathways,
+    isMember,
+    pending: pathways.isPending || status.isPending,
+    throughPartner,
+  };
+};
+
+const PartnerPathway = ({
+  isMember,
+  onChange,
+  pathways,
+  value,
+}: {
+  isMember: boolean;
+  onChange: (partnerId: string) => void;
+  pathways: Pathway[];
+  value: string | undefined;
+}) => {
+  const t = useTranslations("nexus.journal");
+  const locale = useLocale();
+  if (pathways.length === 0) {
+    return null;
+  }
+  return (
+    <Field
+      hint={isMember ? t("throughPartnerOptional") : t("throughPartnerHint")}
+      label={t("throughPartner")}
+    >
+      {(id) => (
+        <SelectInput
+          id={id}
+          onChange={(e) => onChange(e.target.value)}
+          value={value ?? ""}
+        >
+          {isMember ? <option value="">{t("asMember")}</option> : null}
+          {pathways.map((p) => (
+            <option key={p.partner_id} value={p.partner_id}>
+              {localized(p, "name", locale)}
+            </option>
+          ))}
+        </SelectInput>
+      )}
+    </Field>
+  );
+};
+
 export const SubmitWork = () => {
   const t = useTranslations("nexus.journal");
   const locale = useLocale() as Locale;
@@ -172,7 +257,9 @@ export const SubmitWork = () => {
   const [files, setFiles] = useState<PendingFile[]>([]);
   const [pledged, setPledged] = useState(false);
   const [partial, setPartial] = useState<string | null>(null);
-  const call = calls.data?.find((c) => c.id === callId) ?? calls.data?.[0];
+  const [partnerId, setPartnerId] = useState("");
+  const pathway = useSubmitPathway(calls.data, callId, partnerId);
+  const { call, callable, callPathways, isMember, throughPartner } = pathway;
   const kinds = kindsFor(work.category);
 
   const send = useMutation({
@@ -184,6 +271,7 @@ export const SubmitWork = () => {
         cover_note: work.cover_note || undefined,
         human_authorship_confirmed: true,
         language: work.language,
+        partner_id: throughPartner,
         rights_note: work.rights_note || undefined,
         source_author: work.source_author || undefined,
         source_text: work.source_text || undefined,
@@ -211,7 +299,7 @@ export const SubmitWork = () => {
     },
   });
 
-  if (!calls.data) {
+  if (!calls.data || pathway.pending) {
     return <SectionSpinner />;
   }
   const submit = (event: FormEvent) => {
@@ -248,7 +336,7 @@ export const SubmitWork = () => {
                 onChange={(e) => setCallId(e.target.value)}
                 value={call.id}
               >
-                {(calls.data ?? []).map((c) => (
+                {callable.map((c) => (
                   <option key={c.id} value={c.id}>
                     {localized(c, "title", locale)}
                   </option>
@@ -256,6 +344,12 @@ export const SubmitWork = () => {
               </SelectInput>
             )}
           </Field>
+          <PartnerPathway
+            isMember={isMember}
+            onChange={setPartnerId}
+            pathways={callPathways}
+            value={throughPartner}
+          />
           <WorkFields onChange={setWork} value={work} />
           <fieldset className="grid gap-3">
             <legend className="mb-2 font-medium">{t("files.title")}</legend>
