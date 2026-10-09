@@ -2,7 +2,7 @@ import { describe, expect, test, vi } from "vitest";
 import { matchesConfirmation } from "@/components/profile/delete-account";
 import { ApiError, callApi } from "@/lib/api";
 import { preferredLocale, resolveLocalizedPath } from "@/lib/locale";
-import { safeNextPath, stripLocale } from "@/lib/navigation";
+import { safeNextPath, safeSocietyUrl, stripLocale } from "@/lib/navigation";
 import { fakeSupabase } from "./render";
 
 describe("locale", () => {
@@ -24,6 +24,17 @@ describe("return paths", () => {
     expect(safeNextPath("https://evil.example")).toBeNull();
     expect(safeNextPath("//evil.example")).toBeNull();
     expect(safeNextPath("/\\evil.example")).toBeNull();
+  });
+
+  test("returns only to the Society's own https sites", () => {
+    expect(safeSocietyUrl("https://design.auibsal.org/?path=/x")).toBe(
+      "https://design.auibsal.org/?path=/x"
+    );
+    expect(safeSocietyUrl("https://auibsal.org/")).toBe("https://auibsal.org/");
+    expect(safeSocietyUrl("http://design.auibsal.org/")).toBeNull();
+    expect(safeSocietyUrl("https://auibsal.org.evil.example/")).toBeNull();
+    expect(safeSocietyUrl("https://evilauibsal.org/")).toBeNull();
+    expect(safeSocietyUrl("javascript:alert(1)")).toBeNull();
   });
 
   test("drops the locale for the locale-aware router", () => {

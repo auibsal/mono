@@ -1,0 +1,18 @@
+<link href="/brand/sal-avatar.svg" rel="icon" type="image/svg+xml">
+<meta content="noindex, nofollow" name="robots">
+<script>
+  // Storybook names the tab "<story> ⋅ Storybook"; use the Society's name.
+  (() => {
+    const fix = () => {
+      if (document.title.includes("Storybook")) {
+        document.title = document.title.replace("Storybook", "SAL Design System");
+      }
+    };
+    new MutationObserver(fix).observe(document.head, {
+      characterData: true,
+      childList: true,
+      subtree: true,
+    });
+    fix();
+  })();
+</script>

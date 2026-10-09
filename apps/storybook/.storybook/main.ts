@@ -13,11 +13,13 @@ const getAbsolutePath = (value: string) =>
 
 const config: StorybookConfig = {
   addons: [getAbsolutePath("@storybook/addon-themes")],
+  // No vendor notices or usage reporting in the SAL Design System.
+  core: { disableTelemetry: true, disableWhatsNewNotifications: true },
   framework: {
     name: getAbsolutePath("@storybook/nextjs"),
     options: {},
   },
-  staticDirs: ["../public", { from: "../../../brand/logos", to: "/brand" }],
+  staticDirs: [{ from: "../../../brand/logos", to: "/brand" }],
   stories: [
     "../stories/**/*.mdx",
     "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",

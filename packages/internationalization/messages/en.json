@@ -113,6 +113,10 @@
       "recovery": "Press Continue, then choose a new password.",
       "continue": "Continue",
       "pending": "Signing you in…"
+    },
+    "continue": {
+      "title": "Returning",
+      "returning": "Taking you back…"
     }
   },
   "nexus": {
