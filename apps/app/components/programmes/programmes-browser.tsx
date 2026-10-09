@@ -7,6 +7,7 @@ import {
   formatLongDate,
   formatNumber,
 } from "@repo/internationalization/format";
+import { Link } from "@repo/internationalization/navigation";
 import { localized, unwrap } from "@repo/sal-data";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
@@ -139,6 +140,12 @@ export const ProgrammesBrowser = () => {
       <header className="grid gap-2">
         <h1 className="type-display">{t("title")}</h1>
         <p className="type-lede max-w-2xl">{t("lede")}</p>
+        <Link
+          className="type-body justify-self-start underline underline-offset-4"
+          href="/programs/productions"
+        >
+          {t("productionsLink")}
+        </Link>
       </header>
 
       {rotas.data.length === 0 ? (

@@ -15,6 +15,7 @@ export const Footer = async () => {
       ["/news", tn("news")],
       ["/documents", tn("documents")],
       ["/partners", t("partners")],
+      ["/productions", t("productions")],
       ["/search", t("search")],
     ],
     [

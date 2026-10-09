@@ -17,6 +17,7 @@ type SectionNamespace =
   | "web.news"
   | "web.partners"
   | "web.privacy"
+  | "web.productions"
   | "web.programmes";
 
 /** Metadata for a simple section page: its `title` and `lede` messages. */

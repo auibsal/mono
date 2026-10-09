@@ -8,6 +8,7 @@ export * as governance from "./governance";
 export * as journal from "./journal";
 export * as membership from "./membership";
 export * as partners from "./partners";
+export * as productions from "./productions";
 export * as programmes from "./programmes";
 export * as recognition from "./recognition";
 export { sanitizeRichText, toPlainText } from "./sanitize";

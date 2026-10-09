@@ -285,6 +285,18 @@ These stop parts of the work. Everything else continues around them.
   verified as a partner's members get a guest Nexus (Journal, profile,
   service, certificates). The Guest Editor role (issue scope) goes only to
   a partner's member whose memorandum grants `guest_editing`.
+- Productions (Oct 9, 2026): `programmes.productions` with stages from
+  proposal to closed. No production reaches performances, and no
+  performance (a SAL event) is linked, until the script's rights are
+  cleared by someone other than whoever recorded them; a licensed script
+  needs the license on file (library/productions, opened through apps/api
+  `/files/rights`). Audition notes are never readable by the person
+  auditioning. Members choose whether their credit is public. Partners
+  co-produce only under a memorandum granting `productions`. A new
+  `production` scope and the Production Lead role run one production;
+  hours become recorded service, a closed production drafts certificates
+  for its credited members, and the lead signs the Program Report (F-25,
+  section B). Public page: auibsal.org/productions (footer).
 - Reference data after the first migration: later migrations may add
   permissions, roles and grants with plain inserts; `@repo/rbac`'s mirror
   test reads every migration in order.
@@ -373,6 +385,7 @@ These stop parts of the work. Everything else continues around them.
 - [ ] Past attendance on the Events page
 - [x] Journal: submit (rich text or files, translation fields, Human Authorship reconfirmed each time), my submissions, revise when returned, withdraw, sign the Publication Agreement (text is `TODO(content)`)
 - [x] Programs: rotas with upcoming shifts, places left (`programmes.shift_places`), sign up, give back
+- [x] Productions (Programs → Productions): open auditions with sign-up, and for the company their credits (show my name or not) and rehearsals
 - [ ] Society (Book of Members, roster, minutes, elections)
 
 ### Nexus — admin (§8)
@@ -383,6 +396,7 @@ These stop parts of the work. Everything else continues around them.
 - [x] Officer handbook in the Nexus (Account → Officer handbook), edited in place by governance managers
 - [x] Charity (campaigns, ledger with sign-off and reversals, receipts through signed URLs; winter-set cost is a placeholder setting)
 - [x] Programs, Governance (minutes co-edited, elections, spending, library uploads), Activity log, Settings
+- [x] Productions (`/admin/productions`): stages, rights clearance by a second person, auditions with private panel notes, cast and crew credits, hours as service, rehearsals, performances linked to events, partners, Program Report (F-25 B), drafted certificates; public page auibsal.org/productions
 - [x] Journal issues, pieces, contributors; accepted work becomes a draft piece; publishing blocked until the agreement is signed
 - [x] Journal pipeline (`/admin/pipeline`): per-issue tabs by role — my reading (rubric v2 scoring), intake (return for formatting, send to blind review, originals via `/files/submission`), reader assignment, drag-and-drop board with a keyboard Move menu, selection by average and band, decisions with author reveal, Advisory Board flagged view, calls
 - [x] Blind copies: `/files/blind` strips PDF info/XMP/annotation authors, image EXIF, DOCX properties and revision authors; never falls back to the original
@@ -475,8 +489,12 @@ Covered by automated tests so far:
   the motto «والقرطاسُ والقلم» and the Society's name «جمعية الفنون والآداب»,
   which come from the brief.
 - `access.roles.name_ar` (reference-data migration): all 24 role names,
-  and «مدير الشراكات والتواصل» (`20261009000100_partners.sql`) and «محرر ضيف»
-  (`20261009000300_journal_partners.sql`).
+  and «مدير الشراكات والتواصل» (`20261009000100_partners.sql`), «محرر ضيف»
+  (`20261009000300_journal_partners.sql`) and «قائد العمل المسرحي»
+  (`20261009000400_productions.sql`).
+- Productions (2026-10-09): `nexus.productions.*`, `nexus.admin.productions.*`
+  and `web.productions.*`, including the stage, department and audition
+  status names.
 - `core.programmes.name_ar`: every name.
 - `charity.campaigns.unit_label_ar` default «أطفال كُسوا».
 - `core.semesters` names in pgTAP fixtures are test-only (no review needed).
