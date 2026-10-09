@@ -1,5 +1,5 @@
 import { type Client, unwrap } from "./client";
-import { sanitizeRichText } from "./sanitize";
+import { sanitizeRichText, toPlainText } from "./sanitize";
 
 /**
  * The Society's documents (governance.society_documents): public ones on
@@ -84,7 +84,6 @@ export const documentBody = (
 };
 
 const HEADING = /<h2>([\s\S]*?)<\/h2>/g;
-const TAGS = /<[^>]+>/g;
 const ENTITIES: Record<string, string> = {
   "&#39;": "'",
   "&#x27;": "'",
@@ -95,11 +94,10 @@ const ENTITIES: Record<string, string> = {
 };
 const ENTITY = /&(?:#x27|#39|amp|gt|lt|quot);/g;
 
+// Tags are stripped by the sanitizer (never by a regex); the entities it
+// leaves are decoded for the table of contents, which React escapes again.
 const plain = (html: string) =>
-  html
-    .replace(TAGS, "")
-    .replace(ENTITY, (e) => ENTITIES[e] ?? e)
-    .trim();
+  toPlainText(html).replace(ENTITY, (e) => ENTITIES[e] ?? e);
 
 const anchor = (text: string, index: number) =>
   `${index + 1}-${text
