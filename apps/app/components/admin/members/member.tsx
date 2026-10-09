@@ -32,14 +32,14 @@ import {
 } from "../kit";
 import { memberName, useDirectory } from "./directory";
 
-// ── Scope options (programs, Journal issues, campaigns) ─────────────────────
+// ── Scope options (programs, Journal issues, campaigns, productions) ────────
 
 const useScopeOptions = () => {
   const { supabase } = useAuth();
   const locale = useLocale();
   return useQuery({
     queryFn: async () => {
-      const [programmes, issues, campaigns] = await Promise.all([
+      const [programmes, issues, campaigns, shows] = await Promise.all([
         supabase
           .schema("core")
           .from("programmes")
@@ -56,6 +56,11 @@ const useScopeOptions = () => {
           .from("campaigns")
           .select("id, title_en, title_ar")
           .order("created_at", { ascending: false }),
+        supabase
+          .schema("programmes")
+          .from("productions")
+          .select("id, title_en, title_ar")
+          .order("created_at", { ascending: false }),
       ]);
       const options: Record<
         Exclude<ScopeType, "global">,
@@ -68,6 +73,10 @@ const useScopeOptions = () => {
         issue: (unwrap(issues) ?? []).map((i) => ({
           id: i.id,
           label: `${i.volume}.${i.number} · ${localized(i, "title", locale)}`,
+        })),
+        production: (unwrap(shows) ?? []).map((p) => ({
+          id: p.id,
+          label: localized(p, "title", locale),
         })),
         programme: (unwrap(programmes) ?? []).map((p) => ({
           id: p.id,

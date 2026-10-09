@@ -306,7 +306,8 @@
         "full": "Someone took the last place first.",
         "notVerified": "Shifts open once your membership is verified.",
         "failed": "That didn't work. Try again in a moment."
-      }
+      },
+      "productionsLink": "Productions and auditions"
     },
     "society": {
       "title": "Society",
@@ -586,7 +587,8 @@
         "activity": "Activity log",
         "settings": "Settings",
         "partners": "Partners",
-        "recognition": "Recognition"
+        "recognition": "Recognition",
+        "productions": "Productions"
       },
       "noAccess": "Your roles don't include this section. Ask the President or the General Secretary if you need it.",
       "kit": {
@@ -716,7 +718,8 @@
           "global": "Society-wide",
           "programme": "Program",
           "issue": "Journal issue",
-          "campaign": "Campaign"
+          "campaign": "Campaign",
+          "production": "Production"
         },
         "endRole": "End now",
         "endRoleConfirm": "End this assignment now? The permissions it grants stop at once.",
@@ -1885,6 +1888,177 @@
             "revoked": "Revoked"
           }
         }
+      },
+      "productions": {
+        "title": "Productions",
+        "lede": "Staged readings and productions, from proposal to the Program Report (Form F-25). The script's rights are cleared before any performance.",
+        "new": "New production",
+        "closeNew": "Close",
+        "newTitle": "Propose a production",
+        "empty": "No productions yet. The President or Vice President proposes one; a Production Lead runs it.",
+        "stageNow": "Stage",
+        "moveTo": "Move to {stage}",
+        "cancelProduction": "Cancel the production",
+        "cancelConfirm": "The production will be marked canceled. This can't be undone.",
+        "rightsFirst": "Clear the script's rights (Rights tab) before performances.",
+        "columns": {
+          "title": "Title",
+          "kind": "Kind",
+          "stage": "Stage",
+          "rights": "Rights"
+        },
+        "kinds": {
+          "staged_reading": "Staged reading",
+          "production": "Production"
+        },
+        "stages": {
+          "proposal": "Proposal",
+          "approved": "Approved",
+          "auditions": "Auditions",
+          "rehearsals": "Rehearsals",
+          "tech": "Technical week",
+          "performances": "Performances",
+          "closed": "Closed",
+          "cancelled": "Canceled"
+        },
+        "rights": {
+          "pending": "Not cleared",
+          "cleared": "Cleared"
+        },
+        "origins": {
+          "original": "Original work",
+          "public_domain": "Public domain",
+          "licensed": "Licensed"
+        },
+        "fields": {
+          "title": "Title",
+          "slug": "Web address",
+          "slugHint": "Lowercase letters, numbers and hyphens, for auibsal.org/productions.",
+          "playwright": "Written by",
+          "kind": "Kind",
+          "origin": "Script",
+          "summary": "Summary",
+          "programme": "Program",
+          "noProgramme": "No program",
+          "poster": "Poster",
+          "isPublic": "Show on auibsal.org/productions",
+          "isPublicHint": "Only the title, summary, poster, credits people agreed to, partners and published performances are shown. Rights, auditions and the report never are."
+        },
+        "tabs": {
+          "details": "Details",
+          "rights": "Rights",
+          "auditions": "Auditions",
+          "credits": "Company",
+          "rehearsals": "Rehearsals",
+          "performances": "Performances",
+          "report": "Report"
+        },
+        "rightsTab": {
+          "lede": "Record what the right to perform the script rests on. Someone other than whoever records it clears it.",
+          "status": "Rights",
+          "note": "What the rights rest on",
+          "document": "License or consent (PDF or image)",
+          "openDocument": "Open the document on file",
+          "locked": "Rights are locked once performances begin.",
+          "resetNote": "Changing any of this sends the rights back to be cleared again.",
+          "clear": "Clear the rights",
+          "clearHint": "Check the note and the document before clearing.",
+          "someoneElse": "You recorded the rights, so someone else clears them.",
+          "needs": {
+            "original": "An original script needs the author's written consent to the performance.",
+            "public_domain": "Note the edition or translation used and why it is in the public domain (a modern translation usually is not).",
+            "licensed": "Upload the license from the rights holder. It can't be cleared without it."
+          }
+        },
+        "auditionsTab": {
+          "lede": "Audition times members can sign up for while the production is at the Auditions stage.",
+          "openWhen": "Members see these once the production moves to Auditions.",
+          "add": "Add an audition time",
+          "starts": "Starts",
+          "ends": "Ends",
+          "capacity": "Places",
+          "location": "Where",
+          "prepare": "What to prepare",
+          "remove": "Remove",
+          "removeConfirm": "This audition time and its sign-ups will be removed.",
+          "noSignups": "No one has signed up yet.",
+          "status": "Decision",
+          "note": "Panel note",
+          "notePlaceholder": "A note for the panel",
+          "addNote": "Add note",
+          "notesPrivate": "Panel notes are seen only by whoever runs this production, never by the person auditioning."
+        },
+        "creditsTab": {
+          "lede": "Cast, crew and the creative team. Members choose for themselves whether their name appears on the public page.",
+          "add": "Add a credit",
+          "department": "Department",
+          "who": "Who",
+          "aMember": "A member",
+          "someoneOutside": "Someone from outside the Society",
+          "member": "Member",
+          "personName": "Name",
+          "outsideHint": "From a partner or another club. Show their name only with their consent.",
+          "role": "Role",
+          "none": "No credits yet.",
+          "remove": "Remove",
+          "removeConfirm": "This credit will be removed.",
+          "shown": "Name shown publicly (their choice)",
+          "notShown": "Name not shown publicly (their choice)",
+          "showOutside": "They agreed to have their name shown",
+          "hours": "Hours",
+          "recordHours": "Record hours",
+          "recorded": "Recorded as service."
+        },
+        "rehearsalsTab": {
+          "lede": "Rehearsal calls. The company sees them in Programs › Productions.",
+          "add": "Call a rehearsal",
+          "starts": "Starts",
+          "ends": "Ends",
+          "location": "Where",
+          "called": "Called",
+          "calledHint": "For example, \"Act 1 cast\" or \"Full company\".",
+          "notes": "Notes",
+          "none": "No rehearsals yet.",
+          "remove": "Remove",
+          "removeConfirm": "This rehearsal will be removed."
+        },
+        "performancesTab": {
+          "title": "Performances",
+          "lede": "Each performance is a SAL event (Events module), linked here. Published, public performances appear on the production's page.",
+          "rightsFirst": "Performances can be linked once the rights are cleared.",
+          "none": "No performances linked yet.",
+          "unlink": "Unlink",
+          "event": "Event",
+          "choose": "Choose",
+          "link": "Link",
+          "eventHint": "Create the event first in Events.",
+          "partnersTitle": "Partners",
+          "partnersLede": "Partners whose memorandum in force grants productions (Partners module).",
+          "removePartner": "Remove",
+          "noPartners": "No partner's memorandum grants productions yet.",
+          "partner": "Partner",
+          "addPartner": "Add partner"
+        },
+        "reportTab": {
+          "lede": "The Program Report (Form F-25, section B), filed once the production closes.",
+          "people": "People reached",
+          "iqd": "IQD",
+          "moneyIn": "Money in",
+          "moneyOut": "Money out",
+          "what": "What happened",
+          "lessons": "Three lessons",
+          "lessonsHint": "One per line.",
+          "repeat": "Repeat? What would change?",
+          "signTitle": "Sign the report",
+          "signedBy": "Signed by {name} on {date}.",
+          "signHint": "Save the report, then sign it. It can't be changed after.",
+          "closeFirst": "The report is signed after the production closes.",
+          "sign": "Sign the report",
+          "certificatesTitle": "Certificates",
+          "certificatesHint": "Drafts a certificate (F-28) for each credited member. The President and the Faculty Advisor then sign them in Recognition.",
+          "draftCertificates": "Draft certificates",
+          "drafted": "{count, plural, =0 {No new certificates: everyone credited has one.} one {{countText} certificate drafted.} other {{countText} certificates drafted.}}"
+        }
       }
     },
     "editor": {
@@ -2082,6 +2256,55 @@
       "journal": "The Journal",
       "profile": "My profile",
       "service": "My service"
+    },
+    "productions": {
+      "title": "Productions",
+      "lede": "Staged readings and productions the Society is making. Sign up to audition, and if you're in the company, find your rehearsals here.",
+      "companyTitle": "Your productions",
+      "departments": {
+        "cast": "Cast",
+        "crew": "Crew",
+        "creative": "Creative team"
+      },
+      "stages": {
+        "proposal": "Proposal",
+        "approved": "Approved",
+        "auditions": "Auditions",
+        "rehearsals": "Rehearsals",
+        "tech": "Technical week",
+        "performances": "Performances",
+        "closed": "Closed",
+        "cancelled": "Canceled"
+      },
+      "kinds": {
+        "staged_reading": "Staged reading",
+        "production": "Production"
+      },
+      "statuses": {
+        "signed_up": "Signed up",
+        "cancelled": "Canceled",
+        "called_back": "Called back",
+        "cast": "Cast",
+        "not_cast": "Not cast this time"
+      },
+      "showName": "Show my name on the public page",
+      "rehearsalsTitle": "Upcoming rehearsals",
+      "noRehearsals": "No rehearsals are called yet.",
+      "auditionsTitle": "Open auditions",
+      "noAuditions": "No auditions are open right now. Production leads post them here.",
+      "findShift": "Find a shift instead",
+      "by": "By {name}",
+      "prepare": "Prepare: {what}",
+      "interest": "The part or piece you'd like to read (optional)",
+      "signUp": "Sign up to audition",
+      "cancel": "Cancel my sign-up",
+      "notice": {
+        "signedUp": "You're signed up. The production lead will be in touch.",
+        "full": "This audition is full. Try another time.",
+        "closed": "Sign-ups for this audition have closed.",
+        "notVerified": "Auditions open once your membership is verified.",
+        "failed": "That didn't work. Try again in a moment."
+      }
     }
   },
   "web": {
@@ -2104,7 +2327,8 @@
       "sideQuestCare": "Side Quest care",
       "search": "Search",
       "university": "A student society at the American University of Iraq – Baghdad.",
-      "partners": "Partners"
+      "partners": "Partners",
+      "productions": "Productions"
     },
     "home": {
       "title": "The paper and the pen",
@@ -2493,6 +2717,25 @@
         "production": "Certificate of Production Credit",
         "partner": "Certificate of Partnership Service"
       }
+    },
+    "productions": {
+      "title": "Productions",
+      "lede": "Staged readings and productions by the AUIB Society of Arts and Letters, with partners and other AUIB clubs.",
+      "empty": "Our first productions are in the works. They will appear here once announced.",
+      "kinds": {
+        "staged_reading": "Staged reading",
+        "production": "Production"
+      },
+      "by": "by {name}",
+      "with": "With {names}",
+      "performances": "Performances",
+      "company": "The company",
+      "departments": {
+        "cast": "Cast",
+        "crew": "Crew",
+        "creative": "Creative team"
+      },
+      "posterAlt": "Poster for {title}"
     }
   }
 }

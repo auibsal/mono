@@ -3493,6 +3493,7 @@ export type Database = {
           prepared_by: string | null;
           president_signed_at: string | null;
           president_signed_by: string | null;
+          production_id: string | null;
           resolution_id: string | null;
           revoke_reason: string | null;
           revoked_at: string | null;
@@ -3520,6 +3521,7 @@ export type Database = {
           prepared_by?: string | null;
           president_signed_at?: string | null;
           president_signed_by?: string | null;
+          production_id?: string | null;
           resolution_id?: string | null;
           revoke_reason?: string | null;
           revoked_at?: string | null;
@@ -3547,6 +3549,7 @@ export type Database = {
           prepared_by?: string | null;
           president_signed_at?: string | null;
           president_signed_by?: string | null;
+          production_id?: string | null;
           resolution_id?: string | null;
           revoke_reason?: string | null;
           revoked_at?: string | null;
@@ -3839,6 +3842,123 @@ export type Database = {
   };
   programmes: {
     Tables: {
+      audition_notes: {
+        Row: {
+          audition_id: string;
+          author_id: string;
+          created_at: string;
+          id: string;
+          note: string;
+          user_id: string;
+        };
+        Insert: {
+          audition_id: string;
+          author_id?: string;
+          created_at?: string;
+          id?: string;
+          note: string;
+          user_id: string;
+        };
+        Update: {
+          audition_id?: string;
+          author_id?: string;
+          created_at?: string;
+          id?: string;
+          note?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "audition_notes_audition_id_fkey";
+            columns: ["audition_id"];
+            isOneToOne: false;
+            referencedRelation: "auditions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      audition_signups: {
+        Row: {
+          audition_id: string;
+          created_at: string;
+          interest: string | null;
+          status: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          audition_id: string;
+          created_at?: string;
+          interest?: string | null;
+          status?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Update: {
+          audition_id?: string;
+          created_at?: string;
+          interest?: string | null;
+          status?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "audition_signups_audition_id_fkey";
+            columns: ["audition_id"];
+            isOneToOne: false;
+            referencedRelation: "auditions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      auditions: {
+        Row: {
+          capacity: number;
+          created_at: string;
+          ends_at: string;
+          id: string;
+          location_ar: string | null;
+          location_en: string | null;
+          prepare_ar: string | null;
+          prepare_en: string | null;
+          production_id: string;
+          starts_at: string;
+        };
+        Insert: {
+          capacity?: number;
+          created_at?: string;
+          ends_at: string;
+          id?: string;
+          location_ar?: string | null;
+          location_en?: string | null;
+          prepare_ar?: string | null;
+          prepare_en?: string | null;
+          production_id: string;
+          starts_at: string;
+        };
+        Update: {
+          capacity?: number;
+          created_at?: string;
+          ends_at?: string;
+          id?: string;
+          location_ar?: string | null;
+          location_en?: string | null;
+          prepare_ar?: string | null;
+          prepare_en?: string | null;
+          production_id?: string;
+          starts_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "auditions_production_id_fkey";
+            columns: ["production_id"];
+            isOneToOne: false;
+            referencedRelation: "productions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       episodes: {
         Row: {
           created_at: string;
@@ -3890,6 +4010,204 @@ export type Database = {
         };
         Relationships: [];
       };
+      production_credits: {
+        Row: {
+          created_at: string;
+          department: string;
+          id: string;
+          partner_id: string | null;
+          person_name: string | null;
+          production_id: string;
+          role_ar: string | null;
+          role_en: string;
+          show_publicly: boolean;
+          sort: number;
+          user_id: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          department: string;
+          id?: string;
+          partner_id?: string | null;
+          person_name?: string | null;
+          production_id: string;
+          role_ar?: string | null;
+          role_en: string;
+          show_publicly?: boolean;
+          sort?: number;
+          user_id?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          department?: string;
+          id?: string;
+          partner_id?: string | null;
+          person_name?: string | null;
+          production_id?: string;
+          role_ar?: string | null;
+          role_en?: string;
+          show_publicly?: boolean;
+          sort?: number;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "production_credits_production_id_fkey";
+            columns: ["production_id"];
+            isOneToOne: false;
+            referencedRelation: "productions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      production_events: {
+        Row: {
+          event_id: string;
+          production_id: string;
+        };
+        Insert: {
+          event_id: string;
+          production_id: string;
+        };
+        Update: {
+          event_id?: string;
+          production_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "production_events_production_id_fkey";
+            columns: ["production_id"];
+            isOneToOne: false;
+            referencedRelation: "productions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      production_partners: {
+        Row: {
+          created_at: string;
+          partner_id: string;
+          production_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          partner_id: string;
+          production_id: string;
+        };
+        Update: {
+          created_at?: string;
+          partner_id?: string;
+          production_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "production_partners_production_id_fkey";
+            columns: ["production_id"];
+            isOneToOne: false;
+            referencedRelation: "productions";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      productions: {
+        Row: {
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          is_public: boolean;
+          kind: string;
+          playwright: string | null;
+          poster_path: string | null;
+          programme_id: string | null;
+          report_lessons: string | null;
+          report_money_in_iqd: number | null;
+          report_money_out_iqd: number | null;
+          report_people_reached: number | null;
+          report_repeat: string | null;
+          report_signed_at: string | null;
+          report_signed_by: string | null;
+          report_what_happened: string | null;
+          rights_cleared_at: string | null;
+          rights_cleared_by: string | null;
+          rights_document_path: string | null;
+          rights_note: string | null;
+          rights_recorded_by: string | null;
+          rights_status: string;
+          script_origin: string;
+          slug: string;
+          stage: string;
+          summary_ar: string | null;
+          summary_en: string | null;
+          title_ar: string;
+          title_en: string;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          is_public?: boolean;
+          kind?: string;
+          playwright?: string | null;
+          poster_path?: string | null;
+          programme_id?: string | null;
+          report_lessons?: string | null;
+          report_money_in_iqd?: number | null;
+          report_money_out_iqd?: number | null;
+          report_people_reached?: number | null;
+          report_repeat?: string | null;
+          report_signed_at?: string | null;
+          report_signed_by?: string | null;
+          report_what_happened?: string | null;
+          rights_cleared_at?: string | null;
+          rights_cleared_by?: string | null;
+          rights_document_path?: string | null;
+          rights_note?: string | null;
+          rights_recorded_by?: string | null;
+          rights_status?: string;
+          script_origin?: string;
+          slug: string;
+          stage?: string;
+          summary_ar?: string | null;
+          summary_en?: string | null;
+          title_ar: string;
+          title_en: string;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          is_public?: boolean;
+          kind?: string;
+          playwright?: string | null;
+          poster_path?: string | null;
+          programme_id?: string | null;
+          report_lessons?: string | null;
+          report_money_in_iqd?: number | null;
+          report_money_out_iqd?: number | null;
+          report_people_reached?: number | null;
+          report_repeat?: string | null;
+          report_signed_at?: string | null;
+          report_signed_by?: string | null;
+          report_what_happened?: string | null;
+          rights_cleared_at?: string | null;
+          rights_cleared_by?: string | null;
+          rights_document_path?: string | null;
+          rights_note?: string | null;
+          rights_recorded_by?: string | null;
+          rights_status?: string;
+          script_origin?: string;
+          slug?: string;
+          stage?: string;
+          summary_ar?: string | null;
+          summary_en?: string | null;
+          title_ar?: string;
+          title_en?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       reels: {
         Row: {
           caption_ar: string | null;
@@ -3930,6 +4248,50 @@ export type Database = {
             columns: ["episode_id"];
             isOneToOne: false;
             referencedRelation: "episodes";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      rehearsals: {
+        Row: {
+          called: string | null;
+          created_at: string;
+          ends_at: string;
+          id: string;
+          location_ar: string | null;
+          location_en: string | null;
+          notes: string | null;
+          production_id: string;
+          starts_at: string;
+        };
+        Insert: {
+          called?: string | null;
+          created_at?: string;
+          ends_at: string;
+          id?: string;
+          location_ar?: string | null;
+          location_en?: string | null;
+          notes?: string | null;
+          production_id: string;
+          starts_at: string;
+        };
+        Update: {
+          called?: string | null;
+          created_at?: string;
+          ends_at?: string;
+          id?: string;
+          location_ar?: string | null;
+          location_en?: string | null;
+          notes?: string | null;
+          production_id?: string;
+          starts_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "rehearsals_production_id_fkey";
+            columns: ["production_id"];
+            isOneToOne: false;
+            referencedRelation: "productions";
             referencedColumns: ["id"];
           },
         ];
@@ -4135,8 +4497,94 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      cancel_audition: { Args: { audition_id: string }; Returns: undefined };
+      clear_production_rights: {
+        Args: { production_id: string };
+        Returns: undefined;
+      };
+      draft_production_certificates: {
+        Args: { production_id: string };
+        Returns: number;
+      };
+      member_productions: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          id: string;
+          kind: string;
+          playwright: string;
+          poster_path: string;
+          slug: string;
+          stage: string;
+          summary_ar: string;
+          summary_en: string;
+          title_ar: string;
+          title_en: string;
+        }[];
+      };
       moderate_six_words: {
         Args: { approve: boolean; entry_id: string };
+        Returns: undefined;
+      };
+      production_partner_choices: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          id: string;
+          name_ar: string;
+          name_en: string;
+        }[];
+      };
+      public_production_credits: {
+        Args: { production_id: string };
+        Returns: {
+          department: string;
+          name_ar: string;
+          name_en: string;
+          role_ar: string;
+          role_en: string;
+          sort: number;
+        }[];
+      };
+      public_production_events: {
+        Args: { production_id: string };
+        Returns: {
+          slug: string;
+          starts_at: string;
+          title_ar: string;
+          title_en: string;
+          venue_ar: string;
+          venue_en: string;
+        }[];
+      };
+      public_production_partners: {
+        Args: { production_id: string };
+        Returns: {
+          name_ar: string;
+          name_en: string;
+          url: string;
+        }[];
+      };
+      public_productions: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          first_performance: string;
+          id: string;
+          kind: string;
+          playwright: string;
+          poster_path: string;
+          slug: string;
+          stage: string;
+          summary_ar: string;
+          summary_en: string;
+          title_ar: string;
+          title_en: string;
+        }[];
+      };
+      record_production_service: {
+        Args: { hours: number; member_id: string; production_id: string };
+        Returns: string;
+      };
+      set_credit_visibility: {
+        Args: { credit_id: string; visible: boolean };
         Returns: undefined;
       };
       shift_places: {
@@ -4145,6 +4593,14 @@ export type Database = {
           shift_id: string;
           taken: number;
         }[];
+      };
+      sign_production_report: {
+        Args: { production_id: string };
+        Returns: undefined;
+      };
+      sign_up_for_audition: {
+        Args: { audition_id: string; interest?: string };
+        Returns: undefined;
       };
       sign_up_for_shift: { Args: { shift_id: string }; Returns: undefined };
       six_words_wall: {

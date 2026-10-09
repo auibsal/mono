@@ -34,11 +34,18 @@ export const permissions = [
   "certificates.prepare",
   "certificates.sign",
   "certificates.countersign",
+  "productions.manage",
 ] as const;
 
 export type Permission = (typeof permissions)[number];
 
-export const scopeTypes = ["global", "programme", "issue", "campaign"] as const;
+export const scopeTypes = [
+  "global",
+  "programme",
+  "issue",
+  "campaign",
+  "production",
+] as const;
 
 export type ScopeType = (typeof scopeTypes)[number];
 

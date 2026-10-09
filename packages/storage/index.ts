@@ -93,8 +93,11 @@ export const uploadReceipt = (
  */
 export const uploadLibraryFile = (
   supabase: Client,
-  /** The audience folder, or `partners` for signed memoranda (F-26). */
-  folder: "role" | "council" | "partners",
+  /**
+   * The audience folder, `partners` for signed memoranda (F-26) or
+   * `productions` for script licenses and consents.
+   */
+  folder: "role" | "council" | "partners" | "productions",
   file: File
 ) => {
   assertAllowed("library", file);

@@ -22,6 +22,7 @@ const staticPaths = [
   "/events",
   "/documents",
   "/partners",
+  "/productions",
   ...documents.documents.map((doc) => `/documents/${doc.slug}`),
 ];
 
