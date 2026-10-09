@@ -25,9 +25,6 @@
       "!packages/design-system/components/ui",
       "!packages/design-system/lib",
       "!packages/design-system/hooks",
-      // Mintlify content and static assets.
-      "!apps/docs/**/*.json",
-      "!apps/docs/**/*.svg",
       "!apps/email/.react-email",
       // The brand's own export and the source documents, kept as supplied.
       "!brand",

@@ -27,7 +27,6 @@ const projectSchema = z
     hosts: z.object({
       api: z.url(),
       app: z.url(),
-      docs: z.url(),
       web: z.url(),
     }),
     /**

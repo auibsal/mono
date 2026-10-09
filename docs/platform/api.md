@@ -1,7 +1,6 @@
----
-title: Sign in with SAL and the API
-description: How apps outside the Nexus sign members in and work with the AUIB Literary Journal, and what keeps that safe.
----
+# Sign in with SAL and the API
+
+How apps outside the Nexus sign members in and work with the AUIB Literary Journal, and what keeps that safe.
 
 Apps outside the Nexus, such as a Journal team's own tool, can sign members in with their Society account and act for them through the API at `api.auibsal.org/v1`. The Society approves each app and decides what it may reach. Members choose whether to allow it, and can disconnect it at any time.
 
@@ -9,20 +8,10 @@ It costs nothing: sign-in is the Supabase OAuth 2.1 server (free on every plan w
 
 ## How it fits together
 
-<Steps>
-  <Step title="The app sends the member to sign in">
-    A standard OAuth 2.1 authorization-code flow with PKCE, to `https://fghzahtzgelqnpwdhwjo.supabase.co/auth/v1/oauth/authorize`. OpenID Connect discovery is at `/auth/v1/.well-known/openid-configuration` on the same host.
-  </Step>
-  <Step title="The member allows it in the Nexus">
-    Supabase sends them to `nexus.auibsal.org/oauth/consent`. The page names the app and lists what it can do. Apps the Society has not approved can only be refused.
-  </Step>
-  <Step title="The app gets tokens">
-    It exchanges the code at `/auth/v1/oauth/token` for an access token (one hour) and a refresh token.
-  </Step>
-  <Step title="The app calls the API as the member">
-    `Authorization: Bearer <access token>` on `https://api.auibsal.org/v1/...`. Each request runs as that member, so they can do only what they could do in the Nexus.
-  </Step>
-</Steps>
+1. **The app sends the member to sign in.** A standard OAuth 2.1 authorization-code flow with PKCE, to `https://fghzahtzgelqnpwdhwjo.supabase.co/auth/v1/oauth/authorize`. OpenID Connect discovery is at `/auth/v1/.well-known/openid-configuration` on the same host.
+2. **The member allows it in the Nexus.** Supabase sends them to `nexus.auibsal.org/oauth/consent`. The page names the app and lists what it can do. Apps the Society has not approved can only be refused.
+3. **The app gets tokens.** It exchanges the code at `/auth/v1/oauth/token` for an access token (one hour) and a refresh token.
+4. **The app calls the API as the member.** `Authorization: Bearer <access token>` on `https://api.auibsal.org/v1/...`. Each request runs as that member, so they can do only what they could do in the Nexus.
 
 ## What keeps it safe
 
@@ -35,9 +24,7 @@ An OAuth access token is an ordinary member token plus a `client_id` claim. OAut
 - **Two-step sign-in.** Roles that need it (editors deciding, officers) count only on an `aal2` session, so an editor using an app may be asked to finish two-step sign-in first.
 - **Disconnect.** Members disconnect an app in **Profile and privacy → Connected apps**; officers switch an app off for everyone in Settings. Either ends its access at once.
 
-<Warning>
-  An app holding a member's token can also call Supabase Auth as that member (for example to change their password), as the Nexus can. Approve only apps run by people the Society trusts, and keep **dynamic client registration off**.
-</Warning>
+> **Warning.** An app holding a member's token can also call Supabase Auth as that member (for example to change their password), as the Nexus can. Approve only apps run by people the Society trusts, and keep **dynamic client registration off**.
 
 ## API reference (v1)
 
@@ -61,17 +48,9 @@ The database enforces the call window, the limit per member, the rubric and who 
 
 ## Setting up an app
 
-<Steps>
-  <Step title="Turn on the OAuth server (once)">
-    Supabase → Authentication → OAuth Server: on, authorization path `/oauth/consent`, dynamic registration off. Authentication → URL Configuration: Site URL `https://nexus.auibsal.org`. For OpenID Connect ID tokens, switch the project to asymmetric JWT signing keys (Settings → JWT Keys).
-  </Step>
-  <Step title="Register the app">
-    Authentication → OAuth Apps → Add: the app's name, its redirect URLs, and its type: **public** for apps that run in a browser or on a phone (PKCE, no secret), **confidential** for apps with a server that can keep a secret. Send the client id (and secret, if any) to the app's team privately.
-  </Step>
-  <Step title="Approve it in the Nexus">
-    Administration → Settings → Third-party apps → Add an app: the client id, the name, a contact email, and the areas it needs. A Journal team's tool needs **Name and language** and **AUIB Literary Journal**.
-  </Step>
-</Steps>
+1. **Turn on the OAuth server (once).** Supabase → Authentication → OAuth Server: on, authorization path `/oauth/consent`, dynamic registration off. Authentication → URL Configuration: Site URL `https://nexus.auibsal.org`. For OpenID Connect ID tokens, switch the project to asymmetric JWT signing keys (Settings → JWT Keys).
+2. **Register the app.** Authentication → OAuth Apps → Add: the app's name, its redirect URLs, and its type: **public** for apps that run in a browser or on a phone (PKCE, no secret), **confidential** for apps with a server that can keep a secret. Send the client id (and secret, if any) to the app's team privately.
+3. **Approve it in the Nexus.** Administration → Settings → Third-party apps → Add an app: the client id, the name, a contact email, and the areas it needs. A Journal team's tool needs **Name and language** and **AUIB Literary Journal**.
 
 ## What comes next
 

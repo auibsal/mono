@@ -1,7 +1,6 @@
----
-title: How the platform works
-description: The three apps, the database, and the rules that keep members' data safe.
----
+# How the platform works
+
+The three apps, the database, and the rules that keep members' data safe.
 
 The platform is one repository, [auibsal/mono](https://github.com/auibsal/mono), deployed to Vercel and backed by one Supabase project. Members never need to know any of this; the technical administrator and their successor do.
 
@@ -10,8 +9,9 @@ The platform is one repository, [auibsal/mono](https://github.com/auibsal/mono),
 | Public site | [auibsal.org](https://auibsal.org) (`apps/web`) | Events, news, the Journal, documents, the Warmth Meter; English and Arabic |
 | The Nexus | [nexus.auibsal.org](https://nexus.auibsal.org) (`apps/app`) | The member portal and the role-gated admin; a static site with no secrets |
 | API | api.auibsal.org (`apps/api`) | Email, scheduled jobs, calendar feeds, file links, exports, account deletion; the only app holding the secret key |
-| Storybook | Vercel project sal-storybook (Vercel login) | Every component, screen and email, in both languages |
-| This site | docs.auibsal.org (`apps/docs`, Mintlify) | Documents, the officer handbook, these pages |
+| SAL Design System | design.auibsal.org (`apps/storybook`) | Every component, screen and email, in both languages; officers only, through Nexus sign-in |
+| Officer handbook | nexus.auibsal.org/handbook | How to run the Society in the Nexus; officers only, edited in place |
+| These runbooks | `docs/platform` in the repository | How the platform runs, for the technical administrator |
 
 ## How a request flows
 

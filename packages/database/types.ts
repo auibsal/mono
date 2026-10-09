@@ -1789,6 +1789,54 @@ export type Database = {
         };
         Relationships: [];
       };
+      handbook_pages: {
+        Row: {
+          body_ar: string | null;
+          body_en: string;
+          created_at: string;
+          id: string;
+          section: string;
+          slug: string;
+          sort: number;
+          summary_ar: string | null;
+          summary_en: string | null;
+          title_ar: string | null;
+          title_en: string;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          body_ar?: string | null;
+          body_en?: string;
+          created_at?: string;
+          id?: string;
+          section: string;
+          slug: string;
+          sort?: number;
+          summary_ar?: string | null;
+          summary_en?: string | null;
+          title_ar?: string | null;
+          title_en: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          body_ar?: string | null;
+          body_en?: string;
+          created_at?: string;
+          id?: string;
+          section?: string;
+          slug?: string;
+          sort?: number;
+          summary_ar?: string | null;
+          summary_en?: string | null;
+          title_ar?: string | null;
+          title_en?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [];
+      };
       library_documents: {
         Row: {
           audience: string;

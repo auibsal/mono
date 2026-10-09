@@ -1,9 +1,0 @@
-{
-  "name": "docs",
-  "private": true,
-  "scripts": {
-    "dev": "bunx mint@4.2.992 dev --port 3004",
-    "links": "bunx mint@4.2.992 broken-links",
-    "validate": "bunx mint@4.2.992 validate"
-  }
-}

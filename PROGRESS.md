@@ -29,20 +29,33 @@ Branch: `claude/new-session-qosn60`.
       your password manager) to the GitHub `production` environment. Then
       `.github/workflows/backup.yml` stores an encrypted dump every night
       for 30 days. Run it once from Actions to check it.
-- [x] **SAL Docs on Mintlify** (2026-10-08): deployment `theideaiq` builds
-      `apps/docs` from `main`; docs.auibsal.org is live with its certificate.
-      Three tabs: the six registry documents as web pages (with their
-      status), the officer handbook, and platform runbooks. Arabic summaries
-      and signature pages stay in the PDFs. Keep each page's status banner in
-      step with `packages/sal-data/documents.json`.
+- [ ] **Leave Mintlify (owner, 2026-10-09):** `apps/docs` is gone. Ask me
+      before each DNS change; the steps:
+      1. Vercel → sal-web → Settings → Domains → add `docs.auibsal.org`, then
+         in Cloudflare point the `docs` CNAME at Vercel instead of Mintlify.
+         Old links then redirect (documents → auibsal.org, handbook → the
+         Nexus, platform pages → `docs/platform` on GitHub).
+      2. Delete the Mintlify deployment `theideaiq` (Mintlify dashboard), and
+         the Liveblocks account.
+- [ ] **Design system behind our sign-in:** Vercel → sal-storybook →
+      Settings → Domains → add `design.auibsal.org` (Cloudflare: `design`
+      CNAME to Vercel); Environment Variables → `NEXT_PUBLIC_SUPABASE_URL`,
+      `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (the public values) and
+      `NEXT_PUBLIC_APP_URL=https://nexus.auibsal.org`; then Settings →
+      Deployment Protection → Vercel Authentication off (the gate in
+      `apps/storybook/middleware.ts` takes over; it fails closed). The Nexus
+      session cookie must be shared (`NEXT_PUBLIC_AUTH_COOKIE_DOMAIN=.auibsal.org`
+      on sal-nexus).
+- [ ] **Co-editing on Supabase Realtime:** Dashboard → Realtime → Settings →
+      turn off "Allow public access" (only private, checked channels). Remove
+      `LIVEBLOCKS_SECRET` from sal-api and `NEXT_PUBLIC_LIVEBLOCKS_ENABLED`
+      from sal-nexus in Vercel.
 - [ ] **Code security:** in GitHub Settings → Code security, turn on the
       dependency graph, secret scanning and push protection; then add the
       repository variable `DEPENDENCY_REVIEW` = `on` (Settings → Secrets and
       variables → Actions → Variables) so CI's dependency review runs.
-- [ ] **Internal previews:** Vercel project sal-storybook is the one
-      preview site (components, Screens and every email; Vercel login
-      required). sal-emails has no app since PR #64: delete it in Vercel
-      (Settings → Advanced → Delete Project). Optional domain: storybook.auibsal.org.
+- [ ] **sal-emails** has no app since PR #64: delete it in Vercel
+      (Settings → Advanced → Delete Project).
 - [ ] **Founding voters in the Constitution:** the first-100 rule departs
       from Constitution 3.3(b) and Bylaws B3.3. Add a transitional provision
       (for example "For the founding year, ending May 13, 2027, the first one
@@ -86,7 +99,7 @@ These stop parts of the work. Everything else continues around them.
       subjects in `subjects.txt`. (Local stacks load them from `config.toml`.)
       Since 2026-10-08 the links go to `{{ .SiteURL }}/en/auth/confirm`, so
       the Site URL must be `https://nexus.auibsal.org`.
-- [x] **Liveblocks secret** set on sal-api by the owner (2026-10-08).
+- [x] ~~Liveblocks secret~~: Liveblocks replaced by Supabase Realtime (2026-10-09).
 - [x] **Knock and Upstash removed** (owner, 2026-10-08): packages, env keys
       and CSP hosts are gone. Delete the two accounts at will.
 - [x] **Migrations through CI:** the owner added `SUPABASE_ACCESS_TOKEN` and
@@ -104,7 +117,7 @@ These stop parts of the work. Everything else continues around them.
       JWT Keys → asymmetric keys. Then register the team's app (OAuth Apps →
       Add), send them the client id privately, and approve it in Nexus →
       Settings → Third-party apps with "Name and language" and "AUIB
-      Literary Journal". Steps: docs.auibsal.org/platform/api.
+      Literary Journal". Steps: `docs/platform/api.md`.
 - [ ] **Phone notifications (Web Push) keys:** run
       `bunx web-push generate-vapid-keys` once. Put the public key in
       `NEXT_PUBLIC_VAPID_PUBLIC_KEY` on sal-nexus and sal-api, the private
@@ -123,10 +136,10 @@ These stop parts of the work. Everything else continues around them.
       answers this sandbox with a bot challenge (403); test from the cron.
 - [x] Cost per winter set: not final; the UI uses the 40,000 IQD placeholder
       setting (`charity.cost_per_set_iqd`), marked as a placeholder.
-- [x] `docs.auibsal.org`: public, `noindex` (decision below).
+- [x] ~~`docs.auibsal.org` on Mintlify~~: replaced (2026-10-09, decision below).
 - [x] GA4: later; the code stays behind `NEXT_PUBLIC_GA_ID`.
-- [x] Collaboration is back in scope (owner, 2026-10-05): Liveblocks, with
-      the secret key in apps/api only (decision below).
+- [x] Collaboration is back in scope (owner, 2026-10-05); on Supabase
+      Realtime since 2026-10-09 (decision below).
 
 ## Decisions
 
@@ -180,9 +193,15 @@ These stop parts of the work. Everything else continues around them.
 - **Public repository:** auibsal/mono is public, so `docs-source/` holds
   only documents the brief lists as public. Restricted documents live in the
   private `library` bucket, reached through signed URLs.
-- **docs.auibsal.org is public with `noindex`.** It holds the developer
-  handbook and the admin guide; nothing in it is secret (RLS is the boundary,
-  not obscurity), and Council members need it without Vercel accounts.
+- **Our own sign-in everywhere, no vendor branding** (owner, 2026-10-09).
+  Mintlify's free plan keeps its branding and has no member-only pages, and
+  the repository is public anyway, so: documents stay on auibsal.org, the
+  officer handbook lives in the Nexus (`governance.handbook_pages`, officers
+  with `library.read`, edited by `governance.manage`), runbooks are Markdown
+  in `docs/platform`, and docs.auibsal.org redirects. The design system
+  (Storybook, rebranded) sits behind a gate that accepts the Nexus session.
+  Live co-editing moved from Liveblocks (its badge only comes off on a paid
+  plan) to Supabase Realtime (migration `20261008001600`).
 - **Tokens come from `brand/tokens.json`** (generator + tests). Two platform
   additions, both existing tones: the `rule` role (light `rule`, ink
   `ink-70`) and captions on crimson-50/paper switch to `ink-70`, as the
@@ -286,7 +305,7 @@ These stop parts of the work. Everything else continues around them.
 - [x] Sign in with SAL: consent page (`/oauth/consent`), Connected apps in
       Profile and privacy (disconnect), Settings → Third-party apps
 - [ ] Sign in with SAL next: file submissions and publishing through `/v1`,
-      signed webhooks to apps, an OpenAPI description (docs.auibsal.org/platform/api)
+      signed webhooks to apps, an OpenAPI description (`docs/platform/api.md`)
 - [x] Events page: browse, book with registration questions, places left, waitlist join/leave, give a place back (tickets stay on Home); the public RSVP button links to the event's card
 - [ ] Past attendance on the Events page
 - [x] Journal: submit (rich text or files, translation fields, Human Authorship reconfirmed each time), my submissions, revise when returned, withdraw, sign the Publication Agreement (text is `TODO(content)`)
@@ -297,7 +316,8 @@ These stop parts of the work. Everything else continues around them.
 - [x] Shell and module gating by permission (UX only; RLS and RPCs enforce)
 - [x] Overview (`core.admin_overview()`), Members (directory, verification queue, tiers, manual activity, roles via `access.assign_role`)
 - [x] Events (editor, questions, attendance, camera QR check-in)
-- [x] Content (news, pages, announcements, homepage slots, media library; Liveblocks co-editing when enabled)
+- [x] Content (news, pages, announcements, homepage slots, media library; live co-editing on Supabase Realtime)
+- [x] Officer handbook in the Nexus (Account → Officer handbook), edited in place by governance managers
 - [x] Charity (campaigns, ledger with sign-off and reversals, receipts through signed URLs; winter-set cost is a placeholder setting)
 - [x] Programs, Governance (minutes co-edited, elections, spending, library uploads), Activity log, Settings
 - [x] Journal issues, pieces, contributors; accepted work becomes a draft piece; publishing blocked until the agreement is signed
@@ -363,6 +383,8 @@ Covered by automated tests so far:
 
 ## Content still needed
 
+- TODO(content): Arabic titles, summaries and text for the officer handbook
+  pages (`governance.handbook_pages`); the Nexus shows English until then.
 - The Journal, Second Chapter and Side Quest documents listed above.
 - A formal Human Authorship pledge wording: the setup page shows Policy
   Manual P10.1 (English verbatim) until one exists. The Member Pledge is now
@@ -421,3 +443,5 @@ Covered by automated tests so far:
   in `packages/email/copy.ts`.
 - Sign in with SAL (2026-10-08): `nexus.oauth.*`, `nexus.profile.apps.*`
   and `nexus.admin.settings.apps.*`.
+- Officer handbook and design-system sign-in (2026-10-09): `nexus.handbook.*`,
+  `nexus.nav.handbook`, `auth.continue.*`.

@@ -23,6 +23,7 @@ import {
   usePathname,
   useRouter,
 } from "@repo/internationalization/navigation";
+import { hasPermissionAnywhere } from "@repo/rbac";
 import { useQueryClient } from "@tanstack/react-query";
 import { MenuIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -43,11 +44,15 @@ const memberLinks = [
 
 /** Profile, and Administration for members whose roles open it. */
 const useAccountLinks = () => {
-  const { visible } = useVisibleModules();
+  const { grants, visible } = useVisibleModules();
   const twoStep = useTwoStep();
   const admin = visible.length > 0 || Boolean(twoStep.data?.needs);
+  const handbook =
+    hasPermissionAnywhere(grants.data, "library.read") ||
+    hasPermissionAnywhere(grants.data, "governance.manage");
   return [
     { href: "/profile", key: "profile" },
+    ...(handbook ? [{ href: "/handbook", key: "handbook" } as const] : []),
     ...(admin ? [{ href: "/admin", key: "admin" } as const] : []),
   ] as const;
 };

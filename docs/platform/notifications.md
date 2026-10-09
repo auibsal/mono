@@ -1,7 +1,6 @@
----
-title: Notifications
-description: Email and phone notifications, and what each costs.
----
+# Notifications
+
+Email and phone notifications, and what each costs.
 
 Every notice (bookings, reminders, Journal receipts and decisions, role endings, removal requests) goes by **email** through Resend. Members who turn on **phone notifications** also get it on their phones and computers. Both are free.
 

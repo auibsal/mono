@@ -15,8 +15,7 @@
   "hosts": {
     "web": "https://auibsal.org",
     "app": "https://nexus.auibsal.org",
-    "api": "https://api.auibsal.org",
-    "docs": "https://docs.auibsal.org"
+    "api": "https://api.auibsal.org"
   },
   "supportEmail": "hello@auibsal.org",
   "repoUrl": "https://github.com/auibsal/mono",

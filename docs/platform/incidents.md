@@ -1,7 +1,6 @@
----
-title: When something breaks
-description: Where alerts come from, where to look first, and who to tell.
----
+# When something breaks
+
+Where alerts come from, where to look first, and who to tell.
 
 | Signal | Comes from | Look at |
 | --- | --- | --- |
@@ -14,8 +13,8 @@ description: Where alerts come from, where to look first, and who to tell.
 ## First steps
 
 1. **Is it everyone or one person?** Try it signed out, then signed in with a test account.
-2. **Did something just change?** If a deploy went out in the last hour, [roll it back](/platform/releases#if-a-release-breaks-something) first and investigate after.
-3. **Is it a permission?** In the Nexus, most "can't see it" reports are a missing role or a missing two-step sign-in, not a fault. See [Signing in](/sign-in).
+2. **Did something just change?** If a deploy went out in the last hour, [roll it back](releases.md#if-a-release-breaks-something) first and investigate after.
+3. **Is it a permission?** In the Nexus, most "can't see it" reports are a missing role or a missing two-step sign-in, not a fault. See [Signing in](https://nexus.auibsal.org/en/handbook?page=sign-in).
 4. **Tell people.** Post a short note in the Council group: what is broken, since when, and when you will update next.
 
 ## Data or safety incidents
