@@ -34,7 +34,7 @@ const useElections = () => {
             .schema("governance")
             .from("elections")
             .select(
-              "id, title_en, title_ar, status, nominations_open_at, nominations_close_at, voting_opens_at, voting_closes_at, positions(id, title_en, title_ar, sort, candidates(id, user_id, status, statement_en, statement_ar))"
+              "id, title_en, title_ar, status, nominations_open_at, nominations_close_at, voting_opens_at, voting_closes_at, positions!positions_election_id_fkey(id, title_en, title_ar, sort, candidates(id, user_id, status, statement_en, statement_ar))"
             )
             .neq("status", "draft")
             .order("voting_opens_at", { ascending: false })
