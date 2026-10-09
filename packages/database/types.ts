@@ -1879,6 +1879,104 @@ export type Database = {
         };
         Relationships: [];
       };
+      form_submissions: {
+        Row: {
+          acknowledged_at: string | null;
+          closed_at: string | null;
+          created_at: string;
+          data: NonNullable<Json>;
+          form_key: string;
+          handled_by: string | null;
+          id: string;
+          office: NonNullable<Json>;
+          routing: string;
+          status: string;
+          subject_user_id: string | null;
+          submitted_at: string | null;
+          submitted_by: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          acknowledged_at?: string | null;
+          closed_at?: string | null;
+          created_at?: string;
+          data?: NonNullable<Json>;
+          form_key: string;
+          handled_by?: string | null;
+          id?: string;
+          office?: NonNullable<Json>;
+          routing?: string;
+          status?: string;
+          subject_user_id?: string | null;
+          submitted_at?: string | null;
+          submitted_by?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          acknowledged_at?: string | null;
+          closed_at?: string | null;
+          created_at?: string;
+          data?: NonNullable<Json>;
+          form_key?: string;
+          handled_by?: string | null;
+          id?: string;
+          office?: NonNullable<Json>;
+          routing?: string;
+          status?: string;
+          subject_user_id?: string | null;
+          submitted_at?: string | null;
+          submitted_by?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "form_submissions_form_key_fkey";
+            columns: ["form_key"];
+            isOneToOne: false;
+            referencedRelation: "form_types";
+            referencedColumns: ["key"];
+          },
+        ];
+      };
+      form_types: {
+        Row: {
+          acknowledge_days: number | null;
+          anonymous_ok: boolean;
+          answer_days: number | null;
+          code: string;
+          handle_permission: string;
+          key: string;
+          ongoing: boolean;
+          sort: number;
+          subject_reads: boolean;
+          submit_rule: string;
+        };
+        Insert: {
+          acknowledge_days?: number | null;
+          anonymous_ok?: boolean;
+          answer_days?: number | null;
+          code: string;
+          handle_permission: string;
+          key: string;
+          ongoing?: boolean;
+          sort?: number;
+          subject_reads?: boolean;
+          submit_rule: string;
+        };
+        Update: {
+          acknowledge_days?: number | null;
+          anonymous_ok?: boolean;
+          answer_days?: number | null;
+          code?: string;
+          handle_permission?: string;
+          key?: string;
+          ongoing?: boolean;
+          sort?: number;
+          subject_reads?: boolean;
+          submit_rule?: string;
+        };
+        Relationships: [];
+      };
       handbook_pages: {
         Row: {
           body_ar: string | null;
@@ -2496,7 +2594,23 @@ export type Database = {
           name_en: string;
         }[];
       };
+      discard_form_draft: {
+        Args: { submission_id: string };
+        Returns: undefined;
+      };
+      form_queue: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          form_key: string;
+          overdue: number;
+          waiting: number;
+        }[];
+      };
       give_notice: { Args: { election_id: string }; Returns: number };
+      handle_form: {
+        Args: { office?: Json; status: string; submission_id: string };
+        Returns: undefined;
+      };
       joinable_partners: {
         Args: Record<PropertyKey, never>;
         Returns: {
@@ -2540,6 +2654,18 @@ export type Database = {
           purpose_ar?: string;
           purpose_en: string;
           resolution_id?: string;
+        };
+        Returns: string;
+      };
+      save_form: {
+        Args: {
+          anonymous?: boolean;
+          data: Json;
+          form_key: string;
+          routing?: string;
+          subject_id?: string;
+          submission_id?: string;
+          submit?: boolean;
         };
         Returns: string;
       };
