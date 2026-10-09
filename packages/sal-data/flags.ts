@@ -13,6 +13,11 @@ export const flags = {
     description:
       "Online nominations, ballots and results (Elections Committee decides).",
   },
+  volunteer_certificates: {
+    default: false,
+    description:
+      "Certificates for volunteer hours, beyond the Bylaws' certificates of service (Council decides).",
+  },
 } as const;
 
 export type Flag = keyof typeof flags;

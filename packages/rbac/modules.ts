@@ -42,6 +42,16 @@ export const adminModules = [
   { key: "programs", permissions: ["programmes.manage"] },
   { key: "partners", permissions: ["partners.manage", "partners.sign"] },
   {
+    key: "recognition",
+    permissions: [
+      "certificates.prepare",
+      "certificates.sign",
+      "certificates.countersign",
+      "members.manage",
+      "programmes.manage",
+    ],
+  },
+  {
     key: "governance",
     permissions: [
       "governance.manage",

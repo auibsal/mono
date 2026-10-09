@@ -3420,6 +3420,90 @@ export type Database = {
         };
         Relationships: [];
       };
+      certificates: {
+        Row: {
+          advisor_signed_at: string | null;
+          advisor_signed_by: string | null;
+          citation_ar: string | null;
+          citation_en: string | null;
+          created_at: string;
+          hours: number | null;
+          id: string;
+          issued_at: string | null;
+          kind: string;
+          partner_id: string | null;
+          period_from: string | null;
+          period_to: string | null;
+          prepared_by: string | null;
+          president_signed_at: string | null;
+          president_signed_by: string | null;
+          resolution_id: string | null;
+          revoke_reason: string | null;
+          revoked_at: string | null;
+          role_ar: string | null;
+          role_en: string | null;
+          serial: string | null;
+          status: string;
+          updated_at: string;
+          user_id: string;
+          verification_code: string;
+        };
+        Insert: {
+          advisor_signed_at?: string | null;
+          advisor_signed_by?: string | null;
+          citation_ar?: string | null;
+          citation_en?: string | null;
+          created_at?: string;
+          hours?: number | null;
+          id?: string;
+          issued_at?: string | null;
+          kind: string;
+          partner_id?: string | null;
+          period_from?: string | null;
+          period_to?: string | null;
+          prepared_by?: string | null;
+          president_signed_at?: string | null;
+          president_signed_by?: string | null;
+          resolution_id?: string | null;
+          revoke_reason?: string | null;
+          revoked_at?: string | null;
+          role_ar?: string | null;
+          role_en?: string | null;
+          serial?: string | null;
+          status?: string;
+          updated_at?: string;
+          user_id: string;
+          verification_code?: string;
+        };
+        Update: {
+          advisor_signed_at?: string | null;
+          advisor_signed_by?: string | null;
+          citation_ar?: string | null;
+          citation_en?: string | null;
+          created_at?: string;
+          hours?: number | null;
+          id?: string;
+          issued_at?: string | null;
+          kind?: string;
+          partner_id?: string | null;
+          period_from?: string | null;
+          period_to?: string | null;
+          prepared_by?: string | null;
+          president_signed_at?: string | null;
+          president_signed_by?: string | null;
+          resolution_id?: string | null;
+          revoke_reason?: string | null;
+          revoked_at?: string | null;
+          role_ar?: string | null;
+          role_en?: string | null;
+          serial?: string | null;
+          status?: string;
+          updated_at?: string;
+          user_id?: string;
+          verification_code?: string;
+        };
+        Relationships: [];
+      };
       memberships: {
         Row: {
           created_at: string;
@@ -3465,6 +3549,60 @@ export type Database = {
           pledge_type?: Database["membership"]["Enums"]["pledge_type"];
           user_id?: string;
           version?: string;
+        };
+        Relationships: [];
+      };
+      service_records: {
+        Row: {
+          activity: string;
+          confirmed_at: string | null;
+          confirmed_by: string | null;
+          created_at: string;
+          hours: number;
+          id: string;
+          occurred_on: string;
+          programme_id: string | null;
+          reject_reason: string | null;
+          source: string;
+          source_id: string | null;
+          status: string;
+          updated_at: string;
+          user_id: string;
+          what: string | null;
+        };
+        Insert: {
+          activity: string;
+          confirmed_at?: string | null;
+          confirmed_by?: string | null;
+          created_at?: string;
+          hours: number;
+          id?: string;
+          occurred_on: string;
+          programme_id?: string | null;
+          reject_reason?: string | null;
+          source?: string;
+          source_id?: string | null;
+          status?: string;
+          updated_at?: string;
+          user_id?: string;
+          what?: string | null;
+        };
+        Update: {
+          activity?: string;
+          confirmed_at?: string | null;
+          confirmed_by?: string | null;
+          created_at?: string;
+          hours?: number;
+          id?: string;
+          occurred_on?: string;
+          programme_id?: string | null;
+          reject_reason?: string | null;
+          source?: string;
+          source_id?: string | null;
+          status?: string;
+          updated_at?: string;
+          user_id?: string;
+          what?: string | null;
         };
         Relationships: [];
       };
@@ -3522,6 +3660,19 @@ export type Database = {
         Returns: string;
       };
       calendar_token: { Args: Record<PropertyKey, never>; Returns: string };
+      certificate_signers: {
+        Args: { certificate_id: string };
+        Returns: {
+          advisor_ar: string;
+          advisor_en: string;
+          president_ar: string;
+          president_en: string;
+        }[];
+      };
+      confirm_service: {
+        Args: { approve: boolean; reason?: string; record_id: string };
+        Returns: undefined;
+      };
       current_pledge_version: {
         Args: { kind: Database["membership"]["Enums"]["pledge_type"] };
         Returns: string;
@@ -3562,9 +3713,35 @@ export type Database = {
           voting_member: boolean;
         }[];
       };
+      record_event_service: {
+        Args: { event_id: string; hours: number; member_id: string };
+        Returns: string;
+      };
+      record_shift_service: {
+        Args: { member_id: string; shift_id: string };
+        Returns: string;
+      };
       reset_calendar_token: {
         Args: Record<PropertyKey, never>;
         Returns: string;
+      };
+      revoke_certificate: {
+        Args: { certificate_id: string; reason: string };
+        Returns: undefined;
+      };
+      service_hours: {
+        Args: { on_date?: string; uid?: string };
+        Returns: number;
+      };
+      service_totals: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          fellowship_eligible: boolean;
+          full_name_ar: string;
+          full_name_en: string;
+          hours: number;
+          user_id: string;
+        }[];
       };
       set_tier: {
         Args: {
@@ -3572,6 +3749,28 @@ export type Database = {
           target_user: string;
         };
         Returns: undefined;
+      };
+      sign_certificate: { Args: { certificate_id: string }; Returns: string };
+      verify_certificate: {
+        Args: { code: string };
+        Returns: {
+          citation_ar: string;
+          citation_en: string;
+          holder_ar: string;
+          holder_en: string;
+          hours: number;
+          issued_at: string;
+          kind: string;
+          partner_ar: string;
+          partner_en: string;
+          period_from: string;
+          period_to: string;
+          revoked_at: string;
+          role_ar: string;
+          role_en: string;
+          serial: string;
+          status: string;
+        }[];
       };
     };
     Enums: {

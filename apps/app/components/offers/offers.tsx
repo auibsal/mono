@@ -2,7 +2,6 @@
 
 import { useAuth } from "@repo/auth/provider";
 import { SalCard } from "@repo/design-system/components/sal/card";
-import { FormHeader } from "@repo/design-system/components/sal/form-header";
 import { formatLongDate } from "@repo/internationalization/format";
 import { localized, partners } from "@repo/sal-data";
 import { useQuery } from "@tanstack/react-query";
@@ -25,7 +24,10 @@ export const Offers = () => {
 
   return (
     <div className="mx-auto grid w-full max-w-3xl gap-6">
-      <FormHeader title={t("title")}>{t("lede")}</FormHeader>
+      <header className="grid gap-2">
+        <h1 className="type-display">{t("title")}</h1>
+        <p className="type-lede max-w-2xl">{t("lede")}</p>
+      </header>
       {offers.isPending ? <SectionSpinner /> : null}
       {offers.isError ? <ErrorState /> : null}
       {offers.data?.length === 0 ? (

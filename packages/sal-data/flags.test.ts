@@ -25,5 +25,8 @@ test("missing rows fall back to the default", async () => {
       from: () => ({ select: () => ({ in: async () => ({ data: [] }) }) }),
     }),
   };
-  expect(await readFlags(fake as any)).toEqual({ elections: false });
+  expect(await readFlags(fake as any)).toEqual({
+    elections: false,
+    volunteer_certificates: false,
+  });
 });

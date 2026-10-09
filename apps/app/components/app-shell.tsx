@@ -57,6 +57,7 @@ const useAccountLinks = () => {
   const member = Boolean(status.data?.is_member);
   return [
     { href: "/profile", key: "profile" },
+    { href: "/service", key: "service" },
     ...(member ? [{ href: "/offers", key: "offers" } as const] : []),
     ...(handbook ? [{ href: "/handbook", key: "handbook" } as const] : []),
     ...(declares
@@ -122,7 +123,7 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
       >
         {t("common.skipToContent")}
       </a>
-      <header className="frame-b sticky top-0 z-40 bg-surface">
+      <header className="frame-b sticky top-0 z-40 bg-surface print:hidden">
         <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-4 py-3">
           <Link className="shrink-0" href="/">
             <BrandLogo ground="dark" height={56} locale={locale} />
@@ -203,7 +204,7 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8" id="main">
         {children}
       </main>
-      <footer className="frame-t">
+      <footer className="frame-t print:hidden">
         <p className="type-caption mx-auto w-full max-w-6xl px-4 py-4">
           <a
             className="underline-offset-4 hover:underline"

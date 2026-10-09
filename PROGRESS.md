@@ -41,6 +41,13 @@ Branch: `claude/new-session-qosn60`.
       the platform owner's own organizations (Baghdad College Foundation,
       The IDEA IQ, which hosts the Vercel team) belong on it, and whoever
       declares a conflict with a partner cannot sign its memorandum.
+- [ ] **Recognition (B4):** the Faculty Advisor needs a Nexus account with
+      the `faculty_advisor` role to countersign certificates (B4.5: signed
+      by the President and the Faculty Advisor). Decide in Council whether
+      volunteers (hours, not a term) get certificates; if yes, switch on
+      `features.volunteer_certificates` in Administration → Settings.
+      Approve the certificate wording for the kinds the Printables do not
+      cover (Honorary Membership, volunteer, production, partner).
 - [ ] **Backups:** add `BACKUP_PASSPHRASE` (a long random passphrase kept in
       your password manager) to the GitHub `production` environment. Then
       `.github/workflows/backup.yml` stores an encrypted dump every night
@@ -260,6 +267,15 @@ These stop parts of the work. Everything else continues around them.
   declared conflict (P8.3). Partners are public only while active, listed
   and under a signed memorandum. Member offers are display-only (no
   payments). `charity.partners` stays for campaign pages.
+- Recognition (Oct 9, 2026): recorded service is
+  `membership.service_records` (Form F-16): shifts a program manager marks
+  as worked, event staff hours, and members' own entries, always confirmed
+  by someone else. Certificates (F-28, Fellowship, Honorary Membership)
+  issue only after the President signs and the Faculty Advisor
+  countersigns (`membership.sign_certificate`), take the year's next
+  serial, and are checked at auibsal.org/verify. The PDF is the browser's
+  print of the Nexus certificate page (Arabic shaping stays correct; no
+  PDF library or cost).
 - Reference data after the first migration: later migrations may add
   permissions, roles and grants with plain inserts; `@repo/rbac`'s mirror
   test reads every migration in order.

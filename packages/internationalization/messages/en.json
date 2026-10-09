@@ -142,7 +142,8 @@
       "publicSite": "auibsal.org",
       "handbook": "Officer handbook",
       "offers": "Member offers",
-      "declarations": "Declarations"
+      "declarations": "Declarations",
+      "service": "My service"
     },
     "errors": {
       "loadFailed": "We couldn't load this. Check your connection and try again.",
@@ -580,7 +581,8 @@
         "governance": "Governance",
         "activity": "Activity log",
         "settings": "Settings",
-        "partners": "Partners"
+        "partners": "Partners",
+        "recognition": "Recognition"
       },
       "noAccess": "Your roles don't include this section. Ask the President or the General Secretary if you need it.",
       "kit": {
@@ -810,7 +812,10 @@
         "findPerson": "Find a member",
         "findHint": "Type at least two letters of a name or the start of an email.",
         "person": "Member",
-        "rsvpedAt": "RSVPed"
+        "rsvpedAt": "RSVPed",
+        "serviceHours": "Hours {name} gave",
+        "recordHours": "Record hours",
+        "hoursRecorded": "Hours recorded"
       },
       "checkIn": {
         "title": "Check-in",
@@ -1128,7 +1133,9 @@
           "confirm": "Confirm",
           "release": "Release",
           "deleteShift": "Delete shift",
-          "deleteShiftConfirm": "Delete this shift and its sign-ups?"
+          "deleteShiftConfirm": "Delete this shift and its sign-ups?",
+          "worked": "Worked",
+          "markWorked": "Worked the shift"
         },
         "removals": {
           "lede": "The Side Quest care promise: every request is handled within 24 hours.",
@@ -1799,6 +1806,79 @@
           "receive": "Mark received",
           "notReceived": "Not yet received"
         }
+      },
+      "recognition": {
+        "title": "Recognition",
+        "lede": "Recorded service and certificates (Bylaws B4): confirm hours, see who has reached the Fellowship threshold, and prepare certificates for the President and the Faculty Advisor to sign.",
+        "tabs": {
+          "pending": "Hours to confirm",
+          "totals": "Service this year",
+          "certificates": "Certificates"
+        },
+        "pending": {
+          "lede": "Hours members logged (Form F-16). You see entries for the programs you manage. Nobody confirms their own.",
+          "empty": "No hours waiting.",
+          "person": "Person",
+          "date": "Date",
+          "activity": "Activity",
+          "hours": "Hours",
+          "confirm": "Confirm",
+          "reject": "Not confirmed",
+          "reason": "Why (optional)"
+        },
+        "totals": {
+          "lede": "Confirmed hours this academic year. {target} hours make a member eligible to be nominated as a Fellow (B4.1); Fellows are confirmed by two-thirds of the Council.",
+          "cap": "New Fellows in a year should not exceed one-tenth of Voting Members (B4.3).",
+          "empty": "No confirmed hours this year yet.",
+          "person": "Person",
+          "hours": "Hours",
+          "fellowship": "Fellowship",
+          "eligible": "Eligible for nomination"
+        },
+        "certificates": {
+          "lede": "Certificates of service (F-28) go to every officer, director, program lead and coordinator who completes a term (B4.5). Each is issued once the President signs and the Faculty Advisor countersigns, and gets a serial and a public check.",
+          "prepare": "Prepare a certificate",
+          "cancel": "Cancel",
+          "empty": "No certificates yet.",
+          "holder": "Holder",
+          "kind": "Certificate",
+          "role": "Served as",
+          "citation": "For / in recognition of",
+          "resolution": "Council resolution",
+          "resolutionHint": "Fellowship and Honorary Membership are conferred by two-thirds of the Council (B4.2, B4.4).",
+          "chooseResolution": "Choose an adopted resolution",
+          "partner": "Partner",
+          "choosePartner": "Choose a partner",
+          "hours": "Hours",
+          "period_from": "From",
+          "period_to": "To",
+          "hints": {
+            "service": "For a completed term as an officer, director, program lead or coordinator (B4.5).",
+            "fellowship": "Needs the Council's adopted resolution naming the Fellow (B4.2).",
+            "honorary": "Needs the Council's adopted resolution (B4.4).",
+            "volunteer": "For volunteer hours. Not in the Bylaws: on only by Council decision.",
+            "production": "For cast and crew of a production.",
+            "partner": "For work with one of the Society's partners."
+          },
+          "serial": "Serial",
+          "status": "Status",
+          "signatures": "Signatures",
+          "presidentSigned": "President signed",
+          "advisorSigned": "Faculty Advisor signed",
+          "unsigned": "Not yet signed",
+          "open": "Open",
+          "sign": "Sign",
+          "countersign": "Countersign",
+          "revoke": "Revoke",
+          "revokeReason": "Reason",
+          "delete": "Delete draft",
+          "deleteConfirm": "Delete this draft certificate?",
+          "statuses": {
+            "draft": "Draft",
+            "issued": "Issued",
+            "revoked": "Revoked"
+          }
+        }
       }
     },
     "editor": {
@@ -1910,6 +1990,85 @@
       "membershipCard": "Show my membership card",
       "code": "Code:",
       "until": "Until {date}"
+    },
+    "service": {
+      "title": "My service",
+      "lede": "Your recorded service (Form F-16) and certificates. Hours count once someone else confirms them.",
+      "thisYear": "This academic year",
+      "hours": "{hours} hours",
+      "progressLabel": "{hours} of {target} hours",
+      "towardsFellowship": "{target} hours of recorded service in an academic year make you eligible to be nominated as a Fellow of the Society (Bylaws B4.1).",
+      "eligible": "You have the hours to be nominated as a Fellow of the Society (Bylaws B4.1). The Council decides.",
+      "logTitle": "Log hours",
+      "logLede": "For work that isn't a shift or an event staff role: preparing a reading, editing, design, setting up.",
+      "date": "Date",
+      "hoursLabel": "Hours",
+      "programme": "Program",
+      "noProgramme": "No program",
+      "activity": "Activity",
+      "what": "What you did",
+      "confirmNote": "A program lead or the General Secretary confirms each entry. Shifts and event staffing are recorded for you.",
+      "log": "Log hours",
+      "recordsTitle": "Your service",
+      "noRecords": "No service recorded yet.",
+      "findShift": "Find a shift",
+      "withdraw": "Withdraw",
+      "statuses": {
+        "pending": "Waiting for confirmation",
+        "confirmed": "Confirmed",
+        "rejected": "Not confirmed"
+      },
+      "certificatesTitle": "Your certificates",
+      "noCertificates": "Certificates appear here once the President and the Faculty Advisor have signed them.",
+      "revoked": "revoked",
+      "kinds": {
+        "service": "Certificate of Service",
+        "fellowship": "Fellow of the Society",
+        "honorary": "Honorary Member",
+        "volunteer": "Certificate of Volunteer Service",
+        "production": "Certificate of Production Credit",
+        "partner": "Certificate of Partnership Service"
+      }
+    },
+    "certificate": {
+      "title": "Certificate",
+      "back": "Back to my service",
+      "missing": "This certificate isn't available.",
+      "draftNote": "A draft: it is issued once the President and the Faculty Advisor have both signed.",
+      "printNote": "Choose Download to save a PDF (A4, landscape).",
+      "download": "Download PDF",
+      "linkedIn": "Add to LinkedIn",
+      "society": "SOCIETY OF ARTS AND LETTERS",
+      "recordThat": "This is to record that",
+      "present": "the present",
+      "president": "President",
+      "advisor": "Faculty Advisor",
+      "date": "Date",
+      "revoked": "This certificate has been revoked.",
+      "titles": {
+        "service": "Certificate of Service",
+        "fellowship": "Fellow of the Society",
+        "honorary": "Honorary Member",
+        "volunteer": "Certificate of Volunteer Service",
+        "production": "Certificate of Production Credit",
+        "partner": "Certificate of Partnership Service"
+      },
+      "bodies": {
+        "service": "served the Society as {role} from {from} to {to}, and gave the Society their time and care.",
+        "fellowship": "has been named a Fellow of the Society of Arts and Letters by its Council for {citation}, and holds the title for life.",
+        "honorary": "has been made an Honorary Member of the Society of Arts and Letters by its Council, in recognition of {citation}.",
+        "volunteer": "gave the Society {hours} hours of volunteer service from {from} to {to}.",
+        "production": "served as {role} in a production of the Society of Arts and Letters, from {from} to {to}.",
+        "partner": "served the Society as {role} in its partnership with {partner}, from {from} to {to}."
+      },
+      "codes": {
+        "service": "F-28 · Certificate of Service",
+        "fellowship": "Fellowship · B4",
+        "honorary": "Honorary Membership · B4.4",
+        "volunteer": "Recognition · B4",
+        "production": "Recognition · B4",
+        "partner": "Recognition · B4"
+      }
     }
   },
   "web": {
@@ -2290,6 +2449,36 @@
       "visit": "Visit {name}",
       "workTitle": "Work with us",
       "work": "The Society partners with clubs, departments, charities and cultural organizations whose aims fit its mission and who treat people fairly. Sponsors are acknowledged and never have editorial influence. Write to the Director of Partnerships through the contact page."
+    },
+    "verify": {
+      "title": "Check a certificate",
+      "lede": "Certificates from the AUIB Society of Arts and Letters carry a code at the foot. Type it to see whether the certificate stands.",
+      "code": "Certificate code",
+      "check": "Check",
+      "invalid": "That doesn't look like a certificate code.",
+      "notFound": "No certificate has this code. Check it and try again.",
+      "again": "Check another code",
+      "valid": "This certificate was issued by the Society and stands.",
+      "revoked": "This certificate was revoked on {date}.",
+      "holder": "Awarded to",
+      "kind": "Certificate",
+      "role": "Served as",
+      "partner": "With",
+      "citation": "For",
+      "hours": "Hours",
+      "period": "Period",
+      "present": "the present",
+      "issued": "Issued",
+      "serial": "Serial",
+      "signedBy": "Signed in the Nexus by the President and the Faculty Advisor.",
+      "kinds": {
+        "service": "Certificate of Service",
+        "fellowship": "Fellow of the Society",
+        "honorary": "Honorary Member",
+        "volunteer": "Certificate of Volunteer Service",
+        "production": "Certificate of Production Credit",
+        "partner": "Certificate of Partnership Service"
+      }
     }
   }
 }

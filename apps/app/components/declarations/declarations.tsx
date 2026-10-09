@@ -2,7 +2,6 @@
 
 import { useAuth } from "@repo/auth/provider";
 import { SalCard } from "@repo/design-system/components/sal/card";
-import { FormHeader } from "@repo/design-system/components/sal/form-header";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Checkbox } from "@repo/design-system/components/ui/checkbox";
 import { Input } from "@repo/design-system/components/ui/input";
@@ -112,7 +111,10 @@ export const Declarations = () => {
 
   return (
     <div className="mx-auto grid w-full max-w-3xl gap-8">
-      <FormHeader title={t("title")}>{t("lede")}</FormHeader>
+      <header className="grid gap-2">
+        <h1 className="type-display">{t("title")}</h1>
+        <p className="type-lede max-w-2xl">{t("lede")}</p>
+      </header>
       <p className="type-body">{t("definition")}</p>
 
       <form className="grid gap-5" onSubmit={onSubmit}>
