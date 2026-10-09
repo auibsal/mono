@@ -8,7 +8,7 @@ import {
   formatDateTime,
   formatNumber,
 } from "@repo/internationalization/format";
-import { unwrap } from "@repo/sal-data";
+import { recognition, unwrap } from "@repo/sal-data";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
 import { useDeferredValue, useState } from "react";
@@ -122,6 +122,22 @@ const Staff = ({ eventId }: { eventId: string }) => {
     return profile ? memberName(profile, locale) : "—";
   };
 
+  // After the event, the hours each staff member gave count as recorded
+  // service (Form F-16, Bylaws B4.1).
+  const [hours, setHours] = useState<Record<string, string>>({});
+  const [recorded, setRecorded] = useState<Record<string, boolean>>({});
+  const record = useMutation({
+    mutationFn: (userId: string) =>
+      recognition.recordEventService(
+        supabase,
+        eventId,
+        userId,
+        Number(hours[userId] ?? 0)
+      ),
+    onSuccess: (_, userId) =>
+      setRecorded((current) => ({ ...current, [userId]: true })),
+  });
+
   return (
     <section className="grid gap-4">
       <h3 className="type-subheading">{t("staff")}</h3>
@@ -144,6 +160,41 @@ const Staff = ({ eventId }: { eventId: string }) => {
             >
               {t("removeStaff")}
             </Button>
+            <form
+              className="flex items-center gap-2"
+              onSubmit={(event) => {
+                event.preventDefault();
+                record.mutate(member.user_id);
+              }}
+            >
+              <Input
+                aria-label={t("serviceHours", { name: nameOf(member.user_id) })}
+                className="w-20"
+                dir="ltr"
+                max={24}
+                min={0.25}
+                onChange={(e) =>
+                  setHours((current) => ({
+                    ...current,
+                    [member.user_id]: e.target.value,
+                  }))
+                }
+                required
+                step={0.25}
+                type="number"
+                value={hours[member.user_id] ?? ""}
+              />
+              <Button
+                disabled={record.isPending}
+                size="sm"
+                type="submit"
+                variant="outline"
+              >
+                {recorded[member.user_id]
+                  ? t("hoursRecorded")
+                  : t("recordHours")}
+              </Button>
+            </form>
           </li>
         ))}
       </ul>
@@ -195,7 +246,7 @@ const Staff = ({ eventId }: { eventId: string }) => {
           ))}
         </ul>
       ) : null}
-      <ErrorLine error={add.error ?? remove.error} />
+      <ErrorLine error={add.error ?? remove.error ?? record.error} />
     </section>
   );
 };

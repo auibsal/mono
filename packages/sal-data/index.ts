@@ -9,4 +9,5 @@ export * as journal from "./journal";
 export * as membership from "./membership";
 export * as partners from "./partners";
 export * as programmes from "./programmes";
+export * as recognition from "./recognition";
 export { sanitizeRichText, toPlainText } from "./sanitize";

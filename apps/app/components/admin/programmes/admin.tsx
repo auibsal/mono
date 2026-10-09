@@ -18,7 +18,7 @@ import {
   formatLongDate,
   formatNumber,
 } from "@repo/internationalization/format";
-import { localized, programmes, unwrap } from "@repo/sal-data";
+import { localized, programmes, recognition, unwrap } from "@repo/sal-data";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
 import { type FormEvent, useEffect, useState } from "react";
@@ -590,7 +590,7 @@ type SignupStatus = "signed_up" | "confirmed" | "swap_requested" | "cancelled";
 const Shifts = ({ rotaId }: { rotaId: string }) => {
   const t = useTranslations("nexus.admin.programmes.rotas");
   const locale = useLocale() as Locale;
-  const { supabase } = useAuth();
+  const { supabase, user } = useAuth();
   const queryClient = useQueryClient();
   const [form, setForm] = useState({
     capacity: "1",
@@ -622,7 +622,21 @@ const Shifts = ({ rotaId }: { rotaId: string }) => {
               )
           ) ?? [])
         : [];
-      return { shifts, signups };
+      // Shifts already recorded as worked (recorded service, F-16).
+      const worked = shifts.length
+        ? (unwrap(
+            await supabase
+              .schema("membership")
+              .from("service_records")
+              .select("source_id, user_id")
+              .eq("source", "shift")
+              .in(
+                "source_id",
+                shifts.map((s) => s.id)
+              )
+          ) ?? [])
+        : [];
+      return { shifts, signups, worked };
     },
     queryKey: [...invalidateKey, "shifts", rotaId],
   });
@@ -668,6 +682,11 @@ const Shifts = ({ rotaId }: { rotaId: string }) => {
       ),
     onSuccess: invalidate,
   });
+  const markWorked = useMutation({
+    mutationFn: (input: { shift_id: string; user_id: string }) =>
+      recognition.recordShiftService(supabase, input.shift_id, input.user_id),
+    onSuccess: invalidate,
+  });
   const remove = useMutation({
     mutationFn: async (shiftId: string) =>
       unwrap(
@@ -679,6 +698,35 @@ const Shifts = ({ rotaId }: { rotaId: string }) => {
       ),
     onSuccess: invalidate,
   });
+
+  // After a shift ends, its manager records who worked it: the hours count
+  // as confirmed service (Bylaws B4.1).
+  const workedState = (
+    shift: { ends_at: string; id: string },
+    userId: string
+  ) => {
+    if (Date.parse(shift.ends_at) > Date.now() || userId === user?.id) {
+      return null;
+    }
+    const done = data.data?.worked.some(
+      (w) => w.source_id === shift.id && w.user_id === userId
+    );
+    if (done) {
+      return <span className="type-caption">{t("worked")}</span>;
+    }
+    return (
+      <Button
+        disabled={markWorked.isPending}
+        onClick={() =>
+          markWorked.mutate({ shift_id: shift.id, user_id: userId })
+        }
+        size="sm"
+        variant="ghost"
+      >
+        {t("markWorked")}
+      </Button>
+    );
+  };
 
   return (
     <div className="grid gap-4">
@@ -743,6 +791,7 @@ const Shifts = ({ rotaId }: { rotaId: string }) => {
                       >
                         {t("release")}
                       </Button>
+                      {workedState(shift, s.user_id)}
                     </li>
                   );
                 })}

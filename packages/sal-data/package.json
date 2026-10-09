@@ -16,6 +16,7 @@
     "./membership": "./membership.ts",
     "./partners": "./partners.ts",
     "./programmes": "./programmes.ts",
+    "./recognition": "./recognition.ts",
     "./sanitize": "./sanitize.ts"
   },
   "scripts": {
