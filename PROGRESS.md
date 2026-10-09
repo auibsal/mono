@@ -326,6 +326,12 @@ These stop parts of the work. Everything else continues around them.
   resolution grants a founding-term exception. Existing assignments are
   left as they are; the public Council roster lists each person once per
   office.
+- Owner cleanup (Oct 9, 2026, migration `20261010000200`): Shaheen Farjo
+  keeps only the President seat held since Oct 4; his other assignments
+  are ended. Test content is removed (the "Hey" news draft, the two test
+  journal submissions, a duplicate member offer, a test verification
+  request). The manuscript file of the withdrawn test submission stays in
+  the `submissions` bucket until deleted in the dashboard.
 - Reference data after the first migration: later migrations may add
   permissions, roles and grants with plain inserts; `@repo/rbac`'s mirror
   test reads every migration in order.
