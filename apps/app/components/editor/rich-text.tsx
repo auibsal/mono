@@ -1,9 +1,10 @@
 "use client";
 
-import { useLiveblocksExtension } from "@liveblocks/react-tiptap";
+import { useRoom } from "@repo/collaboration/room";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Input } from "@repo/design-system/components/ui/input";
 import { cn } from "@repo/design-system/lib/utils";
+import Collaboration from "@tiptap/extension-collaboration";
 import {
   type Editor,
   EditorContent,
@@ -12,7 +13,7 @@ import {
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface RichTextProps {
   /** Accessible name of the editing area (usually the field label). */
@@ -35,7 +36,7 @@ const starterKit = (collaborative: boolean) =>
       openOnClick: false,
       protocols: ["https", "mailto"],
     },
-    // Liveblocks keeps the shared history when co-editing.
+    // The shared Yjs draft keeps the history when co-editing.
     ...(collaborative ? { undoRedo: false } : {}),
   });
 
@@ -239,17 +240,33 @@ export const RichTextEditor = (props: RichTextProps) => {
 };
 
 /**
- * The same field co-edited live (inside a collaboration Room). The room's
- * draft starts from the saved HTML; Save still writes to Postgres.
+ * The same field co-edited live (inside a collaboration Room). The first
+ * person in the room starts the draft from the saved HTML; later arrivals
+ * receive the draft from the others. Save still writes to Postgres.
  */
 export const CollaborativeRichTextEditor = (
   props: RichTextProps & { field: string }
 ) => {
-  const liveblocks = useLiveblocksExtension({
-    field: props.field,
-    initialContent: props.value,
-  });
-  const editor = useBaseEditor(props, [liveblocks, starterKit(true)], false);
+  const room = useRoom();
+  const editor = useBaseEditor(
+    props,
+    [
+      Collaboration.configure({ document: room.doc, field: props.field }),
+      starterKit(true),
+    ],
+    false
+  );
+  const seeded = useRef(false);
+  useEffect(() => {
+    if (!editor || seeded.current) {
+      return;
+    }
+    seeded.current = true;
+    const fragment = room.doc.getXmlFragment(props.field);
+    if (room.alone && fragment.length === 0 && props.value) {
+      editor.commands.setContent(props.value);
+    }
+  }, [editor, props.field, props.value, room]);
   return (
     <Frame editor={editor} label={props.label} lang={props.lang} undo={false} />
   );

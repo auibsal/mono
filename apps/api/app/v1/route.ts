@@ -6,7 +6,7 @@ export const OPTIONS = preflight;
 /** GET /v1: what this API offers. The reference is in SAL Docs. */
 export const GET = () =>
   json({
-    docs: `${project.hosts.docs}/platform/api`,
+    docs: `${project.repoUrl}/blob/main/docs/platform/api.md`,
     endpoints: [
       "GET /v1/me",
       "GET /v1/journal/calls",

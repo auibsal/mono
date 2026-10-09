@@ -113,6 +113,10 @@
       "recovery": "Press Continue, then choose a new password.",
       "continue": "Continue",
       "pending": "Signing you in…"
+    },
+    "continue": {
+      "title": "Returning",
+      "returning": "Taking you back…"
     }
   },
   "nexus": {
@@ -127,7 +131,8 @@
       "account": "Account",
       "profile": "Profile and privacy",
       "admin": "Administration",
-      "publicSite": "auibsal.org"
+      "publicSite": "auibsal.org",
+      "handbook": "Officer handbook"
     },
     "errors": {
       "loadFailed": "We couldn't load this. Check your connection and try again.",
@@ -1623,6 +1628,33 @@
       "working": "One moment…",
       "invalid": "This sign-in link has expired or is incomplete. Go back to the app and start again.",
       "failed": "We couldn't finish signing you in. Go back to the app and try again."
+    },
+    "handbook": {
+      "title": "Officer handbook",
+      "lede": "How to run the Society in the Nexus: events, the Journal, news, the charity ledger, members, elections and the brand. For Society officers only.",
+      "sections": {
+        "start": "Start here",
+        "running": "Running the Society",
+        "making": "Making things"
+      },
+      "back": "Back to the handbook",
+      "edit": "Edit this page",
+      "delete": "Delete this page",
+      "deleteConfirm": "The page is removed for every officer. This can't be undone.",
+      "newPage": "Add a page",
+      "slug": "Web address (slug)",
+      "slugHint": "Lowercase words joined by hyphens, for example “events”.",
+      "section": "Section",
+      "titleLabel": "Title",
+      "summary": "Summary",
+      "bodyEn": "Text in English",
+      "bodyAr": "Text in Arabic",
+      "cancel": "Cancel",
+      "notFound": "This page isn't in the handbook.",
+      "englishOnly": "This page hasn't been written in Arabic yet; here it is in English.",
+      "forOfficers": "The handbook is for Society officers. It opens when you hold a role.",
+      "seeSociety": "See who runs the Society",
+      "empty": "The handbook has no pages yet."
     }
   },
   "web": {

@@ -73,15 +73,11 @@ jobs:
           node-version-file: .nvmrc
       - run: bun install --frozen-lockfile
       - run: bunx turbo build --filter=api --filter=app --filter=web --filter=@repo/storybook
-      - name: SAL Docs build, with no broken links (Mintlify)
-        run: |
-          bun run --cwd apps/docs validate < /dev/null
-          bun run --cwd apps/docs links < /dev/null
       # No secret may reach a client bundle: the Nexus export and the public
       # site must not contain the secret-key prefix or server-only names.
       - name: No secrets in client bundles
         run: |
-          ! grep -rlE "sb_secret_[A-Za-z0-9_-]{8,}|SUPABASE_SECRET_KEY|RESEND_TOKEN|CRON_SECRET|REVALIDATE_SECRET|DATABASE_WEBHOOK_SECRET|LIVEBLOCKS_SECRET|sk_(dev|prod)_[A-Za-z0-9_-]{8,}" apps/app/out apps/web/.next/static
+          ! grep -rlE "sb_secret_[A-Za-z0-9_-]{8,}|SUPABASE_SECRET_KEY|RESEND_TOKEN|CRON_SECRET|REVALIDATE_SECRET|DATABASE_WEBHOOK_SECRET|sk_(dev|prod)_[A-Za-z0-9_-]{8,}" apps/app/out apps/web/.next/static
 
   database:
     name: Database (migrations, RLS, integration)

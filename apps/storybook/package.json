@@ -6,12 +6,15 @@
     "build": "storybook build",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "dev": "storybook dev -p 6006",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
     "@react-email/components": "1.0.12",
     "@repo/design-system": "workspace:*",
     "@repo/email": "workspace:*",
+    "@supabase/supabase-js": "^2.117.3",
+    "@vercel/functions": "^3.9.11",
     "next": "16.3.8",
     "react": "19.3.0",
     "react-dom": "19.3.0"
@@ -27,6 +30,7 @@
     "postcss": "^8.5.29",
     "storybook": "^10.2.16",
     "tailwindcss": "^4.2.1",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
   }
 }

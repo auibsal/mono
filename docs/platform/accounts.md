@@ -1,0 +1,35 @@
+# Accounts and access
+
+Every service the platform runs on, what it does, and who must hold it.
+
+Policy P15 and Bylaws B11.3 apply to the platform too: **every account has at least two administrators on the Council, with two-step verification on, and access moves within seven days of a handover.** Passwords live in the Society's password manager, never in chats or documents.
+
+| Service | What it does for SAL | Plan and free limits |
+| --- | --- | --- |
+| GitHub (`auibsal/mono`) | The code, CI, nightly backups, Dependabot, CodeQL | Free (public repository) |
+| Vercel (team `theideaiq`) | Hosts sal-web, sal-nexus, sal-api and sal-storybook (the design system); daily keep-alive cron | Pro for now; Hobby is free: 100 deployments a day, cron jobs at most once a day, one member |
+| Supabase (project `auibsal.org`, Frankfurt) | Postgres, sign-in (also for the design system and third-party apps), file storage, scheduled jobs, live co-editing (Realtime) | Free: 500 MB database, 1 GB files; pauses after 7 idle days (the keep-alive cron prevents it); no downloadable backups (the nightly GitHub backup covers it) |
+| Cloudflare | DNS for auibsal.org | Free |
+| Resend | Every email the platform sends, including sign-in links | Free: 100 emails a day, 3,000 a month. Emails over the limit wait in the outbox until it resets |
+| Sentry (EU) | Errors and server logs from all three apps | Free Developer plan: 5,000 errors a month, one user |
+| BetterStack | Uptime monitors for the site, the Nexus sign-in and the API health check | Free |
+| Arcjet | Protects the public removal-request form | Free after the trial: 10,000 requests a month, then a hard stop (no bill); the form keeps working when it is spent |
+| Google Analytics 4 | Visitor counts on the public site only | Free |
+
+## Where secrets live
+
+| Secret | Held by |
+| --- | --- |
+| Supabase secret key, Resend token, cron and webhook secrets, Arcjet key, Web Push private key (`VAPID_PRIVATE_KEY`) | The sal-api project in Vercel |
+| Revalidation secret | sal-api and sal-web |
+| Supabase access token and database password | GitHub → Settings → Environments → production (used by the migration workflow) |
+| Backup passphrase | GitHub production environment; also kept in the password manager, since a backup is useless without it |
+
+The Nexus and the public site hold no secrets; their keys are public by design and the database enforces the rules.
+
+## Handing the platform over
+
+1. **Add the incoming administrator.** Invite them to the GitHub organization, the Vercel team, the Supabase organization, Cloudflare, Resend, Sentry, BetterStack and Arcjet, with admin rights.
+2. **Walk through a release.** Merge one small pull request together and watch CI, the migration workflow and the Vercel deployments go green. See [Releases and migrations](releases.md).
+3. **Restore a backup together.** Practice the [restore](backups.md) into a scratch project once, so it is not new on the day it matters.
+4. **Remove the outgoing administrator.** Within seven days of the handover (B11.3), unless they stay on as one of the two required administrators.

@@ -4,11 +4,11 @@ import { urls } from "../playwright.config";
 import { signInWithPassword } from "./helpers";
 
 /**
- * Two editors on one news post (Liveblocks). Needs apps/api running with
- * LIVEBLOCKS_SECRET and the Nexus built with NEXT_PUBLIC_LIVEBLOCKS_ENABLED;
- * set E2E_LIVEBLOCKS=1 to run it (for example against a preview).
+ * Two editors on one news post (Supabase Realtime). Needs Realtime with
+ * private channels on the stack under test; set E2E_COLLAB=1 to run it (for
+ * example against a preview).
  */
-test.skip(!process.env.E2E_LIVEBLOCKS, "Liveblocks is not configured here");
+test.skip(!process.env.E2E_COLLAB, "Co-editing is not checked here");
 
 test("two editors see each other and each other's typing", async ({
   browser,

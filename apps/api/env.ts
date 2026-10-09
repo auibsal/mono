@@ -1,5 +1,4 @@
 import { keys as auth } from "@repo/auth/keys";
-import { keys as collaboration } from "@repo/collaboration/keys";
 import { keys as database } from "@repo/database/keys";
 import { keys as email } from "@repo/email/keys";
 import { envPresets, withPresets } from "@repo/next-config/env";
@@ -11,7 +10,6 @@ import { z } from "zod";
 
 const presets = envPresets(
   auth(),
-  collaboration(),
   core(),
   database(),
   email(),
