@@ -27,6 +27,18 @@ Policy P15 and Bylaws B11.3 apply to the platform too: **every account has at le
 
 The Nexus and the public site hold no secrets; their keys are public by design and the database enforces the rules.
 
+## Passkeys
+
+Members can sign in with a passkey (fingerprint, face or screen lock) and manage them under Profile in the Nexus. The settings live in Supabase → Authentication → Passkeys:
+
+| Setting | Value | Why |
+| --- | --- | --- |
+| Relying Party ID | `auibsal.org` | Passkeys work only on this domain and its subdomains. **Never change it**: every passkey already registered stops working. |
+| Relying Party Origins | `https://nexus.auibsal.org` (add `https://auibsal.org` only if the public site ever gets a sign-in) | The exact pages allowed to ask for a passkey. Safe to edit at any time. |
+| Display name | `AUIB Society of Arts and Letters` | Shown in the device's passkey prompt. |
+
+A passkey sign-in counts as the first step only: officers whose roles need two-step sign-in still enter their authenticator code afterwards.
+
 ## Handing the platform over
 
 1. **Add the incoming administrator.** Invite them to the GitHub organization, the Vercel team, the Supabase organization, Cloudflare, Resend, Sentry, BetterStack and Arcjet, with admin rights.

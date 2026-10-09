@@ -5,6 +5,7 @@ import {
   sendMagicLink,
   signInWithPassword,
 } from "@repo/auth/email";
+import { passkeysSupported, signInWithPasskey } from "@repo/auth/passkeys";
 import { useAuth } from "@repo/auth/provider";
 import { FormHeader } from "@repo/design-system/components/sal/form-header";
 import { Button } from "@repo/design-system/components/ui/button";
@@ -13,13 +14,14 @@ import { Label } from "@repo/design-system/components/ui/label";
 import { Link } from "@repo/internationalization/navigation";
 import { useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { type FormEvent, useId, useRef, useState } from "react";
-import { useAuthError } from "@/lib/auth-messages";
+import { type FormEvent, useEffect, useId, useRef, useState } from "react";
+import { useAuthError, usePasskeyError } from "@/lib/auth-messages";
 import { callbackUrl, safeNextPath } from "@/lib/navigation";
 
 export const SignInForm = () => {
   const t = useTranslations("auth");
   const errorText = useAuthError();
+  const passkeyErrorText = usePasskeyError();
   const { supabase } = useAuth();
   const locale = useLocale();
   const params = useSearchParams();
@@ -34,6 +36,9 @@ export const SignInForm = () => {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string>();
   const [linkSent, setLinkSent] = useState(false);
+  // Checked after mount: the page is prerendered without a browser.
+  const [canUsePasskey, setCanUsePasskey] = useState(false);
+  useEffect(() => setCanUsePasskey(passkeysSupported()), []);
 
   // One request at a time: a second magic-link request replaces the first
   // link and this browser's PKCE verifier (see ForgotForm).
@@ -64,6 +69,22 @@ export const SignInForm = () => {
       setLinkSent(true);
     }
     // Password sign-in: GuestOnly sends the member on to `next`.
+  };
+
+  const signInPasskey = async () => {
+    if (inFlight.current) {
+      return;
+    }
+    inFlight.current = true;
+    setPending(true);
+    setError(undefined);
+    const result = await signInWithPasskey(supabase);
+    inFlight.current = false;
+    setPending(false);
+    if (!result.ok) {
+      setError(passkeyErrorText(result.code));
+    }
+    // Signed in: GuestOnly sends the member on to `next`.
   };
 
   return (
@@ -134,6 +155,16 @@ export const SignInForm = () => {
               ? t("signIn.magicLink")
               : t("signIn.usePassword")}
           </Button>
+          {canUsePasskey ? (
+            <Button
+              disabled={pending}
+              onClick={signInPasskey}
+              type="button"
+              variant="outline"
+            >
+              {t("signIn.passkey")}
+            </Button>
+          ) : null}
         </form>
       )}
       <nav className="type-body grid gap-2">
