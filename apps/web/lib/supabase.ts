@@ -13,6 +13,7 @@ export const cacheTags = [
   "programmes",
   "documents",
   "about",
+  "partners",
 ] as const;
 export type CacheTag = (typeof cacheTags)[number];
 

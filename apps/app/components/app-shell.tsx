@@ -29,6 +29,7 @@ import { MenuIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { type ReactNode, useState } from "react";
 import { disablePush } from "@/lib/push";
+import { useMemberStatus } from "@/lib/queries";
 import { useVisibleModules } from "./admin/admin-shell";
 import { useTwoStep } from "./auth/two-step";
 import { LanguageSwitcher } from "./language-switcher";
@@ -47,12 +48,20 @@ const useAccountLinks = () => {
   const { grants, visible } = useVisibleModules();
   const twoStep = useTwoStep();
   const admin = visible.length > 0 || Boolean(twoStep.data?.needs);
+  const status = useMemberStatus();
   const handbook =
     hasPermissionAnywhere(grants.data, "library.read") ||
     hasPermissionAnywhere(grants.data, "governance.manage");
+  // Form F-18: every role holder declares conflicts each semester (P8).
+  const declares = (grants.data ?? []).length > 0;
+  const member = Boolean(status.data?.is_member);
   return [
     { href: "/profile", key: "profile" },
+    ...(member ? [{ href: "/offers", key: "offers" } as const] : []),
     ...(handbook ? [{ href: "/handbook", key: "handbook" } as const] : []),
+    ...(declares
+      ? [{ href: "/declarations", key: "declarations" } as const]
+      : []),
     ...(admin ? [{ href: "/admin", key: "admin" } as const] : []),
   ] as const;
 };

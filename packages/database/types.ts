@@ -1662,6 +1662,96 @@ export type Database = {
           },
         ];
       };
+      conflict_declarations: {
+        Row: {
+          created_at: string;
+          id: string;
+          nothing_to_declare: boolean;
+          received_at: string | null;
+          received_by: string | null;
+          role_title: string | null;
+          semester_id: string | null;
+          signed_at: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          nothing_to_declare?: boolean;
+          received_at?: string | null;
+          received_by?: string | null;
+          role_title?: string | null;
+          semester_id?: string | null;
+          signed_at?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          nothing_to_declare?: boolean;
+          received_at?: string | null;
+          received_by?: string | null;
+          role_title?: string | null;
+          semester_id?: string | null;
+          signed_at?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+      conflict_items: {
+        Row: {
+          affects: string | null;
+          closed_on: string | null;
+          created_at: string;
+          declaration_id: string;
+          handling: string | null;
+          id: string;
+          kind: string;
+          partner_id: string | null;
+          what: string;
+        };
+        Insert: {
+          affects?: string | null;
+          closed_on?: string | null;
+          created_at?: string;
+          declaration_id: string;
+          handling?: string | null;
+          id?: string;
+          kind: string;
+          partner_id?: string | null;
+          what: string;
+        };
+        Update: {
+          affects?: string | null;
+          closed_on?: string | null;
+          created_at?: string;
+          declaration_id?: string;
+          handling?: string | null;
+          id?: string;
+          kind?: string;
+          partner_id?: string | null;
+          what?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "conflict_items_declaration_id_fkey";
+            columns: ["declaration_id"];
+            isOneToOne: false;
+            referencedRelation: "conflict_declarations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "conflict_items_partner_id_fkey";
+            columns: ["partner_id"];
+            isOneToOne: false;
+            referencedRelation: "partners";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       council_terms: {
         Row: {
           created_at: string;
@@ -1879,6 +1969,59 @@ export type Database = {
         };
         Relationships: [];
       };
+      member_offers: {
+        Row: {
+          code: string | null;
+          created_at: string;
+          details_ar: string | null;
+          details_en: string;
+          ends_on: string | null;
+          id: string;
+          is_published: boolean;
+          partner_id: string;
+          starts_on: string;
+          title_ar: string | null;
+          title_en: string;
+          updated_at: string;
+        };
+        Insert: {
+          code?: string | null;
+          created_at?: string;
+          details_ar?: string | null;
+          details_en: string;
+          ends_on?: string | null;
+          id?: string;
+          is_published?: boolean;
+          partner_id: string;
+          starts_on?: string;
+          title_ar?: string | null;
+          title_en: string;
+          updated_at?: string;
+        };
+        Update: {
+          code?: string | null;
+          created_at?: string;
+          details_ar?: string | null;
+          details_en?: string;
+          ends_on?: string | null;
+          id?: string;
+          is_published?: boolean;
+          partner_id?: string;
+          starts_on?: string;
+          title_ar?: string | null;
+          title_en?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "member_offers_partner_id_fkey";
+            columns: ["partner_id"];
+            isOneToOne: false;
+            referencedRelation: "partners";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       minutes: {
         Row: {
           adopted_on: string | null;
@@ -1921,6 +2064,214 @@ export type Database = {
           title_ar?: string | null;
           title_en?: string;
           updated_at?: string;
+        };
+        Relationships: [];
+      };
+      partner_affiliations: {
+        Row: {
+          created_at: string;
+          decided_at: string | null;
+          decided_by: string | null;
+          id: string;
+          note: string | null;
+          partner_id: string;
+          status: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          decided_at?: string | null;
+          decided_by?: string | null;
+          id?: string;
+          note?: string | null;
+          partner_id: string;
+          status?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Update: {
+          created_at?: string;
+          decided_at?: string | null;
+          decided_by?: string | null;
+          id?: string;
+          note?: string | null;
+          partner_id?: string;
+          status?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "partner_affiliations_partner_id_fkey";
+            columns: ["partner_id"];
+            isOneToOne: false;
+            referencedRelation: "partners";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      partner_agreements: {
+        Row: {
+          branding: string | null;
+          code: string | null;
+          created_at: string;
+          created_by: string | null;
+          end_reason: string | null;
+          ended_on: string | null;
+          ends_on: string | null;
+          grants: string[];
+          id: string;
+          money: string | null;
+          partner_contact: string | null;
+          partner_id: string;
+          partner_signatory: string | null;
+          partner_will: string | null;
+          people_safety: string | null;
+          purpose_ar: string | null;
+          purpose_en: string;
+          renew_by: string | null;
+          sal_contact: string | null;
+          sal_will: string | null;
+          signed_at: string | null;
+          signed_by: string | null;
+          signed_document_path: string | null;
+          starts_on: string;
+          status: string;
+          student_life_informed_on: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          branding?: string | null;
+          code?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          end_reason?: string | null;
+          ended_on?: string | null;
+          ends_on?: string | null;
+          grants?: string[];
+          id?: string;
+          money?: string | null;
+          partner_contact?: string | null;
+          partner_id: string;
+          partner_signatory?: string | null;
+          partner_will?: string | null;
+          people_safety?: string | null;
+          purpose_ar?: string | null;
+          purpose_en: string;
+          renew_by?: string | null;
+          sal_contact?: string | null;
+          sal_will?: string | null;
+          signed_at?: string | null;
+          signed_by?: string | null;
+          signed_document_path?: string | null;
+          starts_on: string;
+          status?: string;
+          student_life_informed_on?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          branding?: string | null;
+          code?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          end_reason?: string | null;
+          ended_on?: string | null;
+          ends_on?: string | null;
+          grants?: string[];
+          id?: string;
+          money?: string | null;
+          partner_contact?: string | null;
+          partner_id?: string;
+          partner_signatory?: string | null;
+          partner_will?: string | null;
+          people_safety?: string | null;
+          purpose_ar?: string | null;
+          purpose_en?: string;
+          renew_by?: string | null;
+          sal_contact?: string | null;
+          sal_will?: string | null;
+          signed_at?: string | null;
+          signed_by?: string | null;
+          signed_document_path?: string | null;
+          starts_on?: string;
+          status?: string;
+          student_life_informed_on?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "partner_agreements_partner_id_fkey";
+            columns: ["partner_id"];
+            isOneToOne: false;
+            referencedRelation: "partners";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      partners: {
+        Row: {
+          contact_email: string | null;
+          contact_name: string | null;
+          contact_role: string | null;
+          created_at: string;
+          description_ar: string | null;
+          description_en: string | null;
+          id: string;
+          is_listed: boolean;
+          kind: string;
+          lead_id: string | null;
+          logo_path: string | null;
+          name_ar: string | null;
+          name_en: string;
+          notes: string | null;
+          reach: string;
+          slug: string;
+          status: string;
+          updated_at: string;
+          url: string | null;
+        };
+        Insert: {
+          contact_email?: string | null;
+          contact_name?: string | null;
+          contact_role?: string | null;
+          created_at?: string;
+          description_ar?: string | null;
+          description_en?: string | null;
+          id?: string;
+          is_listed?: boolean;
+          kind: string;
+          lead_id?: string | null;
+          logo_path?: string | null;
+          name_ar?: string | null;
+          name_en: string;
+          notes?: string | null;
+          reach?: string;
+          slug: string;
+          status?: string;
+          updated_at?: string;
+          url?: string | null;
+        };
+        Update: {
+          contact_email?: string | null;
+          contact_name?: string | null;
+          contact_role?: string | null;
+          created_at?: string;
+          description_ar?: string | null;
+          description_en?: string | null;
+          id?: string;
+          is_listed?: boolean;
+          kind?: string;
+          lead_id?: string | null;
+          logo_path?: string | null;
+          name_ar?: string | null;
+          name_en?: string;
+          notes?: string | null;
+          reach?: string;
+          slug?: string;
+          status?: string;
+          updated_at?: string;
+          url?: string | null;
         };
         Relationships: [];
       };
@@ -2137,7 +2488,23 @@ export type Database = {
         Args: { approve: boolean; candidate_id: string };
         Returns: undefined;
       };
+      declarable_partners: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          id: string;
+          name_ar: string;
+          name_en: string;
+        }[];
+      };
       give_notice: { Args: { election_id: string }; Returns: number };
+      joinable_partners: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          id: string;
+          name_ar: string;
+          name_en: string;
+        }[];
+      };
       nominate: {
         Args: {
           position_id: string;
@@ -2147,6 +2514,20 @@ export type Database = {
         Returns: string;
       };
       open_voting: { Args: { election_id: string }; Returns: number };
+      public_partners: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          description_ar: string;
+          description_en: string;
+          kind: string;
+          logo_path: string;
+          name_ar: string;
+          name_en: string;
+          reach: string;
+          slug: string;
+          url: string;
+        }[];
+      };
       reject_spending: {
         Args: { approval_id: string; note: string };
         Returns: undefined;
@@ -2161,6 +2542,14 @@ export type Database = {
           resolution_id?: string;
         };
         Returns: string;
+      };
+      sign_partner_agreement: {
+        Args: {
+          agreement_id: string;
+          partner_signatory: string;
+          signed_document_path: string;
+        };
+        Returns: undefined;
       };
       turnout: {
         Args: { election_id: string };

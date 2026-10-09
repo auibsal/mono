@@ -29,6 +29,8 @@ export const permissions = [
   "settings.manage",
   "spending.request",
   "spending.countersign",
+  "partners.manage",
+  "partners.sign",
 ] as const;
 
 export type Permission = (typeof permissions)[number];

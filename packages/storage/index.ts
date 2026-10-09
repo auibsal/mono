@@ -93,14 +93,15 @@ export const uploadReceipt = (
  */
 export const uploadLibraryFile = (
   supabase: Client,
-  audience: "role" | "council",
+  /** The audience folder, or `partners` for signed memoranda (F-26). */
+  folder: "role" | "council" | "partners",
   file: File
 ) => {
   assertAllowed("library", file);
   return upload(
     supabase,
     buckets.library.id,
-    anonymousObjectPath(audience, file.type),
+    anonymousObjectPath(folder, file.type),
     file
   );
 };

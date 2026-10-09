@@ -7,5 +7,6 @@ export * as events from "./events";
 export * as governance from "./governance";
 export * as journal from "./journal";
 export * as membership from "./membership";
+export * as partners from "./partners";
 export * as programmes from "./programmes";
 export { sanitizeRichText, toPlainText } from "./sanitize";
