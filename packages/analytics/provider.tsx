@@ -3,22 +3,25 @@ import type { ReactNode } from "react";
 import { keys } from "./keys";
 
 const SCRIPT_UNSAFE_CHAR_MAP: Record<string, string> = {
-  "<": "\\u003C",
-  ">": "\\u003E",
   "/": "\\u002F",
   "\\": "\\\\",
+  "\0": "\\0",
   "\b": "\\b",
   "\f": "\\f",
   "\n": "\\n",
   "\r": "\\r",
   "\t": "\\t",
-  "\0": "\\0",
   "\u2028": "\\u2028",
   "\u2029": "\\u2029",
+  "<": "\\u003C",
+  ">": "\\u003E",
 };
 
 const escapeUnsafeScriptChars = (value: string): string =>
-  value.replace(/[<>/\\\b\f\n\r\t\0\u2028\u2029]/g, (char) => SCRIPT_UNSAFE_CHAR_MAP[char] ?? char);
+  value.replace(
+    /[<>/\\\b\f\n\r\t\0\u2028\u2029]/g,
+    (char) => SCRIPT_UNSAFE_CHAR_MAP[char] ?? char
+  );
 
 interface AnalyticsProviderProps {
   readonly children: ReactNode;
