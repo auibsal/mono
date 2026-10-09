@@ -35,6 +35,9 @@ export const permissions = [
   "certificates.sign",
   "certificates.countersign",
   "productions.manage",
+  "concerns.handle",
+  "concerns.about_vp",
+  "concerns.about_president",
 ] as const;
 
 export type Permission = (typeof permissions)[number];

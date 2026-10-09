@@ -297,6 +297,22 @@ These stop parts of the work. Everything else continues around them.
   hours become recorded service, a closed production drafts certificates
   for its credited members, and the lead signs the Program Report (F-25,
   section B). Public page: auibsal.org/productions (footer).
+- Forms (Oct 9, 2026): one engine for every form not built into its own
+  module (F-03, F-04, F-06, F-09, F-10, F-11, F-13, F-14, F-17, F-19, F-20,
+  F-24, F-25 A, F-27, F-29). `governance.form_types` says who may fill
+  each in and which permission (held Society-wide) handles it; fields are
+  defined in `@repo/sal-data/forms`, transcribed from Templates & Forms.
+  Submissions are written only through `governance.save_form` and
+  `governance.handle_form`. Incident reports go only to Society-wide
+  events managers. Concerns (F-20) may be anonymous (no account stored)
+  and are routed by permission: one about the Vice President never
+  reaches the Vice President, one about the President never reaches the
+  President. Form submissions have no activity-log trigger (it would
+  record who sent an anonymous concern). Expense claims record what is
+  owed; the Society still makes no online payments. Forms already part
+  of other modules are linked from Account → Forms. The standard letters
+  (L-01 to L-10, F-05) are fill-in-the-brackets templates in Admin →
+  Forms and letters, quoted verbatim.
 - Reference data after the first migration: later migrations may add
   permissions, roles and grants with plain inserts; `@repo/rbac`'s mirror
   test reads every migration in order.
@@ -386,6 +402,7 @@ These stop parts of the work. Everything else continues around them.
 - [x] Journal: submit (rich text or files, translation fields, Human Authorship reconfirmed each time), my submissions, revise when returned, withdraw, sign the Publication Agreement (text is `TODO(content)`)
 - [x] Programs: rotas with upcoming shifts, places left (`programmes.shift_places`), sign up, give back
 - [x] Productions (Programs → Productions): open auditions with sign-up, and for the company their credits (show my name or not) and rehearsals
+- [x] Forms (Account → Forms): fill in, save drafts, send, print; anonymous concerns; checklists and dossiers kept up to date by their subject; links to the forms that live in other sections
 - [ ] Society (Book of Members, roster, minutes, elections)
 
 ### Nexus — admin (§8)
@@ -397,6 +414,7 @@ These stop parts of the work. Everything else continues around them.
 - [x] Charity (campaigns, ledger with sign-off and reversals, receipts through signed URLs; winter-set cost is a placeholder setting)
 - [x] Programs, Governance (minutes co-edited, elections, spending, library uploads), Activity log, Settings
 - [x] Productions (`/admin/productions`): stages, rights clearance by a second person, auditions with private panel notes, cast and crew credits, hours as service, rehearsals, performances linked to events, partners, Program Report (F-25 B), drafted certificates; public page auibsal.org/productions
+- [x] Forms and letters (`/admin/forms`): a queue per form with acknowledge and answer dates, office-use boxes, print; standard letters L-01 to L-10 and F-05 to fill in, copy and print
 - [x] Journal issues, pieces, contributors; accepted work becomes a draft piece; publishing blocked until the agreement is signed
 - [x] Journal pipeline (`/admin/pipeline`): per-issue tabs by role — my reading (rubric v2 scoring), intake (return for formatting, send to blind review, originals via `/files/submission`), reader assignment, drag-and-drop board with a keyboard Move menu, selection by average and band, decisions with author reveal, Advisory Board flagged view, calls
 - [x] Blind copies: `/files/blind` strips PDF info/XMP/annotation authors, image EXIF, DOCX properties and revision authors; never falls back to the original
@@ -482,6 +500,11 @@ Covered by automated tests so far:
 - The Issue 1 call's theme and eligibility text, if any (open theme until
   then), and the Journal Submission Guidelines it should link to.
 
+- TODO(content): Arabic versions of the standard letters (L-01 to L-10,
+  F-05); the Templates & Forms has them in English only.
+- The Media Release (F-17) is to be reviewed by Student Life before first
+  use (as the form says).
+
 ## needs-native-review (Arabic written for the platform)
 
 - `packages/internationalization/messages/ar.json` — every string (all of it
@@ -495,6 +518,9 @@ Covered by automated tests so far:
 - Productions (2026-10-09): `nexus.productions.*`, `nexus.admin.productions.*`
   and `web.productions.*`, including the stage, department and audition
   status names.
+- Forms (2026-10-09): `nexus.forms.*` (every form title, purpose, field and
+  option, including the Arabic of the F-17 media release, which the form
+  itself says must be checked by a native speaker) and `nexus.admin.forms.*`.
 - `core.programmes.name_ar`: every name.
 - `charity.campaigns.unit_label_ar` default «أطفال كُسوا».
 - `core.semesters` names in pgTAP fixtures are test-only (no review needed).

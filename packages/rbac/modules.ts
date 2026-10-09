@@ -62,6 +62,18 @@ export const adminModules = [
       "spending.countersign",
     ],
   },
+  {
+    key: "forms",
+    permissions: [
+      "members.manage",
+      "programmes.manage",
+      "events.manage",
+      "spending.countersign",
+      "content.manage",
+      "governance.manage",
+      "concerns.handle",
+    ],
+  },
   { key: "activity", permissions: ["audit.read"] },
   { key: "settings", permissions: ["settings.manage"] },
 ] as const satisfies readonly {

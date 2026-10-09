@@ -143,7 +143,8 @@
       "handbook": "Officer handbook",
       "offers": "Member offers",
       "declarations": "Declarations",
-      "service": "My service"
+      "service": "My service",
+      "forms": "Forms"
     },
     "errors": {
       "loadFailed": "We couldn't load this. Check your connection and try again.",
@@ -588,7 +589,8 @@
         "settings": "Settings",
         "partners": "Partners",
         "recognition": "Recognition",
-        "productions": "Productions"
+        "productions": "Productions",
+        "forms": "Forms and letters"
       },
       "noAccess": "Your roles don't include this section. Ask the President or the General Secretary if you need it.",
       "kit": {
@@ -2059,6 +2061,61 @@
           "draftCertificates": "Draft certificates",
           "drafted": "{count, plural, =0 {No new certificates: everyone credited has one.} one {{countText} certificate drafted.} other {{countText} certificates drafted.}}"
         }
+      },
+      "forms": {
+        "title": "Forms and letters",
+        "lede": "Forms sent to you to handle, with their answer dates, and the standard letters to fill in and print.",
+        "tabs": {
+          "submissions": "Forms sent in",
+          "letters": "Letters"
+        },
+        "columns": {
+          "form": "Form",
+          "from": "From",
+          "sent": "Sent",
+          "status": "Status"
+        },
+        "noForms": "Your roles don’t handle any forms. Letters are in the next tab.",
+        "empty": "Nothing here.",
+        "waiting": "{count, plural, one {{countText} waiting} other {{countText} waiting}}",
+        "overdue": "{count, plural, one {{countText} overdue} other {{countText} overdue}}",
+        "filterForm": "Form",
+        "allForms": "All forms",
+        "filterShow": "Show",
+        "show": {
+          "open": "Open",
+          "closed": "Closed",
+          "all": "All"
+        },
+        "saveOffice": "Save office use",
+        "acknowledge": "Acknowledge",
+        "takeUp": "Mark as being handled",
+        "close": "Close",
+        "letters": {
+          "lede": "The standard letters from Templates & Forms, word for word. Fill in each bracket, then copy the text into an email or print it.",
+          "choose": "Letter",
+          "fill": "Fill in",
+          "to": "To",
+          "subject": "Subject",
+          "copy": "Copy the text",
+          "copied": "Copied.",
+          "print": "Print",
+          "missing": "{count, plural, one {{countText} bracket still empty.} other {{countText} brackets still empty.}}",
+          "englishOnly": "The letters exist in English only for now; the Arabic versions are still to be written.",
+          "names": {
+            "l01": "Registration letter to Student Life",
+            "l02": "Faculty Advisor invitation",
+            "l03": "Charter Day notice to members",
+            "l04": "SAL Open Call, all-student email",
+            "f05": "Appointment Letter",
+            "l05": "Welcome to new members",
+            "l06": "Application outcome (not selected)",
+            "l07": "Thank-you to a partner",
+            "l08": "Honorary Membership invitation",
+            "l09": "Notice of General Assembly",
+            "l10": "Notice of Election"
+          }
+        }
       }
     },
     "editor": {
@@ -2304,6 +2361,548 @@
         "closed": "Sign-ups for this audition have closed.",
         "notVerified": "Auditions open once your membership is verified.",
         "failed": "That didn't work. Try again in a moment."
+      }
+    },
+    "forms": {
+      "title": "Forms",
+      "lede": "The Society’s forms, filled in here instead of on paper. Each goes only to the officers who handle it.",
+      "fillTitle": "Fill in a form",
+      "viewTitle": "A form",
+      "mine": "Your forms",
+      "noMine": "You haven’t sent any forms yet.",
+      "aboutYou": "about you",
+      "available": "Forms you can fill in",
+      "noneAvailable": "No forms are open to you yet. Some open once your membership is verified or you hold a role.",
+      "home": "Go to Home",
+      "elsewhereTitle": "Forms elsewhere in the Nexus",
+      "elsewhereLede": "These forms are part of their own sections, so they are filled in there.",
+      "elsewhere": {
+        "f01": "Membership Registration: your profile",
+        "f02": "Member Pledge & Consent: your profile",
+        "f07": "Council Meeting Agenda: Governance",
+        "f08": "Minutes & Decisions: Governance",
+        "f12": "Budget Request: Governance, spending",
+        "f15": "Attendance Sheet: event check-in",
+        "f16": "Volunteer Hours Log: My service",
+        "f18": "Conflict of Interest Declaration: Declarations",
+        "f21": "Election Nomination: Society, elections",
+        "f22": "Ballot Paper: Society, elections",
+        "f23": "Election Results Declaration: Society, elections",
+        "f25b": "Program Report (section B): Productions",
+        "f26": "Partnership Memorandum: Partners",
+        "f28": "Certificate of Service: My service"
+      },
+      "statuses": {
+        "draft": "Draft",
+        "submitted": "Sent",
+        "acknowledged": "Acknowledged",
+        "in_progress": "Being handled",
+        "closed": "Closed"
+      },
+      "choose": "Choose",
+      "required": "(required)",
+      "row": "Row {number}",
+      "addRow": "Add a row",
+      "removeRow": "Remove this row",
+      "yes": "Yes",
+      "no": "No",
+      "blank": "Not filled in",
+      "subject": "Who this form is about",
+      "about": "About {name}",
+      "routing": "Is your concern about an officer?",
+      "routingHint": "If it is, it never reaches that officer.",
+      "routings": {
+        "none": "No, about someone or something else",
+        "vice_president": "About the Vice President",
+        "president": "About the President"
+      },
+      "anonymous": "Send without my name",
+      "anonymousHint": "No account is stored with it, so we cannot reply and you will not see it in Your forms.",
+      "sentAnonymously": "Sent without your name. Thank you for telling us.",
+      "problems": "Some answers are missing or not valid: {fields}",
+      "send": "Send",
+      "saveDraft": "Save as draft",
+      "saveChanges": "Save changes",
+      "back": "Back to Forms",
+      "notFound": "This form isn’t available. It may not exist, or it isn’t yours to see.",
+      "interviewTotal": "Weighted total: {total} / 100",
+      "interviewVeto": "A 1 on Commitment or Teamwork means no, whatever the total.",
+      "claimTotal": "Total claimed: {total}",
+      "cashTotals": "Count 1: {one} · Count 2: {two}",
+      "society": "Society of Arts and Letters",
+      "sentOn": "Sent {date}",
+      "from": "From {name}",
+      "anonymousSender": "Anonymous",
+      "acknowledgeBy": "To be acknowledged by {date}",
+      "answerBy": "To be answered by {date}",
+      "office": "Office use",
+      "print": "Print",
+      "update": "Update this form",
+      "defs": {
+        "f03": {
+          "title": "Role Application",
+          "purpose": "For every role in the Open Call. Members and non-members welcome.",
+          "fields": {
+            "first_choice": "First-choice role",
+            "second_choice": "Second choice (optional)",
+            "college_year": "College and year",
+            "hours": "Hours a week you can honestly give",
+            "commitments": "Other clubs, jobs or big commitments this semester",
+            "why": "Why this role? What would you want to have done by the end of the year? (150 words at most)",
+            "experience": "What have you done before that is relevant? Anything counts: school, family, work, hobbies.",
+            "work_link": "For design, media, editorial and stage roles: a link to one piece of your work (optional)",
+            "interview_days": "When could you interview? (director and chair roles)",
+            "decl_true": "The information is true",
+            "decl_read": "I have read the role card and the Member Pledge",
+            "decl_apprenticeship": "I understand team roles begin with a three-week Apprenticeship"
+          },
+          "options": {
+            "interview_days": {
+              "tue": "Tuesday",
+              "wed": "Wednesday",
+              "thu": "Thursday",
+              "any": "Any time"
+            }
+          }
+        },
+        "f04": {
+          "title": "Interview Score Sheet",
+          "purpose": "Each panel member scores alone, then the panel agrees. Fifteen minutes per interview.",
+          "preamble": "Ask every candidate the same questions: 1. Tell us about something you made or organised that you are proud of. 2. What would you do in your first month in this role? 3. Tell us about a time a team member let you down. What did you do? 4. This role needs [x] hours a week. What will you drop in a busy week? 5. How would you make someone who speaks only Arabic, or only English, feel welcome? 6. What questions do you have for us? Score 1 = not shown · 3 = solid · 5 = outstanding.",
+          "fields": {
+            "candidate": "Candidate",
+            "role": "Role",
+            "score_commitment": "Commitment and time (20%): realistic hours; understands the calendar",
+            "score_skills": "Relevant skills (25%): has done, or can quickly learn, what the role needs",
+            "score_ideas": "Ideas for the role (20%): concrete, fits the mission, not only big",
+            "score_teamwork": "Teamwork and care (20%): listens, credits others, handles pressure kindly",
+            "score_values": "Fit with our values (15%): open door, craft, both languages, care, honesty",
+            "notes": "Notes",
+            "recommendation": "Recommendation",
+            "other_role": "Another role (if recommending one)",
+            "conflict": "Conflict of interest",
+            "conflict_what": "What was declared (the panel member stepped aside)"
+          },
+          "options": {
+            "recommendation": {
+              "appoint": "Appoint",
+              "other_role": "Appoint to another role",
+              "not_this_time": "Not this time"
+            },
+            "conflict": {
+              "none": "None",
+              "declared": "Declared"
+            }
+          }
+        },
+        "f06": {
+          "title": "Onboarding Checklist",
+          "purpose": "For every new officer, director, chair and coordinator. Kept with their handover dossier.",
+          "fields": {
+            "role": "Role",
+            "start_date": "Start date",
+            "first_week": "First week",
+            "first_month": "First month",
+            "signed_holder": "Signed off by the role holder",
+            "signed_director": "Signed off by the director"
+          },
+          "options": {
+            "first_week": {
+              "accepted": "Appointment accepted (F-05)",
+              "pledge_coi": "Member Pledge (F-02) and Conflict of Interest (F-18) signed",
+              "coffee": "Coffee with director",
+              "role_card": "Role card read; questions noted",
+              "playbook": "Operations Playbook sections for the role read",
+              "groups": "Added to groups: Council, department, program",
+              "drive": "Drive access for the role only",
+              "dossier_walkthrough": "Previous holder’s handover dossier walked through",
+              "roster": "Name on the Roster tab",
+              "first_task": "First task agreed, with a date"
+            },
+            "first_month": {
+              "two_meetings": "Two meetings attended",
+              "shadowed": "Shadowed one event end to end",
+              "work_plan": "Semester work plan agreed with director",
+              "dossier_started": "Handover dossier started (F-24)",
+              "treasurer": "Met the Treasurer if the role spends money",
+              "cashier": "Cashier training (if needed)",
+              "media_consent": "Media consent rules briefed (if photographing)",
+              "announced": "Announced on @auibsal"
+            }
+          }
+        },
+        "f09": {
+          "title": "General Assembly Motion",
+          "purpose": "Submitted to the General Secretary at least five days before the Assembly (B2.3).",
+          "fields": {
+            "seconder": "Seconder (a Voting Member)",
+            "title": "Title of the motion",
+            "notes": "This Assembly notes… (the facts)",
+            "believes": "This Assembly believes… (the reasons)",
+            "resolves": "This Assembly resolves… (exactly what will happen, who will do it and by when)",
+            "motion_type": "Type"
+          },
+          "options": {
+            "motion_type": {
+              "ordinary": "Ordinary (simple majority)",
+              "amendment": "Constitutional amendment (two-thirds; 14 days’ notice)",
+              "overturn": "Overturn a Bylaw or Policy",
+              "removal": "Removal of an officer (two-thirds; secret ballot)"
+            }
+          }
+        },
+        "f10": {
+          "title": "Program Pitch",
+          "purpose": "Any member may pitch. One page is enough. Send it to the director closest to your idea.",
+          "fields": {
+            "director": "Director sent to",
+            "name": "Name of the program (a working title is fine)",
+            "idea": "The idea in three sentences",
+            "pillars": "Which pillar does it serve?",
+            "helpers": "Who will help you? (names, if you have them)",
+            "audience": "Who is it for, and how many?",
+            "when": "When? (dates or frequency)",
+            "where": "Where?",
+            "cost": "Rough cost (IQD)",
+            "risks": "What could go wrong, and what would you do?",
+            "success": "How will we know it worked?"
+          },
+          "options": {
+            "pillars": {
+              "connecting": "Connecting students",
+              "creativity": "Fostering creativity",
+              "culture": "Celebrating culture",
+              "community": "Building a community"
+            }
+          },
+          "office": {
+            "received": "Received",
+            "at_council": "At Council",
+            "outcome": "Outcome",
+            "reasons_sent": "Reasons sent",
+            "charter": "Charter (F-29) written"
+          },
+          "officeOptions": {
+            "outcome": {
+              "greenlit": "Greenlit",
+              "not_yet": "Not yet"
+            }
+          }
+        },
+        "f11": {
+          "title": "Event Plan & Risk Check",
+          "purpose": "Required for events over 30 people, with cash or equipment, or off campus (P13).",
+          "fields": {
+            "event": "Event",
+            "lead": "Lead on the day",
+            "starts_at": "Date and time",
+            "location": "Room or location",
+            "attendance": "Expected attendance",
+            "student_life_ref": "Student Life approval reference",
+            "risks": "Risks",
+            "t7": "The T – 7 check",
+            "student_life_contact": "Student Life contact on the day",
+            "security_contact": "Security contact",
+            "first_aid": "Nearest first aid"
+          },
+          "rows": {
+            "risks": {
+              "crowding": "Crowding and capacity",
+              "cash": "Cash on site",
+              "equipment": "Equipment and electrics",
+              "food": "Food and allergies",
+              "guests": "Guests from outside AUIB",
+              "photography": "Photography and consent",
+              "sensitive": "Sensitive content",
+              "vulnerable": "Children or vulnerable people",
+              "travel": "Travel or off campus",
+              "weather": "Weather or outdoors"
+            }
+          },
+          "columns": {
+            "risks": {
+              "na": "Not applicable",
+              "what": "What could happen",
+              "level": "Low, medium or high",
+              "plan": "What we will do"
+            }
+          },
+          "options": {
+            "level": {
+              "low": "Low",
+              "medium": "Medium",
+              "high": "High"
+            },
+            "t7": {
+              "approvals": "Approvals in writing",
+              "room": "Room confirmed",
+              "kit": "Kit list checked",
+              "volunteers": "Volunteers briefed",
+              "cash_plan": "Cash plan (F-14)",
+              "stickers": "Camera-shy stickers",
+              "exits": "Exits and first aid known",
+              "contacts": "Emergency contacts listed"
+            }
+          },
+          "office": {
+            "approved": "Approved by the Director of Programs"
+          }
+        },
+        "f13": {
+          "title": "Expense Claim",
+          "purpose": "Within 30 days of purchase, with receipts. Paid or answered within 14 days (B9.3). The Society makes no online payments.",
+          "fields": {
+            "phone": "Phone",
+            "department": "Department or program",
+            "budget_line": "Budget line",
+            "approved_by": "Approved by (name)",
+            "items": "What you bought",
+            "payment": "How to pay you",
+            "receipts_attached": "All receipts attached or handed to the Treasurer",
+            "not_self_approved": "I did not approve this spending myself",
+            "inventory": "The items belong to the Society and are in the inventory"
+          },
+          "columns": {
+            "items": {
+              "date": "Date",
+              "item": "Item",
+              "shop": "Shop",
+              "receipt": "Receipt no.",
+              "amount": "Amount (IQD)"
+            }
+          },
+          "office": {
+            "checked_by": "Checked by the Treasurer",
+            "paid_on": "Paid on",
+            "amount": "Amount (IQD)",
+            "ledger_ref": "Ledger reference"
+          }
+        },
+        "f14": {
+          "title": "Cash Count Sheet",
+          "purpose": "Two people count, both sign. Never kept overnight by one student (P7.3).",
+          "fields": {
+            "event": "Event or program",
+            "date": "Date",
+            "count_type": "Count",
+            "money_type": "Money type",
+            "notes": "Banknotes",
+            "opening_float": "Opening float (IQD)",
+            "sales_recorded": "Sales recorded on the sales sheet (IQD)",
+            "expected_total": "Expected total (IQD)",
+            "difference_reason": "Difference (IQD) and reason",
+            "seal_no": "Envelope or seal no.",
+            "handed_to": "Handed to (Student Life name)",
+            "handed_at": "Time handed over",
+            "counter2": "Second counter",
+            "received_by": "Received by"
+          },
+          "options": {
+            "count_type": {
+              "float": "Float",
+              "close": "Close",
+              "day": "Day"
+            },
+            "money_type": {
+              "society": "Society funds",
+              "charity": "Charity funds (kept separate)"
+            }
+          },
+          "columns": {
+            "notes": {
+              "count1": "Count 1: number",
+              "count2": "Count 2: number"
+            }
+          }
+        },
+        "f17": {
+          "title": "Media Release",
+          "purpose": "For anyone clearly featured in Society photos, video or interviews (P5.1).",
+          "preamble": "I agree that the Society of Arts and Letters may photograph, film and record me at [event / programme] on [date], and publish the result on its channels (@auibsal, YouTube, Telegram), in print and in its archive. I understand that I can ask for anything showing me to be removed at any time, and that it will be taken down within 24 hours. I will see [the episode / feature] before it is published [where applicable]. I am not paid for this. I will be credited by name unless I tick below.",
+          "fields": {
+            "event": "Event or program",
+            "date": "Date",
+            "credit": "Credit",
+            "photos_only": "Photos only, no video",
+            "contact": "AUIB email or phone",
+            "under_18": "I am under 18",
+            "guardian": "If under 18: parent or guardian’s name (they sign the paper copy)",
+            "agree": "I agree to the release above"
+          },
+          "options": {
+            "credit": {
+              "name": "Credit me by name",
+              "no_name": "Do not name me"
+            }
+          }
+        },
+        "f19": {
+          "title": "Incident Report",
+          "purpose": "Within 24 hours of any incident, however small (P13.5).",
+          "preamble": "Serious matters: call Security first. Only the officers who handle incidents Society-wide read this report.",
+          "fields": {
+            "event": "Event or activity",
+            "occurred_at": "Date and time of the incident",
+            "location": "Location",
+            "role": "Your role",
+            "phone": "Phone",
+            "types": "Type",
+            "what": "What happened? Facts only: who, what, when, where. No opinions.",
+            "done": "What was done at the time? (first aid, Security called, event paused…)",
+            "told": "Who else was told? (names, times)",
+            "witnesses": "Witnesses (names)",
+            "follow_up": "Follow-up needed"
+          },
+          "options": {
+            "types": {
+              "injury": "Injury or illness",
+              "damage": "Damage or loss",
+              "safety": "Safety concern",
+              "behaviour": "Behavior",
+              "money": "Money discrepancy",
+              "media": "Media or consent",
+              "other": "Other"
+            }
+          },
+          "office": {
+            "student_life": "Referred to Student Life",
+            "advisor_told": "Faculty Advisor told"
+          }
+        },
+        "f20": {
+          "title": "Concern or Complaint",
+          "purpose": "Anyone may use this form. Acknowledged in 3 days, answered in 14 (P17, B10).",
+          "preamble": "You can also speak to any officer, the Faculty Advisor or the Office of Student Life. Harassment, safety and anything involving a child go straight to Student Life. If your concern is about the Vice President, it goes only to the President and the Faculty Advisor; if about the President, only to the Vice President and the Faculty Advisor.",
+          "fields": {
+            "contact": "How to contact you",
+            "about": "Your concern is about",
+            "what": "What happened, and when?",
+            "wanted": "What would you like to happen?",
+            "would_like": "Would you like"
+          },
+          "options": {
+            "about": {
+              "person": "A person",
+              "event": "An event",
+              "money": "Money",
+              "content": "Content or media",
+              "decision": "A decision",
+              "other": "Something else"
+            },
+            "would_like": {
+              "informal": "An informal conversation first",
+              "formal": "A formal process",
+              "just_know": "Just to let us know"
+            }
+          },
+          "office": {
+            "route": "Route"
+          },
+          "officeOptions": {
+            "route": {
+              "informal": "Informal",
+              "conduct_panel": "Conduct Panel",
+              "student_life": "Student Life"
+            }
+          }
+        },
+        "f24": {
+          "title": "Handover Dossier",
+          "purpose": "Started in your first week; signed off with your successor before handover (B11).",
+          "fields": {
+            "role": "Role",
+            "role_paragraph": "1 · The role in one paragraph: what it really involves, the busy weeks, what surprised you",
+            "contacts": "2 · Contacts (with their permission): name, organization, what for, how they like to be contacted",
+            "accounts": "3 · Accounts and access: which accounts, who administers them (never the passwords)",
+            "open_items": "4 · Open items and promises made: what, to whom, by when",
+            "money": "5 · Money: budget position, open claims, commitments",
+            "files": "6 · Where the files are (Drive paths)",
+            "lessons": "7 · Three lessons: what to keep, what to change, what to avoid"
+          }
+        },
+        "f25a": {
+          "title": "Semester Report",
+          "purpose": "Section A of the Semester & Program Report, by the President and the General Secretary. Each program edition reports in section B.",
+          "fields": {
+            "semester": "Semester",
+            "members_registered": "Members registered",
+            "members_voting": "Voting Members",
+            "members_new": "New members",
+            "members_retained": "Members retained",
+            "events": "Events",
+            "attendance": "Attendance",
+            "volunteer_hours": "Volunteer hours",
+            "budget": "Budget (IQD)",
+            "spent": "Spent (IQD)",
+            "balance": "Balance (IQD)",
+            "charity_handed": "Charity handed over (IQD)",
+            "seats_filled": "Seats filled",
+            "seats_total": "Seats in all",
+            "vacancies": "Vacancies",
+            "highlights": "Highlights",
+            "risks": "Risks and asks for next semester"
+          }
+        },
+        "f27": {
+          "title": "Offboarding Checklist",
+          "purpose": "When anyone leaves a role, at handover or mid-term.",
+          "fields": {
+            "role": "Role",
+            "last_day": "Last day",
+            "items": "Checklist",
+            "exit": "Exit conversation: what should the Society keep, change or stop?",
+            "signed_leaving": "Signed off by the leaving role holder",
+            "signed_gs": "Signed off by the General Secretary"
+          },
+          "options": {
+            "items": {
+              "dossier": "Handover dossier (F-24) completed and signed",
+              "files": "Files moved to the Society Drive",
+              "data_deleted": "Personal copies of member data deleted",
+              "groups": "Removed from Council and department groups",
+              "drive": "Drive access removed (within 7 days)",
+              "admin_rights": "Account admin rights moved (two admins remain)",
+              "passwords": "Password manager access removed",
+              "returned": "Keys, cash box, kit and typewriter items returned",
+              "claims": "Open claims settled with the Treasurer",
+              "exit_conversation": "Exit conversation held",
+              "hours": "Hours logged; certificate of service issued",
+              "thanks": "Thank-you post (with permission)",
+              "roster": "Roster updated; successor announced",
+              "invited": "Invited to stay on as a member or alumnus"
+            }
+          }
+        },
+        "f29": {
+          "title": "Program Charter",
+          "purpose": "One page for every greenlit program (B8.3). Reviewed at least once a year.",
+          "fields": {
+            "programme": "Program",
+            "charter_date": "Charter date",
+            "review_date": "Review date",
+            "purpose": "Purpose: what this program is for, in two sentences",
+            "pillars": "Pillars served",
+            "lead": "Lead or chair",
+            "deputy": "Deputy",
+            "reports_to": "Reports to (director)",
+            "team": "Team and roles",
+            "budget": "Budget per edition (IQD)",
+            "frequency": "Frequency",
+            "standing": "Standing program (B8.5)",
+            "key_dates": "Key dates this year",
+            "success": "Success measures: how we will know it worked (numbers where possible)",
+            "independence": "Editorial and creative independence: what the lead decides alone; what needs the director or Council",
+            "documents": "Handbook or key documents"
+          },
+          "options": {
+            "pillars": {
+              "connecting": "Connecting students",
+              "creativity": "Fostering creativity",
+              "culture": "Celebrating culture",
+              "community": "Building a community"
+            }
+          }
+        }
       }
     }
   },
