@@ -151,6 +151,14 @@ export const roles = {
     ],
     spendingLimitIqd: null,
   },
+  guest_editor: {
+    defaultScope: "issue",
+    isCouncil: false,
+    nameAr: "محرر ضيف",
+    nameEn: "Guest Editor",
+    permissions: ["journal.manage"],
+    spendingLimitIqd: null,
+  },
   layout_designer: {
     defaultScope: "issue",
     isCouncil: false,

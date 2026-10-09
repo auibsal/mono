@@ -6,10 +6,12 @@ import { FormHeader } from "@repo/design-system/components/sal/form-header";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Label } from "@repo/design-system/components/ui/label";
 import { Textarea } from "@repo/design-system/components/ui/textarea";
+import { Link } from "@repo/internationalization/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 import { queryKeys, useVerificationRequest } from "@/lib/queries";
+import { Affiliations } from "./profile/affiliations";
 
 /** Shown to accounts on non-AUIB addresses until a verifier approves them. */
 export const PendingVerification = () => {
@@ -61,6 +63,35 @@ export const PendingVerification = () => {
           </Button>
         </SalCard>
       ) : null}
+      <Affiliations />
+    </main>
+  );
+};
+
+/**
+ * For people verified as a partner's members: what they can use in the
+ * Nexus (the Journal calls opened to their partner, their profile and
+ * service). The rest is for Society members.
+ */
+export const PartnerGuest = () => {
+  const t = useTranslations("nexus.partnerGuest");
+  const links = [
+    ["/journal", t("journal")],
+    ["/profile", t("profile")],
+    ["/service", t("service")],
+  ] as const;
+  return (
+    <main className="mx-auto grid w-full max-w-xl gap-6 px-4 py-12" id="main">
+      <FormHeader title={t("title")}>{t("body")}</FormHeader>
+      <ul className="grid gap-2">
+        {links.map(([href, label]) => (
+          <li key={href}>
+            <Link className="underline underline-offset-4" href={href}>
+              {label}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </main>
   );
 };

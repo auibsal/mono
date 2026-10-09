@@ -135,6 +135,8 @@ export const submissionSchema = z
     cover_note: z.string().max(2000).optional(),
     human_authorship_confirmed: z.literal(true),
     language: z.enum(Constants.journal.Enums.language),
+    /** The partner the author submits through (partner pathway). */
+    partner_id: z.uuid().optional(),
     rights_note: z.string().max(2000).optional(),
     source_author: z.string().max(300).optional(),
     source_text: z.string().max(200_000).optional(),
@@ -215,6 +217,60 @@ export const openCalls = async (client: Client, now = new Date()) =>
       .gte("closes_at", now.toISOString())
       .order("closes_at")
   );
+
+/**
+ * The partner pathway: calls the caller may answer through a partner they
+ * are verified with (the partner's memorandum grants Journal submissions).
+ */
+export const myCallPathways = async (client: Client) =>
+  unwrap(await journal(client).rpc("my_call_pathways")) ?? [];
+
+/** Partners named on a published call (listed partners only). */
+export const callPartnerNames = async (client: Client, callId: string) =>
+  unwrap(
+    await journal(client).rpc("call_partner_names", { call_id: callId })
+  ) ?? [];
+
+/** Partners a Journal manager may open a call to. */
+export const submissionPartners = async (client: Client) =>
+  unwrap(await journal(client).rpc("submission_partners")) ?? [];
+
+/** The partners a call is open to (Journal managers). */
+export const callPartnerIds = async (client: Client, callId: string) =>
+  (
+    unwrap(
+      await journal(client)
+        .from("call_partners")
+        .select("partner_id")
+        .eq("call_id", callId)
+    ) ?? []
+  ).map((row) => row.partner_id);
+
+export const setCallPartners = async (
+  client: Client,
+  callId: string,
+  partnerIds: readonly string[]
+) => {
+  const current = await callPartnerIds(client, callId);
+  const add = partnerIds.filter((id) => !current.includes(id));
+  const remove = current.filter((id) => !partnerIds.includes(id));
+  if (add.length > 0) {
+    unwrap(
+      await journal(client)
+        .from("call_partners")
+        .insert(add.map((partner_id) => ({ call_id: callId, partner_id })))
+    );
+  }
+  if (remove.length > 0) {
+    unwrap(
+      await journal(client)
+        .from("call_partners")
+        .delete()
+        .eq("call_id", callId)
+        .in("partner_id", remove)
+    );
+  }
+};
 
 /** Published calls that have not opened yet: announced ahead of time. */
 export const upcomingCalls = async (client: Client, now = new Date()) =>

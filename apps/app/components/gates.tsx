@@ -2,10 +2,12 @@
 
 import { useAuth } from "@repo/auth/provider";
 import { usePathname, useRouter } from "@repo/internationalization/navigation";
+import { partners } from "@repo/sal-data";
+import { useQuery } from "@tanstack/react-query";
 import { type ReactNode, useEffect } from "react";
 import { safeNextPath } from "@/lib/navigation";
 import { useMemberStatus, useProfile } from "@/lib/queries";
-import { PendingVerification } from "./pending-verification";
+import { PartnerGuest, PendingVerification } from "./pending-verification";
 import { ErrorState, FullPageSpinner } from "./states";
 
 interface GateProps {
@@ -35,18 +37,49 @@ export const RequireAuth = ({ children }: GateProps) => {
 };
 
 /**
- * Members only: unverified accounts see the verification notice, and members
- * with a pledge to (re-)accept or setup to finish go to /setup first.
+ * Where people verified as a partner's members (not Society members) may
+ * go: the Journal (calls opened to their partner), their profile, their
+ * service and certificates. Row Level Security still decides every row.
+ */
+const GUEST_PATHS = ["/journal", "/profile", "/service", "/certificate"];
+
+export const isGuestPath = (pathname: string) =>
+  GUEST_PATHS.some(
+    (path) => pathname === path || pathname.startsWith(`${path}/`)
+  );
+
+/** True when the signed-in person is verified as a partner's member. */
+const usePartnerGuest = (enabled: boolean) => {
+  const { supabase, user } = useAuth();
+  return useQuery({
+    enabled,
+    queryFn: async () =>
+      (await partners.myAffiliations(supabase)).some(
+        (a) => a.status === "verified"
+      ),
+    queryKey: ["affiliations", "guest", user?.id ?? ""],
+  });
+};
+
+/**
+ * Members only: unverified accounts see the verification notice (where they
+ * can also say they belong to a partner), and members with a pledge to
+ * (re-)accept or setup to finish go to /setup first. People verified as a
+ * partner's members get the guest pages (`isGuestPath`), after the same
+ * pledges and setup.
  */
 export const RequireMember = ({ children }: GateProps) => {
   const status = useMemberStatus();
   const profile = useProfile();
   const router = useRouter();
   const pathname = usePathname();
+  const unverified = status.isSuccess && !status.data?.verified;
+  const guest = usePartnerGuest(unverified);
+  const isGuest = unverified && guest.data === true;
 
   const needsSetup =
-    status.data?.verified &&
-    (status.data.pending_pledges.length > 0 ||
+    (status.data?.verified || isGuest) &&
+    ((status.data?.pending_pledges.length ?? 0) > 0 ||
       !profile.data?.setup_completed_at);
 
   useEffect(() => {
@@ -58,15 +91,25 @@ export const RequireMember = ({ children }: GateProps) => {
     }
   }, [needsSetup, pathname, profile.data, router]);
 
-  if (status.isError || profile.isError) {
+  if (status.isError || profile.isError || guest.isError) {
     return (
       <ErrorState
-        onRetry={() => Promise.all([status.refetch(), profile.refetch()])}
+        onRetry={() =>
+          Promise.all([status.refetch(), profile.refetch(), guest.refetch()])
+        }
       />
     );
   }
-  if (status.isPending || profile.isPending || needsSetup) {
+  if (
+    status.isPending ||
+    profile.isPending ||
+    needsSetup ||
+    (unverified && guest.isPending)
+  ) {
     return <FullPageSpinner />;
+  }
+  if (isGuest) {
+    return isGuestPath(pathname) ? children : <PartnerGuest />;
   }
   if (!status.data?.verified) {
     return <PendingVerification />;
