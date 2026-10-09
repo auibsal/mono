@@ -1,53 +1,128 @@
-import { z } from "zod";
-import registry from "./documents.json" with { type: "json" };
+import { type Client, unwrap } from "./client";
+import { sanitizeRichText } from "./sanitize";
 
 /**
- * The public document registry: one entry per file in docs-source/. A
- * document page shows the status recorded here and nothing else, so a draft
- * is never presented as adopted. When the General Assembly ratifies a
- * document, change its status (and version) here and replace the PDF.
+ * The Society's documents (governance.society_documents): public ones on
+ * auibsal.org/documents, internal ones in the Nexus. Each page shows the
+ * status recorded here and nothing else, so a draft is never presented as
+ * adopted. Governance managers edit the text and the status in the Nexus.
  */
 export const documentStatuses = ["draft", "adopted", "superseded"] as const;
 export type DocumentStatus = (typeof documentStatuses)[number];
 
-const isoDate = z.iso.date();
+export const documentAudiences = ["public", "internal"] as const;
+export type DocumentAudience = (typeof documentAudiences)[number];
 
-export const documentSchema = z.object({
-  /** The date of adoption, once recorded (never inferred from the cover). */
-  adopted: isoDate.nullable(),
-  code: z.string().regex(/^SAL-[A-Z]{3}-\d{2}$/),
-  contents: z.array(z.string().min(1)).min(1),
-  /** The date on the cover, if any. */
-  dated: isoDate.nullable(),
-  pages: z.number().int().positive(),
-  /** Planned ratification (Charter Day), while a draft. */
-  ratification: isoDate.nullable(),
-  slug: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/),
-  /** File name in docs-source/. */
-  source: z.string().endsWith(".pdf"),
-  status: z.enum(documentStatuses),
-  /** The cover's subtitle, verbatim (English: the documents are in English). */
-  summary: z.string().min(1),
-  title: z.object({ ar: z.string().min(1), en: z.string().min(1) }),
-  /** The cover's version label, e.g. "Draft 1". */
-  version: z.string().nullable(),
-});
+export interface SalDocument {
+  adopted_on: string | null;
+  audience: string;
+  body_ar?: string | null;
+  body_en?: string;
+  code: string;
+  dated: string | null;
+  id: string;
+  ratification: string | null;
+  slug: string;
+  sort: number;
+  status: string;
+  summary_ar: string | null;
+  summary_en: string | null;
+  title_ar: string | null;
+  title_en: string;
+  updated_at: string;
+  version: string | null;
+}
 
-export type SalDocument = z.infer<typeof documentSchema>;
+const LISTING =
+  "id, slug, code, title_en, title_ar, summary_en, summary_ar, audience, status, version, dated, ratification, adopted_on, sort, updated_at";
 
-export const documents: readonly SalDocument[] = z
-  .array(documentSchema)
-  .parse(registry);
+/** The public documents, without their text (for listings and the sitemap). */
+export const publicDocuments = async (client: Client) =>
+  (unwrap(
+    await client
+      .schema("governance")
+      .from("society_documents")
+      .select(LISTING)
+      .eq("audience", "public")
+      .order("sort")
+  ) ?? []) as SalDocument[];
 
-export const documentBySlug = (slug: string) =>
-  documents.find((d) => d.slug === slug) ?? null;
+/** One document with its text, if the reader may see it. */
+export const documentBySlug = async (client: Client, slug: string) =>
+  (unwrap(
+    await client
+      .schema("governance")
+      .from("society_documents")
+      .select("*")
+      .eq("slug", slug)
+      .maybeSingle()
+  ) ?? null) as SalDocument | null;
 
-/** Where the web build publishes each PDF (apps/web/public/documents). */
-export const documentPdfPath = (doc: Pick<SalDocument, "slug">) =>
-  `/documents/${doc.slug}.pdf`;
+/** Every document the reader may see (the Nexus). */
+export const readableDocuments = async (client: Client) =>
+  (unwrap(
+    await client
+      .schema("governance")
+      .from("society_documents")
+      .select(LISTING)
+      .order("sort")
+  ) ?? []) as SalDocument[];
 
-/** The title in the page's language (English for any other locale). */
+/** The title in the page's language (English when there is no Arabic). */
 export const documentTitle = (
-  doc: Pick<SalDocument, "title">,
+  doc: Pick<SalDocument, "title_ar" | "title_en">,
   locale: string
-) => (locale === "ar" ? doc.title.ar : doc.title.en);
+) => (locale === "ar" && doc.title_ar ? doc.title_ar : doc.title_en);
+
+/** The text in the page's language, and whether it fell back to English. */
+export const documentBody = (
+  doc: Pick<SalDocument, "body_ar" | "body_en">,
+  locale: string
+) => {
+  const arabic = locale === "ar" && doc.body_ar?.trim() ? doc.body_ar : null;
+  return { english: !arabic, html: arabic ?? doc.body_en ?? "" };
+};
+
+const HEADING = /<h2>([\s\S]*?)<\/h2>/g;
+const TAGS = /<[^>]+>/g;
+const ENTITIES: Record<string, string> = {
+  "&#39;": "'",
+  "&#x27;": "'",
+  "&amp;": "&",
+  "&gt;": ">",
+  "&lt;": "<",
+  "&quot;": '"',
+};
+const ENTITY = /&(?:#x27|#39|amp|gt|lt|quot);/g;
+
+const plain = (html: string) =>
+  html
+    .replace(TAGS, "")
+    .replace(ENTITY, (e) => ENTITIES[e] ?? e)
+    .trim();
+
+const anchor = (text: string, index: number) =>
+  `${index + 1}-${text
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 60)}`;
+
+/**
+ * Sanitized document HTML with an id on every section heading, and the
+ * table of contents built from those headings.
+ */
+export const documentSections = (html: string) => {
+  const safe = sanitizeRichText(html);
+  const contents: { id: string; title: string }[] = [];
+  let index = 0;
+  const withIds = safe.replace(HEADING, (_match, inner: string) => {
+    const title = plain(inner);
+    const id = anchor(title, index);
+    index += 1;
+    contents.push({ id, title });
+    return `<h2 id="${id}">${inner}</h2>`;
+  });
+  return { contents, html: withIds };
+};

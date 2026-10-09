@@ -2477,6 +2477,72 @@ export type Database = {
           },
         ];
       };
+      society_documents: {
+        Row: {
+          adopted_on: string | null;
+          audience: string;
+          body_ar: string | null;
+          body_en: string;
+          code: string;
+          created_at: string;
+          dated: string | null;
+          id: string;
+          ratification: string | null;
+          slug: string;
+          sort: number;
+          status: string;
+          summary_ar: string | null;
+          summary_en: string | null;
+          title_ar: string | null;
+          title_en: string;
+          updated_at: string;
+          updated_by: string | null;
+          version: string | null;
+        };
+        Insert: {
+          adopted_on?: string | null;
+          audience?: string;
+          body_ar?: string | null;
+          body_en?: string;
+          code: string;
+          created_at?: string;
+          dated?: string | null;
+          id?: string;
+          ratification?: string | null;
+          slug: string;
+          sort?: number;
+          status?: string;
+          summary_ar?: string | null;
+          summary_en?: string | null;
+          title_ar?: string | null;
+          title_en: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          version?: string | null;
+        };
+        Update: {
+          adopted_on?: string | null;
+          audience?: string;
+          body_ar?: string | null;
+          body_en?: string;
+          code?: string;
+          created_at?: string;
+          dated?: string | null;
+          id?: string;
+          ratification?: string | null;
+          slug?: string;
+          sort?: number;
+          status?: string;
+          summary_ar?: string | null;
+          summary_en?: string | null;
+          title_ar?: string | null;
+          title_en?: string;
+          updated_at?: string;
+          updated_by?: string | null;
+          version?: string | null;
+        };
+        Relationships: [];
+      };
       spending_approvals: {
         Row: {
           amount_iqd: number;

@@ -73,6 +73,7 @@ const LOGGED_TABLES = [
   "governance.partner_agreements",
   "governance.partners",
   "governance.resolutions",
+  "governance.society_documents",
   "governance.spending_approvals",
   "journal.agreements",
   "journal.call_partners",
