@@ -24,7 +24,7 @@ export const signInWithPassword = async (page: Page, email: string) => {
   // AUIB addresses default to a sign-in link; these tests use the password.
   await page.getByRole("button", { name: "Use my password instead" }).click();
   await page.getByLabel("Password").fill(PASSWORD);
-  await page.getByRole("button", { name: "Sign in" }).click();
+  await page.getByRole("button", { exact: true, name: "Sign in" }).click();
   await expect(page).toHaveURL(new RegExp(`${urls.app}/en/?$`));
 };
 
