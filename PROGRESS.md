@@ -313,6 +313,13 @@ These stop parts of the work. Everything else continues around them.
   of other modules are linked from Account → Forms. The standard letters
   (L-01 to L-10, F-05) are fill-in-the-brackets templates in Admin →
   Forms and letters, quoted verbatim.
+- Role rules (Oct 10, 2026): `access.assign_role` refuses a second
+  Council seat (Constitution 6.6; so never President and Treasurer, B9.8),
+  any other role for the Faculty Advisor (9.1), the same role twice, and a
+  third role or second leadership role (B5.5) unless an adopted Council
+  resolution grants a founding-term exception. Existing assignments are
+  left as they are; the public Council roster lists each person once per
+  office.
 - Reference data after the first migration: later migrations may add
   permissions, roles and grants with plain inserts; `@repo/rbac`'s mirror
   test reads every migration in order.

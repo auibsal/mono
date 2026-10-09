@@ -68,6 +68,7 @@ export type Database = {
           assigned_by: string | null;
           created_at: string;
           ends_at: string | null;
+          exception_resolution_id: string | null;
           id: string;
           note: string | null;
           role: string;
@@ -82,6 +83,7 @@ export type Database = {
           assigned_by?: string | null;
           created_at?: string;
           ends_at?: string | null;
+          exception_resolution_id?: string | null;
           id?: string;
           note?: string | null;
           role: string;
@@ -96,6 +98,7 @@ export type Database = {
           assigned_by?: string | null;
           created_at?: string;
           ends_at?: string | null;
+          exception_resolution_id?: string | null;
           id?: string;
           note?: string | null;
           role?: string;
@@ -187,6 +190,7 @@ export type Database = {
       assign_role: {
         Args: {
           ends_at?: string;
+          exception_resolution?: string;
           note?: string;
           role_key: string;
           scope_id?: string;

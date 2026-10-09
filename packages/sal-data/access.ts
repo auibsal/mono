@@ -6,6 +6,8 @@ import { type Client, unwrap } from "./client";
 export const roleAssignmentSchema = z
   .object({
     ends_at: z.iso.datetime({ offset: true }).nullable(),
+    /** An adopted Council resolution agreeing to a B5.5 exception. */
+    exception_resolution: z.uuid().nullable().optional(),
     note: z.string().trim().max(500).optional(),
     role_key: z.string().regex(/^[a-z_]+$/),
     scope_id: z.uuid().nullable(),
@@ -26,6 +28,27 @@ export const roleAssignmentSchema = z
 
 export type RoleAssignmentInput = z.infer<typeof roleAssignmentSchema>;
 
+/**
+ * The rules access.assign_role enforces (Constitution 6.6 and 9.1, Bylaws
+ * B5.5 and B9.8), as the reason codes it raises.
+ */
+export const roleRules = [
+  "already_holds_role",
+  "one_council_seat",
+  "advisor_holds_no_other_role",
+  "two_roles_at_most",
+  "one_leadership_role",
+  "exception_needs_adopted_resolution",
+] as const;
+
+export type RoleRule = (typeof roleRules)[number];
+
+/** The rule an assignment broke, from the database error, if any. */
+export const brokenRoleRule = (error: unknown): RoleRule | null => {
+  const message = error instanceof Error ? error.message : "";
+  return roleRules.find((rule) => message === rule) ?? null;
+};
+
 export const assignRole = async (
   client: Client,
   input: RoleAssignmentInput
@@ -34,6 +57,7 @@ export const assignRole = async (
   return unwrap(
     await client.schema("access").rpc("assign_role", {
       ends_at: a.ends_at ?? undefined,
+      exception_resolution: a.exception_resolution ?? undefined,
       note: a.note || undefined,
       role_key: a.role_key,
       scope_id: a.scope_id ?? undefined,

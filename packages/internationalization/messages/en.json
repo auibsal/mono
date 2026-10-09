@@ -734,7 +734,18 @@
         "titleLabel": "Title shown on the roster (optional)",
         "assignButton": "Assign role",
         "assignConfirm": "Give {name} the role {role}? It grants that role's permissions from the start date.",
-        "choose": "Choose…"
+        "choose": "Choose…",
+        "exception": "Founding-term exception (B5.5)",
+        "exceptionHint": "Only when the Council has agreed that this person may hold more than two roles, or a second leadership role, in the founding term. Choose the adopted resolution.",
+        "noException": "No exception",
+        "rules": {
+          "already_holds_role": "They already hold this role for that period.",
+          "one_council_seat": "They already hold a Council seat. No person holds more than one (Constitution 6.6), so the President is never also the Treasurer (B9.8). End the other seat first.",
+          "advisor_holds_no_other_role": "The Faculty Advisor is a member of faculty or staff (Constitution 9.1) and holds no other Society role.",
+          "two_roles_at_most": "They already hold two roles. Nobody holds more than two at once (B5.5) unless the Council agreed a founding-term exception.",
+          "one_leadership_role": "They already hold a leadership role (officer, director or program chair). Only one at a time (B5.5) unless the Council agreed a founding-term exception.",
+          "exception_needs_adopted_resolution": "The exception needs a Council resolution that has been adopted."
+        }
       },
       "verification": {
         "title": "Verification queue",
