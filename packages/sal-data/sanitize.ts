@@ -9,6 +9,8 @@ const options: sanitizeHtml.IOptions = {
   allowedAttributes: {
     "*": ["lang", "dir"],
     a: ["href", "title", "lang", "dir", "rel"],
+    td: ["colspan", "rowspan", "lang", "dir"],
+    th: ["colspan", "rowspan", "scope", "lang", "dir"],
   },
   allowedSchemes: ["https", "mailto"],
   allowedTags: [
@@ -36,6 +38,13 @@ const options: sanitizeHtml.IOptions = {
     "figcaption",
     "pre",
     "code",
+    // Society documents (Constitution, Bylaws, handbooks).
+    "table",
+    "thead",
+    "tbody",
+    "tr",
+    "th",
+    "td",
   ],
   disallowedTagsMode: "discard",
   transformTags: {

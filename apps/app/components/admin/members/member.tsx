@@ -255,6 +255,7 @@ const RolesSection = ({ name, userId }: { name: string; userId: string }) => {
 
   const empty = {
     ends_at: null as string | null,
+    exception_resolution: "",
     note: "",
     role_key: "",
     scope_id: "",
@@ -270,6 +271,7 @@ const RolesSection = ({ name, userId }: { name: string; userId: string }) => {
     mutationFn: () =>
       access.assignRole(supabase, {
         ends_at: form.ends_at,
+        exception_resolution: form.exception_resolution || null,
         note: form.note,
         role_key: form.role_key,
         scope_id: form.scope_type === "global" ? null : form.scope_id || null,
@@ -283,6 +285,20 @@ const RolesSection = ({ name, userId }: { name: string; userId: string }) => {
       setForm(empty);
       await invalidate();
     },
+  });
+  const brokenRule = access.brokenRoleRule(assign.error);
+  const resolutions = useQuery({
+    queryFn: async () =>
+      unwrap(
+        await supabase
+          .schema("governance")
+          .from("resolutions")
+          .select("id, code, title_en, title_ar")
+          .eq("status", "adopted")
+          .eq("body", "council")
+          .order("adopted_on", { ascending: false })
+      ) ?? [],
+    queryKey: ["admin", "council-resolutions"],
   });
   const end = useMutation({
     mutationFn: (assignmentId: string) =>
@@ -483,6 +499,27 @@ const RolesSection = ({ name, userId }: { name: string; userId: string }) => {
               />
             )}
           </Field>
+          <Field hint={t("exceptionHint")} label={t("exception")}>
+            {(id) => (
+              <SelectInput
+                id={id}
+                onChange={(e) =>
+                  setForm((f) => ({
+                    ...f,
+                    exception_resolution: e.target.value,
+                  }))
+                }
+                value={form.exception_resolution}
+              >
+                <option value="">{t("noException")}</option>
+                {(resolutions.data ?? []).map((r) => (
+                  <option key={r.id} value={r.id}>
+                    {r.code} · {localized(r, "title", locale)}
+                  </option>
+                ))}
+              </SelectInput>
+            )}
+          </Field>
           <div>
             <ConfirmAction
               confirmLabel={t("assignButton")}
@@ -497,7 +534,13 @@ const RolesSection = ({ name, userId }: { name: string; userId: string }) => {
               {t("assignButton")}
             </ConfirmAction>
           </div>
-          <ErrorLine error={assign.error ?? end.error} />
+          {brokenRule ? (
+            <p className="text-sm text-title" role="alert">
+              {t(`rules.${brokenRule}`)}
+            </p>
+          ) : (
+            <ErrorLine error={assign.error ?? end.error} />
+          )}
         </form>
       ) : null}
     </section>

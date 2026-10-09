@@ -144,7 +144,8 @@
       "offers": "Member offers",
       "declarations": "Declarations",
       "service": "My service",
-      "forms": "Forms"
+      "forms": "Forms",
+      "documents": "Society documents"
     },
     "errors": {
       "loadFailed": "We couldn't load this. Check your connection and try again.",
@@ -590,7 +591,8 @@
         "partners": "Partners",
         "recognition": "Recognition",
         "productions": "Productions",
-        "forms": "Forms and letters"
+        "forms": "Forms and letters",
+        "documents": "Documents"
       },
       "noAccess": "Your roles don't include this section. Ask the President or the General Secretary if you need it.",
       "kit": {
@@ -734,7 +736,18 @@
         "titleLabel": "Title shown on the roster (optional)",
         "assignButton": "Assign role",
         "assignConfirm": "Give {name} the role {role}? It grants that role's permissions from the start date.",
-        "choose": "Choose…"
+        "choose": "Choose…",
+        "exception": "Founding-term exception (B5.5)",
+        "exceptionHint": "Only when the Council has agreed that this person may hold more than two roles, or a second leadership role, in the founding term. Choose the adopted resolution.",
+        "noException": "No exception",
+        "rules": {
+          "already_holds_role": "They already hold this role for that period.",
+          "one_council_seat": "They already hold a Council seat. No person holds more than one (Constitution 6.6), so the President is never also the Treasurer (B9.8). End the other seat first.",
+          "advisor_holds_no_other_role": "The Faculty Advisor is a member of faculty or staff (Constitution 9.1) and holds no other Society role.",
+          "two_roles_at_most": "They already hold two roles. Nobody holds more than two at once (B5.5) unless the Council agreed a founding-term exception.",
+          "one_leadership_role": "They already hold a leadership role (officer, director or program chair). Only one at a time (B5.5) unless the Council agreed a founding-term exception.",
+          "exception_needs_adopted_resolution": "The exception needs a Council resolution that has been adopted."
+        }
       },
       "verification": {
         "title": "Verification queue",
@@ -2116,6 +2129,51 @@
             "l10": "Notice of Election"
           }
         }
+      },
+      "documents": {
+        "title": "Society documents",
+        "lede": "The text of every foundational document, edited here. Public documents appear on auibsal.org/documents within a minute of saving; internal ones are read only in the Nexus.",
+        "new": "New document",
+        "closeNew": "Close",
+        "newTitle": "Add a document",
+        "empty": "No documents yet.",
+        "columns": {
+          "title": "Title",
+          "code": "Code",
+          "audience": "Who reads it",
+          "status": "Status",
+          "updated": "Updated"
+        },
+        "audiences": {
+          "public": "Public (auibsal.org and the Nexus)",
+          "internal": "Internal (the Nexus only)"
+        },
+        "statuses": {
+          "draft": "Draft",
+          "adopted": "Adopted",
+          "superseded": "Superseded"
+        },
+        "fields": {
+          "title": "Title",
+          "summary": "Summary (the cover’s subtitle)",
+          "code": "Code",
+          "codeHint": "For example SAL-GOV-01.",
+          "slug": "Web address",
+          "slugHint": "Lowercase letters, numbers and hyphens.",
+          "audience": "Who reads it",
+          "audienceHint": "Internal documents never appear on auibsal.org.",
+          "status": "Status",
+          "version": "Version",
+          "dated": "Dated",
+          "ratification": "Planned ratification",
+          "adopted": "Adopted on",
+          "adoptedHint": "Only once the Assembly or Council has adopted it.",
+          "bodyEn": "Text (English)",
+          "bodyAr": "Text (Arabic)"
+        },
+        "adoptedNoDate": "An adopted document should record the date it was adopted.",
+        "publicNote": "Saving publishes this text on auibsal.org/documents. Its status is shown on the page, so a draft is never presented as adopted.",
+        "internalNote": "Internal: read only in the Nexus by officers who read the internal library."
       }
     },
     "editor": {
@@ -2135,7 +2193,14 @@
       "connecting": "Connecting to the shared draft…",
       "alsoEditing": "Also here: {names}",
       "liveNote": "Changes appear for everyone editing; Save writes them to the record.",
-      "offline": "Co-editing is off; you are editing alone."
+      "offline": "Co-editing is off; you are editing alone.",
+      "minorHeading": "Minor heading",
+      "table": "Table",
+      "addRow": "Add row",
+      "addColumn": "Add column",
+      "deleteRow": "Delete row",
+      "deleteColumn": "Delete column",
+      "deleteTable": "Delete table"
     },
     "oauth": {
       "title": "Sign in with SAL",
@@ -2904,6 +2969,29 @@
           }
         }
       }
+    },
+    "documents": {
+      "title": "Society documents",
+      "lede": "The Constitution, the Bylaws, the policies and handbooks. Officers also find the internal documents here.",
+      "empty": "No documents yet.",
+      "home": "Go to Home",
+      "groups": {
+        "public": "Public documents",
+        "internal": "Internal documents"
+      },
+      "statuses": {
+        "draft": "Draft",
+        "adopted": "Adopted",
+        "superseded": "Superseded"
+      },
+      "updated": "Updated {date}",
+      "back": "All documents",
+      "print": "Print",
+      "notFound": "This document isn’t available. It may not exist, or it is internal.",
+      "contents": "Contents",
+      "adoptedOn": "Adopted on {date}",
+      "englishOnly": "This document is in English; the Arabic version is being prepared.",
+      "noText": "The text of this document has not been entered yet."
     }
   },
   "web": {
@@ -2944,7 +3032,7 @@
     "documents": {
       "title": "Documents",
       "lede": "The Society's founding documents: the Constitution, the rules that follow from it, and the plans and handbooks members use. Each page says whether the text is a draft or adopted.",
-      "englishOnly": "The documents are in English.",
+      "englishOnly": "The documents are in English; the Arabic versions are being prepared.",
       "all": "All documents",
       "statusLabel": "Status of this document",
       "statuses": {
@@ -2960,9 +3048,9 @@
         "superseded": "Superseded by a later version. Kept for the record; it no longer applies."
       },
       "dated": "Dated {date}",
-      "read": "Read the PDF ({pages} pages)",
-      "download": "Download",
-      "contents": "Contents"
+      "contents": "Contents",
+      "empty": "The documents will appear here.",
+      "noText": "The text of this document has not been entered yet."
     },
     "events": {
       "title": "Events",

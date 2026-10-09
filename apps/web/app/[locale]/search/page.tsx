@@ -3,7 +3,7 @@ import { Input } from "@repo/design-system/components/ui/input";
 import type { Locale } from "@repo/internationalization";
 import { formatLongDate } from "@repo/internationalization/format";
 import { Link } from "@repo/internationalization/navigation";
-import { content, documents, localized } from "@repo/sal-data";
+import { content, documents, localized, toPlainText } from "@repo/sal-data";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/section";
@@ -44,23 +44,39 @@ const hrefFor = (kind: Kind, slug: string) => {
   return slug;
 };
 
-/** The registry's own text: titles, the cover subtitle and the contents. */
-const searchDocuments = (query: string) => {
+/** Titles, the cover subtitle and the text of the public documents. */
+const searchDocuments = async (query: string) => {
   const needle = query.toLowerCase();
-  return documents.documents
+  const list = await readPublished(
+    ["documents"],
+    async (c) =>
+      (
+        await Promise.all(
+          (
+            await documents.publicDocuments(c)
+          ).map((doc) => documents.documentBySlug(c, doc.slug))
+        )
+      ).filter((doc): doc is documents.SalDocument => Boolean(doc)),
+    [] as documents.SalDocument[]
+  );
+  return list
     .filter((doc) =>
-      [doc.code, doc.title.en, doc.title.ar, doc.summary, ...doc.contents].some(
-        (text) => text.toLowerCase().includes(needle)
-      )
+      [
+        doc.code,
+        doc.title_en,
+        doc.title_ar ?? "",
+        doc.summary_en ?? "",
+        toPlainText(doc.body_en),
+      ].some((text) => text.toLowerCase().includes(needle))
     )
     .map((doc) => ({
       id: doc.code,
       kind: "document" as const,
       occurred_at: null,
       slug: `/documents/${doc.slug}`,
-      snippet: doc.summary,
-      title_ar: doc.title.ar,
-      title_en: doc.title.en,
+      snippet: doc.summary_en ?? "",
+      title_ar: doc.title_ar ?? doc.title_en,
+      title_en: doc.title_en,
     }));
 };
 
@@ -78,7 +94,7 @@ const SearchPage = async ({ params, searchParams }: SearchProps) => {
       )
     : [];
   const results = [
-    ...(long ? searchDocuments(query) : []),
+    ...(long ? await searchDocuments(query) : []),
     ...(found ?? []).filter((r) => r.kind !== "document"),
   ];
 

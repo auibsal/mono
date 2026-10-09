@@ -62,6 +62,7 @@ export const adminModules = [
       "spending.countersign",
     ],
   },
+  { key: "documents", permissions: ["governance.manage"] },
   {
     key: "forms",
     permissions: [

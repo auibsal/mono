@@ -313,6 +313,19 @@ These stop parts of the work. Everything else continues around them.
   of other modules are linked from Account → Forms. The standard letters
   (L-01 to L-10, F-05) are fill-in-the-brackets templates in Admin →
   Forms and letters, quoted verbatim.
+- Documents (Oct 10, 2026): the foundational documents are text in
+  `governance.society_documents`, converted word for word from the PDFs in
+  docs-source/. Public ones render on auibsal.org/documents (cached under
+  the `documents` tag, refreshed on save); internal ones exist only in the
+  Nexus. The PDFs are no longer published. Arabic text that the PDFs could
+  not give back is TODO(content).
+- Role rules (Oct 10, 2026): `access.assign_role` refuses a second
+  Council seat (Constitution 6.6; so never President and Treasurer, B9.8),
+  any other role for the Faculty Advisor (9.1), the same role twice, and a
+  third role or second leadership role (B5.5) unless an adopted Council
+  resolution grants a founding-term exception. Existing assignments are
+  left as they are; the public Council roster lists each person once per
+  office.
 - Reference data after the first migration: later migrations may add
   permissions, roles and grants with plain inserts; `@repo/rbac`'s mirror
   test reads every migration in order.
@@ -424,7 +437,7 @@ These stop parts of the work. Everything else continues around them.
 ### Public site (§6)
 - [x] Layout (skip link, header, footer, language switch), home (events, the Journal, Warmth Meter, calls, join band), 404
 - [x] Revalidation route (cache tags), sitemap (existing pages only, hreflang), robots
-- [x] Documents: registry (`packages/sal-data/documents.json`, one entry per docs-source PDF, status shown on every page; all six are Draft 1 for ratification on Charter Day), index and per-document pages with contents, PDFs published at build (`apps/web/scripts/copy-documents.mjs`). The documents are English-only; `/ar` says so.
+- [x] Documents as text (`governance.society_documents`, migration `20261010000100`): the six public documents are pages on auibsal.org/documents with a table of contents and their status; internal ones (Founding Proposal, Operations Playbook, Templates & Forms, Printables) are read in the Nexus (Account → Society documents) by officers who read the internal library; governance managers edit every document in Admin → Documents (tables included). No PDFs are published.
 - [x] Events: upcoming and past lists, detail (canceled notice, sanitized body, image, RSVP in the Nexus, add-to-calendar .ics), calendar subscription (webcal)
 - [x] Journal: hub (open calls → submit in the Nexus, issues, latest), issue, piece and contributor pages; members-only text stays in the Nexus (`/journal/piece?slug=`)
 - [x] About (Constitution preamble, motto, mission and "At a Glance", marked as quoted from the draft; Handbook pillars), Programs (Handbook summaries, migration `20261006000000`), Join (Handbook steps and membership table; the Arabic is the Handbook's own welcome page where it exists)
@@ -500,6 +513,8 @@ Covered by automated tests so far:
 - The Issue 1 call's theme and eligibility text, if any (open theme until
   then), and the Journal Submission Guidelines it should link to.
 
+- TODO(content): the text of the internal documents (Founding Proposal SAL-PRP-01, Operations Playbook SAL-OPS-01, Templates & Forms SAL-OPS-02, Printables SAL-PRT-01): paste it in Admin → Documents. It stays out of this public repository.
+- TODO(content): the Arabic summary of the Constitution and the Arabic welcome page of the Member Handbook (the PDFs' Arabic text layer could not be recovered); enter them as each document's Arabic text.
 - TODO(content): Arabic versions of the standard letters (L-01 to L-10,
   F-05); the Templates & Forms has them in English only.
 - The Media Release (F-17) is to be reviewed by Student Life before first
@@ -525,7 +540,7 @@ Covered by automated tests so far:
 - `charity.campaigns.unit_label_ar` default «أطفال كُسوا».
 - `core.semesters` names in pgTAP fixtures are test-only (no review needed).
 - The transliteration «النِّكسَس» for "the Nexus".
-- Arabic document titles in `packages/sal-data/documents.json` (except «دليل السياسات»).
+- Arabic document titles in `governance.society_documents` (migration `20261010000100`, except «دليل السياسات»), the internal documents' Arabic titles, and `nexus.documents.*` / `nexus.admin.documents.*`.
 - `core.programmes.summary_ar` (migration `20261006000000`) and «ليلة المناظرة» for Motion Night (was «ليلة الصورة المتحركة», which meant a moving-image night).
 - `web.about` Arabic (translated from the Constitution and Handbook) and the parts of `web.join` that are not on the Handbook's Arabic welcome page.
 - The Arabic of Policy Manual P10.1 on the setup page (translated for the

@@ -2,6 +2,7 @@ import { project } from "@repo/config";
 import { locales } from "@repo/internationalization";
 import { documents } from "@repo/sal-data";
 import type { MetadataRoute } from "next";
+import { readPublished } from "@/lib/supabase";
 
 /**
  * Only pages that exist, each with its Arabic/English alternates. Pages are
@@ -23,7 +24,6 @@ const staticPaths = [
   "/documents",
   "/partners",
   "/productions",
-  ...documents.documents.map((doc) => `/documents/${doc.slug}`),
 ];
 
 const localized = (path: string): MetadataRoute.Sitemap => {
@@ -41,6 +41,16 @@ const localized = (path: string): MetadataRoute.Sitemap => {
   }));
 };
 
-const sitemap = (): MetadataRoute.Sitemap => staticPaths.flatMap(localized);
+const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
+  const docs = await readPublished(
+    ["documents"],
+    (c) => documents.publicDocuments(c),
+    []
+  );
+  return [
+    ...staticPaths,
+    ...docs.map((doc) => `/documents/${doc.slug}`),
+  ].flatMap(localized);
+};
 
 export default sitemap;

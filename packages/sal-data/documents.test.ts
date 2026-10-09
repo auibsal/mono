@@ -1,38 +1,45 @@
-import { readdirSync } from "node:fs";
-import { join } from "node:path";
 import { describe, expect, test } from "vitest";
-import { documentBySlug, documentPdfPath, documents } from "./documents";
+import { documentBody, documentSections, documentTitle } from "./documents";
 
-const sourceDir = join(import.meta.dirname, "..", "..", "docs-source");
-
-describe("document registry", () => {
-  test("every public document has exactly one entry, and every entry a file", () => {
-    const files = readdirSync(sourceDir)
-      .filter((f) => f.endsWith(".pdf"))
-      .sort();
-    expect(documents.map((d) => d.source).sort()).toEqual(files);
+describe("documents", () => {
+  test("titles and text fall back to English", () => {
+    const doc = {
+      body_ar: null,
+      body_en: "<p>Text</p>",
+      title_ar: null,
+      title_en: "The Constitution",
+    };
+    expect(documentTitle(doc, "ar")).toBe("The Constitution");
+    expect(documentTitle({ ...doc, title_ar: "الدستور" }, "ar")).toBe(
+      "الدستور"
+    );
+    expect(documentBody(doc, "ar")).toEqual({
+      english: true,
+      html: "<p>Text</p>",
+    });
+    expect(documentBody({ ...doc, body_ar: "<p>نص</p>" }, "ar")).toEqual({
+      english: false,
+      html: "<p>نص</p>",
+    });
   });
 
-  test("codes and slugs are unique", () => {
-    expect(new Set(documents.map((d) => d.code)).size).toBe(documents.length);
-    expect(new Set(documents.map((d) => d.slug)).size).toBe(documents.length);
+  test("sections get ids and a table of contents", () => {
+    const { contents, html } = documentSections(
+      "<h2>The Articles</h2><p>1.1</p><h2>Roles &amp; Staffing</h2>"
+    );
+    expect(contents).toEqual([
+      { id: "1-the-articles", title: "The Articles" },
+      { id: "2-roles-staffing", title: "Roles & Staffing" },
+    ]);
+    expect(html).toContain('<h2 id="1-the-articles">The Articles</h2>');
   });
 
-  test("a document whose cover says Draft is never marked adopted", () => {
-    // The governing documents read "Draft 1 · for ratification" until the
-    // Founding General Assembly ratifies them; the registry follows the cover.
-    for (const doc of documents.filter((d) => d.version?.startsWith("Draft"))) {
-      expect(doc.status, doc.code).toBe("draft");
-    }
-  });
-
-  test("the Member Handbook is in force", () => {
-    expect(documentBySlug("member-handbook")?.status).toBe("adopted");
-  });
-
-  test("lookups", () => {
-    expect(documentBySlug("constitution")?.code).toBe("SAL-GOV-01");
-    expect(documentBySlug("nope")).toBeNull();
-    expect(documentPdfPath({ slug: "bylaws" })).toBe("/documents/bylaws.pdf");
+  test("document text is sanitized; tables survive", () => {
+    const { html } = documentSections(
+      '<table><tr><td colspan="2">A</td></tr></table><script>alert(1)</script><p onclick="x">B</p>'
+    );
+    expect(html).toContain('<td colspan="2">A</td>');
+    expect(html).not.toContain("script");
+    expect(html).not.toContain("onclick");
   });
 });

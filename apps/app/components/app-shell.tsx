@@ -59,6 +59,7 @@ const useAccountLinks = () => {
     { href: "/profile", key: "profile" },
     { href: "/service", key: "service" },
     { href: "/forms", key: "forms" },
+    { href: "/documents", key: "documents" },
     ...(member ? [{ href: "/offers", key: "offers" } as const] : []),
     ...(handbook ? [{ href: "/handbook", key: "handbook" } as const] : []),
     ...(declares

@@ -488,3 +488,20 @@
   outline-offset: 2px;
   box-shadow: none;
 }
+
+/* Society documents (auibsal.org/documents, the Nexus): wide tables scroll
+   on small screens; section links land below the sticky header. */
+.document-text h2 {
+  padding-bottom: 0.25rem;
+  scroll-margin-top: 6rem;
+  border-bottom: 1px solid var(--accent-line);
+}
+.document-text table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+.document-text th {
+  text-align: start;
+  white-space: nowrap;
+}
