@@ -25,6 +25,11 @@ Branch: `claude/new-session-qosn60`.
       everything else is already on a free plan. Resend Free sends 100 emails
       a day: the outbox now holds anything over the limit until it resets
       instead of dropping it.
+- [ ] **Passkeys:** Supabase → Authentication → Passkeys: on; Relying Party
+      ID `auibsal.org` (never change it after members register passkeys);
+      origins `https://nexus.auibsal.org`; display name `AUIB Society of
+      Arts and Letters`. The Nexus shows the passkey button and the Profile
+      card already; see `docs/platform/accounts.md`.
 - [ ] **Backups:** add `BACKUP_PASSPHRASE` (a long random passphrase kept in
       your password manager) to the GitHub `production` environment. Then
       `.github/workflows/backup.yml` stores an encrypted dump every night
@@ -236,6 +241,9 @@ These stop parts of the work. Everything else continues around them.
   `apps/app/vercel.json`. Routes with ids use query strings (static export).
 - Members-only piece text lives in `journal.piece_bodies`, so piece metadata
   can be public (with a sign-in prompt) while the text stays members-only.
+- Passkeys (Oct 9, 2026): Supabase Auth's own WebAuthn, no extra service.
+  Relying Party ID `auibsal.org`; a passkey sign-in is a first factor, so
+  roles with `requires_mfa` still ask for the authenticator code.
 - Side effects (emails, revalidation) are queued in `core.outbox` inside the
   transaction; an insert trigger hands each to apps/api (pg_net), and a
   drain every ten minutes retries what failed.

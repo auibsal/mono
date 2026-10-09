@@ -74,7 +74,8 @@
       "forgot": "Forgot your password?",
       "noAccount": "New to the Society?",
       "createAccount": "Create an account",
-      "deleted": "Your account has been deleted."
+      "deleted": "Your account has been deleted.",
+      "passkey": "Sign in with a passkey"
     },
     "signUp": {
       "title": "Join the Society",
@@ -117,6 +118,13 @@
     "continue": {
       "title": "Returning",
       "returning": "Taking you back…"
+    },
+    "passkeyErrors": {
+      "already_registered": "This device already has a passkey for your account.",
+      "cancelled": "No passkey was used. Try again, or sign in with your email.",
+      "expired": "That took too long. Please try again.",
+      "rate_limited": "Too many attempts. Please wait a moment and try again.",
+      "unknown": "Passkeys aren't working right now. Please sign in with your email."
     }
   },
   "nexus": {
@@ -520,6 +528,23 @@
         "since": "Connected {date}",
         "disconnect": "Disconnect",
         "failed": "We couldn't disconnect the app. Please try again."
+      },
+      "passkeys": {
+        "title": "Passkeys",
+        "description": "Sign in with your fingerprint, face or screen lock instead of an email link or password. Add one on each device you use.",
+        "none": "You haven't added a passkey yet.",
+        "loadFailed": "We couldn't load your passkeys. Please refresh the page.",
+        "unsupported": "This browser can't use passkeys. Try a current version of Safari, Chrome, Edge or Firefox.",
+        "nameLabel": "Device name",
+        "nameHint": "Optional, to tell your passkeys apart (for example, \"Work laptop\").",
+        "add": "Add a passkey",
+        "adding": "Waiting for your device…",
+        "addedNow": "Passkey added. Next time, choose \"Sign in with a passkey\".",
+        "unnamed": "Passkey",
+        "added": "Added {date}",
+        "lastUsed": "Last used {date}",
+        "remove": "Remove",
+        "removeNamed": "Remove {name}"
       }
     },
     "admin": {

@@ -17,6 +17,7 @@ import { queryKeys, useProfile } from "@/lib/queries";
 import { ErrorState, SectionSpinner } from "../states";
 import { ConnectedApps } from "./connected-apps";
 import { DeleteAccount } from "./delete-account";
+import { Passkeys } from "./passkeys";
 import { PhoneNotifications } from "./phone-notifications";
 
 export const ProfileScreen = () => {
@@ -197,6 +198,7 @@ export const ProfileScreen = () => {
       <SalCard>
         <PhoneNotifications />
       </SalCard>
+      <Passkeys />
       <ConnectedApps />
       <SalCard>
         <DeleteAccount />
