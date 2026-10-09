@@ -1,5 +1,5 @@
--- The officer handbook: officers read it, governance managers edit it,
--- members and apps see nothing.
+-- Advisor fixes: media objects are not listable by everyone, and the
+-- manager update policy on shift sign-ups checks the new row.
 begin;
 -- <preamble>
 -- Shared pgTAP preamble. Each test file includes a copy (pg_prove runs files
@@ -75,41 +75,57 @@ insert into core.semesters (code, name_en, name_ar, starts_on, ends_on) values
 update core.settings set value = '0' where key = 'membership.founding_voters';
 -- </preamble>
 
-select plan(7);
+select plan(6);
 
-select pg_temp.make_user('00000000-0000-0000-0000-0000000000a1', 'reader-hb@auib.edu.iq');
-select pg_temp.make_user('00000000-0000-0000-0000-0000000000a2', 'member-hb@auib.edu.iq');
-select pg_temp.make_user('00000000-0000-0000-0000-0000000000a3', 'secretary-hb@auib.edu.iq');
-select pg_temp.grant_role('00000000-0000-0000-0000-0000000000a1', 'reader');
-select pg_temp.grant_role('00000000-0000-0000-0000-0000000000a3', 'general_secretary');
+select pg_temp.make_user('00000000-0000-0000-0000-0000000000a1', 'member-adv@auib.edu.iq');
+select pg_temp.make_user('00000000-0000-0000-0000-0000000000a2', 'comms-adv@auib.edu.iq');
+select pg_temp.grant_role('00000000-0000-0000-0000-0000000000a2', 'communications_lead');
 
-select ok((select count(*) from governance.handbook_pages) >= 9,
-  'The handbook starts with the pages from the docs site');
+insert into storage.objects (bucket_id, name) values
+  ('media', 'news/00000000-0000-0000-0000-00000000f001.jpg'),
+  ('media', 'avatars/00000000-0000-0000-0000-0000000000a1/00000000-0000-0000-0000-00000000f002.jpg');
+
+select pg_temp.login_anon();
+select is((select count(*)::int from storage.objects where bucket_id = 'media'), 0,
+  'Visitors cannot list the media bucket');
 
 select pg_temp.login_as('00000000-0000-0000-0000-0000000000a1');
-select ok((select count(*) from governance.handbook_pages) >= 9,
-  'An officer with library.read reads the handbook');
-update governance.handbook_pages set title_en = 'Changed' where slug = 'events';
-select pg_temp.logout();
-select isnt((select title_en from governance.handbook_pages where slug = 'events'), 'Changed',
-  'but cannot edit it');
+select is(
+  (select array_agg(name) from storage.objects where bucket_id = 'media'),
+  array['avatars/00000000-0000-0000-0000-0000000000a1/00000000-0000-0000-0000-00000000f002.jpg']::text[],
+  'A member sees only their own avatar object');
 
 select pg_temp.login_as('00000000-0000-0000-0000-0000000000a2');
-select is((select count(*)::int from governance.handbook_pages), 0,
-  'A member without a role sees nothing');
+select is((select count(*)::int from storage.objects where bucket_id = 'media'), 2,
+  'A publisher sees the media objects they may remove');
 
-select pg_temp.login_as('00000000-0000-0000-0000-0000000000a3');
-select lives_ok(
-  $$ update governance.handbook_pages set title_en = 'Events and RSVPs' where slug = 'events' $$,
-  'A governance manager edits a page');
 select pg_temp.logout();
-select is((select title_en from governance.handbook_pages where slug = 'events'), 'Events and RSVPs',
-  'and the change is saved');
+select is(
+  (select with_check from pg_policies
+   where schemaname = 'programmes' and tablename = 'shift_signups'
+     and policyname = 'Programme managers update sign-ups') = 'true',
+  false, 'The manager update policy on sign-ups checks the new row');
 
-select pg_temp.login_as('00000000-0000-0000-0000-0000000000a1',
-  '{"client_id": "00000000-0000-0000-0000-00000000a002"}');
-select is((select count(*)::int from governance.handbook_pages), 0,
-  'Third-party apps never read the handbook');
+insert into programmes.rotas (id, programme_id, title_en, title_ar)
+select '00000000-0000-0000-0000-00000000c001', id, 'Door team', 'فريق الباب'
+from core.programmes where slug = 'side-quest';
+insert into programmes.shifts (id, rota_id, role_en, role_ar, starts_at, ends_at, capacity) values
+  ('00000000-0000-0000-0000-00000000c101', '00000000-0000-0000-0000-00000000c001', 'Door', 'الباب',
+   now() + interval '1 day', now() + interval '1 day 2 hours', 2);
+insert into programmes.shift_signups (shift_id, user_id) values
+  ('00000000-0000-0000-0000-00000000c101', '00000000-0000-0000-0000-0000000000a1');
+
+select pg_temp.grant_role('00000000-0000-0000-0000-0000000000a2', 'programme_lead', 'programme',
+  (select id from core.programmes where slug = 'side-quest'));
+select pg_temp.login_as('00000000-0000-0000-0000-0000000000a2');
+select lives_ok(
+  $$ update programmes.shift_signups set status = 'confirmed'
+     where user_id = '00000000-0000-0000-0000-0000000000a1' $$,
+  'A programme manager still updates a sign-up');
+select pg_temp.logout();
+select is(
+  (select status from programmes.shift_signups where user_id = '00000000-0000-0000-0000-0000000000a1'),
+  'confirmed', 'and the change is saved');
 
 select * from finish();
 rollback;

@@ -239,6 +239,14 @@ These stop parts of the work. Everything else continues around them.
 - Side effects (emails, revalidation) are queued in `core.outbox` inside the
   transaction; an insert trigger hands each to apps/api (pg_net), and a
   drain every ten minutes retries what failed.
+- Supabase advisor (Oct 9, 2026): fixed the media bucket listing and the
+  always-true sign-up check (migration `20261009000000`). Left as is, by
+  design: SECURITY DEFINER functions callable by visitors or members (each
+  returns only public data or checks permissions inside; the uid-taking
+  membership helpers answer only about the caller unless the caller manages
+  members), "multiple permissive policies" and "unused index" (performance
+  notes, negligible at the Society's scale), and leaked-password protection
+  (a paid feature the owner canceled).
 
 ## Checklist
 
