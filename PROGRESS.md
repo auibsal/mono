@@ -9,6 +9,10 @@ Branch: `claude/new-session-qosn60`.
 
 ## Blocked — needed from the user
 
+- [ ] **Notion connection can read emails:** Notion → Settings → Connections →
+  SAL Platform → Capabilities → allow "Read user information including email
+  addresses". Without it the sync cannot tell who set Ready to publish, so it
+  publishes nothing (`docs/platform/notion.md`).
 - [ ] **Protect `main` (GitHub → Settings → Rules → New branch ruleset):** target
       `main`; require a pull request; require the checks "Lint, typecheck,
       test", "Build apps", "Database (migrations, RLS, integration)" and
@@ -326,6 +330,22 @@ These stop parts of the work. Everything else continues around them.
   resolution grants a founding-term exception. Existing assignments are
   left as they are; the public Council roster lists each person once per
   office.
+- Notion (Oct 10, 2026, owner; migration `20261010000300`,
+  `docs/platform/notion.md`): the officers' team work lives in the Notion
+  workspace (Plus for education clubs): projects, tasks, meetings, the
+  content calendar, the handbook and the internal documents. Events and
+  news are written in Notion and published by apps/api when Status is
+  Ready to publish, after checking that the page's last editor (matched by
+  AUIB email) holds events.manage or content.manage; roles needing two-step
+  sign-in count only for accounts with a verified second factor, since a
+  Notion session is not ours. Notion gets read-only copies of officers,
+  programs, the document and minutes registry and Journal counts (numbers
+  only). Members, RSVPs, ballots, submissions, the ledger, certificates and
+  confidential forms never leave the Nexus. Officers sign in to Notion with
+  their AUIB address (Notion SSO needs Business or Enterprise), which
+  narrows the Oct 9 "our own sign-in everywhere" decision for this
+  workspace only. Invite-only; the auib.edu.iq allowed-domain setting stays
+  off; volunteers are guests on their project's pages.
 - UX pass (Oct 10, 2026): setup asks for the member's name (accounts made
   by a sign-in link had none, so they showed blank across the Nexus), and
   members without one are sent back to setup once. Admin sections are in
@@ -528,7 +548,7 @@ Covered by automated tests so far:
 - The Issue 1 call's theme and eligibility text, if any (open theme until
   then), and the Journal Submission Guidelines it should link to.
 
-- TODO(content): the text of the internal documents (Founding Proposal SAL-PRP-01, Operations Playbook SAL-OPS-01, Templates & Forms SAL-OPS-02, Printables SAL-PRT-01): paste it in Admin → Documents. It stays out of this public repository.
+- TODO(content): the text of the internal documents (Founding Proposal SAL-PRP-01, Operations Playbook SAL-OPS-01, Templates & Forms SAL-OPS-02, Printables SAL-PRT-01): paste it in the team's Notion workspace (Handbook and internal documents), where those pages wait for it. It stays out of this public repository.
 - TODO(content): the Arabic summary of the Constitution and the Arabic welcome page of the Member Handbook (the PDFs' Arabic text layer could not be recovered); enter them as each document's Arabic text.
 - TODO(content): Arabic versions of the standard letters (L-01 to L-10,
   F-05); the Templates & Forms has them in English only.
@@ -552,6 +572,8 @@ Covered by automated tests so far:
   option, including the Arabic of the F-17 media release, which the form
   itself says must be checked by a native speaker) and `nexus.admin.forms.*`.
 - `core.programmes.name_ar`: every name.
+- Notion (2026-10-10): `nexus.nav.workspace`, `nexus.admin.notion.*` and
+  `nexus.admin.settings.notion.*`.
 - UX pass (2026-10-10): `nexus.setup.name.*`, `nexus.home.greetingPlain`,
   `nexus.admin.nav.groups.*`, `web.home.whatWeDo`, `web.home.allPrograms`,
   `web.home.closes`, `web.programmes.major` and `web.programmes.regular`.

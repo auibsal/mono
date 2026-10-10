@@ -142,9 +142,11 @@ export const useActivity = () => {
   });
 };
 
+// Officers may read everyone's RSVPs and waitlist places (check-in), so
+// "mine" is filtered by the member, not left to Row Level Security.
 export const useMyRsvps = () => {
   const { supabase } = useAuth();
-  return useUserQuery(queryKeys.rsvps, async () =>
+  return useUserQuery(queryKeys.rsvps, async (userId) =>
     unwrap(
       await supabase
         .schema("events")
@@ -153,19 +155,21 @@ export const useMyRsvps = () => {
           "id, ticket_code, from_waitlist, event:events(id, slug, title_en, title_ar, starts_at, ends_at, venue_en, venue_ar)"
         )
         .eq("status", "confirmed")
+        .eq("user_id", userId)
     )
   );
 };
 
 export const useMyWaitlist = () => {
   const { supabase } = useAuth();
-  return useUserQuery(queryKeys.waitlist, async () =>
+  return useUserQuery(queryKeys.waitlist, async (userId) =>
     unwrap(
       await supabase
         .schema("events")
         .from("waitlist")
         .select("id, event:events(id, slug, title_en, title_ar, starts_at)")
         .eq("status", "waiting")
+        .eq("user_id", userId)
     )
   );
 };

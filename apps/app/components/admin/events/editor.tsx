@@ -24,6 +24,7 @@ import {
   SaveButton,
   SelectInput,
 } from "../kit";
+import { NotionManaged } from "../notion-managed";
 import { Attendance } from "./attendance";
 import { useProgrammeOptions } from "./data";
 
@@ -287,6 +288,7 @@ export const EventEditor = () => {
           ? `${tk("status")}: ${tk(`statuses.${status as "draft"}`)}`
           : null}
       </AdminHeading>
+      <NotionManaged kind="event" recordId={eventId} />
 
       <form className="grid max-w-4xl gap-6" onSubmit={submit}>
         <BilingualField

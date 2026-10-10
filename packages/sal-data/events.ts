@@ -108,7 +108,8 @@ export const rsvp = async (
 export const cancelRsvp = async (client: Client, eventId: string) =>
   unwrap(await events(client).rpc("cancel_rsvp", { event_id: eventId }));
 
-export const myRsvps = async (client: Client) =>
+/** The member's own confirmed RSVPs (officers may read everyone's). */
+export const myRsvps = async (client: Client, userId: string) =>
   unwrap(
     await events(client)
       .from("rsvps")
@@ -116,4 +117,5 @@ export const myRsvps = async (client: Client) =>
         `id, status, ticket_code, from_waitlist, event:events(${eventColumns})`
       )
       .eq("status", "confirmed")
+      .eq("user_id", userId)
   );

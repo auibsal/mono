@@ -22,6 +22,7 @@ import {
   SaveButton,
   SelectInput,
 } from "../kit";
+import { NotionManaged } from "../notion-managed";
 import { BilingualRichText } from "./bilingual-rich-text";
 
 type Status = "draft" | "scheduled" | "published";
@@ -196,6 +197,7 @@ export const NewsEditor = () => {
       >
         {`${tk("status")}: ${tk(`statuses.${status}`)}`}
       </AdminHeading>
+      <NotionManaged kind="news" recordId={newsId} />
       <form className="grid max-w-4xl gap-6" onSubmit={submit}>
         <BilingualField
           label={t("titleField")}
