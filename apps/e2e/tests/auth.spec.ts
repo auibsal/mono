@@ -22,10 +22,11 @@ test("sign up with an AUIB address, confirm by email, finish setup", async ({
   await page.getByRole("button", { name: /continue/i }).click();
 
   await expect(page).toHaveURL(/\/en\/setup/);
-  await expect(page.getByText("0 of 3 done")).toBeVisible();
+  await expect(page.getByText("1 of 4 done")).toBeVisible();
+  await expect(page.getByLabel("Name in English")).toHaveValue("New Member");
   await page.getByLabel("I make the Human Authorship pledge").check();
   await page.getByLabel("I make the Member Pledge").check();
-  await expect(page.getByText("3 of 3 done")).toBeVisible();
+  await expect(page.getByText("4 of 4 done")).toBeVisible();
   await page.getByRole("button", { name: "Enter the Nexus" }).click();
   await expect(page.getByRole("heading", { name: /Welcome/ })).toBeVisible();
 });

@@ -14,6 +14,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { type FormEvent, useEffect, useId, useState } from "react";
 import { queryKeys, useProfile } from "@/lib/queries";
+import { CalendarFeed } from "../home/calendar-feed";
 import { ErrorState, SectionSpinner } from "../states";
 import { Affiliations } from "./affiliations";
 import { ConnectedApps } from "./connected-apps";
@@ -199,6 +200,7 @@ export const ProfileScreen = () => {
       <SalCard>
         <PhoneNotifications />
       </SalCard>
+      <CalendarFeed />
       <Affiliations />
       <Passkeys />
       <ConnectedApps />

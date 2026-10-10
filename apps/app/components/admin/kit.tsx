@@ -71,7 +71,9 @@ interface DataTableProps<T> {
 
 /**
  * Brand tables: a crimson hairline under the head and gray hairlines
- * between rows, never full grids. Scrolls sideways on small screens.
+ * between rows, never full grids. On phones each row stacks into a block,
+ * the first column as its title and the rest labelled, so nothing scrolls
+ * sideways (brand book, Screens: Phones).
  */
 export const DataTable = <T,>({
   caption,
@@ -91,10 +93,10 @@ export const DataTable = <T,>({
   }
 
   return (
-    <div className="w-full overflow-x-auto">
-      <table className="w-full border-collapse text-sm">
+    <div className="w-full md:overflow-x-auto">
+      <table className="w-full border-collapse text-sm max-md:block">
         {caption ? <caption className="sr-only">{caption}</caption> : null}
-        <thead>
+        <thead className="max-md:sr-only">
           <tr className="border-accent-line border-b">
             {columns.map((column) => (
               <th
@@ -110,15 +112,35 @@ export const DataTable = <T,>({
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody className="max-md:block max-md:border-accent-line max-md:border-t">
           {rows.map((row) => (
-            <tr className="border-rule border-b" key={rowKey(row)}>
-              {columns.map((column) => (
+            <tr
+              className="border-rule border-b max-md:grid max-md:gap-1.5 max-md:py-3"
+              key={rowKey(row)}
+            >
+              {columns.map((column, index) => (
                 <td
-                  className={cn("px-2 py-2 align-top", column.className)}
+                  className={cn(
+                    "px-2 py-2 align-top",
+                    column.className,
+                    "max-md:whitespace-normal max-md:px-0 max-md:py-0 max-md:text-start",
+                    index === 0
+                      ? "max-md:block max-md:font-bold max-md:text-base"
+                      : "max-md:grid max-md:grid-cols-[minmax(6rem,35%)_1fr] max-md:items-baseline max-md:gap-3"
+                  )}
                   key={column.key}
                 >
-                  {column.cell(row)}
+                  {index > 0 && column.header ? (
+                    <span className="type-kicker md:hidden">
+                      {column.header}
+                    </span>
+                  ) : null}
+                  {index > 0 && !column.header ? (
+                    <span className="md:hidden" />
+                  ) : null}
+                  <span className="min-w-0 break-words max-md:block md:contents">
+                    {column.cell(row)}
+                  </span>
                 </td>
               ))}
             </tr>

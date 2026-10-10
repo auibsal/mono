@@ -10,7 +10,13 @@ import {
   formatNumber,
 } from "@repo/internationalization/format";
 import { Link } from "@repo/internationalization/navigation";
-import { charity, events, journal, localized } from "@repo/sal-data";
+import {
+  charity,
+  events,
+  journal,
+  localized,
+  programmes,
+} from "@repo/sal-data";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { localizedMetadata } from "@/lib/metadata";
@@ -36,13 +42,23 @@ const Home = async ({ params }: HomeProps) => {
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "web.home" });
 
-  const [nextEvents, pieces, campaigns, progress, calls] = await Promise.all([
-    readPublished(["events"], (c) => events.publicEvents(c, { limit: 3 }), []),
-    readPublished(["journal"], (c) => journal.latestPieces(c, 3), []),
-    readPublished(["charity"], (c) => charity.activeCampaigns(c), []),
-    readPublished(["charity"], (c) => charity.campaignProgress(c), []),
-    readPublished(["journal"], (c) => journal.openCalls(c), []),
-  ]);
+  const [nextEvents, pieces, campaigns, progress, calls, allProgrammes] =
+    await Promise.all([
+      readPublished(
+        ["events"],
+        (c) => events.publicEvents(c, { limit: 3 }),
+        []
+      ),
+      readPublished(["journal"], (c) => journal.latestPieces(c, 3), []),
+      readPublished(["charity"], (c) => charity.activeCampaigns(c), []),
+      readPublished(["charity"], (c) => charity.campaignProgress(c), []),
+      readPublished(["journal"], (c) => journal.openCalls(c), []),
+      readPublished(["programmes"], (c) => programmes.programmes(c), []),
+    ]);
+  // The flagship programs (not the regular formats), for "What we do".
+  const flagship = (allProgrammes ?? []).filter(
+    (p) => p.is_active && p.kind !== "format"
+  );
   const campaign = campaigns?.[0];
   const meter = campaign
     ? progress.find((p) => p.campaign_id === campaign.id)
@@ -54,7 +70,10 @@ const Home = async ({ params }: HomeProps) => {
     <>
       <section className="frame-b">
         <div className="mx-auto grid w-full max-w-6xl gap-6 px-4 py-16 sm:py-24">
-          <BrandLogo height={96} locale={locale} variant="bilingual" />
+          {/* The header already carries the lockup on phones. */}
+          <div className="hidden sm:block">
+            <BrandLogo height={96} locale={locale} variant="bilingual" />
+          </div>
           <h1 className="type-display max-w-4xl">{t("title")}</h1>
           <p className="type-lede max-w-2xl">{t("lede")}</p>
           <div className="flex flex-wrap gap-4 pt-2">
@@ -69,6 +88,44 @@ const Home = async ({ params }: HomeProps) => {
       </section>
 
       <div className="mx-auto grid w-full max-w-6xl gap-16 px-4 py-16 lg:grid-cols-2">
+        {flagship.length > 0 ? (
+          <section
+            aria-labelledby="what-we-do"
+            className="grid content-start gap-6 lg:col-span-2"
+          >
+            <div className="frame-b flex flex-wrap items-baseline justify-between gap-4 pb-2">
+              <h2 className="type-heading" id="what-we-do">
+                {t("whatWeDo")}
+              </h2>
+              <Link
+                className="type-label text-xs underline underline-offset-4"
+                href="/programs"
+              >
+                {t("allPrograms")}
+              </Link>
+            </div>
+            <ul className="grid gap-gap sm:grid-cols-2 lg:grid-cols-4">
+              {flagship.map((p) => (
+                <li key={p.id}>
+                  <Link
+                    className="frame press grid h-full content-start gap-2 bg-surface-tint p-card-padding shadow-offset hover:bg-surface"
+                    href={p.slug === "journal" ? "/journal" : "/programs"}
+                  >
+                    <h3 className="type-subheading">
+                      {localized(p, "name", locale)}
+                    </h3>
+                    {localized(p, "summary", locale) ? (
+                      <p className="type-body">
+                        {localized(p, "summary", locale)}
+                      </p>
+                    ) : null}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
         {(nextEvents ?? []).length > 0 ? (
           <section
             aria-labelledby="next-events"
@@ -178,12 +235,16 @@ const Home = async ({ params }: HomeProps) => {
             <ul className="grid">
               {(calls ?? []).map((call) => (
                 <li className="border-rule border-b py-4" key={call.id}>
-                  <p className="type-subheading">
-                    {localized(call, "title", locale)}
-                  </p>
-                  <p className="type-caption">
-                    {formatLongDate(call.closes_at, locale)}
-                  </p>
+                  <Link className="grid gap-1 hover:underline" href="/journal">
+                    <span className="type-subheading">
+                      {localized(call, "title", locale)}
+                    </span>
+                    <span className="type-caption">
+                      {t("closes", {
+                        date: formatLongDate(call.closes_at, locale),
+                      })}
+                    </span>
+                  </Link>
                 </li>
               ))}
             </ul>

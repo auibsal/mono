@@ -326,6 +326,15 @@ These stop parts of the work. Everything else continues around them.
   resolution grants a founding-term exception. Existing assignments are
   left as they are; the public Council roster lists each person once per
   office.
+- UX pass (Oct 10, 2026): setup asks for the member's name (accounts made
+  by a sign-in link had none, so they showed blank across the Nexus), and
+  members without one are sent back to setup once. Admin sections are in
+  five groups; below `lg` they open from one "Administration" button. Admin
+  tables stack into labelled rows below `md` (nothing scrolls sideways).
+  The member home shows notices only when there are some; the calendar
+  feed moved to Profile and privacy. `FormHeader` follows its page's theme
+  (white symbol on ink) through the `on-ink` variant. The public home
+  shows the flagship programs.
 - Owner cleanup (Oct 9, 2026, migration `20261010000200`): Shaheen Farjo
   keeps only the President seat held since Oct 4; his other assignments
   are ended. Test content is removed (the "Hey" news draft, the two test
@@ -543,6 +552,9 @@ Covered by automated tests so far:
   option, including the Arabic of the F-17 media release, which the form
   itself says must be checked by a native speaker) and `nexus.admin.forms.*`.
 - `core.programmes.name_ar`: every name.
+- UX pass (2026-10-10): `nexus.setup.name.*`, `nexus.home.greetingPlain`,
+  `nexus.admin.nav.groups.*`, `web.home.whatWeDo`, `web.home.allPrograms`,
+  `web.home.closes`, `web.programmes.major` and `web.programmes.regular`.
 - `charity.campaigns.unit_label_ar` default «أطفال كُسوا».
 - `core.semesters` names in pgTAP fixtures are test-only (no review needed).
 - The transliteration «النِّكسَس» for "the Nexus".

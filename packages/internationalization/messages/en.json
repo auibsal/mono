@@ -169,7 +169,7 @@
     "setup": {
       "kicker": "Membership",
       "title": "Before you begin",
-      "description": "Two pledges and a few choices. You can change the choices later in Profile and privacy.",
+      "description": "Your name, two pledges and a few choices. You can change the choices later in Profile and privacy.",
       "pledges": "Pledges",
       "progress": "{done} of {total} done",
       "humanAuthorship": {
@@ -193,7 +193,14 @@
       "cameraShyHint": "You'll get a camera-shy sticker at events, and we'll leave you out of SAL photos and videos.",
       "personalEmail": "Personal email for after you graduate",
       "personalEmailHint": "So you can stay in touch as an alumni member. Never shown publicly.",
-      "submit": "Enter the Nexus"
+      "submit": "Enter the Nexus",
+      "name": {
+        "title": "Your name",
+        "hint": "As it appears on the Council page, the Book of Members and your certificates.",
+        "en": "Name in English",
+        "ar": "Name in Arabic (optional)",
+        "needed": "Tell us your name. It appears on the Council page, the Book of Members and your certificates."
+      }
     },
     "home": {
       "greeting": "Welcome, {name}",
@@ -231,7 +238,6 @@
       },
       "notices": {
         "title": "Society notices",
-        "empty": "No notices right now.",
         "vote": "Vote"
       },
       "journal": {
@@ -261,7 +267,8 @@
         "empty": "You haven't written your six words yet.",
         "write": "Write my six words",
         "pending": "Waiting for moderation"
-      }
+      },
+      "greetingPlain": "Welcome"
     },
     "events": {
       "title": "Events",
@@ -592,7 +599,14 @@
         "recognition": "Recognition",
         "productions": "Productions",
         "forms": "Forms and letters",
-        "documents": "Documents"
+        "documents": "Documents",
+        "groups": {
+          "work": "Programs and events",
+          "people": "People",
+          "publishing": "Publishing and charity",
+          "society": "Governance",
+          "system": "System"
+        }
       },
       "noAccess": "Your roles don't include this section. Ask the President or the General Secretary if you need it.",
       "kit": {
@@ -3027,7 +3041,10 @@
       "warmth": "Warmth Meter",
       "openCalls": "Open calls",
       "join": "Join the Society",
-      "joinBody": "Membership is free and open to every AUIB student."
+      "joinBody": "Membership is free and open to every AUIB student.",
+      "whatWeDo": "What we do",
+      "allPrograms": "All programs",
+      "closes": "Closes {date}"
     },
     "documents": {
       "title": "Documents",
@@ -3221,7 +3238,9 @@
       "title": "Programs",
       "lede": "Four big programs and a rhythm of small ones. The Term Card lists this semester's dates.",
       "journal": "Read the Journal",
-      "events": "See the events"
+      "events": "See the events",
+      "major": "Flagship programs",
+      "regular": "Through the term"
     },
     "give": {
       "title": "Give",
