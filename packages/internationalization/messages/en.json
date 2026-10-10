@@ -145,7 +145,8 @@
       "declarations": "Declarations",
       "service": "My service",
       "forms": "Forms",
-      "documents": "Society documents"
+      "documents": "Society documents",
+      "workspace": "Team workspace"
     },
     "errors": {
       "loadFailed": "We couldn't load this. Check your connection and try again.",
@@ -1434,6 +1435,28 @@
           "switchOffConfirm": "The app loses access straight away, for every member.",
           "none": "No apps yet.",
           "add": "Add an app"
+        },
+        "notion": {
+          "title": "Notion",
+          "lede": "The team's workspace: projects, tasks, meetings and the handbook live there, and events and news are written and published from there. Every five minutes the platform copies officers, programs, documents and Journal counts into it and publishes what is marked Ready to publish.",
+          "notConfigured": "Not connected. Add the SAL Platform connection's token as NOTION_TOKEN on the sal-api project in Vercel.",
+          "lastSync": "Last sync {date}, {time}.",
+          "counts": "{created} added, {updated} updated, {published} published, {refused} sent back for changes.",
+          "problems": "{count} problems in the last sync",
+          "noSyncYet": "Connected; the first sync runs within five minutes.",
+          "listsError": "Could not read the workspace's members. Check that the connection may read user information including email addresses.",
+          "inviteTitle": "Invite to Notion",
+          "inviteHint": "They hold a role in the Nexus but have no Notion account under their AUIB address. In Notion: Settings, People, Add members.",
+          "inviteEmpty": "Everyone holding a role is in the workspace.",
+          "removeTitle": "Remove from Notion",
+          "removeHint": "In the workspace but holding no role in the Nexus. Remove them unless they own the workspace.",
+          "removeEmpty": "No one to remove.",
+          "open": "Open the workspace",
+          "columns": {
+            "name": "Name",
+            "email": "Email",
+            "roles": "Roles"
+          }
         }
       },
       "journal": {
@@ -2188,6 +2211,11 @@
         "adoptedNoDate": "An adopted document should record the date it was adopted.",
         "publicNote": "Saving publishes this text on auibsal.org/documents. Its status is shown on the page, so a draft is never presented as adopted.",
         "internalNote": "Internal: read only in the Nexus by officers who read the internal library."
+      },
+      "notion": {
+        "event": "This event is written in the team's Notion workspace. Publishing it from Notion again replaces changes made here.",
+        "news": "This post is written in the team's Notion workspace. Publishing it from Notion again replaces changes made here.",
+        "open": "Open in Notion"
       }
     },
     "editor": {

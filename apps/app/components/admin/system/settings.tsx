@@ -25,6 +25,7 @@ import {
   SaveButton,
 } from "../kit";
 import { ThirdPartyApps } from "./apps";
+import { NotionWorkspace } from "./notion";
 
 const key = ["admin", "settings"];
 const SEMESTER_CODE = /^(fall|spring|summer)-\d{4}$/;
@@ -706,6 +707,7 @@ export const SettingsAdmin = () => {
       <WinterSetCost settings={values} />
       <Versions settings={values} />
       <Flags settings={values} />
+      <NotionWorkspace />
       <ThirdPartyApps />
       <p className="type-caption">{t("banner")}</p>
       <p className="type-caption">{t("emails")}</p>

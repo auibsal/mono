@@ -24,8 +24,9 @@ import {
   useRouter,
 } from "@repo/internationalization/navigation";
 import { hasPermissionAnywhere } from "@repo/rbac";
-import { useQueryClient } from "@tanstack/react-query";
-import { MenuIcon } from "lucide-react";
+import { content } from "@repo/sal-data";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { ExternalLink, MenuIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { type ReactNode, useState } from "react";
 import { disablePush } from "@/lib/push";
@@ -69,6 +70,23 @@ const useAccountLinks = () => {
   ] as const;
 };
 
+/**
+ * The team's Notion workspace, for role holders: team work (projects,
+ * tasks, meetings, planning, the handbook) lives there.
+ */
+const useTeamWorkspace = () => {
+  const { supabase } = useAuth();
+  const { grants } = useVisibleModules();
+  const officer = (grants.data ?? []).length > 0;
+  const home = useQuery({
+    enabled: officer,
+    queryFn: () => content.publicSetting(supabase, "notion.home_url"),
+    queryKey: ["setting", "notion.home_url"],
+    staleTime: 3_600_000,
+  });
+  return officer && typeof home.data === "string" ? home.data : null;
+};
+
 const NavLinks = ({ onNavigate }: { onNavigate?: () => void }) => {
   const t = useTranslations("nexus.nav");
   const pathname = usePathname();
@@ -108,6 +126,7 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const account = useAccountLinks();
+  const workspace = useTeamWorkspace();
 
   const signOut = async () => {
     // A shared computer must not show the last member's notices.
@@ -155,6 +174,17 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
                     <Link href={link.href}>{t(`nexus.nav.${link.key}`)}</Link>
                   </DropdownMenuItem>
                 ))}
+                {workspace ? (
+                  <DropdownMenuItem asChild>
+                    <a href={workspace} rel="noopener" target="_blank">
+                      {t("nexus.nav.workspace")}
+                      <ExternalLink
+                        aria-label={t("common.externalLink")}
+                        className="size-3.5"
+                      />
+                    </a>
+                  </DropdownMenuItem>
+                ) : null}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onSelect={signOut}>
                   {t("auth.signOut")}
@@ -190,6 +220,22 @@ export const AppShell = ({ children }: { children: ReactNode }) => {
                       </Link>
                     </li>
                   ))}
+                  {workspace ? (
+                    <li>
+                      <a
+                        className="inline-flex items-center gap-1.5 underline underline-offset-4"
+                        href={workspace}
+                        rel="noopener"
+                        target="_blank"
+                      >
+                        {t("nexus.nav.workspace")}
+                        <ExternalLink
+                          aria-label={t("common.externalLink")}
+                          className="size-3.5"
+                        />
+                      </a>
+                    </li>
+                  ) : null}
                 </ul>
                 <Button
                   className="mt-6 w-full"

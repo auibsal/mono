@@ -133,10 +133,10 @@ jobs:
             | bunx biome format --stdin-file-path=packages/database/types.ts > "$RUNNER_TEMP/types.ts"
           diff -u packages/database/types.ts "$RUNNER_TEMP/types.ts" \
             || (echo "Run 'bun run db:types' and commit the result." && exit 1)
-      - name: Integration tests (auth, storage, data)
+      - name: Integration tests (auth, storage, data, Notion sync)
         run: |
           eval "$(cd packages/database && bunx supabase status -o env | grep -E '^(API_URL|PUBLISHABLE_KEY|SECRET_KEY)=' | sed 's/^/export /')"
-          SUPABASE_INTEGRATION=1 bunx turbo test --force --filter=@repo/auth --filter=@repo/storage --filter=@repo/sal-data
+          SUPABASE_INTEGRATION=1 bunx turbo test --force --filter=@repo/auth --filter=@repo/storage --filter=@repo/sal-data --filter=api
 
   e2e:
     name: End-to-end (Playwright + axe)

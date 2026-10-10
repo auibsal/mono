@@ -30,6 +30,7 @@ export const env = withPresets(
       CRON_SECRET: process.env.CRON_SECRET,
       DATABASE_WEBHOOK_SECRET: process.env.DATABASE_WEBHOOK_SECRET,
       NEXT_PUBLIC_VAPID_PUBLIC_KEY: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+      NOTION_TOKEN: process.env.NOTION_TOKEN,
       REVALIDATE_SECRET: process.env.REVALIDATE_SECRET,
       VAPID_PRIVATE_KEY: process.env.VAPID_PRIVATE_KEY,
     },
@@ -39,6 +40,9 @@ export const env = withPresets(
       CRON_SECRET: z.string().min(32).optional(),
       // Sent by the Supabase database webhook (outbox) as a Bearer token.
       DATABASE_WEBHOOK_SECRET: z.string().min(32).optional(),
+      // The "SAL Platform" connection in the team's Notion workspace (an
+      // internal API token). Without it the Notion sync does nothing.
+      NOTION_TOKEN: z.string().min(20).optional(),
       // Shared with apps/web's revalidation route.
       REVALIDATE_SECRET: z.string().min(32).optional(),
       // Web Push signing key. Without it (or the public key) notices go by

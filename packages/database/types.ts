@@ -224,6 +224,15 @@ export type Database = {
         }[];
       };
       needs_two_step: { Args: Record<PropertyKey, never>; Returns: boolean };
+      notion_publisher: {
+        Args: {
+          email: string;
+          permission: string;
+          scope_id?: string;
+          scope_type?: string;
+        };
+        Returns: string;
+      };
       oauth_client_info: {
         Args: { client_id: string };
         Returns: {
@@ -231,6 +240,19 @@ export type Database = {
           enabled: boolean;
           name_ar: string;
           name_en: string;
+        }[];
+      };
+      officer_directory: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          council: boolean;
+          email: string;
+          full_name_ar: string;
+          full_name_en: string;
+          roles: string[];
+          term_ends: string;
+          term_starts: string;
+          user_id: string;
         }[];
       };
       permission_holders: {
@@ -981,6 +1003,30 @@ export type Database = {
           title?: string;
           uid?: string;
           url?: string | null;
+        };
+        Relationships: [];
+      };
+      notion_links: {
+        Row: {
+          content_hash: string | null;
+          kind: string;
+          notion_page_id: string;
+          record_key: string;
+          synced_at: string;
+        };
+        Insert: {
+          content_hash?: string | null;
+          kind: string;
+          notion_page_id: string;
+          record_key: string;
+          synced_at?: string;
+        };
+        Update: {
+          content_hash?: string | null;
+          kind?: string;
+          notion_page_id?: string;
+          record_key?: string;
+          synced_at?: string;
         };
         Relationships: [];
       };
