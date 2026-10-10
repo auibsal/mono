@@ -54,12 +54,12 @@ const Figure = ({
   readonly label: string;
   readonly value: number;
 }) => (
-  <SalCard className="content-start">
+  <SalCard className="content-start gap-2 p-4 sm:gap-3 sm:p-card-padding">
     <p className="type-kicker">{label}</p>
-    <p className="font-bold text-4xl text-title tabular-nums">
+    <p className="font-bold text-3xl text-title tabular-nums sm:text-4xl">
       {formatNumber(value)}
     </p>
-    <p className="type-body">{detail}</p>
+    <p className="sm:type-body text-sm">{detail}</p>
     {action && href ? (
       <Link
         className="type-label justify-self-start text-xs underline underline-offset-4"
@@ -206,7 +206,7 @@ export const AdminOverview = () => {
         <p className="type-body text-text-secondary">{t("nothing")}</p>
       ) : null}
       {figures.length > 0 ? (
-        <div className="grid gap-gap sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-2 gap-gap-tight sm:gap-gap xl:grid-cols-3">
           {figures.map((figure) => (
             <Figure key={figure.label} {...figure} />
           ))}

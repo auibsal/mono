@@ -40,6 +40,18 @@ const usePledgeVersions = () => {
   });
 };
 
+const setupIntro = (
+  t: ReturnType<typeof useTranslations<"nexus.setup">>,
+  isRenewal: boolean,
+  completed: boolean
+) => {
+  if (isRenewal) {
+    return t("renewed");
+  }
+  // Setup done before names were asked for: only the name is missing.
+  return completed ? t("name.needed") : t("description");
+};
+
 /**
  * After verification: the two required pledges (stored with their version)
  * and the member's choices. Also shown again when a pledge version changes.
@@ -60,6 +72,7 @@ export const SetupForm = () => {
     human_authorship: false,
     member: false,
   });
+  const [name, setName] = useState({ ar: "", en: "" });
   const [prefs, setPrefs] = useState({
     camera_shy: false,
     locale: "en" as "en" | "ar",
@@ -69,6 +82,10 @@ export const SetupForm = () => {
 
   useEffect(() => {
     if (profile.data) {
+      setName({
+        ar: profile.data.full_name_ar ?? "",
+        en: profile.data.full_name_en ?? "",
+      });
       setPrefs({
         camera_shy: profile.data.camera_shy,
         locale: profile.data.locale === "ar" ? "ar" : "en",
@@ -94,6 +111,8 @@ export const SetupForm = () => {
         .from("profiles")
         .update({
           ...prefs,
+          full_name_ar: name.ar.trim() || null,
+          full_name_en: name.en.trim(),
           personal_email: prefs.personal_email.trim() || null,
           setup_completed_at:
             profile.data?.setup_completed_at ?? new Date().toISOString(),
@@ -116,11 +135,14 @@ export const SetupForm = () => {
     return <ErrorState onRetry={() => status.refetch()} />;
   }
 
-  const ready = pending.every((kind) => accepted[kind]);
-  // One step per pending pledge, then the choices (always ready).
-  const total = pending.length + 1;
+  const named = name.en.trim().length > 0;
+  const ready = named && pending.every((kind) => accepted[kind]);
+  // Your name, one step per pending pledge, then the choices (always ready).
+  const total = pending.length + 2;
   const done =
-    pending.filter((kind) => accepted[kind]).length + (ready ? 1 : 0);
+    (named ? 1 : 0) +
+    pending.filter((kind) => accepted[kind]).length +
+    (ready ? 1 : 0);
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -132,7 +154,7 @@ export const SetupForm = () => {
   return (
     <>
       <FormHeader code={t("kicker")} title={t("title")}>
-        {isRenewal ? t("renewed") : t("description")}
+        {setupIntro(t, isRenewal, Boolean(profile.data?.setup_completed_at))}
       </FormHeader>
       <div className="grid gap-2" role="status">
         <p className="type-kicker">
@@ -146,6 +168,43 @@ export const SetupForm = () => {
         </div>
       </div>
       <form className="grid gap-6" onSubmit={submit}>
+        <fieldset className="grid gap-4">
+          <legend className="type-subheading mb-2">{t("name.title")}</legend>
+          <p className="type-caption" id={`${id}-name-hint`}>
+            {t("name.hint")}
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-2">
+              <Label htmlFor={`${id}-name-en`}>{t("name.en")}</Label>
+              <Input
+                aria-describedby={`${id}-name-hint`}
+                autoComplete="name"
+                dir="ltr"
+                id={`${id}-name-en`}
+                lang="en"
+                maxLength={120}
+                onChange={(event) =>
+                  setName((n) => ({ ...n, en: event.target.value }))
+                }
+                required
+                value={name.en}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor={`${id}-name-ar`}>{t("name.ar")}</Label>
+              <Input
+                dir="rtl"
+                id={`${id}-name-ar`}
+                lang="ar"
+                maxLength={120}
+                onChange={(event) =>
+                  setName((n) => ({ ...n, ar: event.target.value }))
+                }
+                value={name.ar}
+              />
+            </div>
+          </div>
+        </fieldset>
         {pending.length > 0 ? (
           <fieldset className="grid gap-4">
             <legend className="type-subheading mb-2">{t("pledges")}</legend>

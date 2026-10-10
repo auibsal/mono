@@ -1,3 +1,4 @@
+import { buttonVariants } from "@repo/design-system/components/ui/button";
 import { Link } from "@repo/internationalization/navigation";
 import { localized, programmes } from "@repo/sal-data";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -42,12 +43,25 @@ const ProgrammesPage = async ({ params }: LocaleParams) => {
         <h1 className="type-display">{t("title")}</h1>
         <p className="type-lede max-w-3xl">{t("lede")}</p>
       </header>
-      <ul className="grid gap-4 md:grid-cols-2">{major.map(card)}</ul>
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {regular.map(card)}
-      </ul>
+      <section aria-labelledby="flagship" className="grid gap-4">
+        <h2 className="type-heading frame-b pb-2" id="flagship">
+          {t("major")}
+        </h2>
+        <ul className="grid gap-4 md:grid-cols-2">{major.map(card)}</ul>
+      </section>
+      <section aria-labelledby="through-the-term" className="grid gap-4">
+        <h2 className="type-heading frame-b pb-2" id="through-the-term">
+          {t("regular")}
+        </h2>
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {regular.map(card)}
+        </ul>
+      </section>
       <Link
-        className="inline-flex h-10 items-center justify-self-start rounded-md border border-rule px-4 text-sm"
+        className={buttonVariants({
+          className: "justify-self-start",
+          variant: "outline",
+        })}
         href="/events"
       >
         {t("events")}

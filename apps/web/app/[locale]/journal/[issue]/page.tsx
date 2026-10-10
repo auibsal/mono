@@ -1,3 +1,4 @@
+import { buttonVariants } from "@repo/design-system/components/ui/button";
 import type { Locale } from "@repo/internationalization";
 import { formatNumber } from "@repo/internationalization/format";
 import { Link } from "@repo/internationalization/navigation";
@@ -96,7 +97,10 @@ const IssuePage = async ({ params }: IssueProps) => {
       ) : null}
       {pdf ? (
         <a
-          className="inline-flex h-10 items-center justify-self-start rounded-md border border-rule px-4 text-sm"
+          className={buttonVariants({
+            className: "justify-self-start",
+            variant: "outline",
+          })}
           href={pdf}
         >
           {t("pdf")}

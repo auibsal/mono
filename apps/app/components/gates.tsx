@@ -80,7 +80,8 @@ export const RequireMember = ({ children }: GateProps) => {
   const needsSetup =
     (status.data?.verified || isGuest) &&
     ((status.data?.pending_pledges.length ?? 0) > 0 ||
-      !profile.data?.setup_completed_at);
+      !profile.data?.setup_completed_at ||
+      !profile.data.full_name_en.trim());
 
   useEffect(() => {
     if (needsSetup && profile.data) {

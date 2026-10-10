@@ -1,7 +1,6 @@
 "use client";
 
 import { useAuth } from "@repo/auth/provider";
-import { SalCard } from "@repo/design-system/components/sal/card";
 import type { Locale } from "@repo/internationalization";
 import { formatLongDate } from "@repo/internationalization/format";
 import { Link } from "@repo/internationalization/navigation";
@@ -132,45 +131,49 @@ export const Forms = () => {
             {t("noneAvailable")}
           </EmptyLine>
         ) : null}
-        <ul className="grid gap-3 sm:grid-cols-2">
+        <ul className="grid border-rule border-t">
           {available.map((type) => (
-            <li key={type.key}>
-              <SalCard>
-                <div className="grid gap-2">
-                  <p className="type-kicker">{type.code}</p>
-                  <Link
-                    className="font-bold underline underline-offset-4"
-                    href={{
-                      pathname: "/forms/fill",
-                      query: { form: type.key },
-                    }}
-                  >
-                    <FormTitle formKey={type.key} />
-                  </Link>
-                  <p className="type-caption">
-                    {td(`${type.key}.purpose` as Parameters<typeof td>[0])}
-                  </p>
-                </div>
-              </SalCard>
+            <li className="border-rule border-b" key={type.key}>
+              <Link
+                className="group -mx-2 grid grid-cols-[4.5rem_1fr] gap-x-3 gap-y-1 px-2 py-3 hover:bg-surface-tint focus-visible:bg-surface-tint"
+                href={{
+                  pathname: "/forms/fill",
+                  query: { form: type.key },
+                }}
+              >
+                <span className="type-code row-span-2 pt-0.5 text-sm text-text-secondary">
+                  {type.code}
+                </span>
+                <span className="font-bold underline-offset-4 group-hover:underline">
+                  <FormTitle formKey={type.key} />
+                </span>
+                <span className="type-caption">
+                  {td(`${type.key}.purpose` as Parameters<typeof td>[0])}
+                </span>
+              </Link>
             </li>
           ))}
         </ul>
       </section>
 
-      <section className="grid gap-3">
-        <h2 className="type-subheading">{t("elsewhereTitle")}</h2>
-        <p className="type-body">{t("elsewhereLede")}</p>
-        <ul className="grid gap-2">
+      <details className="group grid gap-3 border-rule border-t pt-4">
+        <summary className="type-subheading cursor-pointer">
+          {t("elsewhereTitle")}
+        </summary>
+        <p className="type-body mt-3">{t("elsewhereLede")}</p>
+        <ul className="mt-3 grid gap-2">
           {forms.formsElsewhere.map((f) => (
             <li key={f.key}>
-              <span className="type-kicker">{f.code}</span>{" "}
+              <span className="type-code text-sm text-text-secondary">
+                {f.code}
+              </span>{" "}
               <Link className="underline underline-offset-4" href={f.path}>
                 {te(f.key)}
               </Link>
             </li>
           ))}
         </ul>
-      </section>
+      </details>
     </div>
   );
 };

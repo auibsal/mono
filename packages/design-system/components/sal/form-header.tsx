@@ -13,7 +13,8 @@ interface FormHeaderProps {
 /**
  * The brand's Form Header (brand/components/FormHeader), adapted for screen:
  * the form code in Ubuntu Mono and the title, the symbol at the top end, and
- * a crimson rule at twice the hairline. Forms are always light.
+ * a crimson rule at twice the hairline. It takes the colors of the page it
+ * sits on: on ink, the white symbol (never crimson on ink).
  */
 export const FormHeader = ({
   children,
@@ -21,7 +22,7 @@ export const FormHeader = ({
   code,
   title,
 }: FormHeaderProps) => (
-  <header className={cn("grid gap-3", className)} data-theme="light">
+  <header className={cn("grid gap-3", className)}>
     <div className="flex items-start justify-between gap-gap border-accent-line border-b-2 pb-gap-tight">
       <div className="grid gap-1.5">
         {code ? (
@@ -32,9 +33,17 @@ export const FormHeader = ({
       {/* biome-ignore lint/performance/noImgElement: SVG symbol, served as supplied */}
       <img
         alt=""
-        className="h-10 w-auto flex-none"
+        className="on-ink:hidden h-10 w-auto flex-none"
         height={40}
         src={logos.symbol.onLight}
+        width={Math.round(40 * logos.symbol.aspect)}
+      />
+      {/* biome-ignore lint/performance/noImgElement: SVG symbol, served as supplied */}
+      <img
+        alt=""
+        className="on-ink:block hidden h-10 w-auto flex-none"
+        height={40}
+        src={logos.symbol.onDark}
         width={Math.round(40 * logos.symbol.aspect)}
       />
     </div>

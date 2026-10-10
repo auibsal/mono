@@ -11,8 +11,9 @@ import {
   adminModules,
   hasPermissionAnywhere,
 } from "@repo/rbac";
+import { ChevronDown } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { type ReactNode, useEffect } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { useGrants } from "@/lib/queries";
 import { TwoStepPanel, useTwoStep } from "../auth/two-step";
 import { SectionSpinner } from "../states";
@@ -31,11 +32,122 @@ export const useVisibleModules = () => {
   return { grants, visible };
 };
 
-/** Section navigation for the administration area. */
-export const AdminShell = ({ children }: { children: ReactNode }) => {
+// The sections in five groups, so the list reads as a map rather than a
+// wall of links. Modules not listed here fall into the last group.
+type Group = "work" | "people" | "publishing" | "society" | "system";
+
+const groups: { key: Group; modules: AdminModule[] }[] = [
+  {
+    key: "work",
+    modules: ["events", "programs", "productions", "pipeline", "journal"],
+  },
+  { key: "people", modules: ["members", "recognition", "partners"] },
+  { key: "publishing", modules: ["content", "documents", "charity"] },
+  { key: "society", modules: ["governance", "forms"] },
+  { key: "system", modules: ["activity", "settings"] },
+];
+
+const ungrouped = adminModules
+  .map((m) => m.key)
+  .filter(
+    (key) => key !== "overview" && !groups.some((g) => g.modules.includes(key))
+  );
+
+const isActive = (module: AdminModule, pathname: string) =>
+  module === "overview"
+    ? pathname === "/admin"
+    : pathname.startsWith(hrefFor(module));
+
+/**
+ * Section navigation for the administration area: a sidebar on wide
+ * screens; on phones and tablets a single "Section" button that opens the
+ * same grouped list, so it never wraps into a block of links.
+ */
+const AdminNav = () => {
   const t = useTranslations("nexus.admin");
   const pathname = usePathname();
-  const { grants, visible } = useVisibleModules();
+  const { visible } = useVisibleModules();
+  // Open for one page only: moving to another section closes the list.
+  const [openOn, setOpenOn] = useState<string | null>(null);
+  const open = openOn === pathname;
+  const keys = new Set(visible.map((m) => m.key));
+  const current = visible.find((m) => isActive(m.key, pathname));
+
+  const link = (module: AdminModule) => {
+    const active = isActive(module, pathname);
+    return (
+      <li key={module}>
+        <Link
+          aria-current={active ? "page" : undefined}
+          className={cn(
+            "block py-2 text-sm underline-offset-4 hover:underline lg:py-1",
+            active && "font-bold text-title"
+          )}
+          href={hrefFor(module)}
+        >
+          {t(`nav.${module}`)}
+        </Link>
+      </li>
+    );
+  };
+
+  return (
+    <nav aria-label={t("nav.label")}>
+      <p className="type-kicker mb-2 hidden lg:block">{t("title")}</p>
+      <button
+        aria-controls="admin-sections"
+        aria-expanded={open}
+        className="frame flex w-full items-center justify-between gap-3 bg-surface px-4 py-3 text-start lg:hidden"
+        onClick={() => setOpenOn(open ? null : pathname)}
+        type="button"
+      >
+        <span className="grid">
+          <span className="type-kicker">{t("title")}</span>
+          <span className="font-bold">
+            {current ? t(`nav.${current.key}`) : t("nav.overview")}
+          </span>
+        </span>
+        <ChevronDown
+          aria-hidden="true"
+          className={cn(
+            "size-5 shrink-0 transition-transform",
+            open && "rotate-180"
+          )}
+        />
+      </button>
+      <div
+        className={cn(
+          "mt-2 grid gap-4 lg:mt-0 lg:grid",
+          open ? "grid" : "hidden"
+        )}
+        id="admin-sections"
+      >
+        {keys.has("overview") ? <ul>{link("overview")}</ul> : null}
+        {groups.map((group, index) => {
+          const items = [
+            ...group.modules,
+            ...(index === groups.length - 1 ? ungrouped : []),
+          ].filter((m) => keys.has(m));
+          if (items.length === 0) {
+            return null;
+          }
+          return (
+            <div className="grid gap-1" key={group.key}>
+              <p className="type-caption">{t(`nav.groups.${group.key}`)}</p>
+              <ul className="grid grid-cols-2 gap-x-4 sm:grid-cols-3 lg:grid-cols-1">
+                {items.map(link)}
+              </ul>
+            </div>
+          );
+        })}
+      </div>
+    </nav>
+  );
+};
+
+/** The administration area: grouped section navigation and the section. */
+export const AdminShell = ({ children }: { children: ReactNode }) => {
+  const { grants } = useVisibleModules();
   const twoStep = useTwoStep();
 
   if (grants.isPending || twoStep.isPending) {
@@ -47,33 +159,8 @@ export const AdminShell = ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[14rem_1fr]">
-      <nav aria-label={t("nav.label")}>
-        <p className="type-kicker mb-2">{t("title")}</p>
-        <ul className="flex flex-wrap gap-x-4 gap-y-1 lg:flex-col">
-          {visible.map((module) => {
-            const href = hrefFor(module.key);
-            const active =
-              module.key === "overview"
-                ? pathname === "/admin"
-                : pathname.startsWith(href);
-            return (
-              <li key={module.key}>
-                <Link
-                  aria-current={active ? "page" : undefined}
-                  className={cn(
-                    "block py-1 text-sm underline-offset-4 hover:underline",
-                    active && "font-bold text-title"
-                  )}
-                  href={href}
-                >
-                  {t(`nav.${module.key}`)}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+    <div className="grid gap-6 lg:grid-cols-[14rem_1fr] lg:gap-8">
+      <AdminNav />
       <div className="min-w-0">{children}</div>
     </div>
   );

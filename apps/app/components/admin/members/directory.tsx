@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@repo/auth/provider";
+import { buttonVariants } from "@repo/design-system/components/ui/button";
 import { Checkbox } from "@repo/design-system/components/ui/checkbox";
 import { Input } from "@repo/design-system/components/ui/input";
 import { Label } from "@repo/design-system/components/ui/label";
@@ -143,7 +144,7 @@ export const MembersDirectory = () => {
           <>
             {hasPermission(grants.data, "members.verify") ? (
               <Link
-                className="inline-flex h-8 items-center rounded-md border px-3 text-sm"
+                className={buttonVariants({ size: "sm", variant: "outline" })}
                 href="/admin/members/verification"
               >
                 {t("queue", { count: formatNumber(pending) })}

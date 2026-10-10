@@ -6,6 +6,12 @@
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+/* On ink, unless inside a light sheet (`data-theme="light"`) within it. */
+@custom-variant on-ink (
+  &:where([data-theme="dark"] *):not(
+    :where([data-theme="light"], [data-theme="light"] *)
+  )
+);
 
 /*
  * SAL v4 with the v5 Screens amendment (brand/BRAND-BOOK.md, "Screens").

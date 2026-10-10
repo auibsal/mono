@@ -2,7 +2,6 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { useProfile } from "@/lib/queries";
-import { CalendarFeed } from "./calendar-feed";
 import { JournalSection } from "./journal";
 import { MembershipCard } from "./membership-card";
 import { NextEvents } from "./next-events";
@@ -11,7 +10,11 @@ import { MyProgrammes } from "./programmes";
 import { SixWords } from "./six-words";
 import { VotingEligibility } from "./voting";
 
-/** Member home, mobile-first, in the order of the brief (§7). */
+/**
+ * Member home, mobile-first: what to do next first (notices only when there
+ * are some), then voting and the Book of Members. The calendar feed is a
+ * setting, so it lives in Profile and privacy.
+ */
 export const MemberHome = () => {
   const t = useTranslations("nexus.home");
   const locale = useLocale();
@@ -23,15 +26,16 @@ export const MemberHome = () => {
 
   return (
     <div className="grid gap-8">
-      <h1 className="type-display">{t("greeting", { name })}</h1>
+      <h1 className="type-display">
+        {name ? t("greeting", { name }) : t("greetingPlain")}
+      </h1>
       <MembershipCard />
       <div className="grid gap-8 lg:grid-cols-2">
-        <NextEvents />
-        <VotingEligibility />
         <Notices />
+        <NextEvents />
         <JournalSection />
         <MyProgrammes />
-        <CalendarFeed />
+        <VotingEligibility />
         <SixWords />
       </div>
     </div>
